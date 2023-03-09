@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class IsPit : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        Debug.Log("Fell into a pit");
+        Vector3 fellPos = other.transform.position;
+        fellPos.z += 2;
     }
 }
