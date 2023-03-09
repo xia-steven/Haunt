@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour
     public float dodgeRollDistance = 5f;
     public float dodgeRollCooldown = 1f;
 
-    private Rigidbody2D rb;
-    private Vector2 movement;
+    private Rigidbody rb;
+    private Vector3 movement;
     private float movementX;
     private float movementY;
     private bool isDodging = false;
@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
     }
 
     public void OnDodge()
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
             movement.y = movementY;
         }
 
-        if (dodgePressed)
+        if (dodgePressed && (movementX != 0 || movementY != 0))
         {
             isDodging = true;
             dodgePressed = false;
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
             dodgeRollCooldownTimer = dodgeRollCooldown;
 
             float dodgeRollDirection = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
-            rb.velocity = Quaternion.Euler(0, 0, dodgeRollDirection) * Vector2.right * dodgeRollDistance;
+            rb.velocity = Quaternion.Euler(0, 0, dodgeRollDirection) * Vector3.right * dodgeRollDistance;
         }
 
         if (dodgeRollTimer > 0f)
@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
             if (dodgeRollTimer <= 0f)
             {
                 isDodging = false;
+                rb.velocity = Vector3.zero;
             }
         }
 
