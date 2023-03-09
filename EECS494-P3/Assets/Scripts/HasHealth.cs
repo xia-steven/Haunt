@@ -10,5 +10,6 @@ public class HasHealth : MonoBehaviour
     public void AlterHealth(int healthDelta)
     {
         health += healthDelta;
+        Debug.Log(health);
     }
 }
