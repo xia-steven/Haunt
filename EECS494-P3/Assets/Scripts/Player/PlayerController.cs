@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Vector3 movement;
     private float movementX;
-    private float movementY;
+    private float movementZ;
     private bool isDodging = false;
     private bool dodgePressed = false;
     private float dodgeRollTimer = 0f;
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputValue movementValue)
     {
         movementX = movementValue.Get<Vector2>().x;
-        movementY = movementValue.Get<Vector2>().y;
+        movementZ = movementValue.Get<Vector2>().y;
 
     }
 
@@ -48,12 +48,12 @@ public class PlayerController : MonoBehaviour
         if (!isDodging)
         {
             movement.x = movementX;
-            movement.y = movementY;
+            movement.z = movementZ;
         }
 
         if (dodgePressed)
         {
-            if (movementX == 0 && movementY == 0)
+            if (movementX == 0 && movementZ == 0)
             {
                 dodgePressed = false;
             }

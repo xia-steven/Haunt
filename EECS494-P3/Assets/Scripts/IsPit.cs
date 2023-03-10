@@ -9,6 +9,8 @@ public class IsPit : MonoBehaviour
     {
         Debug.Log("Fell into a pit");
         Vector3 fellPos = other.transform.position;
-        fellPos.z += 2;
+        fellPos.y += 2;
+
+        other.transform.position = fellPos;
     }
 }
