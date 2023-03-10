@@ -12,8 +12,14 @@ public class DamagesPlayer : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            EventBus.Publish(new DamageEvent(damageAmount));
             collision.gameObject.GetComponent<HasHealth>().AlterHealth(damageAmount);
         }
     }
 }
  
+public class DamageEvent
+{
+    public int damage_amt = -1;
+    public DamageEvent(int _damage_amt) { damage_amt = _damage_amt; }
+}

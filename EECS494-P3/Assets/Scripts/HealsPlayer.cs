@@ -10,8 +10,19 @@ public class HealsPlayer : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            EventBus.Publish(new HealEvent(healAmount));
             other.gameObject.GetComponent<HasHealth>().AlterHealth(healAmount);
             Destroy(gameObject);
         }
+    }
+}
+
+public class HealEvent
+{
+    public int heal_amt = 1;
+
+    public HealEvent(int _heal_amt)
+    {
+        heal_amt = _heal_amt;
     }
 }
