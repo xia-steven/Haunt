@@ -51,15 +51,23 @@ public class PlayerController : MonoBehaviour
             movement.y = movementY;
         }
 
-        if (dodgePressed && (movementX != 0 || movementY != 0))
+        if (dodgePressed)
         {
-            isDodging = true;
-            dodgePressed = false;
-            dodgeRollTimer = dodgeRollDuration;
-            dodgeRollCooldownTimer = dodgeRollCooldown;
+            if (movementX == 0 && movementY == 0)
+            {
+                dodgePressed = false;
+            }
+            else
+            {
+                isDodging = true;
+                dodgePressed = false;
+                dodgeRollTimer = dodgeRollDuration;
+                dodgeRollCooldownTimer = dodgeRollCooldown;
 
-            float dodgeRollDirection = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
-            rb.velocity = Quaternion.Euler(0, 0, dodgeRollDirection) * Vector3.right * dodgeRollDistance;
+                float dodgeRollDirection = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
+                rb.velocity = Quaternion.Euler(0, 0, dodgeRollDirection) * Vector3.right * dodgeRollDistance; 
+            }
+            
         }
 
         if (dodgeRollTimer > 0f)
