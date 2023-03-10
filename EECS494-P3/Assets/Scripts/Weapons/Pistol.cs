@@ -32,10 +32,13 @@ public class Pistol : Weapon
 
         if (equipped && currentClipAmount > 0)
         {
-            // Fires basic bullet to the right
-            // TODO: change direction to be based on mouse location
+            // Fires basic bullet in direction pistol is facing
 
-            Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+            Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
+            direction.z = 0;
+            direction = direction.normalized;
+
+            Debug.Log(direction);
 
             FireProjectile(basicBullet, direction, transform, BasicBullet.bulletSpeed);
             currentClipAmount--;
