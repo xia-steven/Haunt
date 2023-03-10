@@ -5,12 +5,14 @@ using UnityEngine;
 public class IsPit : MonoBehaviour
 {
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Fell into a pit");
-        Vector3 fellPos = other.transform.position;
+        Debug.Log("Transform normal: ");
+        
+        Vector3 fellPos = collision.transform.position;
         fellPos.y += 2;
 
-        other.transform.position = fellPos;
+
+        collision.transform.position = fellPos;
     }
 }
