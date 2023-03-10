@@ -446,6 +446,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 1780021554232034795, guid: 9411db695b26b2744a8891499c0aca57, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1819651602, guid: 1bab7c4f1ebee384389602bc51b2d9a3, type: 3}
+    - target: {fileID: 1780021554792612324, guid: 9411db695b26b2744a8891499c0aca57, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1819651602, guid: 1bab7c4f1ebee384389602bc51b2d9a3, type: 3}
+    - target: {fileID: 1780021555464159019, guid: 9411db695b26b2744a8891499c0aca57, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1819651602, guid: 1bab7c4f1ebee384389602bc51b2d9a3, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9411db695b26b2744a8891499c0aca57, type: 3}
 --- !u!1001 &6909370434058008734
