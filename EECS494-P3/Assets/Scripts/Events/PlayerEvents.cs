@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 class PlayerDamagedEvent
 {
-    int damageTaken;
+    public int damageTaken;
 
     public PlayerDamagedEvent(int amount=1) { damageTaken = amount; }
 
@@ -24,7 +24,7 @@ class PlayerDamagedEvent
 /// </summary>
 class PlayerHealedEvent
 {
-    int damageHealed;
+    public int damageHealed;
 
     public PlayerHealedEvent(int amount=1) { damageHealed = amount; }
 
@@ -40,7 +40,7 @@ class PlayerHealedEvent
 /// </summary>
 class ReduceMaxHealthEvent
 {
-    int reduceAmount;
+    public int reduceAmount;
 
     public ReduceMaxHealthEvent(int amount=2) { reduceAmount = amount; }
 
@@ -56,7 +56,7 @@ class ReduceMaxHealthEvent
 /// </summary>
 class IncreaseMaxHealthEvent
 {
-    int increaseAmount;
+    public int increaseAmount;
 
     public IncreaseMaxHealthEvent(int amount=2) { increaseAmount = amount; }
 
