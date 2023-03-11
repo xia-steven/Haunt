@@ -39,7 +39,7 @@ partial class GameControl : MonoBehaviour
     void Start()
     {
         if (instance == null) instance = this;
-        else Destroy(this);
+        else Destroy(gameObject);
 
         startSub = EventBus.Subscribe<GameStartEvent>(_Start);
         lossSub = EventBus.Subscribe<GameLossEvent>(_Lose);
