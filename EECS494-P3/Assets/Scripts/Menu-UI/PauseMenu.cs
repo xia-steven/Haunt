@@ -9,11 +9,19 @@ public class PauseMenu : MonoBehaviour
     private InputAction menu;
 
     [SerializeField] GameObject pauseUI;
-    [SerializeField] bool isPaused;
+    bool isPaused;
+
+    private Subscription<GamePauseEvent> pauseSub;
+    private Subscription<GamePlayEvent> playSub;
+
     // Start is called before the first frame update
     void Awake()
     {
         playerControls = new PlayerControls();
+
+        pauseSub = EventBus.Subscribe<GamePauseEvent>(_ActivateMenu);
+        playSub = EventBus.Subscribe<GamePlayEvent>(_DeactivateMenu);
+
     }
 
     private void OnEnable()
@@ -36,27 +44,28 @@ public class PauseMenu : MonoBehaviour
         {
             return;
         }
-        isPaused = !isPaused;
 
         if (isPaused)
         {
-            ActivateMenu();
+            EventBus.Publish(new GamePlayEvent());
         }
         else
         {
-            DeactivateMenu();
+            EventBus.Publish(new GamePauseEvent());
         }
     }
 
-    public void ActivateMenu()
+    private void _ActivateMenu(GamePauseEvent e)
     {
+        isPaused = true;
         Time.timeScale = 0;
         AudioListener.pause = true;
         pauseUI.SetActive(true);
     }
 
-    public void DeactivateMenu()
+    private void _DeactivateMenu(GamePlayEvent e)
     {
+        isPaused = false;
         Time.timeScale = 1;
         AudioListener.pause = false;
         pauseUI.SetActive(false);
@@ -65,6 +74,7 @@ public class PauseMenu : MonoBehaviour
 
     public void RestartLevel()
     {
+        isPaused = false;
         Time.timeScale = 1;
         AudioListener.pause = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -73,6 +83,7 @@ public class PauseMenu : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        isPaused = false;
         Time.timeScale = 1;
         AudioListener.pause = false;
         SceneManager.LoadScene("MainMenu");

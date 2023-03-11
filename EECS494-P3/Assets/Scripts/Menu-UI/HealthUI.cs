@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class HealthUI : MonoBehaviour
 {
     [SerializeField] GameObject healthPipPrefab;
-    [SerializeField] GameObject gameOverUI;
 
     [SerializeField] Sprite fullHeartImage;
     [SerializeField] Sprite halfHeartImage;
@@ -79,16 +77,7 @@ public class HealthUI : MonoBehaviour
 
         if (newHealth == 0)
         {
-            foreach (Transform child in gameOverUI.transform)
-            {
-                if (child.name == "Restart")
-                {
-                    EventSystem.current.SetSelectedGameObject(child.gameObject);
-                }
-            }
-            
-            Time.timeScale = 0;
-            gameOverUI.SetActive(true);
+            EventBus.Publish(new GameLossEvent());
         }
     }
     
