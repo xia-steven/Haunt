@@ -10,33 +10,26 @@ public class ChangeLightColor : MonoBehaviour
     Light sunlight;
 
 
-    bool changingColor = false;
-    float duration = 5.0f;
+    bool roundStopped = false;
+    // Set when the night starts
+    float duration = 1.0f;
+    float resetDuration = 2.0f;
+    Gradient colors;
 
+    Subscription<NightBeginEvent> nightStartsub;
+    Subscription<NightEndEvent> nightEndsub;
+    
     // Start is called before the first frame update
     void Start()
     {
         sunlight = GetComponent<Light>();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(changingColor == false)
-        {
-            changingColor = true;
-            StartCoroutine(ChangeColor());
-        }
-    }
+        nightStartsub = EventBus.Subscribe<NightBeginEvent>(_OnNightBegin);
+        nightEndsub = EventBus.Subscribe<NightEndEvent>(_OnNightEnd);
 
-    IEnumerator ChangeColor()
-    {
-        float initial_time = Time.time;
-        float progress = (Time.time - initial_time) / duration;
-
-
+        // Initialize gradient
         // Code from: https://stackoverflow.com/questions/38642587/making-a-gradient-and-change-colors-based-on-that-gradient-in-unity3d-c-sharp
-        Gradient g = new Gradient();
+        colors = new Gradient();
         GradientColorKey[] gck = new GradientColorKey[2];
         GradientAlphaKey[] gak = new GradientAlphaKey[2];
         gck[0].color = nightColor;
@@ -47,20 +40,52 @@ public class ChangeLightColor : MonoBehaviour
         gak[0].time = 0F;
         gak[1].alpha = 1.0F;
         gak[1].time = 1.0F;
-        g.SetKeys(gck, gak);
+        colors.SetKeys(gck, gak);
+    }
 
-        while (progress < 1.0f)
+    void _OnNightBegin(NightBeginEvent nbe)
+    {
+        duration = GameControl.NightTimeRemaining;
+        roundStopped = false;
+        StartCoroutine(ChangeColor());
+    }
+
+    void _OnNightEnd(NightEndEvent nee)
+    {
+        roundStopped = true;
+        StartCoroutine(ResetColor());
+    }
+
+
+    IEnumerator ChangeColor()
+    {
+        float initial_time = Time.time;
+        float progress = (Time.time - initial_time) / duration;
+
+        while (progress < 1.0f && !roundStopped)
         {
             progress = (Time.time - initial_time) / duration;
 
-            sunlight.color = g.Evaluate(progress);
+            sunlight.color = colors.Evaluate(progress);
 
 
             yield return null;
         }
+    }
+
+    IEnumerator ResetColor()
+    {
+        float initial_time = Time.time;
+        float progress = (Time.time - initial_time) / resetDuration;
+
+        while (progress < 1.0f)
+        {
+            progress = (Time.time - initial_time) / resetDuration;
+
+            sunlight.color = colors.Evaluate(1.0f - progress);
 
 
-
-        changingColor = false;
+            yield return null;
+        }
     }
 }
