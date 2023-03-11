@@ -4,17 +4,31 @@ using UnityEngine;
 
 public class HasHealth : MonoBehaviour
 {
-    private int health = 3;
+    [SerializeField] int maxHealth = 3;
+    private int health;
+
+    private void Awake()
+    {
+        health = maxHealth;
+    }
 
     // Update is called once per frame
-    public void AlterHealth(int healthDelta)
+    public bool AlterHealth(int healthDelta)
     {
+        if (health + healthDelta > maxHealth) return false;
         health += healthDelta;
         Debug.Log(health);
+        return true;
+
     }
 
     public int GetHealth()
     {
         return health;
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
     }
 }

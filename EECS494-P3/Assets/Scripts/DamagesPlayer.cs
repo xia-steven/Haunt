@@ -12,8 +12,10 @@ public class DamagesPlayer : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            //alter before publishing in case a subscriber references the new health
+            collision.gameObject.GetComponent<HasHealth>().AlterHealth(damageAmount); 
+
             EventBus.Publish(new DamageEvent(damageAmount));
-            collision.gameObject.GetComponent<HasHealth>().AlterHealth(damageAmount);
         }
     }
 }

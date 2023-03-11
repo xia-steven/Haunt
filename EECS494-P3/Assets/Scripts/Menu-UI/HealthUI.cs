@@ -6,14 +6,27 @@ using UnityEngine.EventSystems;
 
 public class HealthUI : MonoBehaviour
 {
-    [SerializeField] Image pip0;
-    [SerializeField] Image pip1;
-    [SerializeField] Image pip2;
+    [SerializeField] GameObject healthPipPrefab;
     [SerializeField] GameObject gameOverUI;
+
+    [SerializeField] Sprite fullHeartImage;
+    [SerializeField] Sprite halfHeartImage;
+
+    [SerializeField] float loadWaitTime = 0.2f;
+
     Color fullPipColor = new Color(212f / 255f, 75f / 255f, 116f / 255f, 1f);
     Color emptyPipColor = new Color(41f / 255f, 41f / 255f, 41f / 255f, 1f);
+
     List<Image> healthPips = new List<Image>();
-    int health_counter = 3;
+
+    enum HeartValue
+    {
+        empty,
+        half,
+        full
+    }
+
+    List<HeartValue> heartValueTracker = new List<HeartValue>();
 
     Subscription<DamageEvent> damage_event_subscription;
     Subscription<HealEvent> heal_event_subscription;
@@ -23,9 +36,18 @@ public class HealthUI : MonoBehaviour
         damage_event_subscription = EventBus.Subscribe<DamageEvent>(_OnDamage);
         heal_event_subscription = EventBus.Subscribe<HealEvent>(_OnHeal);
 
-        healthPips.Add(pip0);
-        healthPips.Add(pip1);
-        healthPips.Add(pip2);
+        int numPips = (IsPlayer.instance.GetMaxHealth() + 1) / 2;
+
+        for (int i = 0; i < numPips; ++i)
+        {
+            GameObject newPip = GameObject.Instantiate(healthPipPrefab, transform.position, Quaternion.identity);
+            newPip.transform.localScale = Vector3.one;
+            newPip.transform.SetParent(transform, false);
+            healthPips.Add(newPip.GetComponentsInChildren<Image>()[1]);
+            healthPips[i].enabled = false;
+            heartValueTracker.Add(HeartValue.empty);
+        }
+
         StartCoroutine(loadHealth());
 
         
@@ -33,22 +55,29 @@ public class HealthUI : MonoBehaviour
 
     private IEnumerator loadHealth()
     {
-        healthPips[0].color = emptyPipColor;
-        healthPips[1].color = emptyPipColor;
-        healthPips[2].color = emptyPipColor;
-
-        for (int i = 0; i < 3; i++)
+        int maxHealth = IsPlayer.instance.GetMaxHealth();
+        for (int i = 0; i < healthPips.Count; ++i)
         {
-            yield return new WaitForSeconds(0.3f);
-            healthPips[i].color = fullPipColor;
+            yield return new WaitForSeconds(loadWaitTime);
+            healthPips[i].enabled = true;
+            healthPips[i].sprite = halfHeartImage;
+            heartValueTracker[i] = HeartValue.half;
+            if (maxHealth/2 > i)
+            {
+                yield return new WaitForSeconds(loadWaitTime);
+                healthPips[i].sprite = fullHeartImage;
+                heartValueTracker[i] = HeartValue.full;
+            }
         }
     }
 
+    
     void _OnDamage(DamageEvent e)
     {
-        health_counter--;
-        healthPips[health_counter].color = emptyPipColor;
-        if (health_counter == 0)
+        int newHealth = IsPlayer.instance.GetHealth();
+        UpdatePips(newHealth);
+
+        if (newHealth == 0)
         {
             foreach (Transform child in gameOverUI.transform)
             {
@@ -62,12 +91,47 @@ public class HealthUI : MonoBehaviour
             gameOverUI.SetActive(true);
         }
     }
+    
 
     void _OnHeal(HealEvent e)
     {
-        healthPips[health_counter].color = fullPipColor;
-        health_counter++;
+        int newHealth = IsPlayer.instance.GetHealth();
+        UpdatePips(newHealth);
     }
+
+    private void UpdatePips(int newHealth)
+    {
+        int changeIdx = (newHealth - 1) / 2;
+        for(int i = 0; i < changeIdx; ++i)
+        {
+            if(heartValueTracker[i] != HeartValue.full)
+            {
+                healthPips[i].enabled = true;
+                healthPips[i].sprite = fullHeartImage;
+                heartValueTracker[i] = HeartValue.full;
+            }
+        }
+
+        if (newHealth % 2 == 1)
+        {
+            healthPips[changeIdx].enabled = true;
+            healthPips[changeIdx].sprite = halfHeartImage;
+            heartValueTracker[changeIdx] = HeartValue.half;
+        }
+        else
+        {
+            healthPips[changeIdx].enabled = true;
+            healthPips[changeIdx].sprite = fullHeartImage;
+            heartValueTracker[changeIdx] = HeartValue.full;
+        }
+
+        for (int i = changeIdx + 1; i < healthPips.Count; ++i)
+        {
+            healthPips[i].enabled = false;
+            heartValueTracker[i] = HeartValue.empty;
+        }
+    }
+
     private void OnDestroy()
     {
         EventBus.Unsubscribe(damage_event_subscription);
