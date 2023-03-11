@@ -11,6 +11,8 @@ partial class GameControl : MonoBehaviour
     /*Turn this off if you don't want the night cycle to run*/
     const bool DEBUG_DO_DAYNIGHT = true;
 
+    
+
 
     /*CONTROL PARAMETERS*/
 
@@ -30,10 +32,16 @@ partial class GameControl : MonoBehaviour
     private bool gamePaused = false;
     private bool isNight = false;
 
+    private int waveSize = 2;
+
     /*END STATE DEPENDENT VARIABLES*/
 
     //singleton
     static GameControl instance;
+
+    /*Editor objects held by singleton instance*/
+    [SerializeField] List<Transform> spawners;
+    /*End editor objects held by singleton*/
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +65,9 @@ partial class GameControl : MonoBehaviour
     //NightUpdate runs during the night
     private IEnumerator NightUpdate()
     {
+        Wave w;
+        w = new Wave(waveSize++, 300, spawners);
+        w.Spawn();
         nightStartTime = Time.time;
         while (isNight && Time.time - nightStartTime < nightLength)
         {
@@ -66,7 +77,11 @@ partial class GameControl : MonoBehaviour
                 continue;
             }
 
-            //wave code goes here
+            if (w.IsOver())
+            {
+                w = new Wave(waveSize++, 300, spawners);
+                w.Spawn();
+            }
 
             yield return new WaitForSeconds(updateFrequency);
         }
@@ -76,6 +91,9 @@ partial class GameControl : MonoBehaviour
     //DayUpdate runs while it is day
     private IEnumerator DayUpdate()
     {
+        yield return null;
+        WinGame();
+        /*
         while (!isNight)
         {
             if(!gameActive || gamePaused)
@@ -87,7 +105,7 @@ partial class GameControl : MonoBehaviour
             //code to start night may go here
 
             yield return new WaitForSeconds(updateFrequency);
-        }
+        }*/
     }
 
     
