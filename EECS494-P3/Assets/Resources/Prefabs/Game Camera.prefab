@@ -285,14 +285,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1251538080061305721}
-    - target: {fileID: 715425196258275952, guid: 62c0aa490de7d4946b2707422673dca8, type: 3}
-      propertyPath: m_RenderMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 715425196258275952, guid: 62c0aa490de7d4946b2707422673dca8, type: 3}
-      propertyPath: m_PlaneDistance
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4654469072473339935, guid: 62c0aa490de7d4946b2707422673dca8, type: 3}
       propertyPath: m_Name
       value: MenuSystem
@@ -439,6 +431,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 2087388259792526372, guid: 6327e31284adbd344b7a02030336febd, type: 3}
+      propertyPath: spawners.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2087388259792526373, guid: 6327e31284adbd344b7a02030336febd, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -485,6 +481,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6327e31284adbd344b7a02030336febd, type: 3}
+--- !u!1 &6885874606637417906 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2087388259792526371, guid: 6327e31284adbd344b7a02030336febd, type: 3}
+  m_PrefabInstance: {fileID: 4861757744178305425}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1276548337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6885874606637417906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f31347c5ab8d4a4418b26fea2ac79c58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6885874606637417908 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2087388259792526373, guid: 6327e31284adbd344b7a02030336febd, type: 3}
