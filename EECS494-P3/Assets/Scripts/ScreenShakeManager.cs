@@ -49,7 +49,7 @@ public class ScreenShakeManager : MonoBehaviour
 
         transform.localPosition += velocity;
 
-        Debug();
+        //Debug();
     }
 
     void Debug()
