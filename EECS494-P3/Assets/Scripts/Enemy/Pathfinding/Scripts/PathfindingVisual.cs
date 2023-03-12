@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PathfindingVisual : MonoBehaviour {
-
     private Grid<PathNode> grid;
     private Mesh mesh;
     private bool updateMesh;
@@ -44,7 +43,8 @@ public class PathfindingVisual : MonoBehaviour {
     }
 
     private void UpdateVisual() {
-        MeshUtils.CreateEmptyMeshArrays(grid.GetWidth() * grid.GetHeight(), out Vector3[] vertices, out Vector2[] uv, out int[] triangles);
+        MeshUtils.CreateEmptyMeshArrays(grid.GetWidth() * grid.GetHeight(), out Vector3[] vertices, out Vector2[] uv,
+            out int[] triangles);
 
         for (int x = 0; x < grid.GetWidth(); x++) {
             for (int y = 0; y < grid.GetHeight(); y++) {
@@ -57,7 +57,8 @@ public class PathfindingVisual : MonoBehaviour {
                     quadSize = Vector3.zero;
                 }
 
-                MeshUtils.AddToMeshArrays(vertices, uv, triangles, index, grid.GetWorldPosition(x, y) + quadSize * .5f, 0f, quadSize, Vector2.zero, Vector2.zero);
+                MeshUtils.AddToMeshArrays(vertices, uv, triangles, index, grid.GetWorldPosition(x, y) + quadSize * .5f,
+                    0f, quadSize, Vector2.zero, Vector2.zero);
             }
         }
 
@@ -65,6 +66,4 @@ public class PathfindingVisual : MonoBehaviour {
         mesh.uv = uv;
         mesh.triangles = triangles;
     }
-
 }
-
