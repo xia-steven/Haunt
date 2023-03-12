@@ -42,7 +42,7 @@ public class IsPedestal : MonoBehaviour
     void Update()
     {
 
-        //DebugKeys();
+        DebugKeys();
     }
 
     public void PedestalDied()

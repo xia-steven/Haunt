@@ -26,12 +26,12 @@ public class HealthUI : MonoBehaviour
 
     List<HeartValue> heartValueTracker = new List<HeartValue>();
 
-    Subscription<DamageEvent> damage_event_subscription;
+    Subscription<PlayerDamagedEvent> damage_event_subscription;
     Subscription<HealEvent> heal_event_subscription;
     // Start is called before the first frame update
     void Start()
     {
-        damage_event_subscription = EventBus.Subscribe<DamageEvent>(_OnDamage);
+        damage_event_subscription = EventBus.Subscribe<PlayerDamagedEvent>(_OnDamage);
         heal_event_subscription = EventBus.Subscribe<HealEvent>(_OnHeal);
 
         int numPips = (IsPlayer.instance.GetMaxHealth() + 1) / 2;
@@ -70,17 +70,18 @@ public class HealthUI : MonoBehaviour
     }
 
     
-    void _OnDamage(DamageEvent e)
+    void _OnDamage(PlayerDamagedEvent e)
     {
-        int newHealth = IsPlayer.instance.GetHealth();
-        UpdatePips(newHealth);
-
-        if (newHealth == 0)
-        {
-            EventBus.Publish(new GameLossEvent());
-        }
+        StartCoroutine(waitForHealthUpdate());
     }
     
+    IEnumerator waitForHealthUpdate()
+    {
+        yield return null;
+
+        UpdatePips(IsPlayer.instance.GetHealth());
+    }
+
 
     void _OnHeal(HealEvent e)
     {
@@ -106,6 +107,11 @@ public class HealthUI : MonoBehaviour
             healthPips[changeIdx].enabled = true;
             healthPips[changeIdx].sprite = halfHeartImage;
             heartValueTracker[changeIdx] = HeartValue.half;
+        }
+        else if (newHealth == 0)
+        {
+            healthPips[changeIdx].enabled = false;
+            heartValueTracker[changeIdx] = HeartValue.empty;
         }
         else
         {
