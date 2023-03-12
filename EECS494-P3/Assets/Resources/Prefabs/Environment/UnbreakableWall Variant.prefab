@@ -9,12 +9,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1666045008710828814, guid: 8d3a1f1bce5f17344a0944b9219c250e, type: 3}
       propertyPath: m_Name
-      value: UnbreakableWall
+      value: UnbreakableWall Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1666045008710829040, guid: 8d3a1f1bce5f17344a0944b9219c250e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 23e0adffbb18d6b4ba94bf98edce255f, type: 2}
+    - target: {fileID: 1666045008710829041, guid: 8d3a1f1bce5f17344a0944b9219c250e, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 93c9fe96af8ffb84e9a56dad0f0805e4, type: 2}
     - target: {fileID: 1666045008710829042, guid: 8d3a1f1bce5f17344a0944b9219c250e, type: 3}
       propertyPath: m_RootOrder
       value: 0
