@@ -22,7 +22,7 @@ public class Testing : MonoBehaviour {
         pathfinding = new Pathfinding(20, 10);
         pathfindingDebugStepVisual.Setup(pathfinding.GetGrid());
         pathfindingVisual.SetGrid(pathfinding.GetGrid());
-        InvokeRepeating(nameof(findNewPath), 0.1f, 1.5f);
+        InvokeRepeating(nameof(findNewPath), 0f, 0.5f);
     }
 
     private void findNewPath() {

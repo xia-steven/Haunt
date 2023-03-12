@@ -11,10 +11,7 @@
  */
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using CodeMonkey.Utils;
 
 public class Grid<TGridObject> {
     public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;

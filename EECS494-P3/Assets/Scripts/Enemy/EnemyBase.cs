@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
+using TMPro;
 
 public class EnemyBase : MonoBehaviour {
     private const float speed = 30f;
@@ -9,10 +10,11 @@ public class EnemyBase : MonoBehaviour {
     private Rigidbody rb;
     private int currentPathIndex;
     private List<Vector3> pathVectorList;
-
+    private Transform tf_;
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
+        tf_ = transform;
     }
 
     private void Update() {
@@ -28,7 +30,7 @@ public class EnemyBase : MonoBehaviour {
             var targetPosition = pathVectorList[currentPathIndex];
             if (Vector3.Distance(transform.position, targetPosition) > 1f) {
                 var moveDir = (targetPosition - transform.position).normalized;
-                transform.position += Time.deltaTime * speed * moveDir;
+                tf_.position += Time.deltaTime * speed * moveDir;
             }
             else {
                 currentPathIndex++;

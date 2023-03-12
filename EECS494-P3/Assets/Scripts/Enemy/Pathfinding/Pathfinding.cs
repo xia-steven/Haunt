@@ -10,13 +10,12 @@
     --------------------------------------------------
  */
 
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Pathfinding {
     private const int MOVE_STRAIGHT_COST = 10;
-    private const int MOVE_DIAGONAL_COST = 10000;
+    private const int MOVE_DIAGONAL_COST = 14;
 
     public static Pathfinding Instance { get; private set; }
 
@@ -153,8 +152,7 @@ public class Pathfinding {
     }
 
     private List<PathNode> CalculatePath(PathNode endNode) {
-        var path = new List<PathNode>();
-        path.Add(endNode);
+        var path = new List<PathNode> { endNode };
         var currentNode = endNode;
         while (currentNode.cameFromNode != null) {
             path.Add(currentNode.cameFromNode);
