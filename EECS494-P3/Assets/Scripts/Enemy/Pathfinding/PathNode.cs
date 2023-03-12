@@ -17,7 +17,7 @@ using UnityEngine;
 public class PathNode {
     private readonly Grid<PathNode> grid;
     public readonly int x;
-    public readonly int y;
+    public readonly int z;
 
     public int gCost;
     public int hCost;
@@ -26,10 +26,10 @@ public class PathNode {
     public bool isWalkable;
     public PathNode cameFromNode;
 
-    public PathNode(Grid<PathNode> grid_, int x_, int y_) {
+    public PathNode(Grid<PathNode> grid_, int x_, int z_) {
         grid = grid_;
         x = x_;
-        y = y_;
+        z = z_;
         isWalkable = true;
     }
 
@@ -39,10 +39,10 @@ public class PathNode {
 
     public void SetIsWalkable(bool walkable_) {
         isWalkable = walkable_;
-        grid.TriggerGridObjectChanged(x, y);
+        grid.TriggerGridObjectChanged(x, z);
     }
 
     public override string ToString() {
-        return x + "," + y;
+        return x + "," + z;
     }
 }

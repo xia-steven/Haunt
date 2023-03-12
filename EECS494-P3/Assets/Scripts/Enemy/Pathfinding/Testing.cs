@@ -14,33 +14,31 @@ using UnityEngine;
 using CodeMonkey.Utils;
 
 public class Testing : MonoBehaviour {
-    [SerializeField] private PathfindingDebugStepVisual pathfindingDebugStepVisual;
-    [SerializeField] private PathfindingVisual pathfindingVisual;
-    [SerializeField] int width = 20;
-    [SerializeField] int height = 10;
+    [SerializeField] public int width = 20;
+    [SerializeField] public int height = 10;
 
     private Pathfinding pathfinding;
 
     private void Start() {
         pathfinding = new Pathfinding(width, height);
-        pathfindingDebugStepVisual.Setup(pathfinding.GetGrid());
-        pathfindingVisual.SetGrid(pathfinding.GetGrid());
         InvokeRepeating(nameof(findNewPath), 0f, 0.5f);
     }
 
     private void findNewPath() {
         if (Input.GetMouseButton(0)) {
             var mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
-            pathfinding.GetGrid().GetXY(mouseWorldPosition, out var x, out var y);
-            pathfinding.FindPath(0, 0, x, y);
+            Debug.Log("Mouse click detected");
+            Debug.Log(mouseWorldPosition.x + " " + mouseWorldPosition.z);
+            pathfinding.GetGrid().GetXZ(mouseWorldPosition, out var x, out var z);
+            pathfinding.FindPath(0, 0, x, z);
         }
     }
 
     private void Update() {
         if (Input.GetMouseButtonDown(1)) {
             var mouseWorldPosition = UtilsClass.GetMouseWorldPosition();
-            pathfinding.GetGrid().GetXY(mouseWorldPosition, out var x, out var y);
-            pathfinding.GetNode(x, y).SetIsWalkable(!pathfinding.GetNode(x, y).isWalkable);
+            pathfinding.GetGrid().GetXZ(mouseWorldPosition, out var x, out var z);
+            pathfinding.GetNode(x, z).SetIsWalkable(!pathfinding.GetNode(x, z).isWalkable);
         }
     }
 }
