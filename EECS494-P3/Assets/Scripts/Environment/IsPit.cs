@@ -21,6 +21,14 @@ public class IsPit : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        IsPlayer isPlayer = other.GetComponent<IsPlayer>();
+
+        if(isPlayer == null)
+        {
+            return;
+        }
+
+
         Debug.Log("Player over the pit");
 
         Debug.Log("Our position: " + transform.position);
@@ -59,9 +67,16 @@ public class IsPit : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        IsPlayer isPlayer = other.GetComponent<IsPlayer>();
+
+        if (isPlayer == null)
+        {
+            return;
+        }
+
 
         // If the player fell in the pit
-        if(other.transform.position.y < transform.position.y)
+        if (other.transform.position.y < transform.position.y)
         {
             Debug.Log("Player in pit");
             // Add offset to player position in the pit
@@ -71,6 +86,8 @@ public class IsPit : MonoBehaviour
             adjustedPosition.x = Mathf.Round(adjustedPosition.x);
             // Teleport player outside the pit
             other.transform.position = adjustedPosition;
+
+            EventBus.Publish(new PlayerDamagedEvent(1));
         }
 
     }
