@@ -42,6 +42,16 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void OnFire()
+    {
+        EventBus.Publish<FireEvent>(new FireEvent(this.gameObject));
+    }
+
+    public void OnReload()
+    {
+        EventBus.Publish<ReloadEvent>(new ReloadEvent(this.gameObject));
+    }
+
     private void Update()
     {
         if (!isDodging)
