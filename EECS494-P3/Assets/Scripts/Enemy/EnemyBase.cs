@@ -5,24 +5,22 @@ using CodeMonkey.Utils;
 using TMPro;
 
 public class EnemyBase : MonoBehaviour {
-    private const float speed = 30f;
+    private const float speed = 1f;
 
     private Rigidbody rb;
     private int currentPathIndex;
     private List<Vector3> pathVectorList;
     private Transform tf_;
+    public GameObject player;
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
         tf_ = transform;
+        SetTargetPosition(player.transform.position);
     }
 
     private void Update() {
         HandleMovement();
-
-        if (Input.GetMouseButtonDown(0)) {
-            SetTargetPosition(UtilsClass.GetMouseWorldPosition());
-        }
     }
 
     private void HandleMovement() {
