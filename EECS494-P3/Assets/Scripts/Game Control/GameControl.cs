@@ -17,7 +17,7 @@ partial class GameControl : MonoBehaviour
     /*CONTROL PARAMETERS*/
 
     const int maxDays = 1;
-    const float nightLength = 300f; //5 minutes
+    const float nightLength = 20f; //5 minutes
     const float updateFrequency = .05f; // .05 -> 20 times/second
 
     /*END CONTROL PARAMETERS*/

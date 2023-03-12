@@ -38,7 +38,7 @@ public class HealthUI : MonoBehaviour
 
         for (int i = 0; i < numPips; ++i)
         {
-            GameObject newPip = GameObject.Instantiate(healthPipPrefab, transform.position, Quaternion.identity);
+            GameObject newPip = GameObject.Instantiate(healthPipPrefab, transform.localPosition, Quaternion.identity);
             newPip.transform.localScale = Vector3.one;
             newPip.transform.SetParent(transform, false);
             healthPips.Add(newPip.GetComponentsInChildren<Image>()[1]);

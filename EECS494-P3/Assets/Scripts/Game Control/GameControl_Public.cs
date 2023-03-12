@@ -142,6 +142,8 @@ partial class GameControl : MonoBehaviour
     {
         if (!e.valid) return;
 
+        nightStartTime = Time.time;
+
         instance.isNight = true;
         instance.StartCoroutine(NightUpdate());
     }

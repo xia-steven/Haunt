@@ -16,10 +16,13 @@ using CodeMonkey.Utils;
 public class Testing : MonoBehaviour {
     [SerializeField] private PathfindingDebugStepVisual pathfindingDebugStepVisual;
     [SerializeField] private PathfindingVisual pathfindingVisual;
+    [SerializeField] int width = 20;
+    [SerializeField] int height = 10;
+
     private Pathfinding pathfinding;
 
     private void Start() {
-        pathfinding = new Pathfinding(20, 10);
+        pathfinding = new Pathfinding(width, height);
         pathfindingDebugStepVisual.Setup(pathfinding.GetGrid());
         pathfindingVisual.SetGrid(pathfinding.GetGrid());
         InvokeRepeating(nameof(findNewPath), 0f, 0.5f);

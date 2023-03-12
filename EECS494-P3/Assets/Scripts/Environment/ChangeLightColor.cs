@@ -20,7 +20,7 @@ public class ChangeLightColor : MonoBehaviour
     Subscription<NightEndEvent> nightEndsub;
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         sunlight = GetComponent<Light>();
 
@@ -45,7 +45,6 @@ public class ChangeLightColor : MonoBehaviour
 
     void _OnNightBegin(NightBeginEvent nbe)
     {
-        duration = GameControl.NightTimeRemaining;
         roundStopped = false;
         StartCoroutine(ChangeColor());
     }
@@ -59,6 +58,11 @@ public class ChangeLightColor : MonoBehaviour
 
     IEnumerator ChangeColor()
     {
+        //TODO: Make less horrible
+        yield return null;
+        duration = GameControl.NightTimeRemaining;
+
+
         float initial_time = Time.time;
         float progress = (Time.time - initial_time) / duration;
 

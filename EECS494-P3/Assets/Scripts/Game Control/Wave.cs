@@ -44,7 +44,7 @@ public class Wave
         for(int i  = 0; i < 3; ++i)
         {
             spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position;
-            newMember = Object.Instantiate(potentialMembers[1], spawnPos, Quaternion.Euler(-30, 0, 0)).GetComponent<IsWaveMember>();
+            newMember = Object.Instantiate(potentialMembers[1], spawnPos, Quaternion.Euler(60, 0, 0)).GetComponent<IsWaveMember>();
             newMember.Init(this, nextId);
             newMember.gameObject.SetActive(false);
             numActiveMembers++;
@@ -54,7 +54,7 @@ public class Wave
         for(int i = 0; i < difficulty; ++i)
         {
             spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position;
-            newMember = Object.Instantiate(potentialMembers[0], spawnPos, Quaternion.Euler(-30, 0, 0)).GetComponent<IsWaveMember>();
+            newMember = Object.Instantiate(potentialMembers[0], spawnPos, Quaternion.Euler(60, 0, 0)).GetComponent<IsWaveMember>();
             newMember.Init(this, nextId);
             newMember.gameObject.SetActive(false);
             numActiveMembers++;
