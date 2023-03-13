@@ -1,11 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAttacker : EnemyBase {
-    // Start is called before the first frame update
-    void Start() { }
+    private new void Start() {
+        base.Start();
+    }
 
-    // Update is called once per frame
-    void Update() { }
+    private new void OnTriggerEnter(Collider other) {
+        Debug.Log("Collided");
+        if (other.CompareTag("Player")) {
+            EventBus.Publish(new PlayerDamagedEvent());
+        }
+        else {
+            base.OnTriggerEnter(other);
+        }
+    }
 }

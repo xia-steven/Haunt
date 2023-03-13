@@ -1,22 +1,22 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using CodeMonkey.Utils;
-using TMPro;
 
 public class EnemyBase : MonoBehaviour {
-    private const float speed = 1f;
+    private const float speed = 2f;
+    public int health;
 
     private Rigidbody rb;
     private int currentPathIndex;
     private List<Vector3> pathVectorList;
     private Transform tf_;
-    public GameObject player;
 
-    private void Start() {
+    private Subscription<PlayerPositionEvent> positionSub;
+
+    protected void Start() {
         rb = GetComponent<Rigidbody>();
         tf_ = transform;
-        SetTargetPosition(player.transform.position);
+        positionSub = EventBus.Subscribe<PlayerPositionEvent>(SetTargetPosition);
     }
 
     private void Update() {
@@ -51,12 +51,24 @@ public class EnemyBase : MonoBehaviour {
         return transform.position;
     }
 
-    public void SetTargetPosition(Vector3 targetPosition) {
+    private void SetTargetPosition(PlayerPositionEvent event_) {
         currentPathIndex = 0;
-        pathVectorList = Pathfinding.Instance.FindPath(GetPosition(), targetPosition);
+        pathVectorList = Pathfinding.Instance.FindPath(GetPosition(), event_.position);
 
         if (pathVectorList != null && pathVectorList.Count > 1) {
             pathVectorList.RemoveAt(0);
         }
+    }
+
+    private void TakeDamage(int dmg) {
+        health -= dmg;
+        if (health <= 0) {
+            Destroy(gameObject);
+        }
+    }
+
+    protected void OnTriggerEnter(Collider other) {
+        TakeDamage(1);
+        Destroy(other.gameObject);
     }
 }

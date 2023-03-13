@@ -15,7 +15,7 @@ using UnityEngine;
 
 public class Pathfinding {
     private const int MOVE_STRAIGHT_COST = 10;
-    private const int MOVE_DIAGONAL_COST = 14;
+    private const int MOVE_DIAGONAL_COST = 10000;
 
     public static Pathfinding Instance { get; private set; }
 
@@ -25,7 +25,6 @@ public class Pathfinding {
 
     public Pathfinding(int width, int height) {
         Instance = this;
-        var origin = new Vector3(-width / 2, 0, -height / 2);
         grid = new Grid<PathNode>(width, height, 1f, Vector3.zero,
             (g, x, z) => new PathNode(g, x, z));
     }
