@@ -60,6 +60,8 @@ partial class GameControl : MonoBehaviour {
 
     private void _Start(GameStartEvent e) {
         instance.gameActive = true;
+        PedestalAttacker.pedestalPositions = new Dictionary<int, Vector3>
+            { { 1, new Vector3(10, 0, 0) }, { 2, new Vector3(-10, 0, 0) }, { 3, new Vector3(0, 0, -9) } };
     }
 
 

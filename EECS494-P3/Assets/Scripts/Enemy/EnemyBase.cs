@@ -10,19 +10,22 @@ public class EnemyBase : MonoBehaviour {
     protected int currentPathIndex;
     protected List<Vector3> pathVectorList;
     private Transform tf_;
+    private Vector3 origin;
 
     protected void Start() {
         rb = GetComponent<Rigidbody>();
         tf_ = transform;
+        // origin = new Vector3(-10.5f, -0.5f, -4.5f);
+        origin = new Vector3(-17.5f, 0, -10.5f);
     }
 
-    private void FixedUpdate() {
+    private void Update() {
         HandleMovement();
     }
 
     private void HandleMovement() {
         if (pathVectorList != null) {
-            var targetPosition = pathVectorList[currentPathIndex];
+            var targetPosition = pathVectorList[currentPathIndex] + origin;
             if (Vector3.Distance(transform.position, targetPosition) > 1f) {
                 var moveDir = (targetPosition - transform.position).normalized;
                 tf_.position += Time.deltaTime * speed * moveDir;

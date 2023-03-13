@@ -1,26 +1,48 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PedestalAttacker : EnemyBase {
-    private Dictionary<int, Vector3> pedestalPositions;
+    public static Dictionary<int, Vector3> pedestalPositions = new Dictionary<int, Vector3>
+        { { 1, new Vector3(10, 0, 0) }, { 2, new Vector3(-10, 0, 0) }, { 3, new Vector3(0, 0, -9) } };
+
     private Subscription<PedestalDestroyedEvent> switchPedestalSub;
+
+    private float prevTime;
 
     private new void Start() {
         base.Start();
-        speed = 4f;
-        pedestalPositions = new Dictionary<int, Vector3>
-            { { 1, new Vector3(10, 0, 0) }, { 2, new Vector3(1000, 0, 2) }, { 3, new Vector3(1000, 0, 3) } };
+        speed = 1.5f;
         switchPedestalSub = EventBus.Subscribe<PedestalDestroyedEvent>(SetTargetPosition);
         StartCoroutine(WaitAndFindPath());
     }
 
+    // private void OnTriggerStay(Collider other) {
+    //     if (Time.time - prevTime < 1) {
+    //         return;
+    //     }
+    //
+    //     if (other.gameObject.layer == LayerMask.NameToLayer("Pedestal")) {
+    //         var h = other.gameObject.GetComponent<HasPedestalHealth>();
+    //         if (h != null) {
+    //             h.AlterHealth(-5);
+    //         }
+    //     } else if (!other.CompareTag("Player")) {
+    //         base.OnTriggerEnter(other);
+    //     }
+    //
+    //     prevTime = Time.time;
+    // }
+
     private new void OnTriggerEnter(Collider other) {
+        // if (!other.CompareTag("Player") && other.gameObject.layer != LayerMask.NameToLayer("Pedestal")) {
+        //     base.OnTriggerEnter(other);
+        // }
         if (other.gameObject.layer == LayerMask.NameToLayer("Pedestal")) {
-            Debug.Log("Hit the pedestal");
             var h = other.gameObject.GetComponent<HasPedestalHealth>();
             if (h != null) {
-                h.AlterHealth(-3);
+                h.AlterHealth(-5);
             }
         }
         else if (!other.CompareTag("Player")) {
