@@ -27,13 +27,12 @@ public class IsPlayer : MonoBehaviour {
 
     IEnumerator NaturalHealthRegen()
     {
-        Debug.Log("got here");
+        // Let everything load up
+        yield return new WaitForSeconds(1.0f);
         while(health.GetHealth() > 0)
         {
-            Debug.Log("still here");
             EventBus.Publish(new PlayerDamagedEvent(-1));
             yield return new WaitForSeconds(5.0f);
         }
-        Debug.Log("Died");
     }
 }
