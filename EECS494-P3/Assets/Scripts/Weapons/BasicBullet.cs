@@ -22,6 +22,26 @@ public class BasicBullet : Bullet
             health.AlterHealth(damage);
         }
         
-        Destroy(this);
+        Destroy(this.gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        GameObject collided = other.gameObject;
+
+        // Only check triggers for pedestals
+        if (collided.layer != LayerMask.NameToLayer("Pedestal"))
+        {
+            return;
+        }
+
+        HasPedestalHealth health = collided.GetComponent<HasPedestalHealth>();
+
+        if (health != null)
+        {
+            health.AlterHealth(-damage);
+        }
+
+        Destroy(this.gameObject);
     }
 }

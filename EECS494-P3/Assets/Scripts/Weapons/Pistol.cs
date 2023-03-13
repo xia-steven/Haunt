@@ -34,14 +34,32 @@ public class Pistol : Weapon
         {
             // Fires basic bullet in direction pistol is facing
 
+
+            /*
             Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
-            direction.z = 0;
+            direction.y = 0;
             direction = direction.normalized;
+            */
 
-            Debug.Log(direction);
+            // Get the screen position of the cursor
+            Vector3 screenPos = Input.mousePosition;
 
-            FireProjectile(basicBullet, direction, transform, BasicBullet.bulletSpeed);
-            currentClipAmount--;
+            // Create a ray from the camera through the cursor position
+            Ray ray = Camera.main.ScreenPointToRay(screenPos);
+
+            // Find the point where the ray intersects the plane that contains the player
+            Plane groundPlane = new Plane(Vector3.up, transform.position);
+            if (groundPlane.Raycast(ray, out float distanceToGround))
+            {
+                // Calculate the direction vector from the player to the intersection point
+                Vector3 hitPoint = ray.GetPoint(distanceToGround);
+                Vector3 direction = (hitPoint - transform.position).normalized;
+
+                Debug.Log(direction);
+
+                FireProjectile(basicBullet, direction, transform, BasicBullet.bulletSpeed);
+                currentClipAmount--;
+            }
 
             Debug.Log("Pistol ammo: " + currentClipAmount);
         }
@@ -64,12 +82,25 @@ public class Pistol : Weapon
 
     private void Update()
     {
-        Vector3 cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // Get the screen position of the cursor
+        Vector3 screenPos = Input.mousePosition;
 
-        Vector3 direction = cursorPosition - transform.position;
+        // Create a ray from the camera through the cursor position
+        Ray ray = Camera.main.ScreenPointToRay(screenPos);
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // Find the point where the ray intersects the plane that contains the player
+        Plane groundPlane = new Plane(Vector3.up, transform.position);
+        if (groundPlane.Raycast(ray, out float distanceToGround))
+        {
+            // Calculate the direction vector from the player to the intersection point
+            Vector3 hitPoint = ray.GetPoint(distanceToGround);
+            Vector3 direction = hitPoint - transform.position;
 
-        transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+            // Calculate the rotation that points in the direction of the intersection point
+            Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+
+            // Set the rotation of the gun object
+            transform.rotation = rotation;
+        }
     }
 }
