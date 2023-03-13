@@ -14,7 +14,6 @@ public class HasHealth : MonoBehaviour {
     public virtual bool AlterHealth(int healthDelta) {
         if (health + healthDelta > maxHealth) return false;
         health += healthDelta;
-        Debug.Log(health);
         return true;
     }
 

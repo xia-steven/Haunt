@@ -5,7 +5,7 @@ public class PlayerAttacker : EnemyBase {
 
     private new void Start() {
         base.Start();
-        speed = 6f;
+        speed = 5f;
         positionSub = EventBus.Subscribe<PlayerPositionEvent>(SetTargetPosition);
     }
 

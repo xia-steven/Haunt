@@ -13,7 +13,7 @@
 using System;
 using UnityEngine;
 
-public class Grid<TGridObject> {
+public class Grid<T> {
     public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
 
     public class OnGridObjectChangedEventArgs : EventArgs {
@@ -25,16 +25,16 @@ public class Grid<TGridObject> {
     private int height;
     private float cellSize;
     private Vector3 originPosition;
-    private TGridObject[,] gridArray;
+    private T[,] gridArray;
 
     public Grid(int width, int height, float cellSize, Vector3 originPosition,
-        Func<Grid<TGridObject>, int, int, TGridObject> createGridObject) {
+        Func<Grid<T>, int, int, T> createGridObject) {
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
         this.originPosition = originPosition;
 
-        gridArray = new TGridObject[width, height];
+        gridArray = new T[width, height];
 
         for (var x = 0; x < gridArray.GetLength(0); x++) {
             for (var z = 0; z < gridArray.GetLength(1); z++) {
@@ -64,7 +64,7 @@ public class Grid<TGridObject> {
         z = Mathf.FloorToInt((worldPosition - originPosition).z / cellSize);
     }
 
-    public void SetGridObject(int x, int z, TGridObject value) {
+    public void SetGridObject(int x, int z, T value) {
         if (x >= 0 && z >= 0 && x < width && z < height) {
             gridArray[x, z] = value;
             if (OnGridObjectChanged != null)
@@ -76,12 +76,12 @@ public class Grid<TGridObject> {
         if (OnGridObjectChanged != null) OnGridObjectChanged(this, new OnGridObjectChangedEventArgs { x = x, z = z });
     }
 
-    public void SetGridObject(Vector3 worldPosition, TGridObject value) {
+    public void SetGridObject(Vector3 worldPosition, T value) {
         GetXZ(worldPosition, out var x, out var z);
         SetGridObject(x, z, value);
     }
 
-    public TGridObject GetGridObject(int x, int z) {
+    public T GetGridObject(int x, int z) {
         if (x >= 0 && z >= 0 && x < width && z < height) {
             return gridArray[x, z];
         }
@@ -89,7 +89,7 @@ public class Grid<TGridObject> {
         return default;
     }
 
-    public TGridObject GetGridObject(Vector3 worldPosition) {
+    public T GetGridObject(Vector3 worldPosition) {
         GetXZ(worldPosition, out var x, out var z);
         return GetGridObject(x, z);
     }

@@ -83,11 +83,14 @@ public class HealthUI : MonoBehaviour {
         Destroy(healthPips[healthPips.Count - 1].transform.parent.gameObject);
         // Remove from data structures
         healthPips.RemoveAt(healthPips.Count - 1);
-        heartValueTracker.RemoveAt(healthPips.Count - 1);
+        heartValueTracker.RemoveAt(heartValueTracker.Count - 1);
+        if (healthPips.Count == 0) {
+            EventBus.Publish(new GameLossEvent());
+        }
     }
 
     void _OnPedestalRepaired(PedestalRepairedEvent pre) {
-        GameObject newPip = GameObject.Instantiate(healthPipPrefab, transform.localPosition, Quaternion.identity);
+        GameObject newPip = Instantiate(healthPipPrefab, transform.localPosition, Quaternion.identity);
         newPip.transform.localScale = Vector3.one;
         newPip.transform.SetParent(transform, false);
         healthPips.Add(newPip.GetComponentsInChildren<Image>()[1]);
