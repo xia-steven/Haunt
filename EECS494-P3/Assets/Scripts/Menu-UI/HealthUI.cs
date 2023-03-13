@@ -17,6 +17,9 @@ public class HealthUI : MonoBehaviour
 
     List<Image> healthPips = new List<Image>();
 
+    Subscription<PedestalDestroyedEvent> pedDestSub;
+    Subscription<PedestalRepairedEvent> pedRepSub;
+
     enum HeartValue
     {
         empty,
@@ -33,6 +36,8 @@ public class HealthUI : MonoBehaviour
     {
         damage_event_subscription = EventBus.Subscribe<PlayerDamagedEvent>(_OnDamage);
         heal_event_subscription = EventBus.Subscribe<HealEvent>(_OnHeal);
+        pedDestSub = EventBus.Subscribe<PedestalDestroyedEvent>(_OnPedestalDied);
+        pedRepSub = EventBus.Subscribe<PedestalRepairedEvent>(_OnPedestalRepaired);
 
         int numPips = (IsPlayer.instance.GetMaxHealth() + 1) / 2;
 
@@ -82,6 +87,24 @@ public class HealthUI : MonoBehaviour
         UpdatePips(IsPlayer.instance.GetHealth());
     }
 
+    void _OnPedestalDied(PedestalDestroyedEvent pde)
+    {
+        // Destroy health icon
+        Destroy(healthPips[healthPips.Count - 1].transform.parent.gameObject);
+        // Remove from data structures
+        healthPips.RemoveAt(healthPips.Count - 1);
+        heartValueTracker.RemoveAt(healthPips.Count - 1);
+    }
+
+    void _OnPedestalRepaired(PedestalRepairedEvent pre)
+    {
+        GameObject newPip = GameObject.Instantiate(healthPipPrefab, transform.localPosition, Quaternion.identity);
+        newPip.transform.localScale = Vector3.one;
+        newPip.transform.SetParent(transform, false);
+        healthPips.Add(newPip.GetComponentsInChildren<Image>()[1]);
+        healthPips[healthPips.Count - 1].enabled = false;
+        heartValueTracker.Add(HeartValue.empty);
+    }
 
     void _OnHeal(HealEvent e)
     {
@@ -131,5 +154,7 @@ public class HealthUI : MonoBehaviour
     {
         EventBus.Unsubscribe(damage_event_subscription);
         EventBus.Unsubscribe(heal_event_subscription);
+        EventBus.Unsubscribe(pedDestSub);
+        EventBus.Unsubscribe(pedRepSub);
     }
 }

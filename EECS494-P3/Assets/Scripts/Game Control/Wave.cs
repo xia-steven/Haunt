@@ -43,7 +43,7 @@ public class Wave
         //Queue 
         for(int i  = 0; i < 3; ++i)
         {
-            spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position;
+            spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.5f, 0);
             newMember = Object.Instantiate(potentialMembers[1], spawnPos, Quaternion.Euler(60, 0, 0)).GetComponent<IsWaveMember>();
             newMember.Init(this, nextId);
             newMember.gameObject.SetActive(false);
