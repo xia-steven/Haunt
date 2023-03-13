@@ -14,6 +14,7 @@ public class IsPlayer : MonoBehaviour {
         else Destroy(gameObject);
 
         health = GetComponent<HasHealth>();
+        StartCoroutine(NaturalHealthRegen());
     }
 
     public int GetHealth() {
@@ -22,5 +23,17 @@ public class IsPlayer : MonoBehaviour {
 
     public int GetMaxHealth() {
         return health.GetMaxHealth();
+    }
+
+    IEnumerator NaturalHealthRegen()
+    {
+        Debug.Log("got here");
+        while(health.GetHealth() > 0)
+        {
+            Debug.Log("still here");
+            EventBus.Publish(new PlayerDamagedEvent(-1));
+            yield return new WaitForSeconds(5.0f);
+        }
+        Debug.Log("Died");
     }
 }

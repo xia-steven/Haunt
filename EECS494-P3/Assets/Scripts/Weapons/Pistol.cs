@@ -52,7 +52,8 @@ public class Pistol : Weapon {
                 Debug.Log(direction);
 
                 FireProjectile(basicBullet, direction, transform, BasicBullet.bulletSpeed);
-                currentClipAmount--;
+                // Give the player unlimited ammo for now
+                //currentClipAmount--;
             }
 
             Debug.Log("Pistol ammo: " + currentClipAmount);
@@ -92,4 +93,5 @@ public class Pistol : Weapon {
             transform.rotation = rotation;
         }
     }
+
 }

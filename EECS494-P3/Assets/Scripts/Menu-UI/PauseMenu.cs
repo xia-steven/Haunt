@@ -61,11 +61,23 @@ public class PauseMenu : MonoBehaviour {
         isPaused = false;
     }
 
+    // Used for the button callback
+    public void DeactivateMenu()
+    {
+        EventBus.Publish(new GamePlayEvent());
+    }
+
+
     public void RestartLevel() {
         isPaused = false;
         Time.timeScale = 1;
         AudioListener.pause = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
 
