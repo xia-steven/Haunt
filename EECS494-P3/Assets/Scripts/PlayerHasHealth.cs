@@ -26,7 +26,7 @@ public class PlayerHasHealth : HasHealth {
     void _OnPedestalDied(PedestalDestroyedEvent pde) {
         maxHealth -= 2;
         if (health > maxHealth) {
-            AlterHealth(-(maxHealth - health));
+            AlterHealth(maxHealth - health);
         }
     }
 
