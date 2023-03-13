@@ -2,33 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HasHealth : MonoBehaviour
-{
+public class HasHealth : MonoBehaviour {
     [SerializeField] protected int maxHealth = 3;
     protected int health;
 
-    private void Awake()
-    {
+    private void Awake() {
         health = maxHealth;
     }
 
     // Update is called once per frame
-    public virtual bool AlterHealth(int healthDelta)
-    {
+    public virtual bool AlterHealth(int healthDelta) {
         if (health + healthDelta > maxHealth) return false;
         health += healthDelta;
         Debug.Log(health);
         return true;
-
     }
 
-    public int GetHealth()
-    {
+    public int GetHealth() {
         return health;
     }
 
-    public int GetMaxHealth()
-    {
+    public int GetMaxHealth() {
         return maxHealth;
     }
 }

@@ -6,14 +6,14 @@ using UnityEngine;
 /// The pedestal destroyed event is sent when a pedestal dies. <br/>
 /// The pedestal's UUID must be specified in the constructor.
 /// </summary>
-class PedestalDestroyedEvent
-{
+class PedestalDestroyedEvent {
     public int pedestalUUID;
 
-    public PedestalDestroyedEvent(int UUID) { pedestalUUID = UUID; }
+    public PedestalDestroyedEvent(int UUID) {
+        pedestalUUID = UUID;
+    }
 
-    public override string ToString()
-    {
+    public override string ToString() {
         return "Pedestal Destroyed Event Sent: Pedestal " + pedestalUUID + " died.";
     }
 }
@@ -22,14 +22,14 @@ class PedestalDestroyedEvent
 /// The pedestal repaired event is sent when a pedestal is repaired. <br/>
 /// The pedestal's UUID must be specified in the constructor.
 /// </summary>
-class PedestalRepairedEvent
-{
+class PedestalRepairedEvent {
     public int pedestalUUID;
 
-    public PedestalRepairedEvent(int UUID) { pedestalUUID = UUID; }
+    public PedestalRepairedEvent(int UUID) {
+        pedestalUUID = UUID;
+    }
 
-    public override string ToString()
-    {
+    public override string ToString() {
         return "Pedestal Repaired Event Sent: Pedestal " + pedestalUUID + " repaired.";
     }
 }

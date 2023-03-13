@@ -3,45 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Most simple bullet
-public class BasicBullet : Bullet
-{
+public class BasicBullet : Bullet {
     public static float bulletSpeed = 10;
 
-    private void Awake()
-    {
+    private void Awake() {
         damage = -1;
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
+    private void OnCollisionEnter(Collision collision) {
         GameObject collided = collision.gameObject;
         HasHealth health = collided.GetComponent<HasHealth>();
 
-        if (health != null)
-        {
+        if (health != null) {
             health.AlterHealth(damage);
         }
-        
+
         Destroy(this.gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
+    private void OnTriggerEnter(Collider other) {
         GameObject collided = other.gameObject;
 
         // Only check triggers for pedestals
-        if (collided.layer != LayerMask.NameToLayer("Pedestal"))
-        {
+        if (collided.layer != LayerMask.NameToLayer("Pedestal")) {
             return;
         }
 
-        HasPedestalHealth health = collided.GetComponent<HasPedestalHealth>();
+        var health = collided.GetComponent<HasPedestalHealth>();
 
-        if (health != null)
-        {
+        if (health != null) {
             health.AlterHealth(-damage);
         }
 
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 }

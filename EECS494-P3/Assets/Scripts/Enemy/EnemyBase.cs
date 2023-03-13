@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBase : MonoBehaviour {
-    private const float speed = 2f;
+    protected float speed;
     public int health;
 
     private Rigidbody rb;
@@ -16,7 +16,7 @@ public class EnemyBase : MonoBehaviour {
         tf_ = transform;
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         HandleMovement();
     }
 
@@ -30,7 +30,7 @@ public class EnemyBase : MonoBehaviour {
             else {
                 currentPathIndex++;
                 if (currentPathIndex >= pathVectorList.Count) {
-                    StopMoving();
+                    pathVectorList = null;
                     rb.velocity = Vector3.zero;
                 }
             }
@@ -38,14 +38,6 @@ public class EnemyBase : MonoBehaviour {
         else {
             rb.velocity = Vector3.zero;
         }
-    }
-
-    private void StopMoving() {
-        pathVectorList = null;
-    }
-
-    public Vector3 GetPosition() {
-        return transform.position;
     }
 
     private void TakeDamage(int dmg) {

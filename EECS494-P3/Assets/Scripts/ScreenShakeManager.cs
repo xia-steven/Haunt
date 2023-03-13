@@ -2,34 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScreenShakeManager : MonoBehaviour
-{
-
+public class ScreenShakeManager : MonoBehaviour {
     Subscription<ScreenShakeEvent> shakeSub;
     Subscription<ScreenShakeToggleEvent> shakeToggleSub;
 
     bool shaking = false;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         shakeSub = EventBus.Subscribe<ScreenShakeEvent>(_OnScreenShake);
         shakeToggleSub = EventBus.Subscribe<ScreenShakeToggleEvent>(_OnToggleScreenShake);
     }
 
-    void _OnScreenShake(ScreenShakeEvent sse)
-    {
+    void _OnScreenShake(ScreenShakeEvent sse) {
         transform.localPosition = UnityEngine.Random.onUnitSphere * sse.amplitude;
     }
 
-    void _OnToggleScreenShake(ScreenShakeToggleEvent sste)
-    {
-        if(shaking)
-        {
+    void _OnToggleScreenShake(ScreenShakeToggleEvent sste) {
+        if (shaking) {
             shaking = false;
         }
-        else
-        {
+        else {
             shaking = true;
             StartCoroutine(shakeScreen(sste.amplitude, sste.shakeFrequency));
         }
@@ -40,8 +33,7 @@ public class ScreenShakeManager : MonoBehaviour
     Vector3 velocity = Vector3.zero;
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         Vector3 displacement = Vector3.zero - transform.localPosition;
         Vector3 acceleration = k * displacement;
         velocity += acceleration;
@@ -52,23 +44,18 @@ public class ScreenShakeManager : MonoBehaviour
         //Debug();
     }
 
-    void Debug()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
+    void Debug() {
+        if (Input.GetKeyDown(KeyCode.T)) {
             EventBus.Publish(new ScreenShakeEvent());
         }
 
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
+        if (Input.GetKeyDown(KeyCode.Y)) {
             EventBus.Publish(new ScreenShakeToggleEvent());
         }
     }
 
-    IEnumerator shakeScreen(float amplitude, float frequency)
-    {
-        while(shaking)
-        {
+    IEnumerator shakeScreen(float amplitude, float frequency) {
+        while (shaking) {
             transform.localPosition = UnityEngine.Random.onUnitSphere * amplitude;
 
             yield return new WaitForSeconds(frequency);
