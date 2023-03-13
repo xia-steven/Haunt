@@ -4,8 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(HasPedestalHealth))]
 [RequireComponent(typeof(ParticleSystem))]
-public class IsPedestal : MonoBehaviour
-{
+public class IsPedestal : MonoBehaviour {
     [SerializeField] int UUID = -1;
     [SerializeField] Color repairedColor;
     [SerializeField] Color destroyedColor;
@@ -17,8 +16,7 @@ public class IsPedestal : MonoBehaviour
     bool dead = false;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         particles = GetComponent<ParticleSystem>();
         pedestalHealth = GetComponent<HasPedestalHealth>();
         childrenders = GetComponentsInChildren<Renderer>();
@@ -39,51 +37,45 @@ public class IsPedestal : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-
+    void Update() {
         DebugKeys();
     }
 
-    public void PedestalDied()
-    {
+    public int getUUID() {
+        return UUID;
+    }
+
+    public void PedestalDied() {
         Debug.Log("Pedestal is dead :(");
         dead = true;
         particles.Play();
         EventBus.Publish(new PedestalDestroyedEvent(UUID));
     }
 
-    public void PedestalRepaired()
-    {
+    public void PedestalRepaired() {
         Debug.Log("Pedestal is repaired :)");
         dead = false;
         particles.Stop();
         EventBus.Publish(new PedestalRepairedEvent(UUID));
     }
 
-    public bool IsDead
-    {
+    public bool IsDead {
         get { return dead; }
         set { }
     }
 
-    public void updateColor(int curr, int max)
-    {
+    public void updateColor(int curr, int max) {
         // Ignore the parent material
-        for (int a = 1; a < childrenders.Length; ++a)
-        {
+        for (int a = 1; a < childrenders.Length; ++a) {
             childrenders[a].material.color = colors.Evaluate((float)curr / (float)max);
         }
     }
 
-    void DebugKeys()
-    {
-        if(Input.GetKeyDown(KeyCode.K) && UUID == 1)
-        {
+    void DebugKeys() {
+        if (Input.GetKeyDown(KeyCode.K) && UUID == 1) {
             pedestalHealth.AlterHealth(-1);
         }
-        else if (Input.GetKeyDown(KeyCode.J) && UUID == 1)
-        {
+        else if (Input.GetKeyDown(KeyCode.J) && UUID == 1) {
             pedestalHealth.AlterHealth(1);
         }
     }

@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChangeLightColor : MonoBehaviour
-{
+public class ChangeLightColor : MonoBehaviour {
     [SerializeField] Color nightColor;
     [SerializeField] Color dayColor;
 
@@ -11,6 +10,7 @@ public class ChangeLightColor : MonoBehaviour
 
 
     bool roundStopped = false;
+
     // Set when the night starts
     float duration = 1.0f;
     float resetDuration = 2.0f;
@@ -18,10 +18,9 @@ public class ChangeLightColor : MonoBehaviour
 
     Subscription<NightBeginEvent> nightStartsub;
     Subscription<NightEndEvent> nightEndsub;
-    
+
     // Start is called before the first frame update
-    void Awake()
-    {
+    void Awake() {
         sunlight = GetComponent<Light>();
 
         nightStartsub = EventBus.Subscribe<NightBeginEvent>(_OnNightBegin);
@@ -43,21 +42,18 @@ public class ChangeLightColor : MonoBehaviour
         colors.SetKeys(gck, gak);
     }
 
-    void _OnNightBegin(NightBeginEvent nbe)
-    {
+    void _OnNightBegin(NightBeginEvent nbe) {
         roundStopped = false;
         StartCoroutine(ChangeColor());
     }
 
-    void _OnNightEnd(NightEndEvent nee)
-    {
+    void _OnNightEnd(NightEndEvent nee) {
         roundStopped = true;
         StartCoroutine(ResetColor());
     }
 
 
-    IEnumerator ChangeColor()
-    {
+    IEnumerator ChangeColor() {
         //TODO: Make less horrible
         yield return null;
         duration = GameControl.NightTimeRemaining;
@@ -66,8 +62,7 @@ public class ChangeLightColor : MonoBehaviour
         float initial_time = Time.time;
         float progress = (Time.time - initial_time) / duration;
 
-        while (progress < 1.0f && !roundStopped)
-        {
+        while (progress < 1.0f && !roundStopped) {
             progress = (Time.time - initial_time) / duration;
 
             sunlight.color = colors.Evaluate(progress);
@@ -77,13 +72,11 @@ public class ChangeLightColor : MonoBehaviour
         }
     }
 
-    IEnumerator ResetColor()
-    {
+    IEnumerator ResetColor() {
         float initial_time = Time.time;
         float progress = (Time.time - initial_time) / resetDuration;
 
-        while (progress < 1.0f)
-        {
+        while (progress < 1.0f) {
             progress = (Time.time - initial_time) / resetDuration;
 
             sunlight.color = colors.Evaluate(1.0f - progress);

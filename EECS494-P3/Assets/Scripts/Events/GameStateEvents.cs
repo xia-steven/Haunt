@@ -5,10 +5,8 @@ using UnityEngine;
 /// <summary>
 /// The GameStart event is to be broadcast when the game is started.
 /// </summary>
-class GameStartEvent
-{
-    public override string ToString()
-    {
+class GameStartEvent {
+    public override string ToString() {
         return "Game Start Event Sent";
     }
 }
@@ -16,10 +14,8 @@ class GameStartEvent
 /// <summary>
 /// The GameLoss event is broadcast when the game is lost.
 /// </summary>
-class GameLossEvent
-{
-    public override string ToString()
-    {
+class GameLossEvent {
+    public override string ToString() {
         return "Game Loss Event Sent";
     }
 }
@@ -27,10 +23,8 @@ class GameLossEvent
 /// <summary>
 /// The GameWin event is broadcast when the game is won.
 /// </summary>
-class GameWinEvent
-{
-    public override string ToString()
-    {
+class GameWinEvent {
+    public override string ToString() {
         return "Game Win Event Sent";
     }
 }
@@ -38,10 +32,8 @@ class GameWinEvent
 /// <summary>
 /// The GamePause event is broadcast when the game is paused.
 /// </summary>
-class GamePauseEvent
-{
-    public override string ToString()
-    {
+class GamePauseEvent {
+    public override string ToString() {
         return "Game Pause Event Sent";
     }
 }
@@ -49,10 +41,8 @@ class GamePauseEvent
 /// <summary>
 /// The GamePlay event is broadcast when the game is unpaused.
 /// </summary>
-class GamePlayEvent
-{
-    public override string ToString()
-    {
+class GamePlayEvent {
+    public override string ToString() {
         return "Game Play Event Sent";
     }
 }
@@ -62,18 +52,15 @@ class GamePlayEvent
 /// the night is not already in progress.<bf/>
 /// NOTE: Check valid after receiving a NightBegin event or risk processing an invalid event.
 /// </summary>
-class NightBeginEvent
-{
+class NightBeginEvent {
     public bool valid = false;
 
-    public NightBeginEvent()
-    {
+    public NightBeginEvent() {
         if (!GameControl.IsNight) valid = true;
     }
 
-    public override string ToString()
-    {
-        return (valid ? "V" : "Inv") +"alid Night Begin Event Sent";
+    public override string ToString() {
+        return (valid ? "V" : "Inv") + "alid Night Begin Event Sent";
     }
 }
 
@@ -82,18 +69,15 @@ class NightBeginEvent
 /// the night is already in progress.<bf/>
 /// NOTE: Check valid after receiving a NightEnd event or risk processing an invalid event.
 /// </summary>
-class NightEndEvent
-{
+class NightEndEvent {
     public bool valid = false;
-    
-    public NightEndEvent()
-    {
+
+    public NightEndEvent() {
         if (GameControl.IsNight) valid = true;
     }
 
-    public override string ToString()
-    {
-        return (valid ? "V" : "Inv") +"alid Night End Event Sent";
+    public override string ToString() {
+        return (valid ? "V" : "Inv") + "alid Night End Event Sent";
     }
 }
 
@@ -101,10 +85,8 @@ class NightEndEvent
 /// The WaveBeganEvent is published after a new wave is released, and should only be published
 /// by the GameControl class. There is no currently supported way to force a wave to start.
 /// </summary>
-class WaveBeganEvent
-{
-    public override string ToString()
-    {
+class WaveBeganEvent {
+    public override string ToString() {
         return "Wave Began Event Sent";
     }
 }

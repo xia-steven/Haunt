@@ -2,7 +2,4 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IsWaveSpawner : MonoBehaviour
-{
-    
-}
+public class IsWaveSpawner : MonoBehaviour { }

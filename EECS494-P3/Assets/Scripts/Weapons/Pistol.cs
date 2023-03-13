@@ -2,16 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pistol : Weapon
-{
+public class Pistol : Weapon {
     private GameObject wielder;
     private GameObject basicBullet;
 
-    protected override void Awake()
-    {
+    protected override void Awake() {
         currentClipAmount = 8;
         fullClipAmount = 8;
-        
+
         // Equip pistol on default
         // TODO: change this if necessary
         equipped = true;
@@ -22,16 +20,13 @@ public class Pistol : Weapon
         basicBullet = Resources.Load<GameObject>("Prefabs/BasicBullet");
     }
 
-    protected override void _OnFire(FireEvent e)
-    {
+    protected override void _OnFire(FireEvent e) {
         // Check if fire event comes from pistol holder
-        if (e.shooter != wielder)
-        {
+        if (e.shooter != wielder) {
             return;
         }
 
-        if (equipped && currentClipAmount > 0)
-        {
+        if (equipped && currentClipAmount > 0) {
             // Fires basic bullet in direction pistol is facing
 
 
@@ -49,8 +44,7 @@ public class Pistol : Weapon
 
             // Find the point where the ray intersects the plane that contains the player
             Plane groundPlane = new Plane(Vector3.up, transform.position);
-            if (groundPlane.Raycast(ray, out float distanceToGround))
-            {
+            if (groundPlane.Raycast(ray, out float distanceToGround)) {
                 // Calculate the direction vector from the player to the intersection point
                 Vector3 hitPoint = ray.GetPoint(distanceToGround);
                 Vector3 direction = (hitPoint - transform.position).normalized;
@@ -65,23 +59,19 @@ public class Pistol : Weapon
         }
     }
 
-    protected override void _OnReload(ReloadEvent e)
-    {
+    protected override void _OnReload(ReloadEvent e) {
         // Check if reload event comes from pistol holder
-        if (e.reloader != wielder)
-        {
+        if (e.reloader != wielder) {
             return;
         }
 
-        if (equipped)
-        {
+        if (equipped) {
             ReloadInfinite();
             Debug.Log("Pistol ammo: " + currentClipAmount);
         }
     }
 
-    private void Update()
-    {
+    private void Update() {
         // Get the screen position of the cursor
         Vector3 screenPos = Input.mousePosition;
 
@@ -90,8 +80,7 @@ public class Pistol : Weapon
 
         // Find the point where the ray intersects the plane that contains the player
         Plane groundPlane = new Plane(Vector3.up, transform.position);
-        if (groundPlane.Raycast(ray, out float distanceToGround))
-        {
+        if (groundPlane.Raycast(ray, out float distanceToGround)) {
             // Calculate the direction vector from the player to the intersection point
             Vector3 hitPoint = ray.GetPoint(distanceToGround);
             Vector3 direction = hitPoint - transform.position;

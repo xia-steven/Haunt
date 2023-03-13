@@ -6,12 +6,9 @@ using UnityEngine;
  * This file contains code which controls much of the game state.
  * For all public attributes, see GameControl_Public.cs.
  */
-partial class GameControl : MonoBehaviour
-{
+partial class GameControl : MonoBehaviour {
     /*Turn this off if you don't want the night cycle to run*/
     const bool DEBUG_DO_DAYNIGHT = true;
-
-    
 
 
     /*CONTROL PARAMETERS*/
@@ -27,8 +24,8 @@ partial class GameControl : MonoBehaviour
     private float nightStartTime;
 
     private int day = 0; //set to 1 less than the first day
-    
-    private bool gameActive = false;    
+
+    private bool gameActive = false;
     private bool gamePaused = false;
     private bool isNight = false;
 
@@ -44,8 +41,7 @@ partial class GameControl : MonoBehaviour
     /*End editor objects held by singleton*/
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         if (instance == null) instance = this;
         else Destroy(gameObject);
 
@@ -63,34 +59,30 @@ partial class GameControl : MonoBehaviour
     }
 
     //NightUpdate runs during the night
-    private IEnumerator NightUpdate()
-    {
+    private IEnumerator NightUpdate() {
         Wave w;
         w = new Wave(waveSize++, 300, spawners);
         w.Spawn();
         nightStartTime = Time.time;
-        while (isNight && Time.time - nightStartTime < nightLength)
-        {
-            if(!gameActive || gamePaused)
-            {
+        while (isNight && Time.time - nightStartTime < nightLength) {
+            if (!gameActive || gamePaused) {
                 yield return new WaitForSeconds(updateFrequency);
                 continue;
             }
 
-            if (w.IsOver())
-            {
+            if (w.IsOver()) {
                 w = new Wave(waveSize++, 300, spawners);
                 w.Spawn();
             }
 
             yield return new WaitForSeconds(updateFrequency);
         }
+
         if (isNight) EndNight();
     }
 
     //DayUpdate runs while it is day
-    private IEnumerator DayUpdate()
-    {
+    private IEnumerator DayUpdate() {
         yield return null;
         WinGame();
         /*
@@ -107,6 +99,4 @@ partial class GameControl : MonoBehaviour
             yield return new WaitForSeconds(updateFrequency);
         }*/
     }
-
-    
 }

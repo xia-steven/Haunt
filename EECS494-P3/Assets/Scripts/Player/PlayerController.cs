@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
     public float moveSpeed = 5f;
     public float dodgeRollDuration = 0.01f;
     public float dodgeRollSpeed = 10f;
@@ -18,66 +17,48 @@ public class PlayerController : MonoBehaviour
     private bool dodgePressed = false;
     private float dodgeRollCooldownTimer = 0f;
 
-    private void Start()
-    {
+    private void Start() {
         rb = GetComponent<Rigidbody>();
     }
 
-    public void OnDodge()
-    {
-        if (dodgeRollCooldownTimer > 0)
-        {
+    public void OnDodge() {
+        if (dodgeRollCooldownTimer > 0) {
             return;
-
         }
 
         dodgePressed = true;
-
     }
-    
-    public void OnMove(InputValue movementValue)
-    {
+
+    public void OnMove(InputValue movementValue) {
         movementX = movementValue.Get<Vector2>().x;
         movementZ = movementValue.Get<Vector2>().y;
-
     }
 
-    public void OnFire()
-    {
+    public void OnFire() {
         EventBus.Publish<FireEvent>(new FireEvent(this.gameObject));
     }
 
-    public void OnReload()
-    {
+    public void OnReload() {
         EventBus.Publish<ReloadEvent>(new ReloadEvent(this.gameObject));
     }
 
-    private void Update()
-    {
-        if (!isDodging)
-        {
+    private void Update() {
+        if (!isDodging) {
             movement.x = movementX;
             movement.z = movementZ;
         }
 
-        if (dodgePressed && !isDodging)
-        {
-            if (movementX == 0 && movementZ == 0)
-            {
+        if (dodgePressed && !isDodging) {
+            if (movementX == 0 && movementZ == 0) {
                 dodgePressed = false;
             }
-            else
-            {
+            else {
                 StartCoroutine(Dodge());
             }
-            
         }
-
-        
     }
 
-    IEnumerator Dodge()
-    {
+    IEnumerator Dodge() {
         isDodging = true;
 
         float initial_time = Time.time;
@@ -86,8 +67,7 @@ public class PlayerController : MonoBehaviour
         rb.useGravity = false;
         rb.velocity = movement.normalized * dodgeRollSpeed;
 
-        while (progress < 1.0f)
-        {
+        while (progress < 1.0f) {
             progress = (Time.time - initial_time) / dodgeRollDuration;
 
             yield return null;
@@ -99,14 +79,9 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void FixedUpdate()
-    {
-        if (!isDodging)
-        {
+    private void FixedUpdate() {
+        if (!isDodging) {
             rb.MovePosition(rb.position + moveSpeed * Time.fixedDeltaTime * movement.normalized);
         }
     }
-
-
-
 }

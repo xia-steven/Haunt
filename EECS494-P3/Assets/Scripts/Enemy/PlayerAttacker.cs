@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAttacker : EnemyBase {
@@ -9,22 +5,22 @@ public class PlayerAttacker : EnemyBase {
 
     private new void Start() {
         base.Start();
+        speed = 6f;
         positionSub = EventBus.Subscribe<PlayerPositionEvent>(SetTargetPosition);
     }
 
     private new void OnTriggerEnter(Collider other) {
-        Debug.Log("Collided");
-        if (other.CompareTag("Player")) {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player")) {
             EventBus.Publish(new PlayerDamagedEvent());
         }
-        else {
+        else if (other.gameObject.layer == LayerMask.NameToLayer("PlayerUtility")) {
             base.OnTriggerEnter(other);
         }
     }
 
     private void SetTargetPosition(PlayerPositionEvent event_) {
         currentPathIndex = 0;
-        pathVectorList = Pathfinding.Instance.FindPath(GetPosition(), event_.position);
+        pathVectorList = Pathfinding.Instance.FindPath(transform.position, event_.position);
 
         if (pathVectorList != null && pathVectorList.Count > 1) {
             pathVectorList.RemoveAt(0);

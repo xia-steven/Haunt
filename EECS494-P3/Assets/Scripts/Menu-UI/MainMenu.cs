@@ -3,31 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
-{
+public class MainMenu : MonoBehaviour {
     private PlayerControls playerControls;
+
     // Start is called before the first frame update
-    void Awake()
-    {
+    void Awake() {
         playerControls = new PlayerControls();
     }
 
-    public void LoadLevelOne()
-    {
+    public void LoadLevelOne() {
         SceneManager.LoadScene("Level1");
     }
 
-    public void LoadLevelTwo()
-    {
+    public void LoadLevelTwo() {
         SceneManager.LoadScene("Level2");
     }
-    public void LoadLevelThree()
-    {
+
+    public void LoadLevelThree() {
         SceneManager.LoadScene("Level3");
     }
 
-    public void LoadLevelFour()
-    {
+    public void LoadLevelFour() {
         SceneManager.LoadScene("Level4");
     }
 }
