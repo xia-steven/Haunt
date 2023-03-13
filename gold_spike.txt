@@ -1,0 +1,3 @@
+The game differs from a normal bullet hell because the player must defend pedestals.  If the enemies destroy a pedestal, 
+the player loses 1 max health, and if the player repairs a broken pedestal, the player regains a lost max health (not actually
+gaining the health back).
