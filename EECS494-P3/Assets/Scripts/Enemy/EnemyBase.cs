@@ -7,16 +7,13 @@ public class EnemyBase : MonoBehaviour {
     public int health;
 
     private Rigidbody rb;
-    private int currentPathIndex;
-    private List<Vector3> pathVectorList;
+    protected int currentPathIndex;
+    protected List<Vector3> pathVectorList;
     private Transform tf_;
-
-    private Subscription<PlayerPositionEvent> positionSub;
 
     protected void Start() {
         rb = GetComponent<Rigidbody>();
         tf_ = transform;
-        positionSub = EventBus.Subscribe<PlayerPositionEvent>(SetTargetPosition);
     }
 
     private void Update() {
@@ -49,15 +46,6 @@ public class EnemyBase : MonoBehaviour {
 
     public Vector3 GetPosition() {
         return transform.position;
-    }
-
-    private void SetTargetPosition(PlayerPositionEvent event_) {
-        currentPathIndex = 0;
-        pathVectorList = Pathfinding.Instance.FindPath(GetPosition(), event_.position);
-
-        if (pathVectorList != null && pathVectorList.Count > 1) {
-            pathVectorList.RemoveAt(0);
-        }
     }
 
     private void TakeDamage(int dmg) {
