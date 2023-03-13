@@ -36,7 +36,10 @@ public class HasPedestalHealth : HasHealth
 
         if(currHealth <= 0)
         {
-            pedestal.PedestalDied();
+            if(!pedestal.IsDead)
+            {
+                pedestal.PedestalDied();
+            }
             currHealth = 0;
         }
 
