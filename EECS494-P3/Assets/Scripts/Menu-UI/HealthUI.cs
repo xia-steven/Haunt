@@ -99,13 +99,14 @@ public class HealthUI : MonoBehaviour {
     }
 
     void _OnHeal(HealEvent e) {
-        int newHealth = IsPlayer.instance.GetHealth();
+        var newHealth = IsPlayer.instance.GetHealth();
         UpdatePips(newHealth);
     }
 
     private void UpdatePips(int newHealth) {
-        int changeIdx = (newHealth - 1) / 2;
-        for (int i = 0; i < changeIdx; ++i) {
+        Debug.Log(newHealth);
+        var changeIdx = (newHealth - 1) / 2;
+        for (var i = 0; i < changeIdx; ++i) {
             if (heartValueTracker[i] != HeartValue.full) {
                 healthPips[i].enabled = true;
                 healthPips[i].sprite = fullHeartImage;
@@ -128,7 +129,7 @@ public class HealthUI : MonoBehaviour {
             heartValueTracker[changeIdx] = HeartValue.full;
         }
 
-        for (int i = changeIdx + 1; i < healthPips.Count; ++i) {
+        for (var i = changeIdx + 1; i < healthPips.Count; ++i) {
             healthPips[i].enabled = false;
             heartValueTracker[i] = HeartValue.empty;
         }

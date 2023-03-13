@@ -8,13 +8,15 @@ public class PedestalAttacker : EnemyBase {
         { { 1, new Vector3(10, 0, 0) }, { 2, new Vector3(-10, 0, 0) }, { 3, new Vector3(0, 0, -9) } };
 
     private Subscription<PedestalDestroyedEvent> switchPedestalSub;
+    private Subscription<PedestalRepairedEvent> addPedestalSub;
 
     private float prevTime;
 
     private new void Start() {
         base.Start();
         speed = 1.5f;
-        switchPedestalSub = EventBus.Subscribe<PedestalDestroyedEvent>(SetTargetPosition);
+        switchPedestalSub = EventBus.Subscribe<PedestalDestroyedEvent>(pedestalDied);
+        addPedestalSub = EventBus.Subscribe<PedestalRepairedEvent>(pedestalRepaired);
         StartCoroutine(WaitAndFindPath());
     }
 
@@ -78,8 +80,22 @@ public class PedestalAttacker : EnemyBase {
         }
     }
 
-    private void SetTargetPosition(PedestalDestroyedEvent event_) {
+    private void pedestalDied(PedestalDestroyedEvent event_) {
         pedestalPositions.Remove(event_.pedestalUUID);
+        SetTargetPosition(pedestalPositions[findClosestPedestal()]);
+    }
+    
+    private void pedestalRepaired(PedestalRepairedEvent event_) {
+        if (event_.pedestalUUID == 1) {
+            pedestalPositions.Add(1, new Vector3(10, 0, 0));
+        }
+        if (event_.pedestalUUID == 2) {
+            pedestalPositions.Add(2, new Vector3(-10, 0, 0));
+        }
+        if (event_.pedestalUUID == 3) {
+            pedestalPositions.Add(3, new Vector3(0, 0, -9));
+        }
+        
         SetTargetPosition(pedestalPositions[findClosestPedestal()]);
     }
 }
