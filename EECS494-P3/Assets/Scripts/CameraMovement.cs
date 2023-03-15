@@ -14,7 +14,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] float zRoomMin = 0f; // ADJUST IN SCENES
     [SerializeField] float zRoomMax = 0f; // ADJUST IN SCENES
 
-    private Vector3 camOffsetFromPlayer = new Vector3( 0f, 11.5f, -7.0f );
+    [SerializeField] Vector3 camOffsetFromPlayer = new Vector3( 0f, 11.5f, -7.0f );
 
     [Space(10)]
     [Header("New vertical rules for custom level")]
