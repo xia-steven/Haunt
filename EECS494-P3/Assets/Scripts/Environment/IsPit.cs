@@ -49,7 +49,7 @@ public class IsPit : MonoBehaviour {
         }
         // Else not sure where player is, default to left of the pit
         else {
-            Debug.LogWarning("Couldn't calculate where the player fell into the pit from");
+            Debug.LogWarning("Couldn't calculate what direction the player entered the pit area from.");
             horizontalOffset = Vector3.left;
         }
     }

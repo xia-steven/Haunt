@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// The pedestal destroyed event is sent when a pedestal dies. <br/>
+/// The pedestal destroyed event is sent when the player destroys a pedestal. <br/>
 /// The pedestal's UUID must be specified in the constructor.
 /// </summary>
 class PedestalDestroyedEvent {
@@ -19,7 +19,7 @@ class PedestalDestroyedEvent {
 }
 
 /// <summary>
-/// The pedestal repaired event is sent when a pedestal is repaired. <br/>
+/// The pedestal repaired event is sent when the enemies repair a pedestal. <br/>
 /// The pedestal's UUID must be specified in the constructor.
 /// </summary>
 class PedestalRepairedEvent {

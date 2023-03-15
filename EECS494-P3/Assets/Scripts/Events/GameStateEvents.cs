@@ -90,3 +90,38 @@ class WaveBeganEvent {
         return "Wave Began Event Sent";
     }
 }
+
+/// <summary>
+/// The ToastRequest event is sent whenever a script wants the player to know something.
+/// The sender can specify if the message must remain for a keycode to be sent, 
+/// what color the message should be, as well as the message to send.
+/// </summary>
+public class ToastRequestEvent
+{
+    public string message;
+    public Color color;
+    public bool waitForKey;
+    public KeyCode keyToWaitFor;
+    private Color defaultColor = new Color32(255, 255, 255, 255);
+
+    public ToastRequestEvent(string s, bool wfk = false, KeyCode key = KeyCode.None)
+    {
+        message = s;
+        color = defaultColor;
+        waitForKey = wfk;
+        keyToWaitFor = key;
+    }
+
+    public ToastRequestEvent(Color c, string s, bool wfk = false, KeyCode key = KeyCode.None)
+    {
+        message = s;
+        color = c;
+        waitForKey = wfk;
+        keyToWaitFor = key;
+    }
+
+    public override string ToString()
+    {
+        return "Toast message sent with contents: " + message;
+    }
+}
