@@ -114,3 +114,16 @@ class PlayerInteractEvent {
         return "Player Interact Event Sent";
     }
 }
+
+/// <summary>
+/// The CoinCollectedEvent is to be broadcast whenever the player collects a coin.
+/// </summary>
+class CoinCollectedEvent
+{
+    public int coinValue;
+    
+    public CoinCollectedEvent(int value = 1) {
+        coinValue = value;
+    }
+    
+}
