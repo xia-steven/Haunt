@@ -13,7 +13,7 @@ public class IsPedestal : MonoBehaviour {
 
     Gradient colors;
     Renderer[] childrenders;
-    bool dead = false;
+    bool playerDestroyed = true;
 
     // Start is called before the first frame update
     void Start() {
@@ -34,6 +34,9 @@ public class IsPedestal : MonoBehaviour {
         gak[1].alpha = 1.0F;
         gak[1].time = 1.0F;
         colors.SetKeys(gck, gak);
+        // Set initial color and state to destroyed
+        updateColor(0, 1);
+        particles.Play();
     }
 
     // Update is called once per frame
@@ -45,22 +48,25 @@ public class IsPedestal : MonoBehaviour {
         return UUID;
     }
 
-    public void PedestalDied() {
-        Debug.Log("Pedestal is dead :(");
-        dead = true;
+    public void PedestalDied()
+    {
+        Debug.Log("Pedestal destroyed by player :)");
+        playerDestroyed = true;
         particles.Play();
         EventBus.Publish(new PedestalDestroyedEvent(UUID));
     }
 
-    public void PedestalRepaired() {
-        Debug.Log("Pedestal is repaired :)");
-        dead = false;
+    public void PedestalRepaired()
+    {
+        Debug.Log("Pedestal restored by enemies :(");
+        playerDestroyed = false;
         particles.Stop();
         EventBus.Publish(new PedestalRepairedEvent(UUID));
+        EventBus.Publish(new ToastRequestEvent(new Color32(255, 0, 0, 255), "Pedestal repaired by enemies"));
     }
 
-    public bool IsDead {
-        get { return dead; }
+    public bool IsDestroyedByPlayer {
+        get { return playerDestroyed; }
         set { }
     }
 

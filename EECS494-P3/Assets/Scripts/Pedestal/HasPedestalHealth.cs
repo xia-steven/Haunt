@@ -5,40 +5,47 @@ using UnityEngine;
 [RequireComponent(typeof(IsPedestal))]
 public class HasPedestalHealth : HasHealth {
     [SerializeField] int PedestalMaxHealth = 5;
-    private int currHealth;
 
     IsPedestal pedestal;
 
     private void Start() {
         pedestal = GetComponent<IsPedestal>();
-        currHealth = PedestalMaxHealth;
+        health = 0;
     }
 
-    // Update is called once per frame
+    
     public override bool AlterHealth(int healthDelta) {
-        if (currHealth == 0 && healthDelta < 0) return false;
+        // NOTE: health delta is treated backwards of standard health components
+        // due to the player destroying pedestals and enemies healing
+        healthDelta = -healthDelta;
+        if (health == 0 && healthDelta < 0) return false;
 
-        if (currHealth + healthDelta >= PedestalMaxHealth) {
-            if (pedestal.IsDead) {
+        if (health + healthDelta >= PedestalMaxHealth) {
+            if (pedestal.IsDestroyedByPlayer) {
+                // Let other systems know the enemies repaired a pedestal
                 pedestal.PedestalRepaired();
-                currHealth = PedestalMaxHealth;
+                // Increase pedestal max health for the player to destroy
+                PedestalMaxHealth++;
+                health = PedestalMaxHealth;
             }
 
             return false;
         }
 
-        currHealth += healthDelta;
+        health += healthDelta;
 
-        if (currHealth <= 0) {
-            if (!pedestal.IsDead) {
+        if (health <= 0) {
+            if (!pedestal.IsDestroyedByPlayer) {
                 pedestal.PedestalDied();
             }
 
-            currHealth = 0;
+            health = 0;
         }
 
-        pedestal.updateColor(currHealth, PedestalMaxHealth);
+        pedestal.updateColor(health, PedestalMaxHealth);
 
         return true;
     }
+
+
 }
