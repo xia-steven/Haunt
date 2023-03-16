@@ -121,7 +121,7 @@ public class CameraMovement : MonoBehaviour
         }
         
 
-        Vector3 newPos = Vector3.Lerp(transform.position, (new Vector3(newXPos, this.transform.position.y, newZPos)), camMoveSpeed);
+        Vector3 newPos = Vector3.Lerp(transform.position, (new Vector3(newXPos, this.transform.position.y, newZPos)), camMoveSpeed * Time.deltaTime);
         this.transform.position = newPos;
     }
 
