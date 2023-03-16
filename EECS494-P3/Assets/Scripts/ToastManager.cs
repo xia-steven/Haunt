@@ -60,7 +60,6 @@ public class ToastManager : MonoBehaviour
         EventBus.Unsubscribe(subToastReq);
     }
 
-    // "public static" makes this function accessible from anywhere.
     // note that it does not actually launch a toast operation-- it just throws it on the queue for later execution.
     public void _OnToast(ToastRequestEvent request)
     {

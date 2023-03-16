@@ -45034,6 +45034,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 166189343475146340}
     m_Modifications:
+    - target: {fileID: -3317323155976078487, guid: 2884e4e7c6c4678459ddb1c0e0e30966, type: 3}
+      propertyPath: UUID
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9079298588964849155, guid: 2884e4e7c6c4678459ddb1c0e0e30966, type: 3}
       propertyPath: m_Name
       value: Pedestal
