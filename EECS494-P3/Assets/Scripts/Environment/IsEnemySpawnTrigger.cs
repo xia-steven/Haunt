@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class IsEnemySpawnTrigger : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] Transform spawnLocation;
+    [SerializeField] GameObject enemyToSpawn;
 
-    // Update is called once per frame
-    void Update()
+    bool spawned = false;
+
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if(!spawned)
+        {
+            GameObject enemy = Instantiate(enemyToSpawn, spawnLocation.position, Quaternion.Euler(60, 0, 0));
+            spawned = true;
+        }
     }
 }
