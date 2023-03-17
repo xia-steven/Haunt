@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour {
 
     public void OnMove(InputValue movementValue) {
         movementX = movementValue.Get<Vector2>().x;
-        movementZ = movementValue.Get<Vector2>().y;
+        movementZ = movementValue.Get<Vector2>().y; // translate to XZ plane
     }
 
     public void OnFire() {
@@ -48,7 +48,8 @@ public class PlayerController : MonoBehaviour {
             movement.z = movementZ;
         }
 
-        if (dodgePressed && !isDodging) {
+        if (dodgePressed) {
+            if (isDodging) 
             if (movementX == 0 && movementZ == 0) {
                 dodgePressed = false;
             }
