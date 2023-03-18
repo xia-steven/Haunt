@@ -91,20 +91,23 @@ public class IsPedestal : MonoBehaviour {
         if (curr == 0)
         {
             // Destroyed
+            floatingOrb.SetActive(false);
             repairedVisual.SetActive(false);
             destroyedVisual.SetActive(true);
         }
         else if (healthfraction == 0.5f || (float)curr / (float)(max + 1) == 0.5f)
         {
             // half Repaired
-            repairedVisual.SetActive(true);
             floatingOrb.SetActive(false);
+            repairedVisual.SetActive(true);
             destroyedVisual.SetActive(false);
         }
         else if (curr == max)
         {
             // fully repaired
             floatingOrb.SetActive(true);
+            repairedVisual.SetActive(true);
+            destroyedVisual.SetActive(false);
         }
 
 

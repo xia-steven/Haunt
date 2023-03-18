@@ -1,3 +1,14 @@
 Pathfinding tutorial:
 https://unitycodemonkey.com/video.php?v=alU04hvz6L4
 
+Indicator Arrow tutorial:
+https://www.youtube.com/watch?v=gAQpR1GN0Os
+
+Pedestal damage sound:
+https://opengameart.org/content/breaking-rock
+
+Pedestal break sound:
+https://opengameart.org/content/moving-boulder
+
+Pedestal heal and restore sound:
+https://opengameart.org/content/cure-magic

@@ -44,7 +44,7 @@ public class PedestalAttacker : EnemyBase {
         if (other.gameObject.layer == LayerMask.NameToLayer("Pedestal")) {
             var h = other.gameObject.GetComponent<HasPedestalHealth>();
             if (h != null) {
-                h.AlterHealth(-5);
+                h.AlterHealth(-5000);
             }
         }
         else if (!other.CompareTag("Player")) {
@@ -81,21 +81,23 @@ public class PedestalAttacker : EnemyBase {
     }
 
     private void pedestalDied(PedestalDestroyedEvent event_) {
-        pedestalPositions.Remove(event_.pedestalUUID);
+        if (event_.pedestalUUID == 1)
+        {
+            pedestalPositions[1] = new Vector3(10, 0, 0);
+        }
+        if (event_.pedestalUUID == 2)
+        {
+            pedestalPositions[2] = new Vector3(-10, 0, 0);
+        }
+        if (event_.pedestalUUID == 3)
+        {
+            pedestalPositions[3] = new Vector3(0, 0, -9);
+        }
         SetTargetPosition(pedestalPositions[findClosestPedestal()]);
     }
     
     private void pedestalRepaired(PedestalRepairedEvent event_) {
-        if (event_.pedestalUUID == 1) {
-            pedestalPositions.Add(1, new Vector3(10, 0, 0));
-        }
-        if (event_.pedestalUUID == 2) {
-            pedestalPositions.Add(2, new Vector3(-10, 0, 0));
-        }
-        if (event_.pedestalUUID == 3) {
-            pedestalPositions.Add(3, new Vector3(0, 0, -9));
-        }
-        
+        pedestalPositions.Remove(event_.pedestalUUID);
         SetTargetPosition(pedestalPositions[findClosestPedestal()]);
     }
 }
