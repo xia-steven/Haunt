@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Pistol : Weapon {
-    private GameObject wielder;
-    private GameObject basicBullet;
+    protected GameObject wielder;
+    protected GameObject basicBullet;
+
+    // Time between bullets
+    [SerializeField] protected float bulletDelay = 0.6f;
+    // Time between tap firing
+    [SerializeField] protected float tapDelay = 0.2f;
 
     protected override void Awake() {
+        base.Awake();
+
         currentClipAmount = 8;
         fullClipAmount = 8;
 
@@ -18,6 +25,12 @@ public class Pistol : Weapon {
 
         wielder = this.transform.parent.gameObject;
         basicBullet = Resources.Load<GameObject>("Prefabs/BasicBullet");
+        BulletSettings();
+    }
+
+    protected virtual void BulletSettings()
+    {
+        basicBullet.GetComponent<Bullet>().SetShooter(Shooter.Player);
     }
 
     protected override void _OnFire(FireEvent e) {
@@ -26,38 +39,7 @@ public class Pistol : Weapon {
             return;
         }
 
-        if (equipped && currentClipAmount > 0) {
-            // Fires basic bullet in direction pistol is facing
-
-
-            /*
-            Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
-            direction.y = 0;
-            direction = direction.normalized;
-            */
-
-            // Get the screen position of the cursor
-            Vector3 screenPos = Input.mousePosition;
-
-            // Create a ray from the camera through the cursor position
-            Ray ray = Camera.main.ScreenPointToRay(screenPos);
-
-            // Find the point where the ray intersects the plane that contains the player
-            Plane groundPlane = new Plane(Vector3.up, transform.position);
-            if (groundPlane.Raycast(ray, out float distanceToGround)) {
-                // Calculate the direction vector from the player to the intersection point
-                Vector3 hitPoint = ray.GetPoint(distanceToGround);
-                Vector3 direction = (hitPoint - transform.position).normalized;
-
-                Debug.Log(direction);
-
-                FireProjectile(basicBullet, direction, transform, BasicBullet.bulletSpeed);
-                // Give the player unlimited ammo for now
-                //currentClipAmount--;
-            }
-
-            Debug.Log("Pistol ammo: " + currentClipAmount);
-        }
+        base._OnFire(e);
     }
 
     protected override void _OnReload(ReloadEvent e) {
@@ -75,6 +57,7 @@ public class Pistol : Weapon {
     private void Update() {
         // Get the screen position of the cursor
         Vector3 screenPos = Input.mousePosition;
+        Vector3 direction = Vector3.zero;
 
         // Create a ray from the camera through the cursor position
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
@@ -84,13 +67,38 @@ public class Pistol : Weapon {
         if (groundPlane.Raycast(ray, out float distanceToGround)) {
             // Calculate the direction vector from the player to the intersection point
             Vector3 hitPoint = ray.GetPoint(distanceToGround);
-            Vector3 direction = hitPoint - transform.position;
+            direction = hitPoint - transform.position;
 
             // Calculate the rotation that points in the direction of the intersection point
             Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
 
             // Set the rotation of the gun object
             transform.rotation = rotation;
+        }
+
+        // Fire bullet if equipped, ammo in clip, trigger is down, last bullet was not fired recently, last tap was not recent
+
+        if (equipped && currentClipAmount > 0 && firing && (Time.time - lastBullet >= bulletDelay) && (Time.time - lastTap >= tapDelay))
+        {
+            // Fires basic bullet in direction pistol is facing
+
+            /*
+            Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
+            direction.y = 0;
+            direction = direction.normalized;
+            */
+
+            direction.y = 0;
+            direction = direction.normalized;
+
+            FireProjectile(basicBullet, direction, transform, BasicBullet.bulletSpeed);
+            // Give the player unlimited ammo for now
+            //currentClipAmount--;
+
+            lastBullet = Time.time;
+            lastTap = Time.time;
+
+            Debug.Log("Pistol ammo: " + currentClipAmount);
         }
     }
 

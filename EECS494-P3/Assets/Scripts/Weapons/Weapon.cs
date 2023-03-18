@@ -7,19 +7,25 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour {
     // Number of bullets in one clip - necessary for all guns
     protected int fullClipAmount = 8;
-
     // Currently loaded bullets
     protected int currentClipAmount;
+    // Time of last bullet - used to see when last bullet was fired
+    protected float lastBullet;
+    // Time of last tap fire - used to limit spamming
+    protected float lastTap;
 
     // Bool to keep track if current weapon is equipped - this is useful for knowing when to reload and fire specific weapons
     protected bool equipped = false;
+    // Determines whether weapon is currently firing or not - used for automatic weapons
+    protected bool firing = false;
 
     protected Subscription<FireEvent> fireEventSubscription;
     protected Subscription<ReloadEvent> reloadEventSubscription;
 
 
     protected virtual void Awake() {
-        currentClipAmount = fullClipAmount;
+        lastBullet = Time.time;
+        lastTap = Time.time;
     }
 
     protected void Subscribe() {
@@ -28,7 +34,12 @@ public abstract class Weapon : MonoBehaviour {
     }
 
     protected virtual void _OnFire(FireEvent e) {
-        Debug.Log("Base fire called");
+        firing = e.state;
+        if (!firing)
+        {
+            // Allows for click spamming but not hold spamming
+            lastBullet = 0;
+        }
     }
 
     protected virtual void _OnReload(ReloadEvent e) {
@@ -75,13 +86,22 @@ public abstract class Weapon : MonoBehaviour {
     public void UnEquip() {
         equipped = false;
     }
+
+    private void OnDestroy()
+    {
+        EventBus.Unsubscribe<FireEvent>(fireEventSubscription);
+        EventBus.Unsubscribe<ReloadEvent>(reloadEventSubscription);
+    }
 }
 
 public class FireEvent {
     public GameObject shooter;
+    // True for firing false to stop firing
+    public bool state;
 
-    public FireEvent(GameObject _shooter) {
+    public FireEvent(GameObject _shooter, bool _state) {
         shooter = _shooter;
+        state = _state;
     }
 }
 
@@ -91,4 +111,10 @@ public class ReloadEvent {
     public ReloadEvent(GameObject _reloader) {
         reloader = _reloader;
     }
+}
+
+public enum Shooter
+{
+    Player,
+    Enemy
 }

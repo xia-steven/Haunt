@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour {
     Subscription<EnablePlayerEvent> enableMoveSub;
 
 
+
     private void Start() {
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<TrailRenderer>();
@@ -37,7 +38,7 @@ public class PlayerController : MonoBehaviour {
         EventBus.Unsubscribe(enableMoveSub);
     }
 
-    public void OnDodge() {
+    public void OnDodge(InputAction.CallbackContext value) {
         if (dodgeRollCooldownTimer > 0) {
             return;
         }
@@ -45,18 +46,23 @@ public class PlayerController : MonoBehaviour {
         dodgePressed = true;
     }
 
-    public void OnMove(InputValue movementValue) {
-        movementX = movementValue.Get<Vector2>().x;
-        movementZ = movementValue.Get<Vector2>().y; // translate to XZ plane
+    public void OnMove(InputAction.CallbackContext value) {
+        movementX = value.ReadValue<Vector2>().x;
+        movementZ = value.ReadValue<Vector2>().y;
     }
 
-    public void OnFire() {
+    public void OnFire(InputAction.CallbackContext value) {
         if (!playerEnabled) return;
-        EventBus.Publish<FireEvent>(new FireEvent(this.gameObject));
+        if (value.started)
+        {
+            EventBus.Publish<FireEvent>(new FireEvent(this.gameObject, true));
+        } else if (value.canceled)
+        {
+            EventBus.Publish<FireEvent>(new FireEvent(this.gameObject, false));
+        }
     }
 
-    public void OnReload()
-    {
+    public void OnReload(InputAction.CallbackContext value) {
         if (!playerEnabled) return;
         EventBus.Publish<ReloadEvent>(new ReloadEvent(this.gameObject));
     }
