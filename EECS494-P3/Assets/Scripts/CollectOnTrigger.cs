@@ -9,6 +9,10 @@ public class CollectOnTrigger : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other)
     {
-        EventBus.Publish(new CoinCollectedEvent(value));
+        if (other.gameObject.CompareTag("Player"))
+        {
+            EventBus.Publish(new CoinCollectedEvent(value));
+        }
+            
     }
 }

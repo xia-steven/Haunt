@@ -12,3 +12,7 @@ https://opengameart.org/content/moving-boulder
 
 Pedestal heal and restore sound:
 https://opengameart.org/content/cure-magic
+
+Fonts:
+https://www.dafont.com/rainyhearts.font
+
