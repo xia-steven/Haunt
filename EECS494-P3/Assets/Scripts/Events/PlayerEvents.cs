@@ -127,3 +127,25 @@ class CoinCollectedEvent
     }
     
 }
+
+/// <summary>
+/// This event is sent whenever a script wants to disable player controls
+/// </summary>
+class DisablePlayerEvent
+{
+    public override string ToString()
+    {
+        return "Disable Player Event sent";
+    }
+}
+
+/// <summary>
+/// This event is sent whenever a script wants to enable player controls
+/// </summary>
+class EnablePlayerEvent
+{
+    public override string ToString()
+    {
+        return "Enable Player Event sent";
+    }
+}

@@ -15,14 +15,26 @@ public class PlayerController : MonoBehaviour {
     private Vector3 movement;
     private float movementX;
     private float movementZ;
+    private float dodgeRollCooldownTimer = 0f;
+    private bool playerEnabled = true;
     private bool isDodging = false;
     private bool dodgePressed = false;
     private float dodgeRollTimer = 1f;
-    private float dodgeRollCooldownTimer = 2f;
+    Subscription<DisablePlayerEvent> disableMoveSub;
+    Subscription<EnablePlayerEvent> enableMoveSub;
+
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<TrailRenderer>();
+        disableMoveSub = EventBus.Subscribe<DisablePlayerEvent>(_OnDisableMovement);
+        enableMoveSub = EventBus.Subscribe<EnablePlayerEvent>(_OnEnableMovement);
+    }
+
+    private void OnDestroy()
+    {
+        EventBus.Unsubscribe(disableMoveSub);
+        EventBus.Unsubscribe(enableMoveSub);
     }
 
     public void OnDodge() {
@@ -39,10 +51,13 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnFire() {
+        if (!playerEnabled) return;
         EventBus.Publish<FireEvent>(new FireEvent(this.gameObject));
     }
 
-    public void OnReload() {
+    public void OnReload()
+    {
+        if (!playerEnabled) return;
         EventBus.Publish<ReloadEvent>(new ReloadEvent(this.gameObject));
     }
 
@@ -66,7 +81,20 @@ public class PlayerController : MonoBehaviour {
         
         tr.emitting = false;
     }
+    
+    void _OnDisableMovement(DisablePlayerEvent dpme)
+    {
+        playerEnabled = false;
+    }
+
+    void _OnEnableMovement(EnablePlayerEvent epme)
+    {
+        playerEnabled = true;
+    }
+
     private void Update() {
+        if (!playerEnabled) return;
+
         if (!isDodging) {
             movement.x = movementX;
             movement.y = 0f;
@@ -82,10 +110,15 @@ public class PlayerController : MonoBehaviour {
                 StartDodge();
             }
         }
-
+        
+        // enter this condtl during a dodge
         if (dodgeRollTimer > 0f)
         {
             dodgeRollTimer -= Time.deltaTime;
+            if (!playerEnabled)
+            {
+                StopDodge();
+            }
         }
 
         if (isDodging && dodgeRollTimer <= 0f)
@@ -100,7 +133,10 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
+        if (!playerEnabled) return;
+
         if (!isDodging) {
             rb.MovePosition(rb.position + moveSpeed * Time.fixedDeltaTime * movement.normalized);
         }

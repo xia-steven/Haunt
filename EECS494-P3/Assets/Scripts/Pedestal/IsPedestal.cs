@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(HasPedestalHealth))]
 [RequireComponent(typeof(ParticleSystem))]
@@ -8,18 +9,30 @@ public class IsPedestal : MonoBehaviour {
     [SerializeField] int UUID = -1;
     [SerializeField] Color repairedColor;
     [SerializeField] Color destroyedColor;
+    [SerializeField] GameObject repairedVisual;
+    [SerializeField] GameObject destroyedVisual;
+    [SerializeField] GameObject floatingOrb;
+    [SerializeField] GameObject healthBar;
     ParticleSystem particles;
     HasPedestalHealth pedestalHealth;
 
     Gradient colors;
-    Renderer[] childrenders;
+    Renderer[] repairedRenders;
+    Renderer[] destroyedRenders;
+    Image healthBarImage;
     bool playerDestroyed = true;
 
     // Start is called before the first frame update
     void Start() {
         particles = GetComponent<ParticleSystem>();
         pedestalHealth = GetComponent<HasPedestalHealth>();
-        childrenders = GetComponentsInChildren<Renderer>();
+        repairedRenders = repairedVisual.GetComponentsInChildren<Renderer>();
+        destroyedRenders = destroyedVisual.GetComponentsInChildren<Renderer>();
+        healthBarImage = healthBar.GetComponent<Image>();
+
+        repairedVisual.SetActive(false);
+        floatingOrb.SetActive(false);
+        destroyedVisual.SetActive(true);
 
         // Initialize gradient
         colors = new Gradient();
@@ -35,7 +48,7 @@ public class IsPedestal : MonoBehaviour {
         gak[1].time = 1.0F;
         colors.SetKeys(gck, gak);
         // Set initial color and state to destroyed
-        updateColor(0, 1);
+        updateVisuals(0, 1);
         particles.Play();
     }
 
@@ -65,15 +78,51 @@ public class IsPedestal : MonoBehaviour {
         EventBus.Publish(new ToastRequestEvent(new Color32(255, 0, 0, 255), "Pedestal repaired by enemies"));
     }
 
-    public bool IsDestroyedByPlayer {
-        get { return playerDestroyed; }
-        set { }
+    public bool IsDestroyedByPlayer() {
+        return playerDestroyed; 
     }
 
-    public void updateColor(int curr, int max) {
-        // Ignore the parent material
-        for (int a = 1; a < childrenders.Length; ++a) {
-            childrenders[a].material.color = colors.Evaluate((float)curr / (float)max);
+    public void updateVisuals(int curr, int max) {
+        float healthfraction = (float)curr / max;
+
+        healthBarImage.fillAmount = healthfraction;
+
+        // Update pedestal visual objects
+        if (curr == 0)
+        {
+            // Destroyed
+            repairedVisual.SetActive(false);
+            destroyedVisual.SetActive(true);
+        }
+        else if (healthfraction == 0.5f || (float)curr / (float)(max + 1) == 0.5f)
+        {
+            // half Repaired
+            repairedVisual.SetActive(true);
+            floatingOrb.SetActive(false);
+            destroyedVisual.SetActive(false);
+        }
+        else if (curr == max)
+        {
+            // fully repaired
+            floatingOrb.SetActive(true);
+        }
+
+
+        // If repaired visual is active
+        if (repairedVisual.activeSelf)
+        {
+            for (int a = 0; a < repairedRenders.Length; ++a)
+            {
+                repairedRenders[a].material.color = colors.Evaluate(healthfraction);
+            }
+        }
+        // Else if destroyed is active
+        else if (destroyedVisual.activeSelf)
+        {
+            for (int a = 0; a < destroyedRenders.Length; ++a)
+            {
+                destroyedRenders[a].material.color = colors.Evaluate(healthfraction);
+            }
         }
     }
 
