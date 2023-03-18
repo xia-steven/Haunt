@@ -53,7 +53,7 @@ public abstract class Bullet : MonoBehaviour {
         HasPedestalHealth pedHealth = collided.GetComponent<HasPedestalHealth>();
         if (pedHealth != null)
         {
-            pedHealth.AlterHealth(damage);
+            pedHealth.AlterHealth(-damage);
         }
 
         Destroy(gameObject);

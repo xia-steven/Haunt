@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
     }
 
-    public void OnDodge() {
+    public void OnDodge(InputAction.CallbackContext value) {
         if (dodgeRollCooldownTimer > 0) {
             return;
         }
@@ -30,17 +30,22 @@ public class PlayerController : MonoBehaviour {
         dodgePressed = true;
     }
 
-    public void OnMove(InputValue movementValue) {
-        movementX = movementValue.Get<Vector2>().x;
-        movementZ = movementValue.Get<Vector2>().y;
+    public void OnMove(InputAction.CallbackContext value) {
+        movementX = value.ReadValue<Vector2>().x;
+        movementZ = value.ReadValue<Vector2>().y;
     }
 
-    public void OnFire(InputValue value) {
-        Debug.Log(value);
-        EventBus.Publish<FireEvent>(new FireEvent(this.gameObject));
+    public void OnFire(InputAction.CallbackContext value) {
+        if (value.started)
+        {
+            EventBus.Publish<FireEvent>(new FireEvent(this.gameObject, true));
+        } else if (value.canceled)
+        {
+            EventBus.Publish<FireEvent>(new FireEvent(this.gameObject, false));
+        }
     }
 
-    public void OnReload() {
+    public void OnReload(InputAction.CallbackContext value) {
         EventBus.Publish<ReloadEvent>(new ReloadEvent(this.gameObject));
     }
 
