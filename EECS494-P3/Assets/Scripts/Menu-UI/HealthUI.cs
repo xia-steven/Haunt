@@ -107,7 +107,7 @@ public class HealthUI : MonoBehaviour {
     }
 
     private void UpdatePips(int newHealth) {
-        Debug.Log(newHealth);
+        //Debug.Log(newHealth);
         var changeIdx = (newHealth - 1) / 2;
         for (var i = 0; i < changeIdx; ++i) {
             if (heartValueTracker[i] != HeartValue.full) {
