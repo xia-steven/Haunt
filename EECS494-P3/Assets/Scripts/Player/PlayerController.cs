@@ -13,12 +13,26 @@ public class PlayerController : MonoBehaviour {
     private Vector3 movement;
     private float movementX;
     private float movementZ;
+    private float dodgeRollCooldownTimer = 0f;
+    private bool playerEnabled = true;
     private bool isDodging = false;
     private bool dodgePressed = false;
-    private float dodgeRollCooldownTimer = 0f;
+
+
+    Subscription<DisablePlayerEvent> disableMoveSub;
+    Subscription<EnablePlayerEvent> enableMoveSub;
+
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
+        disableMoveSub = EventBus.Subscribe<DisablePlayerEvent>(_OnDisableMovement);
+        enableMoveSub = EventBus.Subscribe<EnablePlayerEvent>(_OnEnableMovement);
+    }
+
+    private void OnDestroy()
+    {
+        EventBus.Unsubscribe(disableMoveSub);
+        EventBus.Unsubscribe(enableMoveSub);
     }
 
     public void OnDodge() {
@@ -35,14 +49,29 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnFire() {
+        if (!playerEnabled) return;
         EventBus.Publish<FireEvent>(new FireEvent(this.gameObject));
     }
 
-    public void OnReload() {
+    public void OnReload()
+    {
+        if (!playerEnabled) return;
         EventBus.Publish<ReloadEvent>(new ReloadEvent(this.gameObject));
     }
 
+    void _OnDisableMovement(DisablePlayerEvent dpme)
+    {
+        playerEnabled = false;
+    }
+
+    void _OnEnableMovement(EnablePlayerEvent epme)
+    {
+        playerEnabled = true;
+    }
+
     private void Update() {
+        if (!playerEnabled) return;
+
         if (!isDodging) {
             movement.x = movementX;
             movement.z = movementZ;
@@ -67,7 +96,7 @@ public class PlayerController : MonoBehaviour {
         rb.useGravity = false;
         rb.velocity = movement.normalized * dodgeRollSpeed;
 
-        while (progress < 1.0f) {
+        while (progress < 1.0f && playerEnabled) {
             progress = (Time.time - initial_time) / dodgeRollDuration;
 
             yield return null;
@@ -79,7 +108,10 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
+        if (!playerEnabled) return;
+
         if (!isDodging) {
             rb.MovePosition(rb.position + moveSpeed * Time.fixedDeltaTime * movement.normalized);
         }

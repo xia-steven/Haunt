@@ -16,18 +16,9 @@ public class CameraMovement : MonoBehaviour
 
     [SerializeField] Vector3 camOffsetFromPlayer = new Vector3( 0f, 11.5f, -7.0f );
 
-    [Space(10)]
-    [Header("New vertical rules for custom level")]
-    [SerializeField] bool smartVerticalMovement = false;
-    [SerializeField] float allowedOffsetBeforeSwitching = 4;
-
     private Transform player;
 
     private Vector3 offset;
-
-    float lastZDirection = 1f;
-    float wiggleDirection; 
-    float lastPlayerZPosition;
 
     bool isMoving;
     public bool IsMoving {
@@ -40,9 +31,6 @@ public class CameraMovement : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player").transform;
-        // Get the starter room
-        wiggleDirection = 0;
-        if (!smartVerticalMovement) camMoveSpeed *= 4;
         // Room bounds are set per scene
     }
 
@@ -53,24 +41,9 @@ public class CameraMovement : MonoBehaviour
         // Remove y offset
         offset.y = 0;
 
-        float desiredCameraZOffset = 0;
-
-        if (smartVerticalMovement)
-        {
-            if (lastZDirection > 0)
-            {
-                desiredCameraZOffset = minZoffset;
-            }
-            else
-            {
-                desiredCameraZOffset = maxZoffset;
-            }
-        }
-
         // Only adjust cam if offset is too high
         if (offset.x < maxXoffset && offset.x > minXoffset && 
-            (!smartVerticalMovement && offset.z + camOffsetFromPlayer.z < maxZoffset && offset.z + camOffsetFromPlayer.z > minZoffset ||
-            smartVerticalMovement && Mathf.Abs(offset.z -  desiredCameraZOffset) <= .02f))
+            (offset.z + camOffsetFromPlayer.z < maxZoffset && offset.z + camOffsetFromPlayer.z > minZoffset))
         {
             IsMoving = false;
             return;
@@ -82,43 +55,9 @@ public class CameraMovement : MonoBehaviour
         offset.x = Mathf.Clamp(offset.x + camOffsetFromPlayer.x, minXoffset, maxXoffset);
         float newXPos = Mathf.Clamp(player.position.x - offset.x + camOffsetFromPlayer.x, xRoomMin, xRoomMax);
 
-        float newZPos = 0;
-        if (!smartVerticalMovement)
-        {
-            offset.z = Mathf.Clamp(offset.z + camOffsetFromPlayer.z, minZoffset, maxZoffset);
-            newZPos = Mathf.Clamp(player.position.z - offset.z + camOffsetFromPlayer.z, zRoomMin, zRoomMax);
-        }
-        else
-        {
-            //if holding player at bottom of screen
-            if (lastZDirection > 0)
-            {
-                //if player lower than preferred by too much, change to put player at top of screen
-                if (wiggleDirection <= -allowedOffsetBeforeSwitching)
-                {
-                    lastZDirection = -1; //switch to hold player at bottom of screen
-                    wiggleDirection = 0; 
-                    desiredCameraZOffset = maxZoffset;
-                }
-                newZPos = Mathf.Clamp(player.position.z - desiredCameraZOffset + camOffsetFromPlayer.z, zRoomMin, zRoomMax);
-            }
-            //else hold player at top of screen
-            else
-            {
-
-                //if player higher than last direction set by too much, change to put player at top of screen
-                if (wiggleDirection >= allowedOffsetBeforeSwitching)
-                {
-                    lastZDirection = 1; //switch to hold player at bottom of screen
-                    wiggleDirection = 0; 
-                    desiredCameraZOffset = minZoffset;
-                }
-                newZPos = Mathf.Clamp(player.position.z - desiredCameraZOffset + camOffsetFromPlayer.z, zRoomMin, zRoomMax);
-            }
-            wiggleDirection += player.position.z - lastPlayerZPosition;
-            wiggleDirection = Mathf.Clamp(wiggleDirection, -allowedOffsetBeforeSwitching, allowedOffsetBeforeSwitching);
-            lastPlayerZPosition = player.position.z;
-        }
+        offset.z = Mathf.Clamp(offset.z + camOffsetFromPlayer.z, minZoffset, maxZoffset);
+        float newZPos = Mathf.Clamp(player.position.z - offset.z + camOffsetFromPlayer.z, zRoomMin, zRoomMax);
+        
         
 
         Vector3 newPos = Vector3.Lerp(transform.position, (new Vector3(newXPos, this.transform.position.y, newZPos)), camMoveSpeed * Time.deltaTime);
