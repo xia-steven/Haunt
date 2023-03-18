@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Pistol : Weapon {
-    private GameObject wielder;
-    private GameObject basicBullet;
+    protected GameObject wielder;
+    protected GameObject basicBullet;
 
     protected override void Awake() {
         currentClipAmount = 8;
@@ -18,6 +18,12 @@ public class Pistol : Weapon {
 
         wielder = this.transform.parent.gameObject;
         basicBullet = Resources.Load<GameObject>("Prefabs/BasicBullet");
+        BulletSettings();
+    }
+
+    protected virtual void BulletSettings()
+    {
+        basicBullet.GetComponent<Bullet>().SetShooter(Shooter.Player);
     }
 
     protected override void _OnFire(FireEvent e) {

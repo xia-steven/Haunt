@@ -75,6 +75,12 @@ public abstract class Weapon : MonoBehaviour {
     public void UnEquip() {
         equipped = false;
     }
+
+    private void OnDestroy()
+    {
+        EventBus.Unsubscribe<FireEvent>(fireEventSubscription);
+        EventBus.Unsubscribe<ReloadEvent>(reloadEventSubscription);
+    }
 }
 
 public class FireEvent {
@@ -91,4 +97,10 @@ public class ReloadEvent {
     public ReloadEvent(GameObject _reloader) {
         reloader = _reloader;
     }
+}
+
+public enum Shooter
+{
+    Player,
+    Enemy
 }

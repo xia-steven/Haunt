@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour {
     private bool dodgePressed = false;
     private float dodgeRollCooldownTimer = 0f;
 
+
     private void Start() {
         rb = GetComponent<Rigidbody>();
     }
@@ -34,7 +35,8 @@ public class PlayerController : MonoBehaviour {
         movementZ = movementValue.Get<Vector2>().y;
     }
 
-    public void OnFire() {
+    public void OnFire(InputValue value) {
+        Debug.Log(value);
         EventBus.Publish<FireEvent>(new FireEvent(this.gameObject));
     }
 
