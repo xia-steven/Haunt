@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,20 +6,23 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour {
     public float moveSpeed = 5f;
-    public float dodgeRollDuration = 0.01f;
+    public float dodgeRollDuration = 0.1f;
     public float dodgeRollSpeed = 10f;
     public float dodgeRollCooldown = 1f;
 
     private Rigidbody rb;
+    private TrailRenderer tr;
     private Vector3 movement;
     private float movementX;
     private float movementZ;
     private bool isDodging = false;
     private bool dodgePressed = false;
-    private float dodgeRollCooldownTimer = 0f;
+    private float dodgeRollTimer = 1f;
+    private float dodgeRollCooldownTimer = 2f;
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
+        tr = GetComponent<TrailRenderer>();
     }
 
     public void OnDodge() {
@@ -42,47 +46,72 @@ public class PlayerController : MonoBehaviour {
         EventBus.Publish<ReloadEvent>(new ReloadEvent(this.gameObject));
     }
 
+    private void StartDodge()
+    {
+        isDodging = true;
+        rb.useGravity = false;
+        dodgeRollTimer = dodgeRollDuration;
+        dodgeRollCooldownTimer = dodgeRollCooldown;
+        rb.velocity = movement.normalized * dodgeRollSpeed;
+
+        tr.emitting = true;
+    }
+
+    private void StopDodge()
+    {
+        dodgeRollTimer = 0;
+        rb.useGravity = true;
+        isDodging = false;
+        rb.velocity = Vector3.zero;
+        
+        tr.emitting = false;
+    }
     private void Update() {
         if (!isDodging) {
             movement.x = movementX;
+            movement.y = 0f;
             movement.z = movementZ;
         }
 
-        if (dodgePressed) {
-            if (isDodging) 
-            if (movementX == 0 && movementZ == 0) {
-                dodgePressed = false;
-            }
-            else {
-                StartCoroutine(Dodge());
+        if (dodgePressed)
+        {
+            dodgePressed = false;
+
+            if (movementX != 0 || movementZ != 0)
+            {
+                StartDodge();
             }
         }
-    }
 
-    IEnumerator Dodge() {
-        isDodging = true;
-
-        float initial_time = Time.time;
-        float progress = 0;
-
-        rb.useGravity = false;
-        rb.velocity = movement.normalized * dodgeRollSpeed;
-
-        while (progress < 1.0f) {
-            progress = (Time.time - initial_time) / dodgeRollDuration;
-
-            yield return null;
+        if (dodgeRollTimer > 0f)
+        {
+            dodgeRollTimer -= Time.deltaTime;
         }
 
-        rb.velocity = Vector3.zero;
-        rb.useGravity = true;
-        isDodging = false;
-    }
+        if (isDodging && dodgeRollTimer <= 0f)
+        {
+            StopDodge();
+        }
+        
 
+        if (dodgeRollCooldownTimer > 0f)
+        {
+            dodgeRollCooldownTimer -= Time.deltaTime;
+        }
+    }
 
     private void FixedUpdate() {
         if (!isDodging) {
             rb.MovePosition(rb.position + moveSpeed * Time.fixedDeltaTime * movement.normalized);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // manually reset dodge (cancel it) if we hit a wall;
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))    
+        {
+            StopDodge();
         }
     }
 }
