@@ -65,22 +65,22 @@ public class PedestalAttacker : EnemyBase {
 
     private IEnumerator pedetalCoroutine(int uuid) {
         yield return new WaitForSeconds(pedestalTimeout);
-        if (uuid == 1) {
-            pedestalPositions[1] = new Vector3(10, 0, 0);
-        }
-    
-        if (uuid == 2) {
-            pedestalPositions[2] = new Vector3(-10, 0, 0);
-        }
-    
-        if (uuid == 3) {
-            pedestalPositions[3] = new Vector3(0, 0, -9);
-        }
-    
         SetTargetPosition(pedestalPositions[findClosestPedestal()]);
     }
 
     private void pedestalDied(PedestalDestroyedEvent event_) {
+        switch (event_.pedestalUUID) {
+            case 1:
+                pedestalPositions[1] = new Vector3(10, 0, 0);
+                break;
+            case 2:
+                pedestalPositions[2] = new Vector3(-10, 0, 0);
+                break;
+            case 3:
+                pedestalPositions[3] = new Vector3(0, 0, -9);
+                break;
+        }
+
         StartCoroutine(pedetalCoroutine(event_.pedestalUUID));
     }
 
