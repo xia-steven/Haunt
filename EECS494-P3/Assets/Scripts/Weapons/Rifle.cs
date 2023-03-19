@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pistol : Weapon {
+public class Rifle : Weapon
+{
     protected GameObject wielder;
     protected GameObject basicBullet;
 
     // Time between bullets
-    [SerializeField] protected float bulletDelay = 0.6f;
+    [SerializeField] protected float bulletDelay = 0.2f;
     // Time between tap firing
-    [SerializeField] protected float tapDelay = 0.2f;
+    [SerializeField] protected float tapDelay = 0.1f;
 
-    protected override void Awake() {
+    protected override void Awake()
+    {
         base.Awake();
 
-        currentClipAmount = 8;
-        fullClipAmount = 8;
+        currentClipAmount = 30;
+        fullClipAmount = 30;
 
         Subscribe();
 
@@ -29,26 +31,32 @@ public class Pistol : Weapon {
         basicBullet.GetComponent<Bullet>().SetShooter(Shooter.Player);
     }
 
-    protected override void _OnFire(FireEvent e) {
+    protected override void _OnFire(FireEvent e)
+    {
         // Check if fire event comes from pistol holder
-        if (e.shooter != wielder) {
+        if (e.shooter != wielder)
+        {
             return;
         }
 
         base._OnFire(e);
     }
 
-    protected override void _OnReload(ReloadEvent e) {
+    protected override void _OnReload(ReloadEvent e)
+    {
         // Check if reload event comes from pistol holder
-        if (e.reloader != wielder) {
+        if (e.reloader != wielder)
+        {
             return;
         }
 
+        // TODO: change to line up with inventory ammo
         ReloadInfinite();
-        Debug.Log("Pistol ammo: " + currentClipAmount);
+        Debug.Log("Rifle ammo: " + currentClipAmount);
     }
 
-    private void Update() {
+    private void Update()
+    {
         // Get the screen position of the cursor
         Vector3 screenPos = Input.mousePosition;
         Vector3 direction = Vector3.zero;
@@ -58,7 +66,8 @@ public class Pistol : Weapon {
 
         // Find the point where the ray intersects the plane that contains the player
         Plane groundPlane = new Plane(Vector3.up, transform.position);
-        if (groundPlane.Raycast(ray, out float distanceToGround)) {
+        if (groundPlane.Raycast(ray, out float distanceToGround))
+        {
             // Calculate the direction vector from the player to the intersection point
             Vector3 hitPoint = ray.GetPoint(distanceToGround);
             direction = hitPoint - transform.position;

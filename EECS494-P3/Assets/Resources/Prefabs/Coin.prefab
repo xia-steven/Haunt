@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4681487817232544097}
   - component: {fileID: 4681487817232544099}
   - component: {fileID: 4681487817232544098}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CoinSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 4681487817877854836}
   - component: {fileID: 4681487817877854839}
   - component: {fileID: 4681487817877854838}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
