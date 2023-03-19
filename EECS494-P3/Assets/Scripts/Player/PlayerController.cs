@@ -67,6 +67,21 @@ public class PlayerController : MonoBehaviour {
         EventBus.Publish<ReloadEvent>(new ReloadEvent(this.gameObject));
     }
 
+    public void OnSwapWeapon(InputAction.CallbackContext value)
+    {
+        if (value.started)
+        {
+            if (value.ReadValue<float>() > 0)
+            {
+                EventBus.Publish<SwapEvent>(new SwapEvent(1));
+            }
+            else if (value.ReadValue<float>() < 0)
+            {
+                EventBus.Publish<SwapEvent>(new SwapEvent(-1));
+            }
+        }
+    }
+
     private void StartDodge()
     {
         isDodging = true;
