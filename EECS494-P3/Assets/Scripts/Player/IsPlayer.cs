@@ -14,7 +14,8 @@ public class IsPlayer : MonoBehaviour {
         else Destroy(gameObject);
 
         health = GetComponent<HasHealth>();
-        StartCoroutine(NaturalHealthRegen());
+        // StartCoroutine(NaturalHealthRegen());
+        // starting to phase this out of the game
     }
 
     public int GetHealth() {
