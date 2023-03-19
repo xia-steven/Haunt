@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,7 +37,7 @@ public class PedestalAttacker : EnemyBase {
 
     private int findClosestPedestal() {
         var closestDist = float.MaxValue;
-        var closest = -1;
+        var closest = (int)Random.Range(1f, 3.1f);
         foreach (var ped in pedestalPositions) {
             var distance = Vector3.Distance(transform.position, ped.Value);
             if (distance < closestDist) {
@@ -83,19 +82,6 @@ public class PedestalAttacker : EnemyBase {
 
     private void pedestalDied(PedestalDestroyedEvent event_) {
         StartCoroutine(pedetalCoroutine(event_.pedestalUUID));
-        // if (event_.pedestalUUID == 1) {
-        //     pedestalPositions[1] = new Vector3(10, 0, 0);
-        // }
-        //
-        // if (event_.pedestalUUID == 2) {
-        //     pedestalPositions[2] = new Vector3(-10, 0, 0);
-        // }
-        //
-        // if (event_.pedestalUUID == 3) {
-        //     pedestalPositions[3] = new Vector3(0, 0, -9);
-        // }
-        //
-        // SetTargetPosition(pedestalPositions[findClosestPedestal()]);
     }
 
     private void pedestalRepaired(PedestalRepairedEvent event_) {
