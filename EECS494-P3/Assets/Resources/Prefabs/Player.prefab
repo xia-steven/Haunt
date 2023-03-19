@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 5067998880475344224}
   - component: {fileID: 5067998880475344228}
   - component: {fileID: 7257248000686981297}
+  - component: {fileID: 928225902538800023}
   - component: {fileID: 7848006774521122707}
   - component: {fileID: 94799519}
   - component: {fileID: 8323561763438187096}
@@ -278,22 +279,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 82a56828-4ee3-4524-986d-e56eb7f1b696
     m_ActionName: Player/SwapForward[/Mouse/forwardButton]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5067998880475344228}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnSwapBack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 9f16abf5-ae6b-4f95-9f98-a8e8df7bdbd8
-    m_ActionName: Player/SwapBack[/Mouse/backButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -344,6 +329,27 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.66, y: 0.66, z: 0.66}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &928225902538800023
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5067998880475344235}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 53e5dde619251614eb69aaec6d45a35c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!96 &7848006774521122707
 TrailRenderer:
   serializedVersion: 2
