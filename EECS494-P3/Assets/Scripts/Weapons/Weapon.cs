@@ -14,8 +14,6 @@ public abstract class Weapon : MonoBehaviour {
     // Time of last tap fire - used to limit spamming
     protected float lastTap;
 
-    // Bool to keep track if current weapon is equipped - this is useful for knowing when to reload and fire specific weapons
-    protected bool equipped = false;
     // Determines whether weapon is currently firing or not - used for automatic weapons
     protected bool firing = false;
 
@@ -24,13 +22,19 @@ public abstract class Weapon : MonoBehaviour {
 
 
     protected virtual void Awake() {
-        lastBullet = Time.time;
-        lastTap = Time.time;
+        lastBullet = 0;
+        lastTap = 0;
     }
 
     protected void Subscribe() {
         fireEventSubscription = EventBus.Subscribe<FireEvent>(_OnFire);
         reloadEventSubscription = EventBus.Subscribe<ReloadEvent>(_OnReload);
+    }
+
+    protected void UnSubscribe()
+    {
+        EventBus.Unsubscribe<FireEvent>(fireEventSubscription);
+        EventBus.Unsubscribe<ReloadEvent>(reloadEventSubscription);
     }
 
     protected virtual void _OnFire(FireEvent e) {
@@ -77,20 +81,6 @@ public abstract class Weapon : MonoBehaviour {
     // Used for base pistol and god mode
     public void ReloadInfinite() {
         currentClipAmount = fullClipAmount;
-    }
-
-    public void Equip() {
-        equipped = true;
-    }
-
-    public void UnEquip() {
-        equipped = false;
-    }
-
-    private void OnDestroy()
-    {
-        EventBus.Unsubscribe<FireEvent>(fireEventSubscription);
-        EventBus.Unsubscribe<ReloadEvent>(reloadEventSubscription);
     }
 }
 
