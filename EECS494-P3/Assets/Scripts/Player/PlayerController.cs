@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody rb;
     private TrailRenderer tr;
+    private Animator animator;
     private Vector3 movement;
     private float movementX;
     private float movementZ;
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour {
     private void Start() {
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<TrailRenderer>();
+        animator = GetComponent<Animator>();
         disableMoveSub = EventBus.Subscribe<DisablePlayerEvent>(_OnDisableMovement);
         enableMoveSub = EventBus.Subscribe<EnablePlayerEvent>(_OnEnableMovement);
     }
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviour {
     public void OnMove(InputAction.CallbackContext value) {
         movementX = value.ReadValue<Vector2>().x;
         movementZ = value.ReadValue<Vector2>().y;
+        animator.SetBool("walking", true);
     }
 
     public void OnFire(InputAction.CallbackContext value) {
@@ -91,6 +94,7 @@ public class PlayerController : MonoBehaviour {
         rb.velocity = movement.normalized * dodgeRollSpeed;
 
         tr.emitting = true;
+        animator.SetBool("walking", false);
     }
 
     private void StopDodge()
@@ -101,6 +105,7 @@ public class PlayerController : MonoBehaviour {
         rb.velocity = Vector3.zero;
         
         tr.emitting = false;
+        animator.SetBool("walking", true);
     }
     
     void _OnDisableMovement(DisablePlayerEvent dpme)
@@ -115,11 +120,15 @@ public class PlayerController : MonoBehaviour {
 
     private void Update() {
         if (!playerEnabled) return;
-
+        
         if (!isDodging) {
             movement.x = movementX;
             movement.y = 0f;
             movement.z = movementZ;
+            if (movement == Vector3.zero)
+            {
+                animator.SetBool("walking", false);
+            }
         }
 
         if (dodgePressed)
