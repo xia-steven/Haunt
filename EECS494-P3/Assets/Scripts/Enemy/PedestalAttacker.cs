@@ -11,6 +11,7 @@ public class PedestalAttacker : EnemyBase {
     private Subscription<PedestalRepairedEvent> addPedestalSub;
 
     private float prevTime;
+    public int pedestalTimeout;
 
     private new void Start() {
         base.Start();
@@ -19,23 +20,6 @@ public class PedestalAttacker : EnemyBase {
         addPedestalSub = EventBus.Subscribe<PedestalRepairedEvent>(pedestalRepaired);
         StartCoroutine(WaitAndFindPath());
     }
-
-    // private void OnTriggerStay(Collider other) {
-    //     if (Time.time - prevTime < 1) {
-    //         return;
-    //     }
-    //
-    //     if (other.gameObject.layer == LayerMask.NameToLayer("Pedestal")) {
-    //         var h = other.gameObject.GetComponent<HasPedestalHealth>();
-    //         if (h != null) {
-    //             h.AlterHealth(-5);
-    //         }
-    //     } else if (!other.CompareTag("Player")) {
-    //         base.OnTriggerEnter(other);
-    //     }
-    //
-    //     prevTime = Time.time;
-    // }
 
     private new void OnTriggerEnter(Collider other) {
         // if (!other.CompareTag("Player") && other.gameObject.layer != LayerMask.NameToLayer("Pedestal")) {
@@ -80,22 +64,40 @@ public class PedestalAttacker : EnemyBase {
         }
     }
 
-    private void pedestalDied(PedestalDestroyedEvent event_) {
-        if (event_.pedestalUUID == 1)
-        {
+    private IEnumerator pedetalCoroutine(int uuid) {
+        yield return new WaitForSeconds(pedestalTimeout);
+        if (uuid == 1) {
             pedestalPositions[1] = new Vector3(10, 0, 0);
         }
-        if (event_.pedestalUUID == 2)
-        {
+    
+        if (uuid == 2) {
             pedestalPositions[2] = new Vector3(-10, 0, 0);
         }
-        if (event_.pedestalUUID == 3)
-        {
+    
+        if (uuid == 3) {
             pedestalPositions[3] = new Vector3(0, 0, -9);
         }
+    
         SetTargetPosition(pedestalPositions[findClosestPedestal()]);
     }
-    
+
+    private void pedestalDied(PedestalDestroyedEvent event_) {
+        StartCoroutine(pedetalCoroutine(event_.pedestalUUID));
+        // if (event_.pedestalUUID == 1) {
+        //     pedestalPositions[1] = new Vector3(10, 0, 0);
+        // }
+        //
+        // if (event_.pedestalUUID == 2) {
+        //     pedestalPositions[2] = new Vector3(-10, 0, 0);
+        // }
+        //
+        // if (event_.pedestalUUID == 3) {
+        //     pedestalPositions[3] = new Vector3(0, 0, -9);
+        // }
+        //
+        // SetTargetPosition(pedestalPositions[findClosestPedestal()]);
+    }
+
     private void pedestalRepaired(PedestalRepairedEvent event_) {
         pedestalPositions.Remove(event_.pedestalUUID);
         SetTargetPosition(pedestalPositions[findClosestPedestal()]);

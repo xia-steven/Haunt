@@ -15,8 +15,7 @@ public class EnemyBase : MonoBehaviour {
     protected void Start() {
         rb = GetComponent<Rigidbody>();
         tf_ = transform;
-        // origin = new Vector3(-10.5f, -0.5f, -4.5f);
-        origin = new Vector3(-17.5f, 0, -10.5f);
+        origin = new Vector3(-17.5f, 0, -11f);
     }
 
     private void Update() {
