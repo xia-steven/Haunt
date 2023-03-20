@@ -76,7 +76,8 @@ public class HealthUI : MonoBehaviour {
         StartCoroutine(waitForHealthUpdate());
     }
 
-    IEnumerator waitForHealthUpdate() {
+    IEnumerator waitForHealthUpdate()
+    {
         yield return null;
 
         UpdatePips(IsPlayer.instance.GetHealth());
@@ -125,8 +126,10 @@ public class HealthUI : MonoBehaviour {
     }
 
     private void UpdatePips(int newHealth) {
-        //Debug.Log(newHealth);
+        Debug.Log("Health: " + newHealth);
+        
         var changeIdx = (newHealth - 1) / 2;
+        Debug.Log("UI Idx: " + changeIdx);
         for (var i = 0; i < changeIdx; ++i) {
             if (heartValueTracker[i] != HeartValue.full) {
                 healthPips[i].enabled = true;

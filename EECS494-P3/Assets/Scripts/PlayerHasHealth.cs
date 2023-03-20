@@ -22,6 +22,7 @@ public class PlayerHasHealth : HasHealth {
     void _OnPlayerDamaged(PlayerDamagedEvent pde) {
         if (!isInvincible)
         {
+            
             AlterHealth(-pde.damageTaken);
             StartCoroutine(TriggerInvincibility());
         }
@@ -33,14 +34,15 @@ public class PlayerHasHealth : HasHealth {
     }
 
     void _OnPedestalDied(PedestalDestroyedEvent pde) {
+        maxHealth += 2;
+        
+    }
+
+    void _OnPedestalRepaired(PedestalRepairedEvent pre) {
         maxHealth -= 2;
         if (health > maxHealth) {
             AlterHealth(maxHealth - health);
         }
-    }
-
-    void _OnPedestalRepaired(PedestalRepairedEvent pre) {
-        maxHealth += 2;
     }
 
     public void UpgradeHealth()

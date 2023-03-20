@@ -13,6 +13,9 @@ https://opengameart.org/content/moving-boulder
 Pedestal heal and restore sound:
 https://opengameart.org/content/cure-magic
 
+Coin collect sound:
+https://opengameart.org/content/10-8bit-coin-sounds
+
 Fonts:
 https://www.dafont.com/rainyhearts.font
 

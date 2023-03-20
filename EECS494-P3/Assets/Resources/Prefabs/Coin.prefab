@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 1
+  coin_collected_sound: {fileID: 8300000, guid: 8fafa9d39b1218946b1a9ce67e4934d3, type: 3}
 --- !u!114 &4681487817877854838
 MonoBehaviour:
   m_ObjectHideFlags: 0
