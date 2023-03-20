@@ -118,11 +118,11 @@ class PlayerInteractEvent {
 /// <summary>
 /// The CoinCollectedEvent is to be broadcast whenever the player collects a coin.
 /// </summary>
-class CoinCollectedEvent
+class CoinEvent
 {
     public int coinValue;
     
-    public CoinCollectedEvent(int value = 1) {
+    public CoinEvent(int value = 1) {
         coinValue = value;
     }
     

@@ -11,7 +11,7 @@ public class CollectOnTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            EventBus.Publish(new CoinCollectedEvent(value));
+            EventBus.Publish(new CoinEvent(value));
         }
             
     }

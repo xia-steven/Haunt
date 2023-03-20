@@ -43,6 +43,12 @@ public class PlayerHasHealth : HasHealth {
         maxHealth += 2;
     }
 
+    public void UpgradeHealth()
+    {
+        maxHealth += 2;
+        health = maxHealth;
+    }
+    
     private IEnumerator TriggerInvincibility()
     {
         isInvincible = true;

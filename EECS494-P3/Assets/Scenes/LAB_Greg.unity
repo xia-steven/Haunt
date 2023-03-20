@@ -311,7 +311,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &786608831
 RectTransform:
   m_ObjectHideFlags: 0
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Health Upgrade: Increase max health by 1, refilling lost hearts
+  m_text: 'Health Upgrade: Increase max health by +1 and refils hearts
 
     Cost:
     10 coins
@@ -529,6 +529,14 @@ PrefabInstance:
     - target: {fileID: 4426098916686368618, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426098917429715812, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_StretchFill
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426098917429715812, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_PixelSnapping
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4426098917429715812, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_RefResolutionX
