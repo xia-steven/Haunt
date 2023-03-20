@@ -15,7 +15,7 @@ partial class GameControl : MonoBehaviour {
     /*CONTROL PARAMETERS*/
 
     const int maxDays = 3;
-    const float nightLength = 30f;//180f; //3 minutes
+    const float nightLength = 120f; //2 minutes
     const float waveTimeout = 20f;
     const float updateFrequency = .05f; // .05 -> 20 times/second
     const float waveDailyScale = 2.5f; //multiplies initial size daily
@@ -78,13 +78,13 @@ partial class GameControl : MonoBehaviour {
         }
         else
         {
-            isNight = false;
             StartCoroutine(StartOnDelay(DayUpdate, .01f));
         }
     }
 
     private void OnDisable()
     {
+        isNight = false;
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
