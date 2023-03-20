@@ -21,7 +21,7 @@ public abstract class Upgrade : MonoBehaviour
     void Start()
     {
         origin = transform.position;
-        destination = new Vector3(origin.x, origin.x + bobDistance, origin.z);
+        destination = new Vector3(origin.x, origin.y + bobDistance, origin.z);
         playerInventory = GameObject.Find("Player").GetComponent<Inventory>();
 
     }
@@ -52,6 +52,7 @@ public abstract class Upgrade : MonoBehaviour
         itemDescription.SetActive(true);
         while (Vector3.Distance(transform.position, destination) > 0.1f)
         {
+            Debug.DrawLine(transform.position, destination);
             transform.position = Vector3.MoveTowards(transform.position, destination, Time.deltaTime*bobSpeed);
             yield return null;
         }
