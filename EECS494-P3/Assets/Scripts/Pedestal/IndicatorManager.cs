@@ -48,14 +48,14 @@ public class IndicatorManager : MonoBehaviour
 
     void _onPedestalDestroy(PedestalDestroyedEvent pde)
     {
-        Sprite arrowSprite = indicatorArrows[pde.pedestalUUID].GetComponent<Sprite>();
-        Debug.Log(arrowSprite);
+        Image arrowImage = indicatorArrows[pde.pedestalUUID - 1].GetComponentInChildren<Image>();
+        arrowImage.color = Color.green;
     }
 
     void _onPedestalRepair(PedestalRepairedEvent pre)
     {
-        Sprite arrowSprite = indicatorArrows[pre.pedestalUUID].GetComponent<Sprite>();
-        Debug.Log(arrowSprite);
+        Image arrowImage = indicatorArrows[pre.pedestalUUID - 1].GetComponentInChildren<Image>();
+        arrowImage.color = Color.red;
     }
 
 
