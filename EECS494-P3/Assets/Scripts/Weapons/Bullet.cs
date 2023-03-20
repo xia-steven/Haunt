@@ -17,6 +17,7 @@ public abstract class Bullet : MonoBehaviour {
 
     public void SetShooter(Shooter entity)
     {
+        Debug.Log("Shooter set to: " + entity);
         shooter = entity;
     }
 
@@ -50,8 +51,10 @@ public abstract class Bullet : MonoBehaviour {
         }
 
         PlayerHasHealth playerHealth = collided.GetComponent<PlayerHasHealth>();
+        Debug.Log("Shooter: " + shooter + " " + collided.name + " + " + playerHealth);
         if (playerHealth != null)
         {
+            Debug.Log("Player damaged");
             EventBus.Publish<PlayerDamagedEvent>(new PlayerDamagedEvent(-damage));
         }
 
