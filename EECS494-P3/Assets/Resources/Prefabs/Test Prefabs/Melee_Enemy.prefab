@@ -98,7 +98,6 @@ GameObject:
   - component: {fileID: 2149509506550893982}
   - component: {fileID: 5897757382681029384}
   - component: {fileID: -8962438368043714105}
-  - component: {fileID: -7141424894064109393}
   m_Layer: 8
   m_Name: Melee_Enemy
   m_TagString: Untagged
@@ -159,7 +158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24d7de669d999942b628b58e860671f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
 --- !u!54 &5897757382681029384
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -189,17 +187,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
---- !u!114 &-7141424894064109393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5176294668627473358}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae5b83e041c3e37409a577688ed07be0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletDelay: 0.6
-  tapDelay: 0.2

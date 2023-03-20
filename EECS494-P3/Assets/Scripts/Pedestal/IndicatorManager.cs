@@ -16,6 +16,9 @@ public class IndicatorManager : MonoBehaviour
     float xModifier = 1f;
     float yModifier = 1f;
 
+    Subscription<PedestalDestroyedEvent> destSub;
+    Subscription<PedestalRepairedEvent> repSub;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +35,29 @@ public class IndicatorManager : MonoBehaviour
         }
         xModifier = canvasSize.x / Screen.width;
         yModifier = canvasSize.y / Screen.height;
+
+        destSub = EventBus.Subscribe<PedestalDestroyedEvent>(_onPedestalDestroy);
+        repSub = EventBus.Subscribe<PedestalRepairedEvent>(_onPedestalRepair);
     }
+
+    private void OnDestroy()
+    {
+        EventBus.Unsubscribe(destSub);
+        EventBus.Unsubscribe(repSub);
+    }
+
+    void _onPedestalDestroy(PedestalDestroyedEvent pde)
+    {
+        Sprite arrowSprite = indicatorArrows[pde.pedestalUUID].GetComponent<Sprite>();
+        Debug.Log(arrowSprite);
+    }
+
+    void _onPedestalRepair(PedestalRepairedEvent pre)
+    {
+        Sprite arrowSprite = indicatorArrows[pre.pedestalUUID].GetComponent<Sprite>();
+        Debug.Log(arrowSprite);
+    }
+
 
     // Update is called once per frame
     void LateUpdate()
