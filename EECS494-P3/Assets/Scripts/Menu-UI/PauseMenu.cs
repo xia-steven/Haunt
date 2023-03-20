@@ -76,6 +76,15 @@ public class PauseMenu : MonoBehaviour {
         SceneManager.LoadScene("TutorialScene");
     }
 
+    public void RetryLevel()
+    {
+        isPaused = false;
+        Time.timeScale = 1;
+        AudioListener.pause = false;
+
+        SceneManager.LoadScene("GameScene");
+    }
+
     public void QuitGame()
     {
         Application.Quit();
