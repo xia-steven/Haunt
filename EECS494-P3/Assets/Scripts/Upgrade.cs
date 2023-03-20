@@ -70,7 +70,7 @@ public abstract class Upgrade : MonoBehaviour
         transform.position = origin;
     }
 
-    private void OnPurchase()
+    public void OnPurchase()
     {
         if (selected && playerInventory.GetCoins() >= cost)
         {
