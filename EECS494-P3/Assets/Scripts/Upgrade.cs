@@ -5,7 +5,7 @@ using System.Numerics;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
-public abstract class Upgrade : MonoBehaviour
+public class Upgrade : MonoBehaviour
 {
     [SerializeField] private float bobDistance = 1f;
     [SerializeField] private float bobSpeed = 3f;
@@ -58,6 +58,7 @@ public abstract class Upgrade : MonoBehaviour
         }
 
         transform.position = destination;
+        Debug.Log("BobUp:" + selected);
     }
     
     private IEnumerator BobDown()
@@ -69,10 +70,12 @@ public abstract class Upgrade : MonoBehaviour
             yield return null;
         }
         transform.position = origin;
+        Debug.Log("BobDown: " + selected);
     }
 
     public void OnPurchase()
     {
+        Debug.Log("Attempted purchase," + selected);
         if (selected && playerInventory.GetCoins() >= cost)
         {
             EventBus.Publish(new CoinEvent(-cost));
@@ -82,5 +85,8 @@ public abstract class Upgrade : MonoBehaviour
         }
     }
 
-    protected abstract void ApplyUpgrade();
+    protected virtual void ApplyUpgrade()
+    {
+        
+    }
 }
