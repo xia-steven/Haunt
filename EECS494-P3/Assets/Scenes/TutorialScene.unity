@@ -320,6 +320,11 @@ PrefabInstance:
       objectReference: {fileID: 1491930103}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3315b88d4aaf5bc4b991f15c3ef8799d, type: 3}
+--- !u!1 &813245450 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3489256068759039891, guid: 19b81e967451b094dbca954528fa236d, type: 3}
+  m_PrefabInstance: {fileID: 6350287192775057059}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1491930103 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 786837431484019313, guid: 19b81e967451b094dbca954528fa236d, type: 3}
@@ -332,6 +337,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 785603094, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: Pedestals.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 785603094, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: Pedestals.Array.data[0]
+      value: 
+      objectReference: {fileID: 813245450}
     - target: {fileID: 641650401560064576, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -410,7 +423,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6793672629260230726, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 100
+      value: 100.000015
       objectReference: {fileID: 0}
     - target: {fileID: 7387562270841912395, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_RootOrder
