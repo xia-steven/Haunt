@@ -26,12 +26,6 @@ public class Shotgun : Weapon
 
         wielder = this.transform.parent.gameObject;
         shotgunBullet = Resources.Load<GameObject>("Prefabs/Weapons/ShotgunBullet");
-        BulletSettings();
-    }
-
-    protected virtual void BulletSettings()
-    {
-        shotgunBullet.GetComponent<Bullet>().SetShooter(Shooter.Player);
     }
 
     protected override void _OnFire(FireEvent e)
@@ -114,11 +108,11 @@ public class Shotgun : Weapon
             bullet3.Normalize();
             bullet4.Normalize();
 
-            FireProjectile(shotgunBullet, straight, transform, ShotgunBullet.bulletSpeed);
-            FireProjectile(shotgunBullet, bullet1, transform, ShotgunBullet.bulletSpeed);
-            FireProjectile(shotgunBullet, bullet2, transform, ShotgunBullet.bulletSpeed);
-            FireProjectile(shotgunBullet, bullet3, transform, ShotgunBullet.bulletSpeed);
-            FireProjectile(shotgunBullet, bullet4, transform, ShotgunBullet.bulletSpeed);
+            FireProjectile(shotgunBullet, straight, transform, ShotgunBullet.bulletSpeed, Shooter.Player);
+            FireProjectile(shotgunBullet, bullet1, transform, ShotgunBullet.bulletSpeed, Shooter.Player);
+            FireProjectile(shotgunBullet, bullet2, transform, ShotgunBullet.bulletSpeed, Shooter.Player);
+            FireProjectile(shotgunBullet, bullet3, transform, ShotgunBullet.bulletSpeed, Shooter.Player);
+            FireProjectile(shotgunBullet, bullet4, transform, ShotgunBullet.bulletSpeed, Shooter.Player);
 
             // Give the player unlimited ammo for now
             //currentClipAmount--;
