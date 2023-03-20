@@ -10,15 +10,18 @@ public class Inventory : MonoBehaviour
     private GameObject pistol;
     private GameObject rifle;
     private GameObject shotgun;
+    private int coins = 0;
 
     private Subscription<SwapEvent> swapEventSubscription;
+    private Subscription<CoinEvent> coinEventSubscription;
 
     private void Awake()
     {
         swapEventSubscription = EventBus.Subscribe<SwapEvent>(_OnSwitchWeapon);
+        coinEventSubscription = EventBus.Subscribe<CoinEvent>(_OnCoinChange);
 
-        // Equip all weapons (will be removed) TODO
-        rifle = Resources.Load<GameObject>("Prefabs/Weapons/Rifle");
+                                // Equip all weapons (will be removed) TODO
+                                rifle = Resources.Load<GameObject>("Prefabs/Weapons/Rifle");
         shotgun = Resources.Load<GameObject>("Prefabs/Weapons/Shotgun");
         Equip(rifle);
         Equip(shotgun);
@@ -64,9 +67,20 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public int GetCoins()
+    {
+        return coins;
+    }
+
+    private void _OnCoinChange(CoinEvent e)
+    {
+        coins += e.coinValue;
+    }
+
     private void OnDestroy()
     {
         EventBus.Unsubscribe<SwapEvent>(swapEventSubscription);
+        EventBus.Unsubscribe<CoinEvent>(coinEventSubscription);
     }
 }
 

@@ -9,13 +9,13 @@ public class CoinUI : MonoBehaviour
     [SerializeField] private TMP_Text coinText;
 
     private int coinCount = 0;
-    Subscription<CoinCollectedEvent> coinSub;
+    Subscription<CoinEvent> coinSub;
     void Start()
     {
-        coinSub = EventBus.Subscribe<CoinCollectedEvent>(_OnCollected);
+        coinSub = EventBus.Subscribe<CoinEvent>(_OnCoinCountChange);
     }
 
-   void _OnCollected(CoinCollectedEvent e)
+   void _OnCoinCountChange(CoinEvent e)
     {
         coinCount += e.coinValue;
         coinText.text = coinCount.ToString();

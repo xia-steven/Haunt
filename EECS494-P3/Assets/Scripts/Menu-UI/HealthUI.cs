@@ -30,13 +30,17 @@ public class HealthUI : MonoBehaviour {
     Subscription<PlayerDamagedEvent> damage_event_subscription;
 
     Subscription<HealEvent> heal_event_subscription;
+    private Subscription<IncreaseMaxHealthEvent> inc_max_health_event_subscription;
 
     // Start is called before the first frame update
     void Start() {
         damage_event_subscription = EventBus.Subscribe<PlayerDamagedEvent>(_OnDamage);
         heal_event_subscription = EventBus.Subscribe<HealEvent>(_OnHeal);
+        inc_max_health_event_subscription = EventBus.Subscribe<IncreaseMaxHealthEvent>(_OnMaxHealthIncrease);
+
         pedDestSub = EventBus.Subscribe<PedestalDestroyedEvent>(_OnPedestalDied);
         pedRepSub = EventBus.Subscribe<PedestalRepairedEvent>(_OnPedestalRepaired);
+        
 
         int numPips = (IsPlayer.instance.GetMaxHealth() + 1) / 2;
 
@@ -106,6 +110,20 @@ public class HealthUI : MonoBehaviour {
         UpdatePips(newHealth);
     }
 
+    // combines the effects of a pedestal being destroyed with a heal event
+    void _OnMaxHealthIncrease(IncreaseMaxHealthEvent e)
+    {
+        GameObject newPip = Instantiate(healthPipPrefab, transform.localPosition, Quaternion.identity);
+        newPip.transform.localScale = Vector3.one;
+        newPip.transform.SetParent(transform, false);
+        healthPips.Add(newPip.GetComponentsInChildren<Image>()[1]);
+        healthPips[healthPips.Count - 1].enabled = false;
+        heartValueTracker.Add(HeartValue.empty);
+        
+        var newHealth = IsPlayer.instance.GetHealth();
+        UpdatePips(newHealth);
+    }
+
     private void UpdatePips(int newHealth) {
         //Debug.Log(newHealth);
         var changeIdx = (newHealth - 1) / 2;
@@ -141,6 +159,7 @@ public class HealthUI : MonoBehaviour {
     private void OnDestroy() {
         EventBus.Unsubscribe(damage_event_subscription);
         EventBus.Unsubscribe(heal_event_subscription);
+        EventBus.Unsubscribe(inc_max_health_event_subscription);
         EventBus.Unsubscribe(pedDestSub);
         EventBus.Unsubscribe(pedRepSub);
     }
