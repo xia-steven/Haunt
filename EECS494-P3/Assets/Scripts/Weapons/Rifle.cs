@@ -23,14 +23,7 @@ public class Rifle : Weapon
 
         wielder = this.transform.parent.gameObject;
         basicBullet = Resources.Load<GameObject>("Prefabs/Weapons/BasicBullet");
-        BulletSettings();
     }
-
-    protected virtual void BulletSettings()
-    {
-        basicBullet.GetComponent<Bullet>().SetShooter(Shooter.Player);
-    }
-
     protected override void _OnFire(FireEvent e)
     {
         // Check if fire event comes from pistol holder
@@ -94,7 +87,7 @@ public class Rifle : Weapon
             direction.y = 0;
             direction = direction.normalized;
 
-            FireProjectile(basicBullet, direction, transform, BasicBullet.bulletSpeed);
+            FireProjectile(basicBullet, direction, transform, BasicBullet.bulletSpeed, Shooter.Player);
             // Give the player unlimited ammo for now
             //currentClipAmount--;
 

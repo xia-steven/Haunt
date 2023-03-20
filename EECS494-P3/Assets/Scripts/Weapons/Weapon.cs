@@ -51,9 +51,10 @@ public abstract class Weapon : MonoBehaviour {
     }
 
     // Fires a projectile of type Bullet in specified direction
-    public void FireProjectile(GameObject bullet, Vector3 direction, Transform start, float bulletSpeed) {
+    public void FireProjectile(GameObject bullet, Vector3 direction, Transform start, float bulletSpeed, Shooter shooter) {
         GameObject projectile = Instantiate(bullet, start.position, Quaternion.identity);
 
+        projectile.GetComponent<Bullet>().SetShooter(shooter);
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.velocity = direction * bulletSpeed;
     }
