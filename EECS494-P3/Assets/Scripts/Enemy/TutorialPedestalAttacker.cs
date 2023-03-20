@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TutorialPedestalAttacker : EnemyBase {
     public static Dictionary<int, Vector3> pedestalPositions = new Dictionary<int, Vector3>
-        {{ 1, new Vector3(23, 0, -4) }};
+        {{ 1, new Vector3(8, 0, -4) }};
 
     private Subscription<PedestalDestroyedEvent> switchPedestalSub;
     private Subscription<PedestalRepairedEvent> addPedestalSub;
@@ -34,7 +34,7 @@ public class TutorialPedestalAttacker : EnemyBase {
 
     private int findClosestPedestal() {
         var closestDist = float.MaxValue;
-        var closest = (int)Random.Range(1f, 3.1f);
+        var closest = 1;
         foreach (var ped in pedestalPositions) {
             var distance = Vector3.Distance(transform.position, ped.Value);
             if (distance < closestDist) {
@@ -75,8 +75,8 @@ public class TutorialPedestalAttacker : EnemyBase {
         StartCoroutine(pedetalCoroutine(event_.pedestalUUID));
     }
 
-    private void pedestalRepaired(PedestalRepairedEvent event_) {
-        pedestalPositions.Remove(event_.pedestalUUID);
-        SetTargetPosition(pedestalPositions[findClosestPedestal()]);
+    private void pedestalRepaired(PedestalRepairedEvent event_)
+    {
+        StartCoroutine(pedetalCoroutine(event_.pedestalUUID));
     }
 }
