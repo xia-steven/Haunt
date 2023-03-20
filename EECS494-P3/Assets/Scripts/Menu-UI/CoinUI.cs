@@ -13,8 +13,15 @@ public class CoinUI : MonoBehaviour
     void Start()
     {
         coinSub = EventBus.Subscribe<CoinEvent>(_OnCoinCountChange);
+        StartCoroutine(LoadCoins());
     }
-
+    
+    private IEnumerator LoadCoins()
+    {
+        yield return null;
+        coinCount = GameObject.Find("Player").GetComponent<Inventory>().GetCoins();
+        coinText.text = coinCount.ToString();
+    }
    void _OnCoinCountChange(CoinEvent e)
     {
         coinCount += e.coinValue;

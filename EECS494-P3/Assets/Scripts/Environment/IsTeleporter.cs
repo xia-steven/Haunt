@@ -46,6 +46,7 @@ public class IsTeleporter : MonoBehaviour
     {
         if (isUsable)
         {
+            
             SceneManager.LoadScene(otherScene);
         }
     }
