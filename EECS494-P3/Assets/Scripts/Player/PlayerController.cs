@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour {
         movementX = value.ReadValue<Vector2>().x;
         movementZ = value.ReadValue<Vector2>().y;
 
-        /*Vector3 rayStart = col.bounds.center - Vector3.up * (col.bounds.extents.y - .1f);
+        Vector3 rayStart = col.bounds.center - Vector3.up * (col.bounds.extents.y - .1f);
 
         float horizontalExtent = col.bounds.extents.x + extraRayDist;
         float verticalExtent = col.bounds.extents.z + extraRayDist;
@@ -70,10 +70,12 @@ public class PlayerController : MonoBehaviour {
 
         Debug.DrawRay(rayStart, Vector3.right * horizontalExtent);
         // left/right checks
-        if (Physics.Raycast(rayStart, Vector3.left, out ray1, horizontalExtent, ignoreMask) || Physics.Raycast(rayStart, Vector3.right, out ray2, horizontalExtent, ignoreMask))
+        if ((Physics.Raycast(rayStart, Vector3.left, out ray1, horizontalExtent, ignoreMask) && movementX < -.1f) || 
+            (Physics.Raycast(rayStart, Vector3.right, out ray2, horizontalExtent, ignoreMask) && movementX > .1f))
             movementX = 0;
-        if (Physics.Raycast(rayStart, Vector3.forward, out ray3, verticalExtent, ignoreMask) || Physics.Raycast(rayStart, Vector3.back, out ray4, verticalExtent, ignoreMask))
-            movementZ = 0;*/
+        if ((Physics.Raycast(rayStart, Vector3.forward, out ray3, verticalExtent, ignoreMask) && movementZ > .1f) || 
+            (Physics.Raycast(rayStart, Vector3.back, out ray4, verticalExtent, ignoreMask) && movementZ < -.1f)) 
+            movementZ = 0;
 
         animator.SetBool("walking", true);
     }
