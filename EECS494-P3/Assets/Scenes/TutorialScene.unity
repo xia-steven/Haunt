@@ -421,6 +421,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 749175624, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 749175626, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_text
+      value: Retry Level
+      objectReference: {fileID: 0}
     - target: {fileID: 785603092, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_IsActive
       value: 0
