@@ -181,7 +181,7 @@ PrefabInstance:
     - target: {fileID: 6620980532919507033, guid: 3315b88d4aaf5bc4b991f15c3ef8799d, type: 3}
       propertyPath: enemyToSpawn
       value: 
-      objectReference: {fileID: 5176294668627473358, guid: 6032850b60aa1b34a91f87bd4ccc4611, type: 3}
+      objectReference: {fileID: 3931167590101363315, guid: d934c9c7cd9c239438b9bb2c66551e02, type: 3}
     - target: {fileID: 6620980532919507033, guid: 3315b88d4aaf5bc4b991f15c3ef8799d, type: 3}
       propertyPath: spawnLocation
       value: 
@@ -313,7 +313,7 @@ PrefabInstance:
     - target: {fileID: 6620980532919507033, guid: 3315b88d4aaf5bc4b991f15c3ef8799d, type: 3}
       propertyPath: enemyToSpawn
       value: 
-      objectReference: {fileID: 5176294668627473358, guid: 6032850b60aa1b34a91f87bd4ccc4611, type: 3}
+      objectReference: {fileID: 3931167590101363315, guid: d934c9c7cd9c239438b9bb2c66551e02, type: 3}
     - target: {fileID: 6620980532919507033, guid: 3315b88d4aaf5bc4b991f15c3ef8799d, type: 3}
       propertyPath: spawnLocation
       value: 
@@ -332,6 +332,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 785603092, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 641650401560064576, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_Enabled
       value: 0
