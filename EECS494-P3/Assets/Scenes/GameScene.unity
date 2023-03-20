@@ -662,6 +662,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 749175624, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 785603094, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: Pedestals.Array.data[0]
       value: 
@@ -701,6 +705,38 @@ PrefabInstance:
     - target: {fileID: 3729305788052865444, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_Name
       value: CameraContainer
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426098916549385493, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426098916549385493, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426098916549385493, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426098916549385493, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426098916686368618, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426098916686368618, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426098916686368618, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426098916686368618, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7387562270841912395, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_RootOrder
