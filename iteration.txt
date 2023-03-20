@@ -1,0 +1,10 @@
+The main piece of feedback we received was that we lacked a lot of player guidance and visuals.  To improve this, we added a new 
+tutorial level, explaining all of the basic mechanics of the game.  In addition, we added player movement, dodge visuals, pedestal
+indicator arrows, pedestal health bars, and better pedestal visuals.
+
+Some other feedback included the constant clicking to shoot (now can hold left mouse to fire), large amount of pedestal enemies 
+(rebalanced enemy waves to include a small minority of pedestal enemies), and player shooting pedestals to "repair them" (player now
+destroys pedestals and enemies fix pedestals).
+
+Also, we fixed numerous bugs found in playtesting, including enemies pathing through walls, dash continuing after the time expires, 
+and enemies freezing next to pedestals.

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour {
     protected float speed;
-    public int health;
+    private HasHealth health;
 
     private Rigidbody rb;
     protected int currentPathIndex;
@@ -14,6 +14,7 @@ public class EnemyBase : MonoBehaviour {
 
     protected void Start() {
         rb = GetComponent<Rigidbody>();
+        health = GetComponent<HasHealth>();
         tf_ = transform;
         origin = new Vector3(-17.5f, 0, -11f);
     }
@@ -43,8 +44,8 @@ public class EnemyBase : MonoBehaviour {
     }
 
     private void TakeDamage(int dmg) {
-        health -= dmg;
-        if (health <= 0) {
+        health.AlterHealth(-dmg);
+        if (health.GetHealth() <= 0) {
             Destroy(gameObject);
         }
     }

@@ -10,11 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6161182734130515283}
   - component: {fileID: 7981500631066920884}
+  - component: {fileID: 1817842840780450543}
   - component: {fileID: 3871911061760421202}
   - component: {fileID: -5445845853047608040}
   - component: {fileID: 2011468650931085444}
   m_Layer: 8
-  m_Name: Test_Enemy3
+  m_Name: Pedestal_Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5176294668627473358}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: 0}
-  m_LocalScale: {x: 1.1, y: 1, z: 1.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6262934886305270626}
@@ -48,6 +49,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36285adb985ddf4f8bb70c73b47b6de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1817842840780450543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5176294668627473358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c582122e42b5567409033085947e887b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 5
 --- !u!114 &3871911061760421202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +74,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7eb131bf9ad5841bf3ab4e21d71cb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
   pedestalTimeout: 6
 --- !u!54 &-5445845853047608040
 Rigidbody:
@@ -89,7 +102,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.5, y: 1, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8120392926761131740
 GameObject:

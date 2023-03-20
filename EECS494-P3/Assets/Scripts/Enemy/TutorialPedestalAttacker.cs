@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PedestalAttacker : EnemyBase {
+public class TutorialPedestalAttacker : EnemyBase {
     public static Dictionary<int, Vector3> pedestalPositions = new Dictionary<int, Vector3>
-        { { 1, new Vector3(10, 0, 0) }, { 2, new Vector3(-10, 0, 0) }, { 3, new Vector3(0, 0, -9) } };
+        {{ 1, new Vector3(8, 0, -4) }};
 
     private Subscription<PedestalDestroyedEvent> switchPedestalSub;
     private Subscription<PedestalRepairedEvent> addPedestalSub;
@@ -21,9 +21,6 @@ public class PedestalAttacker : EnemyBase {
     }
 
     private new void OnTriggerEnter(Collider other) {
-        // if (!other.CompareTag("Player") && other.gameObject.layer != LayerMask.NameToLayer("Pedestal")) {
-        //     base.OnTriggerEnter(other);
-        // }
         if (other.gameObject.layer == LayerMask.NameToLayer("Pedestal")) {
             var h = other.gameObject.GetComponent<HasPedestalHealth>();
             if (h != null) {
@@ -37,7 +34,7 @@ public class PedestalAttacker : EnemyBase {
 
     private int findClosestPedestal() {
         var closestDist = float.MaxValue;
-        var closest = (int)Random.Range(1f, 3.1f);
+        var closest = 1;
         foreach (var ped in pedestalPositions) {
             var distance = Vector3.Distance(transform.position, ped.Value);
             if (distance < closestDist) {
@@ -71,21 +68,15 @@ public class PedestalAttacker : EnemyBase {
     private void pedestalDied(PedestalDestroyedEvent event_) {
         switch (event_.pedestalUUID) {
             case 1:
-                pedestalPositions[1] = new Vector3(10, 0, 0);
-                break;
-            case 2:
-                pedestalPositions[2] = new Vector3(-10, 0, 0);
-                break;
-            case 3:
-                pedestalPositions[3] = new Vector3(0, 0, -9);
+                pedestalPositions[1] = new Vector3(23, 0, -4);
                 break;
         }
 
         StartCoroutine(pedetalCoroutine(event_.pedestalUUID));
     }
 
-    private void pedestalRepaired(PedestalRepairedEvent event_) {
-        pedestalPositions.Remove(event_.pedestalUUID);
-        SetTargetPosition(pedestalPositions[findClosestPedestal()]);
+    private void pedestalRepaired(PedestalRepairedEvent event_)
+    {
+        StartCoroutine(pedetalCoroutine(event_.pedestalUUID));
     }
 }

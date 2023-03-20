@@ -6,9 +6,9 @@ public class IsWaveMediator : MonoBehaviour {
     public static IsWaveMediator instance;
 
     // Start is called before the first frame update
-    void Awake() {
+    private void Awake() {
         if (instance == null) instance = this;
-        else Destroy(this.gameObject);
+        else Destroy(gameObject);
     }
 
     public void Spawn(Dictionary<int, IsWaveMember>.ValueCollection members, float timeBetweenSpawns) {
