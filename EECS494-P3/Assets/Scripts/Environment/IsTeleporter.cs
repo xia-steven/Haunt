@@ -24,14 +24,9 @@ public class IsTeleporter : MonoBehaviour
         interactSub = EventBus.Subscribe<TryInteractEvent>(_Interact);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("IS Active: " + isActive);
         if (isActive && other.CompareTag("Player"))
         {
             isUsable = true;
