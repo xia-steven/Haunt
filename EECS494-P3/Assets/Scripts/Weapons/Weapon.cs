@@ -55,11 +55,6 @@ public abstract class Weapon : MonoBehaviour {
         GameObject projectile = Instantiate(bullet, start.position, Quaternion.identity);
 
         projectile.GetComponent<Bullet>().SetShooter(shooter);
-        // If the bullet was fired by an enemy
-        if(shooter == Shooter.Enemy)
-        {
-            projectile.layer = LayerMask.NameToLayer("Enemy");
-        }
 
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.velocity = direction * bulletSpeed;

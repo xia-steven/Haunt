@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: -2126332816895569608}
   - component: {fileID: 2149509506550893982}
   - component: {fileID: 5897757382681029384}
-  - component: {fileID: -8962438368043714105}
+  - component: {fileID: -3857567374560746919}
   m_Layer: 8
   m_Name: Melee_Enemy
   m_TagString: Untagged
@@ -174,7 +174,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-8962438368043714105
+--- !u!114 &-3857567374560746919
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5176294668627473358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c582122e42b5567409033085947e887b, type: 3}
+  m_Script: {fileID: 11500000, guid: e6c5b5ad405a06c4abeda245e303e8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3

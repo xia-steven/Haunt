@@ -14,7 +14,7 @@ public class PlayerAttacker : EnemyBase {
             EventBus.Publish(new PlayerDamagedEvent());
         }
         else if (other.gameObject.layer == LayerMask.NameToLayer("PlayerUtility")) {
-            base.OnTriggerEnter(other);
+            //base.OnTriggerEnter(other);
         }
     }
 
