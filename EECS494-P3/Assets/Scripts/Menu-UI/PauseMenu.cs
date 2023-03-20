@@ -72,7 +72,8 @@ public class PauseMenu : MonoBehaviour {
         isPaused = false;
         Time.timeScale = 1;
         AudioListener.pause = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        SceneManager.LoadScene("TutorialScene");
     }
 
     public void QuitGame()

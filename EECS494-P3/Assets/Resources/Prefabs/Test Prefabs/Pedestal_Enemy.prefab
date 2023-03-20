@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5445845853047608040}
   - component: {fileID: 2011468650931085444}
   m_Layer: 8
-  m_Name: Test_Enemy3
+  m_Name: Pedestal_Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -149,3 +149,14 @@ class EnablePlayerEvent
         return "Enable Player Event sent";
     }
 }
+
+/// <summary>
+/// This event is sent whenever the player attempts to interact by using the interact key
+/// </summary>
+public class TryInteractEvent
+{
+    public override string ToString()
+    {
+        return "Interact Attempt Event sent";
+    }
+}

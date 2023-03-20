@@ -7,9 +7,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7141424894064109393, guid: 6032850b60aa1b34a91f87bd4ccc4611, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5176294668627473358, guid: 6032850b60aa1b34a91f87bd4ccc4611, type: 3}
       propertyPath: m_Name
-      value: Test_Enemy1
+      value: Tutorial_Player_Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 6161182734130515283, guid: 6032850b60aa1b34a91f87bd4ccc4611, type: 3}
       propertyPath: m_RootOrder
