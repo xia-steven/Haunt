@@ -10,7 +10,10 @@ public class PlayerController : MonoBehaviour {
     public float dodgeRollSpeed = 10f;
     public float dodgeRollCooldown = 1f;
 
+    const float extraRayDist = .05f;
+
     private Rigidbody rb;
+    private Collider col;
     private TrailRenderer tr;
     private Animator animator;
     private Vector3 movement;
@@ -28,6 +31,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
         tr = GetComponent<TrailRenderer>();
         animator = GetComponent<Animator>();
         disableMoveSub = EventBus.Subscribe<DisablePlayerEvent>(_OnDisableMovement);
@@ -51,6 +55,26 @@ public class PlayerController : MonoBehaviour {
     public void OnMove(InputAction.CallbackContext value) {
         movementX = value.ReadValue<Vector2>().x;
         movementZ = value.ReadValue<Vector2>().y;
+
+        Vector3 rayStart = col.bounds.center - Vector3.up * (col.bounds.extents.y - .1f);
+
+        float horizontalExtent = col.bounds.extents.x + extraRayDist;
+        float verticalExtent = col.bounds.extents.z + extraRayDist;
+
+        int ignoreMask = ~LayerMask.GetMask("Special");
+
+        RaycastHit ray1;
+        RaycastHit ray2;
+        RaycastHit ray3;
+        RaycastHit ray4;
+
+        Debug.DrawRay(rayStart, Vector3.right * horizontalExtent);
+        // left/right checks
+        if (Physics.Raycast(rayStart, Vector3.left, out ray1, horizontalExtent, ignoreMask) || Physics.Raycast(rayStart, Vector3.right, out ray2, horizontalExtent, ignoreMask))
+            movementX = 0;
+        if (Physics.Raycast(rayStart, Vector3.forward, out ray3, verticalExtent, ignoreMask) || Physics.Raycast(rayStart, Vector3.back, out ray4, verticalExtent, ignoreMask))
+            movementZ = 0;
+
         animator.SetBool("walking", true);
     }
 
@@ -83,6 +107,11 @@ public class PlayerController : MonoBehaviour {
                 EventBus.Publish<SwapEvent>(new SwapEvent(-1));
             }
         }
+    }
+
+    public void OnInteract(InputAction.CallbackContext value)
+    {
+        EventBus.Publish(new TryInteractEvent());
     }
 
     private void StartDodge()

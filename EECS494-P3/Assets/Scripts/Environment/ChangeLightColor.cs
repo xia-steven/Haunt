@@ -49,7 +49,7 @@ public class ChangeLightColor : MonoBehaviour {
 
     void _OnNightEnd(NightEndEvent nee) {
         roundStopped = true;
-        StartCoroutine(ResetColor());
+        //StartCoroutine(ResetColor());
     }
 
 

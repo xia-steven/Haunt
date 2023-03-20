@@ -65,8 +65,8 @@ class NightBeginEvent {
 }
 
 /// <summary>
-/// The NightEnd event can be broadcast to end the night. Valid will be set true iff <br/>
-/// the night is already in progress.<bf/>
+/// The NightEnd event can be broadcast to end the night and cause the NightEnding state. <br/>
+/// Valid will be set true iff the night is already in progress.<br/>
 /// NOTE: Check valid after receiving a NightEnd event or risk processing an invalid event.
 /// </summary>
 class NightEndEvent {

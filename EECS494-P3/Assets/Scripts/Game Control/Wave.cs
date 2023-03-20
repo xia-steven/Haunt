@@ -12,20 +12,24 @@ public class Wave {
 
     public readonly int difficulty;
     public readonly float duration;
+    private float startTime;
 
+    bool spawnPedestals;
     bool active = false;
 
     int numActiveMembers = 0;
     int nextId = 0;
 
     //for now, difficulty will represent the number of melee enemies to spawn
-    public Wave(int _difficulty, float _duration, List<Transform> _spawnPoints) {
+    public Wave(int _difficulty, float _duration, List<Transform> _spawnPoints, bool _spawnPedestals = true) {
         difficulty = _difficulty;
         duration = _duration;
         spawnPoints = _spawnPoints;
+        spawnPedestals = _spawnPedestals;
 
-        potentialMembers.Add(Resources.Load("Prefabs/Test Prefabs/Test_Enemy1") as GameObject); //melee
-        potentialMembers.Add(Resources.Load("Prefabs/Test Prefabs/Test_Enemy3") as GameObject); //exorcist
+        potentialMembers.Add(Resources.Load("Prefabs/Test Prefabs/Melee_Enemy") as GameObject); //melee
+        potentialMembers.Add(Resources.Load("Prefabs/Test Prefabs/Ranged_Enemy") as GameObject); //ranged
+        potentialMembers.Add(Resources.Load("Prefabs/Test Prefabs/Pedestal_Enemy") as GameObject); //exorcist
 
         Init();
     }
@@ -35,21 +39,26 @@ public class Wave {
         Vector3 spawnPos;
         IsWaveMember newMember;
 
-        //Queue 
-        for (int i = 0; i < 3; ++i) {
+        //wave seed to decide composition. closer to 0 -> melee, closer to 1 -> ranged
+        float enemyBalance = Random.value;
+        
+
+        for (int i = 0; i < difficulty; ++i) {
             spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
-            newMember = Object.Instantiate(potentialMembers[1], spawnPos, Quaternion.identity)
-                .GetComponent<IsWaveMember>();
+
+            int randSpawnIdx = Random.value < enemyBalance ? 0 : 1;
+            newMember = Object.Instantiate(potentialMembers[randSpawnIdx], spawnPos, Quaternion.identity).GetComponent<IsWaveMember>();
+
             newMember.Init(this, nextId);
             newMember.gameObject.SetActive(false);
             numActiveMembers++;
             members.Add(nextId++, newMember);
         }
 
-        for (int i = 0; i < difficulty; ++i) {
+        //spawn pedestal enemies
+        for (int i = 0; i < 3; ++i) {
             spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
-            newMember = Object.Instantiate(potentialMembers[0], spawnPos, Quaternion.identity)
-                .GetComponent<IsWaveMember>();
+            newMember = Object.Instantiate(potentialMembers[2], spawnPos, Quaternion.identity).GetComponent<IsWaveMember>();
             newMember.Init(this, nextId);
             newMember.gameObject.SetActive(false);
             numActiveMembers++;
@@ -66,11 +75,12 @@ public class Wave {
         IsWaveMediator.instance.Spawn(members.Values, timeBetweenSpawns);
 
         active = true;
+        startTime = Time.time;
     }
 
 
     public bool IsOver() {
-        return active && numActiveMembers <= 0;
+        return active && (numActiveMembers <= 0 || Time.time - startTime >= duration);
     }
 
     public void LoseMember(int id) {

@@ -30,16 +30,34 @@ partial class GameControl : MonoBehaviour {
     /// Tracks whether it is night or day.
     /// </summary>
     public static bool IsNight {
-        get { return instance.isNight; }
+        get { return isNight; }
         private set { }
     }
+
+    /// <summary>
+    /// Tracks when the night is ending and the exit teleporter is active
+    /// </summary>
+    public static bool NightEnding {
+        get { return instance.nightEnding; }
+        private set { }
+    }
+
+    /// <summary>
+    /// Returns the current day. Note that the day increments after each night starts.
+    /// </summary>
+    public static int Day {
+        get { return day; }
+        private set { }
+    }
+
+
 
     /// <summary>
     /// Tracks remaining time in the night. If it is not night, NightTimeRemaining is set to -1
     /// </summary>
     public static float NightTimeRemaining {
         get {
-            if (instance.isNight)
+            if (isNight && !instance.nightEnding)
                 return nightLength - (Time.time - instance.nightStartTime);
             else
                 return -1;
@@ -60,6 +78,8 @@ partial class GameControl : MonoBehaviour {
 
     private void _Start(GameStartEvent e) {
         instance.gameActive = true;
+
+        //TODO: Make more robust
         PedestalAttacker.pedestalPositions = new Dictionary<int, Vector3>
             { { 1, new Vector3(10, 0, 0) }, { 2, new Vector3(-10, 0, 0) }, { 3, new Vector3(0, 0, -9) } };
     }
@@ -133,15 +153,16 @@ partial class GameControl : MonoBehaviour {
     private void _NightStart(NightBeginEvent e) {
         if (!e.valid) return;
 
+        ++day;
         nightStartTime = Time.time;
 
-        instance.isNight = true;
+        isNight = true;
         instance.StartCoroutine(NightUpdate());
     }
 
 
     /// <summary>
-    /// Ends the night via the event bus.
+    /// Ends the night via the event bus, causing the NightEnding state to be true.
     /// </summary>
     public static void EndNight() {
         EventBus.Publish(new NightEndEvent());
@@ -152,7 +173,17 @@ partial class GameControl : MonoBehaviour {
     private void _NightEnd(NightEndEvent e) {
         if (!e.valid) return;
 
-        instance.isNight = false;
-        instance.StartCoroutine(DayUpdate());
+        instance.nightEnding = true;
+        instance.StartCoroutine(NightEndingUpdate());
+    }
+
+    public void ResetGame()
+    {
+        day = 0;
+
+        gameActive = false;
+        gamePaused = false;
+        isNight = false;
+        nightEnding = false;
     }
 }

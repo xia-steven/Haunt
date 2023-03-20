@@ -8,6 +8,10 @@ public class GameTimerUI : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        text.text = "Remaining: " + (int)GameControl.NightTimeRemaining;
+        int remaining = (int)GameControl.NightTimeRemaining;
+        if (remaining == -1)
+            text.text = "Night Ending!\nGet to the teleporter!";
+        else
+            text.text = "Remaining: " + remaining;
     }
 }
