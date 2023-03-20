@@ -43,15 +43,18 @@ public class EnemyBase : MonoBehaviour {
         }
     }
 
+    /*
     private void TakeDamage(int dmg) {
         health.AlterHealth(-dmg);
         if (health.GetHealth() <= 0) {
             Destroy(gameObject);
         }
     }
+    
 
     protected void OnTriggerEnter(Collider other) {
         TakeDamage(1);
         Destroy(other.gameObject);
     }
+    */
 }

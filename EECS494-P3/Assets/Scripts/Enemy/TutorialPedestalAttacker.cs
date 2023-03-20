@@ -28,7 +28,7 @@ public class TutorialPedestalAttacker : EnemyBase {
             }
         }
         else if (!other.CompareTag("Player")) {
-            base.OnTriggerEnter(other);
+            //base.OnTriggerEnter(other);
         }
     }
 

@@ -73,6 +73,7 @@ partial class GameControl : MonoBehaviour {
     {
         if (s.name == "GameScene")
         {
+            Debug.Log("GameScene Loaded");
             StartCoroutine(StartOnDelay(StartNight, .01f));
         }
         else
