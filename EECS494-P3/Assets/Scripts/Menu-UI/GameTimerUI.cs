@@ -10,7 +10,13 @@ public class GameTimerUI : MonoBehaviour {
     void Update() {
         int remaining = (int)GameControl.NightTimeRemaining;
         if (remaining == -1)
-            text.text = "Night Ending!\nGet to the teleporter!";
+        {
+            if (GameControl.IsNight)
+                text.text = "Night Ending!\nGet to the teleporter!";
+            else
+                text.text = "Use the teleporter to\nstart the next night";
+        }
+            
         else
             text.text = "Remaining: " + remaining;
     }
