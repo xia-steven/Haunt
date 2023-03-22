@@ -125,3 +125,17 @@ public class ToastRequestEvent
         return "Toast message sent with contents: " + message;
     }
 }
+
+/// <summary>
+/// The TutorialTriggerEvent is sent whenever the tutorial needs to send information 
+/// from one script to another.
+/// </summary>
+public class TutorialTriggerEvent
+{
+    public int UUID;
+
+    public TutorialTriggerEvent(int UUID_in)
+    {
+        UUID = UUID_in;
+    }
+}

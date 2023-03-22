@@ -31,6 +31,7 @@ public class IndicatorManager : MonoBehaviour
             indicatorRect.pivot = new Vector2(0.5f, 0);
             newIndicator.transform.localScale = Vector3.one;
             newIndicator.transform.SetParent(transform, false);
+            newIndicator.SetActive(false);
             indicatorArrows.Add(newIndicator);
         }
         xModifier = canvasSize.x / Screen.width;
@@ -48,14 +49,12 @@ public class IndicatorManager : MonoBehaviour
 
     void _onPedestalDestroy(PedestalDestroyedEvent pde)
     {
-        Image arrowImage = indicatorArrows[pde.pedestalUUID - 1].GetComponentInChildren<Image>();
-        arrowImage.color = Color.green;
+        indicatorArrows[pde.pedestalUUID - 1].SetActive(false);
     }
 
     void _onPedestalRepair(PedestalRepairedEvent pre)
     {
-        Image arrowImage = indicatorArrows[pre.pedestalUUID - 1].GetComponentInChildren<Image>();
-        arrowImage.color = Color.red;
+        indicatorArrows[pre.pedestalUUID - 1].SetActive(true);
     }
 
 

@@ -17,6 +17,7 @@ public class IsMessageTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        EventBus.Publish(new TutorialTriggerEvent(1));
         if(!sent || repeat)
         {
             sent = true;
