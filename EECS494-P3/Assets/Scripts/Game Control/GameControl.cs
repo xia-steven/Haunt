@@ -11,18 +11,7 @@ partial class GameControl : MonoBehaviour {
     /*Turn this off if you don't want the night cycle to run*/
     const bool DEBUG_DO_DAYNIGHT = true;
 
-
-    /*CONTROL PARAMETERS*/
-
-    const int maxDays = 3;
-    const float nightLength = 120f; //2 minutes
-    const float waveTimeout = 20f;
-    const float updateFrequency = .05f; // .05 -> 20 times/second
-    const float waveDailyScale = 2.5f; //multiplies initial size daily
-    const float initialWaveSize = 2; //2 non-pedestal enemies
-
-    /*END CONTROL PARAMETERS*/
-
+    [SerializeField] GameData data;
 
     /*STATE DEPENDENT VARIABLES*/
     private float nightStartTime;
@@ -64,7 +53,9 @@ partial class GameControl : MonoBehaviour {
         nightStartSub = EventBus.Subscribe<NightBeginEvent>(_NightStart);
         nightEndEvent = EventBus.Subscribe<NightEndEvent>(_NightEnd);
 
-        waveSize = (int)(initialWaveSize * Mathf.Pow(waveDailyScale, day));
+        data = ConfigManager.GetData<GameData>("GameData");
+
+        waveSize = (int)(data.initialWaveSize * Mathf.Pow(data.waveDailyScale, day));
 
         StartGame();
     }
@@ -109,21 +100,21 @@ partial class GameControl : MonoBehaviour {
     //NightUpdate runs during the night
     private IEnumerator NightUpdate() {
         Wave w;
-        w = new Wave(waveSize++, waveTimeout, spawners);
+        w = new Wave(waveSize++, data.waveTimeout, spawners);
         w.Spawn();
         nightStartTime = Time.time;
-        while (isNight && Time.time - nightStartTime < nightLength) {
+        while (isNight && Time.time - nightStartTime < data.nightLength) {
             if (!gameActive || gamePaused) {
-                yield return new WaitForSeconds(updateFrequency);
+                yield return new WaitForSeconds(data.updateFrequency);
                 continue;
             }
 
             if (w.IsOver()) {
-                w = new Wave(waveSize++, waveTimeout, spawners);
+                w = new Wave(waveSize++, data.waveTimeout, spawners);
                 w.Spawn();
             }
 
-            yield return new WaitForSeconds(updateFrequency);
+            yield return new WaitForSeconds(data.updateFrequency);
         }
 
         if (isNight) EndNight();
@@ -137,7 +128,7 @@ partial class GameControl : MonoBehaviour {
         while(nightEnding)
         {
             if (!gameActive || gamePaused) {
-                yield return new WaitForSeconds(updateFrequency);
+                yield return new WaitForSeconds(data.updateFrequency);
                 continue;
             }
 
@@ -147,26 +138,36 @@ partial class GameControl : MonoBehaviour {
                 w.Spawn();
             }
 
-            yield return new WaitForSeconds(updateFrequency);
+            yield return new WaitForSeconds(data.updateFrequency);
         }
     }
 
     //DayUpdate runs while it is day
     private IEnumerator DayUpdate() {
         yield return null;
-        if (day == maxDays) WinGame();
+        if (day == data.maxDays) WinGame();
         
         while (!isNight)
         {
             if(!gameActive || gamePaused)
             {
-                yield return new WaitForSeconds(updateFrequency);
+                yield return new WaitForSeconds(data.updateFrequency);
                 continue;
             }
 
             //code to start night may go here
 
-            yield return new WaitForSeconds(updateFrequency);
+            yield return new WaitForSeconds(data.updateFrequency);
         }
     }
+}
+
+public class GameData : Savable
+{
+    public int maxDays;
+    public float nightLength; // seconds
+    public float waveTimeout; // seconds
+    public float updateFrequency; // seconds per update
+    public float waveDailyScale; // base wave size multiplier per day (multiplicative)
+    public float initialWaveSize; // number of non-pedestal enemies
 }
