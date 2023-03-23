@@ -127,15 +127,14 @@ public class ToastRequestEvent
 }
 
 /// <summary>
-/// The TutorialTriggerEvent is sent whenever the tutorial needs to send information 
-/// from one script to another.
+/// The MessageEvent is sent whenever there is a message to display to the player from a NPC.
 /// </summary>
-public class TutorialTriggerEvent
+public class MessageEvent
 {
-    public int UUID;
+    public List<string> messages;
 
-    public TutorialTriggerEvent(int UUID_in)
+    public MessageEvent(List<string> messages_in)
     {
-        UUID = UUID_in;
+        messages = messages_in;
     }
 }
