@@ -1,0 +1,36 @@
+{
+    "key": "TutorialData",
+    "allMessages": [
+        {
+            "messages": [
+                "Oh good, you're awake.  We have much to discuss.  You can use <b>LEFT CLICK</b> to speed through my messages, as well as continue our conversation.",
+                "I've enlisted the help of a few friends to teach you everything you need to know to survive the upcoming battle.",
+                "To begin, let's head to the right.  Use <b>WASD</b> to move and <b>SPACEBAR</b> to dash over that pit."
+            ]
+        },
+        {
+            "messages": [
+                "Your dash (<b>SPACEBAR</b>) can be used to travel through projectiles, and you can use <b>LEFT CLICK</b> to fire."
+            ]
+        },
+        {
+            "messages": [
+                "Nice work.  Let's practice with a few more friends."
+            ]
+        },
+        {
+            "messages": [
+                "Great job!  Ascend the staircase to the right and I'll show you around the graveyard."
+            ]
+        },
+        {
+            "messages": [
+                "Before I show you to survive the upcoming days, let me explain the situation a little more.",
+                "I've been waiting years for you to finally awaken.  I was able to bring you back to life using a bit of magic, but we have a problem.",
+                "Due to the nature of my magic, the nearby town was alerted and are sending people to kill you.  I know they are planning to erect pedestals to banish you away, and we must not let them.",
+                "If you can survive the next 3 days, my magic will become strong enough that they will be unable to banish you.",
+                "Alright.  Head to the teleporter in the center and I'll walk you through a simulation of how the humans will attempt to banish you."
+            ]
+        }
+    ]
+}
