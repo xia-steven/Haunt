@@ -889,15 +889,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camMoveSpeed: 8
-  maxXoffset: 1
-  minXoffset: -1
-  maxZoffset: 1
-  minZoffset: -1
+  maxXoffset: 2
+  minXoffset: -2
+  maxZoffset: 2
+  minZoffset: -2
   xRoomMin: -15
   xRoomMax: 30
   zRoomMin: -13
   zRoomMax: -13
   camOffsetFromPlayer: {x: 0, y: 11.5, z: -8}
+  playerOffsetProportion: 0.8
 --- !u!1 &3753191300782068639
 GameObject:
   m_ObjectHideFlags: 0

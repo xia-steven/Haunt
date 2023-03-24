@@ -15,10 +15,15 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] float zRoomMax = 0f; // ADJUST IN SCENES
 
     [SerializeField] Vector3 camOffsetFromPlayer = new Vector3( 0f, 11.5f, -7.0f );
+    [SerializeField] float playerOffsetProportion = 0.6f;
+
 
     private Transform player;
 
     private Vector3 offset;
+    private Vector3 playerOffset;
+    private Vector3 mouseOffset;
+    
 
     bool isMoving;
     public bool IsMoving {
@@ -37,7 +42,13 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        offset = player.position - transform.position;
+        playerOffset = player.position - transform.position;
+        Vector3 mouse = Input.mousePosition;
+        mouse.z = 1;
+        // Invert for some reason
+        mouseOffset = -(Camera.main.ScreenToWorldPoint(mouse) - transform.position);
+        offset = playerOffset * playerOffsetProportion + mouseOffset * (1 - playerOffsetProportion);
+        Debug.Log("Offset: " + offset);
         // Remove y offset
         offset.y = 0;
 
