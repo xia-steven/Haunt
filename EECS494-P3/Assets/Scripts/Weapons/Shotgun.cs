@@ -8,9 +8,9 @@ public class Shotgun : Weapon
     protected GameObject shotgunBullet;
 
     // Time between bullets
-    [SerializeField] protected float bulletDelay = 2.5f;
+    [SerializeField] protected float bulletDelay = 0.85f;
     // Time between tap firing
-    [SerializeField] protected float tapDelay = 2.3f;
+    [SerializeField] protected float tapDelay = 0.8f;
     // Bullet spread in degrees
     [SerializeField] protected float spread = 30f;
 
@@ -21,6 +21,7 @@ public class Shotgun : Weapon
 
         currentClipAmount = 5;
         fullClipAmount = 5;
+        reloadTime = 2.0f;
 
         Subscribe();
 
@@ -46,6 +47,14 @@ public class Shotgun : Weapon
         {
             return;
         }
+
+        StartCoroutine(ReloadDelay());
+    }
+
+    private IEnumerator ReloadDelay()
+    {
+        Debug.Log("Reloading");
+        yield return new WaitForSeconds(reloadTime);
 
         // TODO: change to line up with inventory ammo
         ReloadInfinite();

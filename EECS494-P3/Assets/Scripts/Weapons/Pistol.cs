@@ -16,6 +16,7 @@ public class Pistol : Weapon {
 
         currentClipAmount = 8;
         fullClipAmount = 8;
+        reloadTime = 0.5f;
 
         Subscribe();
 
@@ -38,6 +39,16 @@ public class Pistol : Weapon {
             return;
         }
 
+        StartCoroutine(ReloadDelay());
+    }
+
+
+    private IEnumerator ReloadDelay()
+    {
+        Debug.Log("Reloading");
+        yield return new WaitForSeconds(reloadTime);
+
+        // TODO: change to line up with inventory ammo
         ReloadInfinite();
         Debug.Log("Pistol ammo: " + currentClipAmount);
     }
