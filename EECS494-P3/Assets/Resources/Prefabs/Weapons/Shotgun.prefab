@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9978e4984e420934b997414c7250c059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletDelay: 2.5
-  tapDelay: 2.3
+  bulletDelay: 1
+  tapDelay: 0.98
+  spread: 30
 --- !u!1 &1962310841784963166
 GameObject:
   m_ObjectHideFlags: 0

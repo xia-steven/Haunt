@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBase : MonoBehaviour {
-    protected float speed;
+    [SerializeField] protected float speed = 3.25f;
     private HasHealth health;
 
     private Rigidbody rb;
@@ -19,14 +19,14 @@ public class EnemyBase : MonoBehaviour {
         origin = new Vector3(-17.5f, 0, -11f);
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         HandleMovement();
     }
 
     private void HandleMovement() {
         if (pathVectorList != null) {
             var targetPosition = pathVectorList[currentPathIndex] + origin;
-            if (Vector3.Distance(transform.position, targetPosition) > 1f) {
+            if (Vector3.Distance(transform.position, targetPosition) > 0.5f) {
                 var moveDir = (targetPosition - transform.position).normalized;
                 tf_.position += Time.deltaTime * speed * moveDir;
             }

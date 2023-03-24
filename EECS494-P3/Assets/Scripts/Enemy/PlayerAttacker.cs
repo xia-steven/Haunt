@@ -5,16 +5,12 @@ public class PlayerAttacker : EnemyBase {
 
     private new void Start() {
         base.Start();
-        speed = 5f;
         positionSub = EventBus.Subscribe<PlayerPositionEvent>(SetTargetPosition);
     }
 
-    private new void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter(Collider other) {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player")) {
             EventBus.Publish(new PlayerDamagedEvent());
-        }
-        else if (other.gameObject.layer == LayerMask.NameToLayer("PlayerUtility")) {
-            //base.OnTriggerEnter(other);
         }
     }
 

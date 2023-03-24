@@ -17,6 +17,8 @@ public abstract class Weapon : MonoBehaviour {
     // Determines whether weapon is currently firing or not - used for automatic weapons
     protected bool firing = false;
 
+    protected float reloadTime;
+
     protected Subscription<FireEvent> fireEventSubscription;
     protected Subscription<ReloadEvent> reloadEventSubscription;
 
@@ -59,6 +61,7 @@ public abstract class Weapon : MonoBehaviour {
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.velocity = direction * bulletSpeed;
     }
+
 
     // Reloads gun with specified number of bullets
     // Returns number of bullets returned to inventory
