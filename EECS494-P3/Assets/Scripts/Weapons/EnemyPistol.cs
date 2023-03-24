@@ -15,7 +15,7 @@ public class EnemyPistol : Pistol
         player = GameObject.Find("Player");
 
         // Don't subscribe to firing or reloading in enemy weapon awake
-        basicBullet = Resources.Load<GameObject>("Prefabs/Weapons/BasicBullet");
+        basicBullet = Resources.Load<GameObject>("Prefabs/Weapons/EnemyBasicBullet");
     }
 
     private void Update()
@@ -30,7 +30,7 @@ public class EnemyPistol : Pistol
 
             Debug.Log(basicBullet);
 
-            FireProjectile(basicBullet, direction, transform, BasicBullet.bulletSpeed, Shooter.Enemy);
+            FireProjectile(basicBullet, direction, transform, EnemyBasicBullet.bulletSpeed, Shooter.Enemy);
 
             lastBullet = Time.time;
         }

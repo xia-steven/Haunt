@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBase : MonoBehaviour {
-    protected float speed;
+    [SerializeField] protected float speed = 3.25f;
     private HasHealth health;
 
     private Rigidbody rb;

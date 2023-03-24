@@ -101,6 +101,14 @@ class PlayerMeleeEvent {
 /// The PlayerDodgeEvent is to be broadcast whenever the player dodges.
 /// </summary>
 class PlayerDodgeEvent {
+    // Set to true for starting a dodge and false for ending a dodge
+    public bool start;
+
+    public PlayerDodgeEvent(bool _start)
+    {
+        start = _start;
+    }
+
     public override string ToString() {
         return "Player Dodge Event Sent";
     }
@@ -158,5 +166,23 @@ public class TryInteractEvent
     public override string ToString()
     {
         return "Interact Attempt Event sent";
+    }
+}
+
+/// <summary>
+/// This event is sent whenever the player is detected over a pit
+/// </summary>
+class OverPitEvent
+{
+    public GameObject player;
+
+    public OverPitEvent(GameObject _player)
+    {
+        player = _player;
+    }
+
+    public override string ToString()
+    {
+        return "Over Pit Event sent";
     }
 }

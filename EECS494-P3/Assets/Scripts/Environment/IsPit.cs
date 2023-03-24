@@ -7,11 +7,46 @@ public class IsPit : MonoBehaviour {
     Vector3 horizontalOffset = Vector3.zero;
     float xSize;
     float zSize;
+    private bool isDodging = false;
+    private bool overPit = false;
+    private float pitResetDistance = 1.1f;
+
+    private Subscription<PlayerDodgeEvent> playerDodgeSubscription;
+    private Subscription<OverPitEvent> overPitSubscription;
 
     private void Start() {
         BoxCollider col = GetComponent<BoxCollider>();
         xSize = col.size.x;
         zSize = col.size.z;
+
+        playerDodgeSubscription = EventBus.Subscribe<PlayerDodgeEvent>(_OnPlayerDodge);
+        overPitSubscription = EventBus.Subscribe<OverPitEvent>(_OnOverPit);
+    }
+
+    private void _OnPlayerDodge(PlayerDodgeEvent e)
+    {
+        isDodging = e.start;
+    }
+
+    private void _OnOverPit(OverPitEvent e)
+    {
+        GameObject player = e.player;
+
+        // Checks that player is not dodging and over this current pit
+        if (!isDodging && overPit)
+        {
+            Debug.Log("Player in pit");
+            // Add offset to player position in the pit
+            Vector3 adjustedPosition = player.transform.position + (horizontalOffset * pitResetDistance);
+            // Round values to teleport the player to the center of a square
+            // Removed for now as seems to only bring the player close to pits and doesn't seem necessary
+            // adjustedPosition.z = Mathf.Round(adjustedPosition.z);
+            // adjustedPosition.x = Mathf.Round(adjustedPosition.x);
+            // Teleport player outside the pit
+            player.transform.position = adjustedPosition;
+
+            EventBus.Publish(new PlayerDamagedEvent(1));
+        }
     }
 
 
@@ -22,11 +57,7 @@ public class IsPit : MonoBehaviour {
             return;
         }
 
-
-        Debug.Log("Player over the pit");
-
-        Debug.Log("Our position: " + transform.position);
-        Debug.Log("Player position " + other.transform.position);
+        overPit = true;
 
         float xOffsetMag = Mathf.Abs(other.transform.position.x - transform.position.x);
         float zOffsetMag = Mathf.Abs(other.transform.position.z - transform.position.z);
@@ -52,8 +83,24 @@ public class IsPit : MonoBehaviour {
             Debug.LogWarning("Couldn't calculate what direction the player entered the pit area from.");
             horizontalOffset = Vector3.left;
         }
+
+        Debug.Log(horizontalOffset);
     }
 
+
+    private void OnTriggerExit(Collider other)
+    {
+        IsPlayer isPlayer = other.GetComponent<IsPlayer>();
+
+        if (isPlayer == null)
+        {
+            return;
+        }
+
+        overPit = false;
+    }
+
+    /*
     private void OnTriggerExit(Collider other) {
         IsPlayer isPlayer = other.GetComponent<IsPlayer>();
 
@@ -76,11 +123,12 @@ public class IsPit : MonoBehaviour {
             EventBus.Publish(new PlayerDamagedEvent(1));
         }
     }
+    */
 
 
     private Vector3 teleportOffset(Transform other) {
         Vector3 offset = Vector3.zero;
-        offset.y = 1.0f + pitDepth;
+        //offset.y = 1.0f + pitDepth;
         offset += horizontalOffset;
 
         return offset;
