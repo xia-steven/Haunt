@@ -51,7 +51,6 @@ partial class GameControl : MonoBehaviour {
     }
 
 
-
     /// <summary>
     /// Tracks remaining time in the night. If it is not night, NightTimeRemaining is set to -1
     /// </summary>
@@ -78,10 +77,6 @@ partial class GameControl : MonoBehaviour {
 
     private void _Start(GameStartEvent e) {
         instance.gameActive = true;
-
-        //TODO: Make more robust
-        PedestalAttacker.pedestalPositions = new Dictionary<int, Vector3>
-            { { 1, new Vector3(10, 0, 0) }, { 2, new Vector3(-10, 0, 0) }, { 3, new Vector3(0, 0, -9) } };
     }
 
 
@@ -177,8 +172,7 @@ partial class GameControl : MonoBehaviour {
         instance.StartCoroutine(NightEndingUpdate());
     }
 
-    public void ResetGame()
-    {
+    public void ResetGame() {
         day = 0;
 
         gameActive = false;

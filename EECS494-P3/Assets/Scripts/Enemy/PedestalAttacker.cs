@@ -2,9 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class PedestalInfo {
+    public Vector3 position;
+    public bool destroyed = true;
+
+    public PedestalInfo(Vector3 pos) {
+        position = pos;
+    }
+}
+
 public class PedestalAttacker : EnemyBase {
-    public static Dictionary<int, Vector3> pedestalPositions = new Dictionary<int, Vector3>
-        { { 1, new Vector3(10, 0, 0) }, { 2, new Vector3(-10, 0, 0) }, { 3, new Vector3(0, 0, -9) } };
+
+    public static Dictionary<int, PedestalInfo> pedestalInfos = new Dictionary<int, PedestalInfo> {
+        { 1, new PedestalInfo(new Vector3(10, 0, 0)) }, { 2, new PedestalInfo(new Vector3(-10, 0, 0)) },
+        { 3, new PedestalInfo(new Vector3(0, 0, -9)) }
+    };
 
     private Subscription<PedestalDestroyedEvent> switchPedestalSub;
     private Subscription<PedestalRepairedEvent> addPedestalSub;
@@ -37,10 +49,10 @@ public class PedestalAttacker : EnemyBase {
 
     private int findClosestPedestal() {
         var closestDist = float.MaxValue;
-        var closest = (int)Random.Range(1f, 3.1f);
-        foreach (var ped in pedestalPositions) {
-            var distance = Vector3.Distance(transform.position, ped.Value);
-            if (distance < closestDist) {
+        var closest = (int)Random.Range(1f, 3.99f);
+        foreach (var ped in pedestalInfos) {
+            var distance = Vector3.Distance(transform.position, ped.Value.position);
+            if (distance < closestDist && ped.Value.destroyed) {
                 closestDist = distance;
                 closest = ped.Key;
             }
@@ -51,7 +63,7 @@ public class PedestalAttacker : EnemyBase {
 
     private IEnumerator WaitAndFindPath() {
         yield return null;
-        SetTargetPosition(pedestalPositions[findClosestPedestal()]);
+        SetTargetPosition(pedestalInfos[findClosestPedestal()].position);
     }
 
     private void SetTargetPosition(Vector3 pos) {
@@ -65,19 +77,19 @@ public class PedestalAttacker : EnemyBase {
 
     private IEnumerator pedetalCoroutine(int uuid) {
         yield return new WaitForSeconds(pedestalTimeout);
-        SetTargetPosition(pedestalPositions[findClosestPedestal()]);
+        SetTargetPosition(pedestalInfos[findClosestPedestal()].position);
     }
 
     private void pedestalDied(PedestalDestroyedEvent event_) {
         switch (event_.pedestalUUID) {
             case 1:
-                pedestalPositions[1] = new Vector3(10, 0, 0);
+                pedestalInfos[1].destroyed = true;
                 break;
             case 2:
-                pedestalPositions[2] = new Vector3(-10, 0, 0);
+                pedestalInfos[2].destroyed = true;
                 break;
             case 3:
-                pedestalPositions[3] = new Vector3(0, 0, -9);
+                pedestalInfos[3].destroyed = true;
                 break;
         }
 
@@ -85,7 +97,7 @@ public class PedestalAttacker : EnemyBase {
     }
 
     private void pedestalRepaired(PedestalRepairedEvent event_) {
-        pedestalPositions.Remove(event_.pedestalUUID);
-        SetTargetPosition(pedestalPositions[findClosestPedestal()]);
+        pedestalInfos[event_.pedestalUUID].destroyed = false;
+        SetTargetPosition(pedestalInfos[findClosestPedestal()].position);
     }
 }
