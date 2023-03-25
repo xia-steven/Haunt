@@ -116,7 +116,7 @@ public class MessageManager : MonoBehaviour
             }
 
             // Wait for user to acknowledge the message
-            while (!Input.GetKeyDown(KeyCode.Mouse0))
+            while (!Input.GetKeyDown(message.keyToWaitFor))
             {
                 yield return null;
             }
@@ -124,6 +124,15 @@ public class MessageManager : MonoBehaviour
             yield return null;
         }
 
+        if(message.unpauseBeforeFade)
+        {
+            // Set timescales back to 1
+            TimeManager.ResetTimeScale();
+
+            // Let other scripts know the message finished
+            Debug.Log("Finished message from sender " + message.senderInstanceID);
+            EventBus.Publish(new MessageFinishedEvent(message.senderInstanceID));
+        }
 
         // Fade out
         initial_time = Time.realtimeSinceStartup;
@@ -145,7 +154,19 @@ public class MessageManager : MonoBehaviour
         text.gameObject.SetActive(false);
         textBackground.gameObject.SetActive(false);
 
-        // Set timescales back to 1
-        TimeManager.ResetTimeScale();
+        if(!message.unpauseBeforeFade)
+        {
+            // Set timescales back to 1
+            TimeManager.ResetTimeScale();
+
+            // Let other scripts know the message finished
+            Debug.Log("Finished message from sender " + message.senderInstanceID);
+            EventBus.Publish(new MessageFinishedEvent(message.senderInstanceID));
+        }
+
+
+        // reset text color
+        text.color = textColor;
+        sendingMessage = false;
     }
 }

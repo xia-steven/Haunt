@@ -132,9 +132,29 @@ public class ToastRequestEvent
 public class MessageEvent
 {
     public List<string> messages;
+    public KeyCode keyToWaitFor;
+    public int senderInstanceID;
+    public bool unpauseBeforeFade;
 
-    public MessageEvent(List<string> messages_in)
+    public MessageEvent(List<string> messages_in, int senderInstanceID_in, KeyCode keyToWaitFor_in = KeyCode.Mouse0,
+        bool unpauseBeforeFade_in = false)
     {
         messages = messages_in;
+        keyToWaitFor = keyToWaitFor_in;
+        senderInstanceID = senderInstanceID_in;
+        unpauseBeforeFade = unpauseBeforeFade_in;
+    }
+}
+
+/// <summary>
+/// The MessageFinishedEvent is sent whenever there a message finished displaying to the player.
+/// </summary>
+public class MessageFinishedEvent
+{
+    public int senderInstanceID;
+
+    public MessageFinishedEvent(int senderInstanceID_in)
+    {
+        senderInstanceID = senderInstanceID_in;
     }
 }

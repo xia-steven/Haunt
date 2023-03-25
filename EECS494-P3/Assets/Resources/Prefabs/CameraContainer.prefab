@@ -208,7 +208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &785603093
 RectTransform:
   m_ObjectHideFlags: 0
@@ -898,6 +898,7 @@ MonoBehaviour:
   zRoomMin: -18
   zRoomMax: -5
   camOffsetFromPlayer: {x: 0, y: 11.5, z: -12}
+  playerOffsetProportion: 0.6
 --- !u!1 &3753191300782068639
 GameObject:
   m_ObjectHideFlags: 0

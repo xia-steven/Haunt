@@ -6,13 +6,13 @@
                 "Oh good, you're awake.  We have much to discuss.  You can use <b>LEFT CLICK</b> to speed through my messages, as well as continue our conversation.",
                 "I've been waiting years for you to finally awaken.  I hope you will be different then all the previous.",
                 "Since you woke up in the middle of the night, we'll only face a few humans tonight.  I'll use tonight to show you the ropes, but you'll be on your own after that.",
-                "As you can see, I've provided you with a simple pistol to defend yourself.  I'll see if I can have {INSERT SHOP KEEPER NAME} find you better weapons to use as the nights progress.",
+                "As you can see, I've provided you with a simple pistol to defend yourself.  I'll see if I can have Fred find you better weapons to use as the nights progress.",
                 "Use <b>WASD</b> to head over to the teleporter in the center of the room and head to the surface.  I dug a few pits around the teleporter, so you should be safe after teleporting."
             ]
         },
         {
             "messages": [
-                "Oh no!  It looks like an archer was waiting for you!  Use <b>SPACEBAR</b> to travel through the arrow and cross the pit."
+                "Oh no!  It looks like an archer was waiting for you!  Use <b>SPACEBAR</b> to safely travel through the arrow and cross the pit."
             ]
         },
         {
@@ -26,7 +26,7 @@
                 "I was able to reanimate you with a bit of magic, but we have a problem.",
                 "Due to the nature of my magic, the nearby town was alerted and are sending people to banish you back to the underworld.",
                 "If they are able to construct all 3 pedestals, you will be banished.  In addition to fighting the humans attacking you, you'll need to prevent them from building these pedestals.",
-                "It looks like there's still a pedestal from your predecessor.  Go destroy it with your pistol! (<b>LEFT CLICK</b>)"
+                "It looks like there's still a pedestal from your predecessor.  You can see constructed pedestals with the red arrows.  Go destroy it with your pistol! (<b>LEFT CLICK</b>)"
             ]
         },
         {
@@ -39,6 +39,11 @@
             "messages": [
                 "It looks like that was the last human for that night.  Since humans can only construct the pedestals during the night, they're going to head back to their village for now.",
                 "Head back to the teleporter in the center of the room to return to your crypt.  We can gear you up there."
+            ]
+        },
+        {
+            "messages": [
+                "Oh no!  It looks like the humans got to you.  Luckily, since I'm here, we can restart training."
             ]
         }
     ]

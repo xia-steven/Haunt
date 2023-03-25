@@ -34,14 +34,14 @@ public class TutorialMessageManager : MonoBehaviour
     {
         Debug.Log("Sending tutorial message");
         // Send message event
-        EventBus.Publish(new MessageEvent(data.allMessages[tme.messageID].messages));
+        EventBus.Publish(new MessageEvent(data.allMessages[tme.messageID].messages, tme.senderInstanceID, tme.keyToWaitFor, tme.unpauseBeforeFade));
     }
 
     void DebugSendMessage()
     {
         if (Input.GetKeyDown(KeyCode.V))
         {
-            EventBus.Publish(new TutorialMessageEvent(count));
+            EventBus.Publish(new TutorialMessageEvent(count, GetInstanceID()));
             count++;
             if (count >= data.allMessages.Count)
             {

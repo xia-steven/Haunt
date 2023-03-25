@@ -73,7 +73,7 @@ public class PauseMenu : MonoBehaviour {
         Time.timeScale = 1;
         AudioListener.pause = false;
 
-        SceneManager.LoadScene("TutorialScene");
+        SceneManager.LoadScene("TutorialHubWorld");
     }
 
     public void RetryLevel()

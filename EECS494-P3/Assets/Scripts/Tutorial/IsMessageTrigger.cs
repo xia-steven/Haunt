@@ -11,9 +11,10 @@ public class IsMessageTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!sent)
+
+        if(!sent && other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            EventBus.Publish(new TutorialMessageEvent(tutorialMessageID));
+            EventBus.Publish(new TutorialMessageEvent(tutorialMessageID, GetInstanceID()));
             sent = true;
         }
     }

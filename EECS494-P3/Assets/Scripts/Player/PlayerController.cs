@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour {
     private float groundDistance = 0.5f;
     Subscription<DisablePlayerEvent> disableMoveSub;
     Subscription<EnablePlayerEvent> enableMoveSub;
+    Subscription<TutorialDodgeStartEvent> dodgeStartSub;
+    Subscription<TutorialDodgeEndEvent> dodgeEndSub;
 
 
 
@@ -37,12 +39,16 @@ public class PlayerController : MonoBehaviour {
         animator = GetComponent<Animator>();
         disableMoveSub = EventBus.Subscribe<DisablePlayerEvent>(_OnDisableMovement);
         enableMoveSub = EventBus.Subscribe<EnablePlayerEvent>(_OnEnableMovement);
+        dodgeStartSub = EventBus.Subscribe<TutorialDodgeStartEvent>(StartDodge);
+        dodgeEndSub = EventBus.Subscribe<TutorialDodgeEndEvent>(StopDodge);
     }
 
     private void OnDestroy()
     {
         EventBus.Unsubscribe(disableMoveSub);
         EventBus.Unsubscribe(enableMoveSub);
+        EventBus.Unsubscribe(dodgeStartSub);
+        EventBus.Unsubscribe(dodgeEndSub);
     }
 
     public void OnDodge(InputAction.CallbackContext value) {
@@ -57,6 +63,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnMove(InputAction.CallbackContext value) {
+        if (!playerEnabled) return;
+
         movementX = value.ReadValue<Vector2>().x;
         movementZ = value.ReadValue<Vector2>().y;
 
@@ -65,7 +73,7 @@ public class PlayerController : MonoBehaviour {
         float horizontalExtent = col.bounds.extents.x + extraRayDist;
         float verticalExtent = col.bounds.extents.z + extraRayDist;
 
-        int ignoreMask = ~LayerMask.GetMask("Special");
+        int ignoreMask = ~LayerMask.GetMask("Special", "Tutorial", "PlayerUtility");
 
         RaycastHit ray1;
         RaycastHit ray2;
@@ -135,7 +143,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void StartDodge()
+    private void StartDodge(TutorialDodgeStartEvent tutorDodge = null)
     {
         EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(true));
 
@@ -143,13 +151,20 @@ public class PlayerController : MonoBehaviour {
         rb.useGravity = false;
         dodgeRollTimer = dodgeRollDuration;
         dodgeRollCooldownTimer = dodgeRollCooldown;
-        rb.velocity = movement.normalized * dodgeRollSpeed;
+        if(tutorDodge != null)
+        {
+            rb.velocity = tutorDodge.direction * dodgeRollSpeed;
+        }
+        else
+        {
+            rb.velocity = movement.normalized * dodgeRollSpeed;
+        }
 
         tr.emitting = true;
         animator.SetBool("walking", false);
     }
 
-    private void StopDodge()
+    private void StopDodge(TutorialDodgeEndEvent tutorDodge = null)
     {
         EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(false));
 

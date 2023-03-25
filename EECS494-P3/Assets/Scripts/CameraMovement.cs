@@ -23,7 +23,9 @@ public class CameraMovement : MonoBehaviour
     private Vector3 offset;
     private Vector3 playerOffset;
     private Vector3 mouseOffset;
-    
+
+    bool locked = false;
+
 
     bool isMoving;
     public bool IsMoving {
@@ -31,17 +33,33 @@ public class CameraMovement : MonoBehaviour
         set { isMoving = value; }
     }
 
+    Subscription<TutorialLockCameraEvent> lockSub;
+    Subscription<TutorialUnlockCameraEvent> unlockSub;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player").transform;
         // Room bounds are set per scene
+
+        lockSub = EventBus.Subscribe<TutorialLockCameraEvent>(onCameraLock);
+        unlockSub = EventBus.Subscribe<TutorialUnlockCameraEvent>(onCameraUnlock);
+    }
+
+    private void OnDestroy()
+    {
+        EventBus.Unsubscribe(lockSub);
+        EventBus.Unsubscribe(unlockSub);
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
+        if(locked)
+        {
+            return;
+        }
+
         playerOffset = player.position - transform.position;
         Vector3 mouse = Input.mousePosition;
         mouse.z = 1;
@@ -73,4 +91,14 @@ public class CameraMovement : MonoBehaviour
         this.transform.position = newPos;
     }
 
+    void onCameraLock(TutorialLockCameraEvent tlce)
+    {
+        locked = true;
+        transform.position = tlce.cameraLockedLocation;
+    }
+
+    void onCameraUnlock(TutorialUnlockCameraEvent tuce)
+    {
+        locked = false;
+    }
 }
