@@ -45,18 +45,19 @@ public class CameraMovement : MonoBehaviour
         playerOffset = player.position - transform.position;
         Vector3 mouse = Input.mousePosition;
         mouse.z = 1;
-        // Invert for some reason
-        mouseOffset = -(Camera.main.ScreenToWorldPoint(mouse) - transform.position);
+        mouseOffset = -(Camera.main.ScreenToWorldPoint(mouse));
         offset = playerOffset * playerOffsetProportion + mouseOffset * (1 - playerOffsetProportion);
         // Remove y offset
         offset.y = 0;
+
+
 
         // Only adjust cam if offset is too high
         if (offset.x < maxXoffset && offset.x > minXoffset && 
             (offset.z + camOffsetFromPlayer.z < maxZoffset && offset.z + camOffsetFromPlayer.z > minZoffset))
         {
-            IsMoving = false;
-            return;
+            //IsMoving = false;
+            //return;
         }
 
         IsMoving = true;
@@ -67,15 +68,9 @@ public class CameraMovement : MonoBehaviour
 
         offset.z = Mathf.Clamp(offset.z + camOffsetFromPlayer.z, minZoffset, maxZoffset);
         float newZPos = Mathf.Clamp(player.position.z - offset.z + camOffsetFromPlayer.z, zRoomMin, zRoomMax);
-        
-        
 
         Vector3 newPos = Vector3.Lerp(transform.position, (new Vector3(newXPos, this.transform.position.y, newZPos)), camMoveSpeed * Time.deltaTime);
         this.transform.position = newPos;
     }
 
-    public bool InVerticalRoom()
-    {
-        return zRoomMax != zRoomMin;
-    }
 }

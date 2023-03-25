@@ -492,6 +492,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1063970267352803540, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
+      propertyPath: otherScene
+      value: TutorialGameScene
+      objectReference: {fileID: 0}
     - target: {fileID: 4073059639498689819, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.125
