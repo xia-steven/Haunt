@@ -125,3 +125,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherScene: 
+  inactiveMat: {fileID: 2100000, guid: 6f937a95e0d541b448743720f0a74d50, type: 2}
+  activeMat: {fileID: 2100000, guid: 8c237bdca93390444bbed21d2f2fb527, type: 2}
