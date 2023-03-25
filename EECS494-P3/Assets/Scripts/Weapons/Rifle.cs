@@ -6,7 +6,9 @@ public class Rifle : Weapon
 {
     protected GameObject wielder;
     protected GameObject basicBullet;
+    protected SpriteRenderer spriteRenderer;
 
+    [SerializeField] protected GameObject rifleSprite;
     // Time between bullets
     [SerializeField] protected float bulletDelay = 0.2f;
     // Time between tap firing
@@ -22,8 +24,9 @@ public class Rifle : Weapon
 
         Subscribe();
 
+        spriteRenderer = rifleSprite.GetComponent<SpriteRenderer>();
         wielder = this.transform.parent.gameObject;
-        basicBullet = Resources.Load<GameObject>("Prefabs/Weapons/BasicBullet");
+        basicBullet = Resources.Load<GameObject>("Prefabs/Weapons/RifleBullet");
     }
     protected override void _OnFire(FireEvent e)
     {
@@ -73,6 +76,16 @@ public class Rifle : Weapon
             // Calculate the direction vector from the player to the intersection point
             Vector3 hitPoint = ray.GetPoint(distanceToGround);
             direction = hitPoint - transform.position;
+
+            // Check if gun sprite needs to be flipped
+            if (direction.x < 0)
+            {
+                spriteRenderer.flipY = true;
+            }
+            else
+            {
+                spriteRenderer.flipY = false;
+            }
 
             // Calculate the rotation that points in the direction of the intersection point
             Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
