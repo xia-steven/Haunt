@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a8ffa1f85c15d942823274db6709460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barrelLength: 0.5
+  barrelLength: 0.625
+  pistolSprite: {fileID: 3235131618428306483}
   bulletDelay: 0.6
   tapDelay: 0.2
 --- !u!1 &1962310841784963166
@@ -148,7 +149,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4463994369574393964
 Transform:
   m_ObjectHideFlags: 0
@@ -233,7 +234,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8940655298549814537
 Transform:
   m_ObjectHideFlags: 0
