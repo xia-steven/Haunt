@@ -8,10 +8,20 @@ public class IsTeleporter : MonoBehaviour
 {
     [SerializeField] string otherScene;
 
+    [SerializeField] Material inactiveMat;
+    [SerializeField] Material activeMat;
+
+    Renderer visualRenderer;
+
     bool isActive = true;
     public bool Active {
         get { return isActive; }
-        set { isActive = value; }
+        set 
+        { 
+            isActive = value;
+            if (isActive) Activate();
+            else Deactivate();
+        }
     }
 
     bool isUsable = false;
@@ -21,6 +31,10 @@ public class IsTeleporter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        visualRenderer = GetComponent<Renderer>();
+
+        Activate();
+
         interactSub = EventBus.Subscribe<TryInteractEvent>(_Interact);
     }
 
@@ -42,11 +56,25 @@ public class IsTeleporter : MonoBehaviour
         }
     }
 
+    private void Activate()
+    {
+        visualRenderer.material = activeMat;
+
+        //activate other visuals here
+    }
+
+    private void Deactivate()
+    {
+        visualRenderer.material = inactiveMat;
+
+        //deactivate other visuals here
+    }
+
     public void _Interact(TryInteractEvent e)
     {
         if (isUsable)
         {
-            
+            IsPlayer.SetPosition(new Vector3(0, .25f, 0));
             SceneManager.LoadScene(otherScene);
         }
     }
