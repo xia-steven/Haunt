@@ -80,6 +80,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwapSpecificWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""85416b19-430e-41cd-8dc8-6cb670396ae2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -327,12 +336,67 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""14386a26-a09b-4518-9897-e71c9e880762"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""SwapWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""59e5175c-09dc-4234-a574-828defba7931"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""729cd746-d5d3-4ae2-9998-be1482971e52"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""SwapSpecificWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dff9b083-af47-475d-bd71-e1b73de47a4b"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""SwapSpecificWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d844760f-79a3-47c6-a1b3-de3dfa6ce091"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""SwapSpecificWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""201329e6-39d0-4230-8c4a-5ce96ec14452"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""SwapSpecificWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -957,6 +1021,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_SwapWeapon = m_Player.FindAction("SwapWeapon", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_SwapSpecificWeapon = m_Player.FindAction("SwapSpecificWeapon", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1037,6 +1102,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_SwapWeapon;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_SwapSpecificWeapon;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -1047,6 +1113,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputAction @SwapWeapon => m_Wrapper.m_Player_SwapWeapon;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @SwapSpecificWeapon => m_Wrapper.m_Player_SwapSpecificWeapon;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1074,6 +1141,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @SwapSpecificWeapon.started += instance.OnSwapSpecificWeapon;
+            @SwapSpecificWeapon.performed += instance.OnSwapSpecificWeapon;
+            @SwapSpecificWeapon.canceled += instance.OnSwapSpecificWeapon;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1096,6 +1166,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @SwapSpecificWeapon.started -= instance.OnSwapSpecificWeapon;
+            @SwapSpecificWeapon.performed -= instance.OnSwapSpecificWeapon;
+            @SwapSpecificWeapon.canceled -= instance.OnSwapSpecificWeapon;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1292,6 +1365,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnReload(InputAction.CallbackContext context);
         void OnSwapWeapon(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnSwapSpecificWeapon(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
