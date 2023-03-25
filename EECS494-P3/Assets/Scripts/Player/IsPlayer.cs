@@ -36,4 +36,9 @@ public class IsPlayer : MonoBehaviour {
             yield return new WaitForSeconds(5.0f);
         }
     }
+
+    public static void SetPosition(Vector3 newPos)
+    {
+        instance.transform.position = newPos;
+    }
 }
