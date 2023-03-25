@@ -9,7 +9,7 @@ public class TutorialMessageManager : MonoBehaviour
     Subscription<TutorialMessageEvent> tutorMesSub;
 
     TutorialMessages data;
-    int count = 0;
+    int previousMessage = -1;
 
     // Start is called before the first frame update
     void Start()
@@ -20,11 +20,6 @@ public class TutorialMessageManager : MonoBehaviour
         data = ConfigManager.GetData<TutorialMessages>(configPath);
     }
 
-    private void Update()
-    {
-        //DebugSendMessage();
-    }
-
     private void OnDestroy()
     {
         EventBus.Unsubscribe(tutorMesSub);
@@ -32,21 +27,15 @@ public class TutorialMessageManager : MonoBehaviour
 
     void onTutorialMessageSent(TutorialMessageEvent tme)
     {
-        Debug.Log("Sending tutorial message");
-        // Send message event
-        EventBus.Publish(new MessageEvent(data.allMessages[tme.messageID].messages, tme.senderInstanceID, tme.keyToWaitFor, tme.unpauseBeforeFade));
-    }
-
-    void DebugSendMessage()
-    {
-        if (Input.GetKeyDown(KeyCode.V))
+        if(previousMessage < tme.messageID)
         {
-            EventBus.Publish(new TutorialMessageEvent(count, GetInstanceID()));
-            count++;
-            if (count >= data.allMessages.Count)
-            {
-                count = 0;
-            }
+            Debug.Log("Sending tutorial message");
+            previousMessage = tme.messageID;
+            // Send message event
+            EventBus.Publish(new MessageEvent(data.allMessages[tme.messageID].messages, tme.senderInstanceID, tme.keyToWaitFor, tme.unpauseBeforeFade));
+        } else
+        {
+            Debug.Log("Attempted to send an out of order message. Skipping");
         }
     }
 }
