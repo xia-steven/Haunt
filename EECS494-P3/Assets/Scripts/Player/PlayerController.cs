@@ -156,7 +156,8 @@ public class PlayerController : MonoBehaviour {
 
     private void Update() {
         if (!playerEnabled) return;
-        
+
+
         if (!isDodging) {
             movement.x = movementX;
             movement.y = 0f;

@@ -22,15 +22,7 @@ public class TutorialMessageManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.V))
-        {
-            EventBus.Publish(new TutorialMessageEvent(count));
-            count++;
-            if(count >= data.allMessages.Count)
-            {
-                count = 0;
-            }
-        }
+        //DebugSendMessage();
     }
 
     private void OnDestroy()
@@ -43,5 +35,18 @@ public class TutorialMessageManager : MonoBehaviour
         Debug.Log("Sending tutorial message");
         // Send message event
         EventBus.Publish(new MessageEvent(data.allMessages[tme.messageID].messages));
+    }
+
+    void DebugSendMessage()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            EventBus.Publish(new TutorialMessageEvent(count));
+            count++;
+            if (count >= data.allMessages.Count)
+            {
+                count = 0;
+            }
+        }
     }
 }

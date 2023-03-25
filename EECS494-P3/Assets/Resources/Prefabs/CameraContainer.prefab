@@ -471,8 +471,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -893,10 +893,10 @@ MonoBehaviour:
   minXoffset: -2
   maxZoffset: 2
   minZoffset: -2
-  xRoomMin: -15
-  xRoomMax: 30
-  zRoomMin: -13
-  zRoomMax: -13
+  xRoomMin: 0
+  xRoomMax: 0
+  zRoomMin: -7
+  zRoomMax: -7
   camOffsetFromPlayer: {x: 0, y: 11.5, z: -8}
   playerOffsetProportion: 0.8
 --- !u!1 &3753191300782068639
@@ -3887,11 +3887,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2087388259792526371, guid: 6327e31284adbd344b7a02030336febd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2087388259792526372, guid: 6327e31284adbd344b7a02030336febd, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2087388259792526372, guid: 6327e31284adbd344b7a02030336febd, type: 3}
       propertyPath: spawners.Array.size

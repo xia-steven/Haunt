@@ -48,7 +48,6 @@ public class CameraMovement : MonoBehaviour
         // Invert for some reason
         mouseOffset = -(Camera.main.ScreenToWorldPoint(mouse) - transform.position);
         offset = playerOffset * playerOffsetProportion + mouseOffset * (1 - playerOffsetProportion);
-        Debug.Log("Offset: " + offset);
         // Remove y offset
         offset.y = 0;
 

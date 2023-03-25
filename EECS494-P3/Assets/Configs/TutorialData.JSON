@@ -4,32 +4,41 @@
         {
             "messages": [
                 "Oh good, you're awake.  We have much to discuss.  You can use <b>LEFT CLICK</b> to speed through my messages, as well as continue our conversation.",
-                "I've enlisted the help of a few friends to teach you everything you need to know to survive the upcoming battle.",
-                "To begin, let's head to the right.  Use <b>WASD</b> to move and <b>SPACEBAR</b> to dash over that pit."
+                "I've been waiting years for you to finally awaken.  I hope you will be different then all the previous.",
+                "Since you woke up in the middle of the night, we'll only face a few humans tonight.  I'll use tonight to show you the ropes, but you'll be on your own after that.",
+                "As you can see, I've provided you with a simple pistol to defend yourself.  I'll see if I can have {INSERT SHOP KEEPER NAME} find you better weapons to use as the nights progress.",
+                "Use <b>WASD</b> to head over to the teleporter in the center of the room and head to the surface.  I dug a few pits around the teleporter, so you should be safe after teleporting."
             ]
         },
         {
             "messages": [
-                "Your dash (<b>SPACEBAR</b>) can be used to travel through projectiles, and you can use <b>LEFT CLICK</b> to fire."
+                "Oh no!  It looks like an archer was waiting for you!  Use <b>SPACEBAR</b> to travel through the arrow and cross the pit."
             ]
         },
         {
             "messages": [
-                "Nice work.  Let's practice with a few more friends."
+                "Nice work.  Use <b>LEFT CLICK</b> to shoot your pistol and kill the archer."
             ]
         },
         {
             "messages": [
-                "Great job!  Ascend the staircase to the right and I'll show you around the graveyard."
+                "Great job!  Before more humans show up, let me explain the situation a little more.",
+                "I was able to reanimate you with a bit of magic, but we have a problem.",
+                "Due to the nature of my magic, the nearby town was alerted and are sending people to banish you back to the underworld.",
+                "If they are able to construct all 3 pedestals, you will be banished.  In addition to fighting the humans attacking you, you'll need to prevent them from building these pedestals.",
+                "It looks like there's still a pedestal from your predecessor.  Go destroy it with your pistol! (<b>LEFT CLICK</b>)"
             ]
         },
         {
             "messages": [
-                "Before I show you to survive the upcoming days, let me explain the situation a little more.",
-                "I've been waiting years for you to finally awaken.  I was able to bring you back to life using a bit of magic, but we have a problem.",
-                "Due to the nature of my magic, the nearby town was alerted and are sending people to kill you.  I know they are planning to erect pedestals to banish you away, and we must not let them.",
-                "If you can survive the next 3 days, my magic will become strong enough that they will be unable to banish you.",
-                "Alright.  Head to the teleporter in the center and I'll walk you through a simulation of how the humans will attempt to banish you."
+                "Sweet.  As you can see, destroying the pedestal increased your max health from 2 to 3.  You'll want to keep the humans from constructing any pedestals to stay the strongest.",
+                "I think I can hear a few more humans coming.  Try and survive the best you can!  I'll be back once day hits."
+            ]
+        },
+        {
+            "messages": [
+                "It looks like that was the last human for that night.  Since humans can only construct the pedestals during the night, they're going to head back to their village for now.",
+                "Head back to the teleporter in the center of the room to return to your crypt.  We can gear you up there."
             ]
         }
     ]
