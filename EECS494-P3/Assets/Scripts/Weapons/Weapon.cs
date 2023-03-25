@@ -17,7 +17,10 @@ public abstract class Weapon : MonoBehaviour {
     // Determines whether weapon is currently firing or not - used for automatic weapons
     protected bool firing = false;
 
+    // Time it takes gun to reload (NEED TO SHOW THIS VISUALLY)
     protected float reloadTime;
+    // Length of gun barrel for bullet spawning - will be gun specific due to masking / variability of sprites
+    [SerializeField] protected float barrelLength = 0.5f;
 
     protected Subscription<FireEvent> fireEventSubscription;
     protected Subscription<ReloadEvent> reloadEventSubscription;
@@ -54,10 +57,17 @@ public abstract class Weapon : MonoBehaviour {
 
     // Fires a projectile of type Bullet in specified direction
     public void FireProjectile(GameObject bullet, Vector3 direction, Transform start, float bulletSpeed, Shooter shooter) {
-        GameObject projectile = Instantiate(bullet, start.position, Quaternion.identity);
+        // Set spawn position based on barrel length
+        Vector3 barrelOffset = direction * barrelLength;
+        Vector3 barrelSpawn = start.position + barrelOffset;
 
+        // Spawn bullet at barrel of gun
+        GameObject projectile = Instantiate(bullet, barrelSpawn, Quaternion.identity);
+
+        // Set shooter to holder of gun (enemy or player)
         projectile.GetComponent<Bullet>().SetShooter(shooter);
 
+        // Give bullet its velocity
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.velocity = direction * bulletSpeed;
     }
