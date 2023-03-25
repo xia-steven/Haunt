@@ -50,7 +50,10 @@ public class PlayerController : MonoBehaviour {
             return;
         }
 
-        dodgePressed = true;
+        if (value.started)
+        {
+            dodgePressed = true;
+        }
     }
 
     public void OnMove(InputAction.CallbackContext value) {
@@ -94,13 +97,17 @@ public class PlayerController : MonoBehaviour {
 
     public void OnReload(InputAction.CallbackContext value) {
         if (!playerEnabled) return;
-        EventBus.Publish<ReloadEvent>(new ReloadEvent(this.gameObject));
+        if (value.started)
+        {
+            EventBus.Publish<ReloadEvent>(new ReloadEvent(this.gameObject));
+        }
     }
 
     public void OnSwapWeapon(InputAction.CallbackContext value)
     {
         if (value.started)
         {
+            Debug.Log(value.ReadValue<float>());
             if (value.ReadValue<float>() > 0)
             {
                 EventBus.Publish<SwapEvent>(new SwapEvent(1));
@@ -112,9 +119,20 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public void OnSwapSpecificWeapon(InputAction.CallbackContext value)
+    {
+        if (value.started)
+        {
+            EventBus.Publish<SwapSpecificEvent>(new SwapSpecificEvent(int.Parse(value.control.name)));
+        }
+    }
+
     public void OnInteract(InputAction.CallbackContext value)
     {
-        EventBus.Publish(new TryInteractEvent());
+        if (value.started)
+        {
+            EventBus.Publish(new TryInteractEvent());
+        }
     }
 
     private void StartDodge()
