@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2722227701225203394}
   - component: {fileID: 470793184306117436}
   - component: {fileID: 1094618456979900168}
+  - component: {fileID: 87641175731913332}
   m_Layer: 0
   m_Name: HeartSprite
   m_TagString: Untagged
@@ -106,6 +107,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &87641175731913332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5445751335085985804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e07952aa48a7fc4478591f800a034e80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6909370433621505590
 GameObject:
   m_ObjectHideFlags: 0
