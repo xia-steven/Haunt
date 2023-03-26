@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PedestalInfo {
@@ -12,7 +13,6 @@ public class PedestalInfo {
 }
 
 public class PedestalAttacker : EnemyBase {
-
     public static Dictionary<int, PedestalInfo> pedestalInfos = new Dictionary<int, PedestalInfo> {
         { 1, new PedestalInfo(new Vector3(10, 0, 0)) }, { 2, new PedestalInfo(new Vector3(-10, 0, 0)) },
         { 3, new PedestalInfo(new Vector3(0, 0, -9)) }
@@ -42,19 +42,16 @@ public class PedestalAttacker : EnemyBase {
     }
 
     private int findClosestPedestal() {
-        var need_return = true;
-        foreach (var ped in pedestalInfos) {
-            if (ped.Value.destroyed)
-                need_return = false;
+        if (pedestalInfos.All(ped => !ped.Value.destroyed)) {
+            return 0;
         }
 
-        if (need_return)
-            return 0;
         var closestDist = float.MaxValue;
         var closest = (int)Random.Range(1f, 3.99f);
         while (!pedestalInfos[closest].destroyed) {
             closest = (int)Random.Range(1f, 3.99f);
         }
+
         foreach (var ped in pedestalInfos) {
             var distance = Vector3.Distance(transform.position, ped.Value.position);
             if (distance < closestDist && ped.Value.destroyed) {
