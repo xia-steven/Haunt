@@ -116,6 +116,28 @@ TextureImporter:
   spriteSheet:
     serializedVersion: 2
     sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: minigun_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 6
+        width: 27
+        height: 18
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54ac42f3e306bdb4a9b229d737b68793
+      internalID: 884262886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
