@@ -26,7 +26,7 @@ public class ConfigManager : MonoBehaviour
 
     private bool LoadConfig<T>(string key) where T : Savable
     {
-        string path = Application.dataPath + "/Configs/" + key + ".JSON";
+        string path = Application.dataPath + "/Configs/" + key + ".json";
 
         //check that config file exists
         if (!File.Exists(path))

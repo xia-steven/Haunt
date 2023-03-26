@@ -10,13 +10,11 @@ public class EnemyBase : MonoBehaviour {
     protected int currentPathIndex;
     protected List<Vector3> pathVectorList;
     private Transform tf_;
-    private Vector3 origin;
 
     protected void Start() {
         rb = GetComponent<Rigidbody>();
         health = GetComponent<HasHealth>();
         tf_ = transform;
-        origin = new Vector3(-17.5f, 0, -11f);
     }
 
     private void FixedUpdate() {
@@ -25,7 +23,7 @@ public class EnemyBase : MonoBehaviour {
 
     private void HandleMovement() {
         if (pathVectorList != null) {
-            var targetPosition = pathVectorList[currentPathIndex] + origin;
+            var targetPosition = pathVectorList[currentPathIndex] + PathfindingController.map.origin;
             if (Vector3.Distance(transform.position, targetPosition) > 0.5f) {
                 var moveDir = (targetPosition - transform.position).normalized;
                 tf_.position += Time.deltaTime * speed * moveDir;
