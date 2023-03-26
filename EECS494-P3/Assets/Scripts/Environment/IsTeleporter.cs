@@ -11,16 +11,17 @@ public class IsTeleporter : MonoBehaviour
     [SerializeField] Material inactiveMat;
     [SerializeField] Material activeMat;
 
-    Renderer visualRenderer;
+    MeshRenderer visualRenderer;
 
     bool isActive = true;
     public bool Active {
         get { return isActive; }
         set 
-        { 
+        {
+            bool tmp = isActive;
             isActive = value;
-            if (isActive) Activate();
-            else Deactivate();
+            if (isActive && !tmp) Activate();
+            else if (tmp) Deactivate();
         }
     }
 
@@ -31,7 +32,7 @@ public class IsTeleporter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        visualRenderer = GetComponent<Renderer>();
+        visualRenderer = GetComponent<MeshRenderer>();
 
         Activate();
 
