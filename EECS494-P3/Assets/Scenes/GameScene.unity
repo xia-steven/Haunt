@@ -1385,6 +1385,38 @@ PrefabInstance:
       propertyPath: m_projectionMatrixMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5059311065477073491, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: flashColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5059311065477073491, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: flashColor.b
+      value: 0.07075471
+      objectReference: {fileID: 0}
+    - target: {fileID: 5059311065477073491, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: flashColor.g
+      value: 0.07075471
+      objectReference: {fileID: 0}
+    - target: {fileID: 5059311065477073491, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: flashColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5059311065477073491, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: normalColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5059311065477073491, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: normalColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5059311065477073491, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: normalColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5059311065477073491, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: normalColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6641841127982902867, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1395,7 +1427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6793672629260230726, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 159.49138
+      value: 159.4914
       objectReference: {fileID: 0}
     - target: {fileID: 7056402118522664960, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_AnchorMax.y
