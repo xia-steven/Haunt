@@ -65,7 +65,7 @@ public class Rifle : Weapon
         isReloading = false;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         // Get the screen position of the cursor
         Vector3 screenPos = Input.mousePosition;
@@ -76,7 +76,7 @@ public class Rifle : Weapon
 
         // Find the point where the ray intersects the plane that contains the player
         Plane groundPlane = new Plane(Vector3.up, transform.position);
-        if (groundPlane.Raycast(ray, out float distanceToGround))
+        if (groundPlane.Raycast(ray, out float distanceToGround) && playerEnabled)
         {
             // Calculate the direction vector from the player to the intersection point
             Vector3 hitPoint = ray.GetPoint(distanceToGround);

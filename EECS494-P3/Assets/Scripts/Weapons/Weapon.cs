@@ -34,19 +34,23 @@ public abstract class Weapon : MonoBehaviour {
     // Determines whether weapon is currently firing or not - used for automatic weapons
     protected bool firing = false;
 
-    // Time it takes gun to reload (NEED TO SHOW THIS VISUALLY)
+    // Time it takes gun to reload
     protected float reloadTime;
     public float ReloadTime {
         get { return reloadTime; }
         private set{ }
     }
 
+
+    protected bool playerEnabled = true;
     protected bool isReloading = false;
     // Length of gun barrel for bullet spawning - will be gun specific due to masking / variability of sprites
     [SerializeField] protected float barrelLength = 0.5f;
 
     protected Subscription<FireEvent> fireEventSubscription;
     protected Subscription<ReloadEvent> reloadEventSubscription;
+    protected Subscription<EnablePlayerEvent> enablePlayerSubscription;
+    protected Subscription<DisablePlayerEvent> disablePlayerSubscription;
 
     bool hasDoneInitialBroadcast;
 
@@ -63,12 +67,26 @@ public abstract class Weapon : MonoBehaviour {
     protected void Subscribe() {
         fireEventSubscription = EventBus.Subscribe<FireEvent>(_OnFire);
         reloadEventSubscription = EventBus.Subscribe<ReloadEvent>(_OnReload);
+        enablePlayerSubscription = EventBus.Subscribe<EnablePlayerEvent>(_OnEnablePlayer);
+        disablePlayerSubscription = EventBus.Subscribe<DisablePlayerEvent>(_OnDisablePlayer);
     }
 
     protected void UnSubscribe()
     {
         EventBus.Unsubscribe<FireEvent>(fireEventSubscription);
         EventBus.Unsubscribe<ReloadEvent>(reloadEventSubscription);
+    }
+
+    protected virtual void _OnEnablePlayer(EnablePlayerEvent e)
+    {
+        Debug.Log("Player enabled in weapon");
+        playerEnabled = true;
+    }
+
+    protected virtual void _OnDisablePlayer(DisablePlayerEvent e)
+    {
+        Debug.Log("Player disabled in weapon");
+        playerEnabled = false;
     }
 
     protected virtual void _OnFire(FireEvent e) {
