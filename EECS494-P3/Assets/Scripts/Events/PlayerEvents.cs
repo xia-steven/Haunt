@@ -139,7 +139,7 @@ class CoinEvent
 /// <summary>
 /// This event is sent whenever a script wants to disable player controls
 /// </summary>
-class DisablePlayerEvent
+public class DisablePlayerEvent
 {
     public override string ToString()
     {
@@ -150,7 +150,7 @@ class DisablePlayerEvent
 /// <summary>
 /// This event is sent whenever a script wants to enable player controls
 /// </summary>
-class EnablePlayerEvent
+public class EnablePlayerEvent
 {
     public override string ToString()
     {
