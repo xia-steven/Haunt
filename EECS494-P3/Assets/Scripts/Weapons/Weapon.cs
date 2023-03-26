@@ -19,6 +19,7 @@ public abstract class Weapon : MonoBehaviour {
 
     // Time it takes gun to reload (NEED TO SHOW THIS VISUALLY)
     protected float reloadTime;
+    protected bool isReloading = false;
     // Length of gun barrel for bullet spawning - will be gun specific due to masking / variability of sprites
     [SerializeField] protected float barrelLength = 0.5f;
 
