@@ -131,6 +131,7 @@ public abstract class Weapon : MonoBehaviour {
     public void OnEnable()
     {
         EventBus.Publish(new WeaponSwapEvent(this));
+        firing = false;
     }
 }
 
