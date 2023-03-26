@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2daf6a3d93866ae4eacfaf62395dfbf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialMessageID: 2
+  tutorialMessageID: -1
 --- !u!65 &167498675
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -771,7 +771,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3884637779830538311, guid: e49a484649d406a48a08fb2bf089d5e7, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3884637779830538311, guid: e49a484649d406a48a08fb2bf089d5e7, type: 3}
       propertyPath: m_AnchorMax.x
@@ -927,6 +927,10 @@ PrefabInstance:
       propertyPath: Pedestals.Array.data[2]
       value: 
       objectReference: {fileID: 1581399560}
+    - target: {fileID: 1514967688, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 641650401560064576, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: isTutorial
       value: 1
