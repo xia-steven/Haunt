@@ -42,6 +42,14 @@ public class PedestalAttacker : EnemyBase {
     }
 
     private int findClosestPedestal() {
+        var need_return = true;
+        foreach (var ped in pedestalInfos) {
+            if (ped.Value.destroyed)
+                need_return = false;
+        }
+
+        if (need_return)
+            return 0;
         var closestDist = float.MaxValue;
         var closest = (int)Random.Range(1f, 3.99f);
         while (!pedestalInfos[closest].destroyed) {
