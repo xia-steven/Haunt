@@ -13,6 +13,7 @@ public class IsPedestal : MonoBehaviour {
     [SerializeField] GameObject destroyedVisual;
     [SerializeField] GameObject floatingOrb;
     [SerializeField] GameObject healthBar;
+    [SerializeField] bool startRepaired = false;
     ParticleSystem particles;
     HasPedestalHealth pedestalHealth;
 
@@ -30,10 +31,6 @@ public class IsPedestal : MonoBehaviour {
         destroyedRenders = destroyedVisual.GetComponentsInChildren<Renderer>();
         healthBarImage = healthBar.GetComponent<Image>();
 
-        repairedVisual.SetActive(false);
-        floatingOrb.SetActive(false);
-        destroyedVisual.SetActive(true);
-
         // Initialize gradient
         colors = new Gradient();
         GradientColorKey[] gck = new GradientColorKey[2];
@@ -47,13 +44,33 @@ public class IsPedestal : MonoBehaviour {
         gak[1].alpha = 1.0F;
         gak[1].time = 1.0F;
         colors.SetKeys(gck, gak);
-        // Set initial color and state to destroyed
-        updateVisuals(0, 1);
-        particles.Play();
+
+        if (!startRepaired)
+        {
+            repairedVisual.SetActive(false);
+            floatingOrb.SetActive(false);
+            destroyedVisual.SetActive(true);
+            // Set initial color and state to destroyed
+            updateVisuals(0, 1);
+            particles.Play();
+        }
+        else
+        {
+            repairedVisual.SetActive(true);
+            floatingOrb.SetActive(true);
+            destroyedVisual.SetActive(false);
+        }
     }
 
     // Update is called once per frame
     void Update() {
+        if(startRepaired)
+        {
+            // Manually repair the pedestal
+            pedestalHealth.AlterHealth(-500);
+            startRepaired = false;
+        }
+
         DebugKeys();
     }
 
@@ -75,7 +92,6 @@ public class IsPedestal : MonoBehaviour {
         playerDestroyed = false;
         particles.Stop();
         EventBus.Publish(new PedestalRepairedEvent(UUID));
-        EventBus.Publish(new ToastRequestEvent(new Color32(255, 0, 0, 255), "Pedestal repaired by enemies"));
     }
 
     public bool IsDestroyedByPlayer() {
@@ -98,7 +114,6 @@ public class IsPedestal : MonoBehaviour {
         else if (healthfraction == 0.5f || (float)curr / (float)(max + 1) == 0.5f)
         {
             // half Repaired
-            floatingOrb.SetActive(false);
             repairedVisual.SetActive(true);
             destroyedVisual.SetActive(false);
         }

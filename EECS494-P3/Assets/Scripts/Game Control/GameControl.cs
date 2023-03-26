@@ -16,7 +16,7 @@ partial class GameControl : MonoBehaviour {
     /*STATE DEPENDENT VARIABLES*/
     private float nightStartTime;
 
-    private static int day = 0; //set to 1 less than the first day
+    private static int day = -1; //set to 1 less than the first day (tutorial is day 0)
 
     private bool gameActive = false;
     private bool gamePaused = false;
@@ -71,6 +71,7 @@ partial class GameControl : MonoBehaviour {
         {
             StartCoroutine(StartOnDelay(DayUpdate, .01f));
         }
+        TimeManager.ResetTimeScale();
     }
 
     private void OnDisable()
