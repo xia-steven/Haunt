@@ -3,28 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(IsTeleporter))]
-public class TeleporterDisableDuringWave : MonoBehaviour
-{
+public class TeleporterDisableDuringWave : MonoBehaviour {
     IsTeleporter tp;
     bool activated = false;
 
-    private void Start()
-    {
+    private void Start() {
         tp = GetComponent<IsTeleporter>();
-
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        Debug.Log("Activated: " + tp.Active);
-        if (!activated && GameControl.NightEnding)
-        {
+    void Update() {
+        if (!activated && GameControl.NightEnding) {
             activated = true;
             tp.Active = true;
         }
-        else
-        {
+        else {
             tp.Active = false;
         }
     }

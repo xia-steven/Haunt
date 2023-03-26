@@ -77,7 +77,7 @@ public class PedestalAttacker : EnemyBase {
         }
     }
 
-    private IEnumerator pedetalCoroutine(int uuid) {
+    private IEnumerator pedetalCoroutine() {
         yield return new WaitForSeconds(pedestalTimeout);
         SetTargetPosition(pedestalInfos[findClosestPedestal()].position);
     }
@@ -95,7 +95,7 @@ public class PedestalAttacker : EnemyBase {
                 break;
         }
 
-        StartCoroutine(pedetalCoroutine(event_.pedestalUUID));
+        StartCoroutine(pedetalCoroutine());
     }
 
     private void pedestalRepaired(PedestalRepairedEvent event_) {
