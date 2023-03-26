@@ -59,12 +59,14 @@ public class Shotgun : Weapon
 
     private IEnumerator ReloadDelay()
     {
+        isReloading = true;
         Debug.Log("Reloading");
         yield return new WaitForSeconds(reloadTime);
 
         // TODO: change to line up with inventory ammo
         ReloadInfinite();
         Debug.Log("Shotgun ammo: " + currentClipAmount);
+        isReloading = false;
     }
 
     private void Update()
@@ -104,7 +106,7 @@ public class Shotgun : Weapon
 
         // Fire bullet if ammo in clip, trigger is down, last bullet was not fired recently, last tap was not recent
 
-        if (currentClipAmount > 0 && firing && (Time.time - lastBullet >= bulletDelay) && (Time.time - lastTap >= tapDelay))
+        if (currentClipAmount > 0 && firing && (Time.time - lastBullet >= bulletDelay) && (Time.time - lastTap >= tapDelay) && !isReloading)
         {
             // Fires basic bullet in direction pistol is facing
 

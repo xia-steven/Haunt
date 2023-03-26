@@ -41,6 +41,7 @@ public abstract class Weapon : MonoBehaviour {
         private set{ }
     }
 
+    protected bool isReloading = false;
     // Length of gun barrel for bullet spawning - will be gun specific due to masking / variability of sprites
     [SerializeField] protected float barrelLength = 0.5f;
 
