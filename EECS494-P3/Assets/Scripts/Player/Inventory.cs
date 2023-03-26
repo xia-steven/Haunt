@@ -15,12 +15,14 @@ public class Inventory : MonoBehaviour
     private Subscription<SwapEvent> swapEventSubscription;
     private Subscription<SwapSpecificEvent> swapSpecificSubscription;
     private Subscription<CoinEvent> coinEventSubscription;
+    private Subscription<ResetInventoryEvent> resetInventorySubscription;
 
     private void Awake()
     {
         swapEventSubscription = EventBus.Subscribe<SwapEvent>(_OnSwitchWeapon);
         coinEventSubscription = EventBus.Subscribe<CoinEvent>(_OnCoinChange);
         swapSpecificSubscription = EventBus.Subscribe<SwapSpecificEvent>(_OnSpecificSwap);
+        resetInventorySubscription = EventBus.Subscribe<ResetInventoryEvent>(_OnResetInventory);
 
         // Equip pistol on load
         pistol = Resources.Load<GameObject>("Prefabs/Weapons/Pistol");
@@ -41,8 +43,8 @@ public class Inventory : MonoBehaviour
         weapons[numWeapons] = Instantiate(weapon, transform);
 
         // Unequip current weapon and equip new weapon
-        weapons[currentWeapon].gameObject.SetActive(false);
-        weapons[numWeapons].gameObject.SetActive(true);
+        weapons[currentWeapon].SetActive(false);
+        weapons[numWeapons].SetActive(true);
 
         currentWeapon = numWeapons;
         numWeapons++;
@@ -101,11 +103,29 @@ public class Inventory : MonoBehaviour
         coins += e.coinValue;
     }
 
+    private void _OnResetInventory(ResetInventoryEvent e) 
+    {
+        // Set all values back to zero
+        numWeapons = 0;
+        currentWeapon = 0;
+        coins = 0;
+
+        // Remove all weapons
+        for (int i = 0; i < numWeapons; i++)
+        {
+            weapons[i] = null;
+        }
+
+        // Re-equip pistol
+        Equip(pistol);
+    }
+
     private void OnDestroy()
     {
         EventBus.Unsubscribe<SwapEvent>(swapEventSubscription);
         EventBus.Unsubscribe<CoinEvent>(coinEventSubscription);
         EventBus.Unsubscribe<SwapSpecificEvent>(swapSpecificSubscription);
+        EventBus.Unsubscribe<ResetInventoryEvent>(resetInventorySubscription);
     }
 }
 

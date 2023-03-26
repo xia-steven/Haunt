@@ -6,7 +6,9 @@ public class Shotgun : Weapon
 {
     protected GameObject wielder;
     protected GameObject shotgunBullet;
+    protected SpriteRenderer spriteRenderer;
 
+    [SerializeField] protected GameObject shotgunSprite;
     // Time between bullets
     [SerializeField] protected float bulletDelay = 0.85f;
     // Time between tap firing
@@ -25,6 +27,7 @@ public class Shotgun : Weapon
 
         Subscribe();
 
+        spriteRenderer = shotgunSprite.GetComponent<SpriteRenderer>();
         wielder = this.transform.parent.gameObject;
         shotgunBullet = Resources.Load<GameObject>("Prefabs/Weapons/ShotgunBullet");
     }
@@ -78,6 +81,16 @@ public class Shotgun : Weapon
             // Calculate the direction vector from the player to the intersection point
             Vector3 hitPoint = ray.GetPoint(distanceToGround);
             direction = hitPoint - transform.position;
+
+            // Check if gun sprite needs to be flipped
+            if (direction.x < 0)
+            {
+                spriteRenderer.flipY = true;
+            }
+            else
+            {
+                spriteRenderer.flipY = false;
+            }
 
             // Calculate the rotation that points in the direction of the intersection point
             rotation = Quaternion.LookRotation(direction, Vector3.up);

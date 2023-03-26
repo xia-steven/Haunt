@@ -170,7 +170,7 @@ public class TryInteractEvent
 }
 
 /// <summary>
-/// This event is sent whenever the player is detected over a pit
+/// This event is sent whenever the player detects themselves over a pit
 /// </summary>
 class OverPitEvent
 {
@@ -184,5 +184,16 @@ class OverPitEvent
     public override string ToString()
     {
         return "Over Pit Event sent";
+    }
+}
+
+/// <summary>
+/// This event is sent to reset the player's inventory back to just a base pistol
+/// </summary>
+class ResetInventoryEvent
+{
+    public override string ToString()
+    {
+        return "Reset Inventory Event sent";
     }
 }
