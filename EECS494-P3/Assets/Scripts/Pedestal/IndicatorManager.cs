@@ -35,7 +35,7 @@ public class IndicatorManager : MonoBehaviour
             indicatorArrows.Add(newIndicator);
         }
         xModifier = canvasSize.x / Screen.width;
-        yModifier = canvasSize.y / Screen.height;
+        yModifier = canvasSize.y / Screen.height * Mathf.Sqrt(2);
 
         destSub = EventBus.Subscribe<PedestalDestroyedEvent>(_onPedestalDestroy);
         repSub = EventBus.Subscribe<PedestalRepairedEvent>(_onPedestalRepair);
