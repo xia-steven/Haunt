@@ -2,13 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHasHealth : HasHealth {
     Subscription<PlayerDamagedEvent> damageSub;
     Subscription<PedestalDestroyedEvent> pedDestSub;
     Subscription<PedestalRepairedEvent> pedRepSub;
+    Subscription<MessageFinishedEvent> messFinSub;
 
     [SerializeField] private float invincibilityTimer = 1f;
+    [SerializeField] int tutorialDeathMessageID = 6;
+
+    public int initialMaxHealth = 0;
     private bool isInvincible = false;
 
     // Start is called before the first frame update
@@ -16,6 +21,10 @@ public class PlayerHasHealth : HasHealth {
         damageSub = EventBus.Subscribe<PlayerDamagedEvent>(_OnPlayerDamaged);
         pedDestSub = EventBus.Subscribe<PedestalDestroyedEvent>(_OnPedestalDied);
         pedRepSub = EventBus.Subscribe<PedestalRepairedEvent>(_OnPedestalRepaired);
+        messFinSub = EventBus.Subscribe<MessageFinishedEvent>(_OnTutorialDeathMessageFinished);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        initialMaxHealth = maxHealth;
     }
 
 
@@ -28,8 +37,23 @@ public class PlayerHasHealth : HasHealth {
         }
         
 
-        if (health == 0) {
+        Debug.Log("Game control day: " + GameControl.Day);
+        if (health == 0 && GameControl.Day > 0) {
             EventBus.Publish(new GameLossEvent());
+        }
+        else if (health == 0 && GameControl.Day <= 0)
+        {
+            // Tutorial day death
+            EventBus.Publish(new TutorialMessageEvent(tutorialDeathMessageID, GetInstanceID(), KeyCode.Mouse0));
+        }
+    }
+
+    void _OnTutorialDeathMessageFinished(MessageFinishedEvent mfe)
+    {
+        if(mfe.senderInstanceID == GetInstanceID())
+        {
+            // Restart tutorial scene
+            SceneManager.LoadScene("TutorialGameScene");
         }
     }
 
@@ -59,7 +83,7 @@ public class PlayerHasHealth : HasHealth {
         Color normalColor = sr.color;
         while (duration < invincibilityTimer)
         {
-            Debug.Log("Inv_timer:" + duration);
+            //Debug.Log("Inv_timer:" + duration);
             duration += 0.1f;
             normalColor.a = 1 - normalColor.a;
             sr.color = normalColor;
@@ -74,5 +98,18 @@ public class PlayerHasHealth : HasHealth {
     private void OnDestroy() {
         EventBus.Unsubscribe(pedDestSub);
         EventBus.Unsubscribe(pedRepSub);
+        EventBus.Unsubscribe(messFinSub);
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene s, LoadSceneMode m)
+    {
+        if (s.name == "TutorialGameScene")
+        {
+            Debug.Log("TutorialGameScene Loaded");
+            health = initialMaxHealth;
+            transform.position = new Vector3(0, 0.5f, 0);
+        }
     }
 }

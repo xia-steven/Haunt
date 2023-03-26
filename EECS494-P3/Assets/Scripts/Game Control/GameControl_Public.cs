@@ -173,7 +173,8 @@ partial class GameControl : MonoBehaviour {
     }
 
     public void ResetGame() {
-        day = 0;
+        // Day 0 is the tutorial night, start 1 below that
+        day = -1;
 
         gameActive = false;
         gamePaused = false;

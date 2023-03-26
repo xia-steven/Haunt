@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(HasHealth))]
+[RequireComponent(typeof(PlayerHasHealth))]
 public class IsPlayer : MonoBehaviour {
     public static IsPlayer instance;
 
-    private HasHealth health;
+    private PlayerHasHealth health;
 
     // Start is called before the first frame update
     void Awake() {
         if (instance == null) instance = this;
         else Destroy(gameObject);
 
-        health = GetComponent<HasHealth>();
+        health = GetComponent<PlayerHasHealth>();
         // StartCoroutine(NaturalHealthRegen());
         // starting to phase this out of the game
     }
@@ -24,6 +24,18 @@ public class IsPlayer : MonoBehaviour {
 
     public int GetMaxHealth() {
         return health.GetMaxHealth();
+    }
+
+    public int GetInitialMaxHealth()
+    {
+        if(health.initialMaxHealth == 0)
+        {
+            return health.GetMaxHealth();
+        }
+        else
+        {
+            return health.initialMaxHealth;
+        }
     }
 
     IEnumerator NaturalHealthRegen()

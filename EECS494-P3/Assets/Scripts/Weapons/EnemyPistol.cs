@@ -6,6 +6,7 @@ public class EnemyPistol : Pistol
 {
     GameObject player;
 
+
     protected override void Awake()
     {
         lastBullet = Time.time;
@@ -28,7 +29,7 @@ public class EnemyPistol : Pistol
             direction.y = 0;
             direction = direction.normalized;
 
-            Debug.Log(basicBullet);
+            //Debug.Log(basicBullet);
 
             FireProjectile(basicBullet, direction, transform, EnemyBasicBullet.bulletSpeed, Shooter.Enemy);
 
