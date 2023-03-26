@@ -4,33 +4,40 @@ using UnityEngine;
 
 public class TutorialNightTrigger : MonoBehaviour
 {
-    [SerializeField] int tutorialMessageID = 4;
+    [SerializeField] int nightStartTutorialMessageID = 4;
+    [SerializeField] int nightEndTutorialMessageID = 5;
+    [SerializeField] GameObject timerText;
 
     bool sent = false;
     bool messageFinished = false;
 
     Subscription<PedestalDestroyedEvent> pedDestSub;
     Subscription<MessageFinishedEvent> messFinSub;
+    Subscription<NightEndEvent> nightEndSub;
 
     // Start is called before the first frame update
     void Start()
     {
         pedDestSub = EventBus.Subscribe<PedestalDestroyedEvent>(onPedestalDestroyed);
         messFinSub = EventBus.Subscribe<MessageFinishedEvent>(onMessageAcknowledged);
+        nightEndSub = EventBus.Subscribe<NightEndEvent>(onNightEnd);
+        timerText.SetActive(false);
     }
 
     private void OnDestroy()
     {
         EventBus.Unsubscribe(pedDestSub);
         EventBus.Unsubscribe(messFinSub);
+        EventBus.Unsubscribe(nightEndSub);
     }
 
     void onPedestalDestroyed(PedestalDestroyedEvent pde)
     {
         if(!sent)
         {
-            EventBus.Publish(new TutorialMessageEvent(tutorialMessageID, GetInstanceID(), KeyCode.Mouse0, true));
+            EventBus.Publish(new TutorialMessageEvent(nightStartTutorialMessageID, GetInstanceID(), KeyCode.Mouse0, true));
             sent = true;
+            StartCoroutine(startTutorialNight());
         }
     }
 
@@ -42,7 +49,8 @@ public class TutorialNightTrigger : MonoBehaviour
             yield return null;
         }
 
-        GameControl.StartGame();
+        GameControl.StartNight();
+        timerText.SetActive(true);
     }
 
     void onMessageAcknowledged(MessageFinishedEvent mfe)
@@ -51,5 +59,11 @@ public class TutorialNightTrigger : MonoBehaviour
         {
             messageFinished = true;
         }
+    }
+
+
+    void onNightEnd(NightEndEvent nee)
+    {
+        EventBus.Publish(new TutorialMessageEvent(nightEndTutorialMessageID, GetInstanceID()));
     }
 }

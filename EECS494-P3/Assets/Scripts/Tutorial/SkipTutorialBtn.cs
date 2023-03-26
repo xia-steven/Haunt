@@ -12,6 +12,6 @@ public class SkipTutorialBtn : MonoBehaviour
         SceneManager.LoadScene("GameScene");
         TimeManager.ResetTimeScale();
         GameObject player = GameObject.Find("Player");
-        player.transform.position = new Vector3(0f, 0.5f, 0f);
+        PlayerHasHealth health = player.GetComponent<PlayerHasHealth>();
     }
 }

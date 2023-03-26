@@ -12,12 +12,11 @@ partial class GameControl : MonoBehaviour {
     const bool DEBUG_DO_DAYNIGHT = true;
 
     [SerializeField] GameData data;
-    [SerializeField] bool isTutorial = false;
 
     /*STATE DEPENDENT VARIABLES*/
     private float nightStartTime;
 
-    private static int day = 0; //set to 1 less than the first day
+    private static int day = -1; //set to 1 less than the first day (tutorial is day 0)
 
     private bool gameActive = false;
     private bool gamePaused = false;
@@ -58,10 +57,7 @@ partial class GameControl : MonoBehaviour {
 
         waveSize = (int)(data.initialWaveSize * Mathf.Pow(data.waveDailyScale, day));
 
-        if(!isTutorial)
-        {
-            StartGame();
-        }
+        StartGame();
     }
 
     void OnSceneLoaded(Scene s, LoadSceneMode m)
@@ -75,6 +71,7 @@ partial class GameControl : MonoBehaviour {
         {
             StartCoroutine(StartOnDelay(DayUpdate, .01f));
         }
+        TimeManager.ResetTimeScale();
     }
 
     private void OnDisable()

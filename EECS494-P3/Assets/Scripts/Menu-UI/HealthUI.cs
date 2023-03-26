@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HealthUI : MonoBehaviour {
     [SerializeField] GameObject healthPipPrefab;
 
     [SerializeField] Sprite fullHeartImage;
     [SerializeField] Sprite halfHeartImage;
+    [SerializeField] int tutorialDeathMessageID = 6;
 
     [SerializeField] float loadWaitTime = 0.2f;
 
@@ -18,6 +20,7 @@ public class HealthUI : MonoBehaviour {
 
     Subscription<PedestalDestroyedEvent> pedDestSub;
     Subscription<PedestalRepairedEvent> pedRepSub;
+    Subscription<MessageFinishedEvent> messFinSub;
 
     enum HeartValue {
         empty,
@@ -40,18 +43,12 @@ public class HealthUI : MonoBehaviour {
 
         pedDestSub = EventBus.Subscribe<PedestalDestroyedEvent>(_OnPedestalDied);
         pedRepSub = EventBus.Subscribe<PedestalRepairedEvent>(_OnPedestalRepaired);
-        
+        messFinSub = EventBus.Subscribe<MessageFinishedEvent>(_OnTutorialDeathMessageFinished);
 
-        int numPips = (IsPlayer.instance.GetMaxHealth() + 1) / 2;
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
-        for (int i = 0; i < numPips; ++i) {
-            GameObject newPip = GameObject.Instantiate(healthPipPrefab, transform.localPosition, Quaternion.identity);
-            newPip.transform.localScale = Vector3.one;
-            newPip.transform.SetParent(transform, false);
-            healthPips.Add(newPip.GetComponentsInChildren<Image>()[1]);
-            healthPips[i].enabled = false;
-            heartValueTracker.Add(HeartValue.empty);
-        }
+        InitializeHealth();
+
 
         StartCoroutine(loadHealth());
     }
@@ -71,6 +68,20 @@ public class HealthUI : MonoBehaviour {
         }
     }
 
+    void InitializeHealth()
+    {
+        int numPips = (IsPlayer.instance.GetInitialMaxHealth() + 1) / 2;
+
+        for (int i = 0; i < numPips; ++i)
+        {
+            GameObject newPip = GameObject.Instantiate(healthPipPrefab, transform.localPosition, Quaternion.identity);
+            newPip.transform.localScale = Vector3.one;
+            newPip.transform.SetParent(transform, false);
+            healthPips.Add(newPip.GetComponentsInChildren<Image>()[1]);
+            healthPips[i].enabled = false;
+            heartValueTracker.Add(HeartValue.empty);
+        }
+    }
 
     void _OnDamage(PlayerDamagedEvent e) {
         StartCoroutine(waitForHealthUpdate());
@@ -100,9 +111,35 @@ public class HealthUI : MonoBehaviour {
         // Remove from data structures
         healthPips.RemoveAt(healthPips.Count - 1);
         heartValueTracker.RemoveAt(heartValueTracker.Count - 1);
-        if (healthPips.Count == 0)
+
+        // Standard death
+        if (healthPips.Count == 0 && GameControl.Day > 0)
         {
             EventBus.Publish(new GameLossEvent());
+        }
+        else if (healthPips.Count == 0 && GameControl.Day <= 0)
+        {
+            // Tutorial day death
+            EventBus.Publish(new TutorialMessageEvent(tutorialDeathMessageID, GetInstanceID(), KeyCode.Mouse0));
+        }
+    }
+
+    void _OnTutorialDeathMessageFinished(MessageFinishedEvent mfe)
+    {
+        if (mfe.senderInstanceID == GetInstanceID())
+        {
+            // Restart tutorial scene
+            SceneManager.LoadScene("TutorialGameScene");
+        }
+    }
+
+    void OnSceneLoaded(Scene s, LoadSceneMode m)
+    {
+        if (s.name == "TutorialGameScene")
+        {
+            Debug.Log("TutorialGameScene Loaded");
+            // Reset health
+            InitializeHealth();
         }
     }
 
@@ -165,5 +202,8 @@ public class HealthUI : MonoBehaviour {
         EventBus.Unsubscribe(inc_max_health_event_subscription);
         EventBus.Unsubscribe(pedDestSub);
         EventBus.Unsubscribe(pedRepSub);
+        EventBus.Unsubscribe(messFinSub);
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

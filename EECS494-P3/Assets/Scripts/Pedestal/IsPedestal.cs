@@ -92,7 +92,6 @@ public class IsPedestal : MonoBehaviour {
         playerDestroyed = false;
         particles.Stop();
         EventBus.Publish(new PedestalRepairedEvent(UUID));
-        EventBus.Publish(new ToastRequestEvent(new Color32(255, 0, 0, 255), "Pedestal repaired by enemies"));
     }
 
     public bool IsDestroyedByPlayer() {
