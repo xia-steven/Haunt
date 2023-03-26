@@ -23,9 +23,8 @@ public class Pathfinding {
     private List<PathNode> openList;
     private List<PathNode> closedList;
 
-    public Pathfinding(int width, int height) {
+    public Pathfinding(int width, int height, Vector3 origin) {
         Instance = this;
-        var origin = new Vector3(-(float)width / 2, 0, -(float)height / 2);
         // var origin = Vector3.zero;
         grid = new Grid<PathNode>(width, height, 1f, origin,
             (g, x, z) => new PathNode(g, x, z));

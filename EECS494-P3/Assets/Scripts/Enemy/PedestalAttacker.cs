@@ -32,18 +32,12 @@ public class PedestalAttacker : EnemyBase {
         StartCoroutine(WaitAndFindPath());
     }
 
-    private new void OnTriggerEnter(Collider other) {
-        // if (!other.CompareTag("Player") && other.gameObject.layer != LayerMask.NameToLayer("Pedestal")) {
-        //     base.OnTriggerEnter(other);
-        // }
+    private void OnTriggerEnter(Collider other) {
         if (other.gameObject.layer == LayerMask.NameToLayer("Pedestal")) {
             var h = other.gameObject.GetComponent<HasPedestalHealth>();
             if (h != null) {
                 h.AlterHealth(-5000);
             }
-        }
-        else if (!other.CompareTag("Player")) {
-            //base.OnTriggerEnter(other);
         }
     }
 
