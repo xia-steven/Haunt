@@ -142,7 +142,7 @@ public class Shotgun : Weapon
             FireProjectile(shotgunBullet, bullet4, transform, ShotgunBullet.bulletSpeed, Shooter.Player);
 
             // Give the player unlimited ammo for now
-            //currentClipAmount--;
+            currentClipAmount--;
 
             lastBullet = Time.time;
             lastTap = Time.time;

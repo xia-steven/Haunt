@@ -55,7 +55,7 @@ public abstract class Weapon : MonoBehaviour {
         lastTap = 0;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         EventBus.Publish(new WeaponSwapEvent(this));
     }
@@ -77,8 +77,6 @@ public abstract class Weapon : MonoBehaviour {
         {
             // Allows for click spamming but not hold spamming
             lastBullet = 0;
-
-            if (currentClipAmount > 0) --currentClipAmount;
         }
 
     }
