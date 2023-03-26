@@ -6,10 +6,10 @@ public class EnemyBase : MonoBehaviour {
     [SerializeField] protected float speed = 3.25f;
     private HasHealth health;
 
-    private Rigidbody rb;
+    protected Rigidbody rb;
     protected int currentPathIndex;
     protected List<Vector3> pathVectorList;
-    private Transform tf_;
+    protected Transform tf_;
 
     protected void Start() {
         rb = GetComponent<Rigidbody>();
@@ -17,7 +17,7 @@ public class EnemyBase : MonoBehaviour {
         tf_ = transform;
     }
 
-    private void FixedUpdate() {
+    protected void FixedUpdate() {
         HandleMovement();
     }
 
@@ -40,19 +40,4 @@ public class EnemyBase : MonoBehaviour {
             rb.velocity = Vector3.zero;
         }
     }
-
-    /*
-    private void TakeDamage(int dmg) {
-        health.AlterHealth(-dmg);
-        if (health.GetHealth() <= 0) {
-            Destroy(gameObject);
-        }
-    }
-    
-
-    protected void OnTriggerEnter(Collider other) {
-        TakeDamage(1);
-        Destroy(other.gameObject);
-    }
-    */
 }

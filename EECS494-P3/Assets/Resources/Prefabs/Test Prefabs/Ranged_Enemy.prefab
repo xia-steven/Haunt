@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2.45
+  is_ranged: 1
 --- !u!54 &5897757382681029384
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -201,6 +202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae5b83e041c3e37409a577688ed07be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  barrelLength: 0.5
+  pistolSprite: {fileID: 0}
   bulletDelay: 0.6
   tapDelay: 0.2
 --- !u!114 &1707090665980979479
