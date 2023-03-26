@@ -43,15 +43,14 @@ public abstract class Bullet : MonoBehaviour {
             return;
         }
 
-        // Alter pedestal health if collided is pedestal
+        // Alter pedestal health if collided is pedestal and shot by player
         HasPedestalHealth pedHealth = collided.GetComponent<HasPedestalHealth>();
-        if (pedHealth != null)
+        if (pedHealth != null && shooter == Shooter.Player)
         {
             pedHealth.AlterHealth(-damage);
         }
 
         PlayerHasHealth playerHealth = collided.GetComponent<PlayerHasHealth>();
-        Debug.Log("Shooter: " + shooter + " " + collided.name + " + " + playerHealth);
         if (playerHealth != null)
         {
             Debug.Log("Player damaged");
