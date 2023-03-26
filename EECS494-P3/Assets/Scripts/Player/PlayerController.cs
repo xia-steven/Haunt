@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour {
         EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(true));
 
         isDodging = true;
-        rb.useGravity = false;
+        //rb.useGravity = false;
         dodgeRollTimer = dodgeRollDuration;
         dodgeRollCooldownTimer = dodgeRollCooldown;
         if(tutorDodge != null)
@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour {
         EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(false));
 
         dodgeRollTimer = 0;
-        rb.useGravity = true;
+        //rb.useGravity = true;
         isDodging = false;
         rb.velocity = Vector3.zero;
         

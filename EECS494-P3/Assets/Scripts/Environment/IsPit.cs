@@ -130,6 +130,8 @@ public class IsPit : MonoBehaviour {
         Vector3 offset = Vector3.zero;
         //offset.y = 1.0f + pitDepth;
         offset += horizontalOffset;
+        // Make sure player doesn't spawn in the ground
+        offset.y = 0.5f;
 
         return offset;
     }

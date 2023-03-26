@@ -74,9 +74,6 @@ public class IndicatorManager : MonoBehaviour
 
             Vector3 screenCenter = new Vector3(Screen.width, Screen.height, 0) / 2;
 
-            Debug.Log("Screen width: " + Screen.width + " Screen height: " + Screen.height);
-            Debug.Log("Screen position: " + screenpos);
-
             // Translate coordinates to make 00 the center of the screen
             screenpos -= screenCenter;
 

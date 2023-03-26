@@ -54,7 +54,7 @@ public class TutorialRangedEnemyEncounter : MonoBehaviour
 
         // Perform tutorial dodge
         EventBus.Publish(new TutorialDodgeStartEvent(Vector3.left));
-        yield return new WaitForSecondsRealtime(1.5f);
+        yield return new WaitForSecondsRealtime(0.35f);
         EventBus.Publish(new TutorialDodgeEndEvent());
 
         // Unlock the camera
