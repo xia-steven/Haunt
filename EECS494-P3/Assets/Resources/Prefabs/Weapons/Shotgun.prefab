@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9978e4984e420934b997414c7250c059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barrelLength: 1.05
+  barrelLength: 1.1
   shotgunSprite: {fileID: 7860175128343921836}
   bulletDelay: 1
   tapDelay: 0.98
@@ -415,7 +415,7 @@ Transform:
   m_GameObject: {fileID: 7860175128343921836}
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 50, z: 1}
+  m_LocalScale: {x: 1.5, y: 6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1962310840802872690}
