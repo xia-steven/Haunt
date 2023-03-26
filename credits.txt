@@ -18,6 +18,7 @@ https://opengameart.org/content/10-8bit-coin-sounds
 
 Fonts:
 https://www.dafont.com/rainyhearts.font
+https://www.dafont.com/font-comment.php?file=alagard&l[]=10&l[]=1
 
 Tileset:
 https://opengameart.org/content/tiled-terrains

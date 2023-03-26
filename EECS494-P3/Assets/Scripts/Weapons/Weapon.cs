@@ -7,8 +7,25 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour {
     // Number of bullets in one clip - necessary for all guns
     protected int fullClipAmount = 8;
+    public int FullClipAmount {
+        get { return fullClipAmount; }
+        private set { }
+    }
+
     // Currently loaded bullets
     protected int currentClipAmount;
+    public int CurrentClipAmount {
+        get { return currentClipAmount; }
+        private set { }
+    }
+
+    //weapon type (used to get sprite)
+    protected string type;
+    public string Type {
+        get { return type; }
+        private set { }
+    }
+
     // Time of last bullet - used to see when last bullet was fired
     protected float lastBullet;
     // Time of last tap fire - used to limit spamming
@@ -19,6 +36,11 @@ public abstract class Weapon : MonoBehaviour {
 
     // Time it takes gun to reload (NEED TO SHOW THIS VISUALLY)
     protected float reloadTime;
+    public float ReloadTime {
+        get { return reloadTime; }
+        private set{ }
+    }
+
     protected bool isReloading = false;
     // Length of gun barrel for bullet spawning - will be gun specific due to masking / variability of sprites
     [SerializeField] protected float barrelLength = 0.5f;
@@ -26,10 +48,16 @@ public abstract class Weapon : MonoBehaviour {
     protected Subscription<FireEvent> fireEventSubscription;
     protected Subscription<ReloadEvent> reloadEventSubscription;
 
+    bool hasDoneInitialBroadcast;
 
     protected virtual void Awake() {
         lastBullet = 0;
         lastTap = 0;
+    }
+
+    private void Start()
+    {
+        EventBus.Publish(new WeaponSwapEvent(this));
     }
 
     protected void Subscribe() {
@@ -49,7 +77,10 @@ public abstract class Weapon : MonoBehaviour {
         {
             // Allows for click spamming but not hold spamming
             lastBullet = 0;
+
+            if (currentClipAmount > 0) --currentClipAmount;
         }
+
     }
 
     protected virtual void _OnReload(ReloadEvent e) {
@@ -98,6 +129,11 @@ public abstract class Weapon : MonoBehaviour {
     public void ReloadInfinite() {
         currentClipAmount = fullClipAmount;
     }
+
+    public void OnEnable()
+    {
+        EventBus.Publish(new WeaponSwapEvent(this));
+    }
 }
 
 public class FireEvent {
@@ -116,6 +152,16 @@ public class ReloadEvent {
 
     public ReloadEvent(GameObject _reloader) {
         reloader = _reloader;
+    }
+}
+
+public class WeaponSwapEvent
+{
+    public Weapon newWeapon;
+
+    public WeaponSwapEvent(Weapon _newWeapon)
+    {
+        newWeapon = _newWeapon;
     }
 }
 

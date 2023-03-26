@@ -24,6 +24,7 @@ public class Shotgun : Weapon
         currentClipAmount = 5;
         fullClipAmount = 5;
         reloadTime = 2.0f;
+        type = "shotgun";
 
         Subscribe();
 
@@ -34,6 +35,7 @@ public class Shotgun : Weapon
 
     protected override void _OnFire(FireEvent e)
     {
+        if (!gameObject.activeInHierarchy) return;
         // Check if fire event comes from pistol holder
         if (e.shooter != wielder)
         {
@@ -45,6 +47,7 @@ public class Shotgun : Weapon
 
     protected override void _OnReload(ReloadEvent e)
     {
+        if (!gameObject.activeInHierarchy) return;
         // Check if reload event comes from pistol holder
         if (e.reloader != wielder)
         {

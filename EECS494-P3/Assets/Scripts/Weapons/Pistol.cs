@@ -20,6 +20,7 @@ public class Pistol : Weapon {
         currentClipAmount = 8;
         fullClipAmount = 8;
         reloadTime = 0.5f;
+        type = "pistol";
 
         Subscribe();
 
@@ -29,6 +30,8 @@ public class Pistol : Weapon {
     }
 
     protected override void _OnFire(FireEvent e) {
+        if (!gameObject.activeInHierarchy) return;
+
         // Check if fire event comes from pistol holder
         if (e.shooter != wielder) {
             return;
@@ -38,6 +41,8 @@ public class Pistol : Weapon {
     }
 
     protected override void _OnReload(ReloadEvent e) {
+        if (!gameObject.activeInHierarchy) return;
+
         // Check if reload event comes from pistol holder
         if (e.reloader != wielder) {
             return;

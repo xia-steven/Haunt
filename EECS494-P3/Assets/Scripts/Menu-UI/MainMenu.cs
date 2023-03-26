@@ -11,19 +11,11 @@ public class MainMenu : MonoBehaviour {
         playerControls = new PlayerControls();
     }
 
-    public void LoadLevelOne() {
-        SceneManager.LoadScene("Level1");
+    public void LoadTutorial() {
+        SceneManager.LoadScene("TutorialHubWorld");
     }
 
-    public void LoadLevelTwo() {
-        SceneManager.LoadScene("Level2");
-    }
-
-    public void LoadLevelThree() {
-        SceneManager.LoadScene("Level3");
-    }
-
-    public void LoadLevelFour() {
-        SceneManager.LoadScene("Level4");
+    public void Quit() {
+        Application.Quit();
     }
 }

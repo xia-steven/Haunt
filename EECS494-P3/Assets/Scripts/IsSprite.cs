@@ -6,7 +6,6 @@ public class IsSprite : MonoBehaviour
 {
     void Start()
     {
-        Vector3 l = transform.localScale;
-        transform.localScale = new Vector3(l.x, l.y / CameraStretch.instance.height, l.z);
+        transform.localScale = new Vector3(1, 1 / CameraStretch.instance.height, 1);
     }
 }
