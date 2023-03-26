@@ -12,7 +12,6 @@ public class TeleporterDisableDuringWave : MonoBehaviour
     {
         tp = GetComponent<IsTeleporter>();
 
-        tp.Active = false;
     }
 
     // Update is called once per frame
@@ -22,6 +21,10 @@ public class TeleporterDisableDuringWave : MonoBehaviour
         {
             activated = true;
             tp.Active = true;
+        }
+        else
+        {
+            tp.Active = false;
         }
     }
 }
