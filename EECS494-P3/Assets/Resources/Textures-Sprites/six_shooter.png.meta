@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 094a1260fd9abdd4599b3ea97af9d8a7
+guid: 632d746bf9e98ad439e9478d10b290fb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: shotguns_0
+      name: six_shooter_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 13
         y: 17
-        width: 29
-        height: 9
+        width: 17
+        height: 8
       alignment: 4
       pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2faf9eac72c8e4944a273f082630cddb
-      internalID: -1462720725
+      spriteID: 92ec3f8f721a175459562f8122cafc1b
+      internalID: 462971825
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shotguns_1
+      name: six_shooter_1
       rect:
         serializedVersion: 2
-        x: 3
-        y: 9
-        width: 24
-        height: 6
+        x: 5
+        y: 4
+        width: 16
+        height: 8
       alignment: 4
       pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,29 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 15842f188581d69458eebeaf6f374b0b
-      internalID: 1070639554
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: shotguns_2
-      rect:
-        serializedVersion: 2
-        x: 3
-        y: 1
-        width: 24
-        height: 6
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4aa6efe1589ffb248be940f67d5163b0
-      internalID: -403390666
+      spriteID: 76529b81ec562d0448a49f4f3d0627a5
+      internalID: -462584030
       vertices: []
       indices: 
       edges: []
@@ -190,9 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      shotguns_0: -1462720725
-      shotguns_1: 1070639554
-      shotguns_2: -403390666
+      six_shooter_0: 462971825
+      six_shooter_1: -462584030
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

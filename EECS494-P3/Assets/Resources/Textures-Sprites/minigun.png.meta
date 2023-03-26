@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 632d746bf9e98ad439e9478d10b290fb
+guid: c53b6b8e4e4d4114e995834558aed45d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -45,9 +45,9 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  alignment: 9
+  spritePivot: {x: 0.09290862, y: 0.50000006}
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,43 +117,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: six_shooter_0
+      name: minigun_0
       rect:
         serializedVersion: 2
-        x: 13
-        y: 17
-        width: 17
-        height: 8
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+        x: 3
+        y: 6
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 92ec3f8f721a175459562f8122cafc1b
-      internalID: 462971825
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: six_shooter_1
-      rect:
-        serializedVersion: 2
-        x: 5
-        y: 4
-        width: 16
-        height: 8
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 76529b81ec562d0448a49f4f3d0627a5
-      internalID: -462584030
+      spriteID: 54ac42f3e306bdb4a9b229d737b68793
+      internalID: 884262886
       vertices: []
       indices: 
       edges: []
@@ -162,15 +141,14 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      six_shooter_0: 462971825
-      six_shooter_1: -462584030
+      minigun_0: 884262886
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
