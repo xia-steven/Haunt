@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /*
  * This file contains (mostly) static code pertaining to public attributes of the GameControl class.
@@ -148,7 +149,7 @@ partial class GameControl : MonoBehaviour {
     private void _NightStart(NightBeginEvent e) {
         if (!e.valid) return;
 
-        ++day;
+        if (SceneManager.GetActiveScene().name == "GameScene") ++day;
         nightStartTime = Time.time;
 
         isNight = true;

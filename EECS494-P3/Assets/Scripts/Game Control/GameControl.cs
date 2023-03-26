@@ -16,7 +16,7 @@ partial class GameControl : MonoBehaviour {
     /*STATE DEPENDENT VARIABLES*/
     private float nightStartTime;
 
-    private static int day = -1; //set to 1 less than the first day (tutorial is day 0)
+    private static int day = 0; //set to 1 less than the first day - does not increment during tutorial (tutorial is day 0)
 
     private bool gameActive = false;
     private bool gamePaused = false;

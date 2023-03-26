@@ -47,9 +47,8 @@ public class HealthUI : MonoBehaviour {
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
+        
         InitializeHealth();
-
-
         StartCoroutine(loadHealth());
     }
 
@@ -70,6 +69,13 @@ public class HealthUI : MonoBehaviour {
 
     void InitializeHealth()
     {
+        for (int i = healthPips.Count-1; i >= 0 ; --i)
+        {
+            Destroy(healthPips[i]);
+            healthPips.RemoveAt(i);
+            heartValueTracker.RemoveAt(i);
+        }
+
         int numPips = (IsPlayer.instance.GetInitialMaxHealth() + 1) / 2;
 
         for (int i = 0; i < numPips; ++i)
@@ -135,12 +141,6 @@ public class HealthUI : MonoBehaviour {
 
     void OnSceneLoaded(Scene s, LoadSceneMode m)
     {
-        if (s.name == "TutorialGameScene")
-        {
-            Debug.Log("TutorialGameScene Loaded");
-            // Reset health
-            InitializeHealth();
-        }
     }
 
     void _OnHeal(HealEvent e) {
