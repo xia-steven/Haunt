@@ -7,9 +7,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2149509506550893982, guid: e2af55d476a9e2047b39914a7a8659d5, type: 3}
+      propertyPath: range
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5176294668627473358, guid: e2af55d476a9e2047b39914a7a8659d5, type: 3}
       propertyPath: m_Name
-      value: Tutorial_Ranged_Enemy
+      value: Tutorial_Ranged_Enemy Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6161182734130515283, guid: e2af55d476a9e2047b39914a7a8659d5, type: 3}
       propertyPath: m_RootOrder

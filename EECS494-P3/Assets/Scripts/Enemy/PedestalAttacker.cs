@@ -13,11 +13,6 @@ public class PedestalInfo {
 }
 
 public class PedestalAttacker : EnemyBase {
-    public static Dictionary<int, PedestalInfo> pedestalInfos = new Dictionary<int, PedestalInfo> {
-        { 1, new PedestalInfo(new Vector3(10, 0, 0)) }, { 2, new PedestalInfo(new Vector3(-10, 0, 0)) },
-        { 3, new PedestalInfo(new Vector3(0, 0, -9)) }
-    };
-
     private Subscription<PedestalDestroyedEvent> switchPedestalSub;
     private Subscription<PedestalRepairedEvent> addPedestalSub;
 
@@ -42,17 +37,17 @@ public class PedestalAttacker : EnemyBase {
     }
 
     private int findClosestPedestal() {
-        if (pedestalInfos.All(ped => !ped.Value.destroyed)) {
+        if (PathfindingController.pedestalInfos.All(ped => !ped.Value.destroyed)) {
             return 0;
         }
 
         var closestDist = float.MaxValue;
         var closest = (int)Random.Range(1f, 3.99f);
-        while (!pedestalInfos[closest].destroyed) {
+        while (!PathfindingController.pedestalInfos[closest].destroyed) {
             closest = (int)Random.Range(1f, 3.99f);
         }
 
-        foreach (var ped in pedestalInfos) {
+        foreach (var ped in PathfindingController.pedestalInfos) {
             var distance = Vector3.Distance(transform.position, ped.Value.position);
             if (distance < closestDist && ped.Value.destroyed) {
                 closestDist = distance;
@@ -65,7 +60,7 @@ public class PedestalAttacker : EnemyBase {
 
     private IEnumerator WaitAndFindPath() {
         yield return null;
-        SetTargetPosition(pedestalInfos[findClosestPedestal()].position);
+        SetTargetPosition(PathfindingController.pedestalInfos[findClosestPedestal()].position);
     }
 
     private void SetTargetPosition(Vector3 pos) {
@@ -79,19 +74,19 @@ public class PedestalAttacker : EnemyBase {
 
     private IEnumerator pedetalCoroutine() {
         yield return new WaitForSeconds(pedestalTimeout);
-        SetTargetPosition(pedestalInfos[findClosestPedestal()].position);
+        SetTargetPosition(PathfindingController.pedestalInfos[findClosestPedestal()].position);
     }
 
     private void pedestalDied(PedestalDestroyedEvent event_) {
         switch (event_.pedestalUUID) {
             case 1:
-                pedestalInfos[1].destroyed = true;
+                PathfindingController.pedestalInfos[1].destroyed = true;
                 break;
             case 2:
-                pedestalInfos[2].destroyed = true;
+                PathfindingController.pedestalInfos[2].destroyed = true;
                 break;
             case 3:
-                pedestalInfos[3].destroyed = true;
+                PathfindingController.pedestalInfos[3].destroyed = true;
                 break;
         }
 
@@ -99,7 +94,7 @@ public class PedestalAttacker : EnemyBase {
     }
 
     private void pedestalRepaired(PedestalRepairedEvent event_) {
-        pedestalInfos[event_.pedestalUUID].destroyed = false;
-        SetTargetPosition(pedestalInfos[findClosestPedestal()].position);
+        PathfindingController.pedestalInfos[event_.pedestalUUID].destroyed = false;
+        SetTargetPosition(PathfindingController.pedestalInfos[findClosestPedestal()].position);
     }
 }
