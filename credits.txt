@@ -22,3 +22,6 @@ https://www.dafont.com/font-comment.php?file=alagard&l[]=10&l[]=1
 
 Tileset:
 https://opengameart.org/content/tiled-terrains
+
+Decorative sprites:
+https://opengameart.org/content/lpc-medieval-village-decorations

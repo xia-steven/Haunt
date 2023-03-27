@@ -33,7 +33,7 @@ public class AmmoUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (reloading || current) return;
+        if (reloading || current == null) return;
 
         clipMax = current.FullClipAmount;
         curClip = current.CurrentClipAmount;

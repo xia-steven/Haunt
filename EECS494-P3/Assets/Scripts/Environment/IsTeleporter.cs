@@ -30,7 +30,7 @@ public class IsTeleporter : MonoBehaviour
     Subscription<TryInteractEvent> interactSub;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         visualRenderer = GetComponent<MeshRenderer>();
 
