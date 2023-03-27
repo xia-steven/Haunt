@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnDodge(InputAction.CallbackContext value) {
+        if (!playerEnabled) return;
         if (dodgeRollCooldownTimer > 0) {
             return;
         }
@@ -145,6 +146,7 @@ public class PlayerController : MonoBehaviour {
 
     private void StartDodge(TutorialDodgeStartEvent tutorDodge = null)
     {
+        Debug.Log("Start dodging");
         EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(true));
         col.enabled = false; // start iframes, turn back on when dodge ends
         isDodging = true;
@@ -166,6 +168,7 @@ public class PlayerController : MonoBehaviour {
 
     private void StopDodge(TutorialDodgeEndEvent tutorDodge = null)
     {
+        Debug.Log("Stop dodging");
         EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(false));
         col.enabled = true;
         dodgeRollTimer = 0;
@@ -198,7 +201,8 @@ public class PlayerController : MonoBehaviour {
 
         return false;
     }
-    private void Update() {
+    private void Update()
+    {
         if (!playerEnabled) return;
 
 
