@@ -8,17 +8,28 @@ public class HasEnemyHealth : HasHealth
 {
     private GameObject coinPrefab;
     private GameObject healthPrefab;
+    private SpriteRenderer sr;
+    private Color normalColor;
 
     private void Start()
     {
         coinPrefab = Resources.Load<GameObject>("Prefabs/Coin");
         healthPrefab = Resources.Load<GameObject>("Prefabs/Health");
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.name == "Sprite")
+            {
+                sr = child.gameObject.GetComponent<SpriteRenderer>();
+                normalColor = sr.color;
+            }
+        }
 
     }
 
     public override bool AlterHealth(int healthDelta)
     {
         base.AlterHealth(healthDelta);
+        StartCoroutine(FlashRed());
         if (health <= 0)
         {
             
@@ -33,5 +44,13 @@ public class HasEnemyHealth : HasHealth
             Destroy(gameObject);
         }
         return true;
+    }
+
+    private IEnumerator FlashRed()
+    {
+        sr.color = Color.red;
+        yield return new WaitForSeconds(.1f);
+        sr.color = normalColor;
+
     }
 }
