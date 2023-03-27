@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Weapon base class
 
@@ -54,14 +55,19 @@ public abstract class Weapon : MonoBehaviour {
 
     bool hasDoneInitialBroadcast;
 
-    protected virtual void Awake() {
+    protected virtual void Awake()
+    {
         lastBullet = 0;
         lastTap = 0;
+        SceneManager.sceneLoaded += OnSceneLoad;
     }
 
-    protected virtual void Start()
+    void OnSceneLoad(Scene s, LoadSceneMode m)
     {
-        EventBus.Publish(new WeaponSwapEvent(this));
+        if(gameObject.activeInHierarchy)
+        {
+            EventBus.Publish(new WeaponSwapEvent(this));
+        }
     }
 
     protected void Subscribe() {

@@ -19,11 +19,6 @@ public class EnemyPistol : Pistol
         basicBullet = Resources.Load<GameObject>("Prefabs/Weapons/EnemyBasicBullet");
     }
 
-    protected override void Start()
-    {
-        Debug.Log("Enemy pistol spawned");
-    }
-
     private void Update()
     {
         // Fire bullets based on delays - tap is between bursts and bullet is between individual bullets

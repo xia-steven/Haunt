@@ -24,8 +24,7 @@ public class AmmoUI : MonoBehaviour
     bool reloading = false;
     bool swapped = false;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         swapSub = EventBus.Subscribe<WeaponSwapEvent>(_OnSwap);
         reloadSub = EventBus.Subscribe<ReloadEvent>(_OnReload);
