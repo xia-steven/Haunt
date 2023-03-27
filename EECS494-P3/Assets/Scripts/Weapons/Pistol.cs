@@ -65,6 +65,8 @@ public class Pistol : Weapon {
     }
 
     private void FixedUpdate() {
+        if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+
         // Get the screen position of the cursor
         Vector3 screenPos = Input.mousePosition;
         Vector3 direction = Vector3.zero;

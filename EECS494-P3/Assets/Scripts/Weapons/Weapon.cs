@@ -42,6 +42,11 @@ public abstract class Weapon : MonoBehaviour {
         private set{ }
     }
 
+    protected bool isPlayer = true;
+    public bool IsPlayer {
+        get { return isPlayer; }
+        private set{ }
+    }
 
     protected bool playerEnabled = true;
     protected bool isReloading = false;
@@ -64,7 +69,7 @@ public abstract class Weapon : MonoBehaviour {
 
     void OnSceneLoad(Scene s, LoadSceneMode m)
     {
-        if(gameObject.activeInHierarchy)
+        if(gameObject.activeInHierarchy && isPlayer)
         {
             EventBus.Publish(new WeaponSwapEvent(this));
         }
@@ -154,7 +159,8 @@ public abstract class Weapon : MonoBehaviour {
 
     public void OnEnable()
     {
-        EventBus.Publish(new WeaponSwapEvent(this));
+        if (isPlayer)
+            EventBus.Publish(new WeaponSwapEvent(this));
         firing = false;
     }
 }

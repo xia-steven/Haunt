@@ -9,6 +9,8 @@ public class EnemyPistol : Pistol
 
     protected override void Awake()
     {
+        isPlayer = false;
+
         lastBullet = Time.time;
 
         tapDelay = 3.0f;

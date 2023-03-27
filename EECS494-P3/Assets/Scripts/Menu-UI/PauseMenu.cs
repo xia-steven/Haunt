@@ -72,6 +72,7 @@ public class PauseMenu : MonoBehaviour {
         isPaused = false;
         Time.timeScale = 1;
         AudioListener.pause = false;
+        GameControl.Day = 0;
 
         SceneManager.LoadScene("TutorialHubWorld");
     }
@@ -81,7 +82,7 @@ public class PauseMenu : MonoBehaviour {
         isPaused = false;
         Time.timeScale = 1;
         AudioListener.pause = false;
-
+        GameControl.Day--;
         
 
         SceneManager.LoadScene("GameScene");

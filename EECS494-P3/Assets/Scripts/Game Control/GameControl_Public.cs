@@ -48,7 +48,7 @@ partial class GameControl : MonoBehaviour {
     /// </summary>
     public static int Day {
         get { return day; }
-        set { }
+        set { day = value; }
     }
 
 
