@@ -22,6 +22,7 @@ partial class GameControl : MonoBehaviour {
     private bool gamePaused = false;
     private static bool isNight = false;
     private bool nightEnding = false;
+    private bool started = false;
 
     private int waveSize;
 
@@ -58,6 +59,7 @@ partial class GameControl : MonoBehaviour {
         waveSize = (int)(data.initialWaveSize * Mathf.Pow(data.waveDailyScale, day));
 
         StartGame();
+        started = true;
     }
 
     void OnSceneLoaded(Scene s, LoadSceneMode m)
@@ -65,11 +67,11 @@ partial class GameControl : MonoBehaviour {
         if (s.name == "GameScene")
         {
             Debug.Log("GameScene Loaded");
-            StartCoroutine(StartOnDelay(StartNight, .01f));
+            StartCoroutine(StartOnDelay(StartNight));
         }
         else
         {
-            StartCoroutine(StartOnDelay(DayUpdate, .01f));
+            StartCoroutine(StartOnDelay(DayUpdate));
         }
         TimeManager.ResetTimeScale();
     }
@@ -83,16 +85,22 @@ partial class GameControl : MonoBehaviour {
     delegate IEnumerator delayedEnum();
     delegate void delayedVoid();
 
-    private IEnumerator StartOnDelay(delayedEnum f, float delay)
+    private IEnumerator StartOnDelay(delayedEnum f)
     {
-        yield return new WaitForSeconds(delay);
+        while(!started)
+        {
+            yield return null;
+        }
 
         StartCoroutine(f());
     }
 
-    private IEnumerator StartOnDelay(delayedVoid f, float delay)
+    private IEnumerator StartOnDelay(delayedVoid f)
     {
-        yield return new WaitForSeconds(delay);
+        while (!started)
+        {
+            yield return null;
+        }
 
         f();
     }
