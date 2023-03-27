@@ -1,7 +1,7 @@
-Players had difficulty understanding our pedestal mechanic and its influence on player health. We decided to 
-overhaul the tutorial (again) to create a dedicated tutorial wave so the player sees the game's mechanics in their natural context.
+Players had difficulty understanding our pedestal mechanic and its influence on player health. We decided to overhaul the tutorial (again) to create a dedicated tutorial wave so the player sees the game's mechanics in their natural context. This will give players better guidance and hopefully understand the mechanics the game a bit more.
 
-Other criticism was on the lack of theme and flavor, so we injected some story dialogue to ground the experience and added 
-more sprites to communicate the medeival graveyard setting.
+Other criticism was on the lack of theme and flavor, so we injected some story dialogue to ground the experience and added more sprites to communicate the medeival graveyard setting. We also changed the font to fit more to the style of that game that we are looking to create.
 
-We also had numerous gameplay bugs last week that we found in playtesting and fixed, like the restart game not working.
+Additionally, we've added various UI elements such as weapon indication, bullet count, and weapon reloading with key R. This further gives more guidance. We also overhauled the enemy movement system by adding variations to enemy pathfinding, including making the ranged enemies stop at a certain range.
+
+We also had numerous gameplay bugs last week that we found in playtesting and fixed, like the restart game not working, and player getting stuck on the pit, as well as the softlocks in the tutorial. The pit is still a bit away from what we want, but we believe that we've made significant progress in making it more consistent.
