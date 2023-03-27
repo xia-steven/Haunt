@@ -104,7 +104,14 @@ partial class GameControl : MonoBehaviour {
         w = new Wave(waveSize++, data.waveTimeout, spawners);
         w.Spawn();
         nightStartTime = Time.time;
-        while (isNight && Time.time - nightStartTime < data.nightLength) {
+        float nLength = data.nightLength;
+        if(day == 0)
+        {
+            // Set tutorial night length to 15 seconds
+            nLength = 15f;
+        }
+
+        while (isNight && Time.time - nightStartTime < nLength) {
             if (!gameActive || gamePaused) {
                 yield return new WaitForSeconds(data.updateFrequency);
                 continue;

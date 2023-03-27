@@ -13,17 +13,20 @@ public class TeleporterDisableDuringWave : MonoBehaviour {
         if(!GameControl.NightEnding)
         {
             tp.Active = false;
+            activated = false;
         }
     }
 
     // Update is called once per frame
     void Update() {
+        Debug.Log("Activated: " + activated + " GameControl.NightEnding: " + GameControl.NightEnding);
         if (!activated && GameControl.NightEnding) {
             activated = true;
             tp.Active = true;
         }
-        else {
+        else if (!GameControl.NightEnding) {
             tp.Active = false;
+            activated = false;
         }
     }
 }
