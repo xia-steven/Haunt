@@ -74,6 +74,12 @@ public class PlayerHasHealth : HasHealth {
         maxHealth += 2;
         health = maxHealth;
     }
+
+    public void ResetHealthToInitial()
+    {
+        maxHealth = initialMaxHealth;
+        health = initialMaxHealth;
+    }
     
     private IEnumerator TriggerInvincibility()
     {
@@ -105,10 +111,15 @@ public class PlayerHasHealth : HasHealth {
 
     void OnSceneLoaded(Scene s, LoadSceneMode m)
     {
-        if (s.name == "TutorialGameScene")
+        if (s.name == "TutorialGameScene" || s.name == "TutorialHubWorld")
         {
             Debug.Log("TutorialGameScene Loaded");
             health = initialMaxHealth;
+            transform.position = new Vector3(0, 0.5f, 0);
+        }
+        else if (s.name == "GameScene")
+        {
+            Debug.Log("GameScene Loaded");
             transform.position = new Vector3(0, 0.5f, 0);
         }
     }

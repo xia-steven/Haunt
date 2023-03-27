@@ -250,7 +250,7 @@ public class PlayerController : MonoBehaviour {
         if (!playerEnabled) return;
 
         if (!isDodging) {
-            Debug.Log(IsWall(movement));
+            //Debug.Log(IsWall(movement));
             rb.MovePosition(rb.position + moveSpeed * Time.fixedDeltaTime * movement.normalized);
         }
 

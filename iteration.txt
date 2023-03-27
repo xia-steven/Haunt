@@ -1,3 +1,7 @@
-Players had difficulty understanding our pedestal mechanic and its influence on player health. We decided to overhaul the tutorial (again) to create a dedicated tutorial wave so the player sees the game's mechanics in their natural context.
+Players had difficulty understanding our pedestal mechanic and its influence on player health. We decided to 
+overhaul the tutorial (again) to create a dedicated tutorial wave so the player sees the game's mechanics in their natural context.
 
-Other criticism was on the lack of theme and flavor, so we injected some story dialogue to ground the experience and added more sprites to communicate the medeival graveyard setting.
+Other criticism was on the lack of theme and flavor, so we injected some story dialogue to ground the experience and added 
+more sprites to communicate the medeival graveyard setting.
+
+We also had numerous gameplay bugs last week that we found in playtesting and fixed, like the restart game not working.
