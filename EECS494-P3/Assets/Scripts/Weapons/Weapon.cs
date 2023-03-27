@@ -166,7 +166,7 @@ public abstract class Weapon : MonoBehaviour {
 
     private void OnDestroy()
     {
-        SceneManager.sceneLoaded += OnSceneLoad;
+        SceneManager.sceneLoaded -= OnSceneLoad;
     }
 }
 
