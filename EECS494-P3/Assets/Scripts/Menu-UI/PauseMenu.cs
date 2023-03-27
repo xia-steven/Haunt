@@ -73,6 +73,7 @@ public class PauseMenu : MonoBehaviour {
         Time.timeScale = 1;
         AudioListener.pause = false;
         GameControl.Day = 0;
+        IsPlayer.instance.ResetHealth();
 
         SceneManager.LoadScene("TutorialHubWorld");
     }
@@ -83,7 +84,7 @@ public class PauseMenu : MonoBehaviour {
         Time.timeScale = 1;
         AudioListener.pause = false;
         GameControl.Day--;
-        
+        IsPlayer.instance.ResetHealth();
 
         SceneManager.LoadScene("GameScene");
     }

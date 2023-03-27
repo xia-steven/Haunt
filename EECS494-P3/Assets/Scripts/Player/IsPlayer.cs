@@ -53,4 +53,9 @@ public class IsPlayer : MonoBehaviour {
     {
         instance.transform.position = newPos;
     }
+
+    public void ResetHealth()
+    {
+        health.ResetHealth();
+    }
 }
