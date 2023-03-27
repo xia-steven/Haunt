@@ -19,7 +19,7 @@ public class ConfigManager : MonoBehaviour
     {
         //enforce singleton
         if (instance == null) instance = this;
-        else Destroy(this);
+        else Destroy(this.gameObject);
 
         DontDestroyOnLoad(gameObject);
     }

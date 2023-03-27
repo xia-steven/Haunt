@@ -316,7 +316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 641650401560064583, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 711694074749793866, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_IsActive
@@ -616,10 +616,6 @@ PrefabInstance:
       propertyPath: otherScene
       value: TutorialGameScene
       objectReference: {fileID: 0}
-    - target: {fileID: 1446076236408841723, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
-      propertyPath: m_Center.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4073059639498689819, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.125
@@ -684,6 +680,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7810300987032838726, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
+    - target: {fileID: 7810300987032838726, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}

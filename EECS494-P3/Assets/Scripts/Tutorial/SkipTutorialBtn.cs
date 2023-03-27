@@ -11,7 +11,12 @@ public class SkipTutorialBtn : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");
         TimeManager.ResetTimeScale();
+        // Enable player in case disabled
+        EventBus.Publish(new EnablePlayerEvent());
+        // Increment day if not already
+        GameControl.Day = 0;
         GameObject player = GameObject.Find("Player");
         PlayerHasHealth health = player.GetComponent<PlayerHasHealth>();
+        health.ResetHealthToInitial();
     }
 }

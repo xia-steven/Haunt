@@ -141,6 +141,11 @@ public class HealthUI : MonoBehaviour {
 
     void OnSceneLoaded(Scene s, LoadSceneMode m)
     {
+        if(s.name == "TutorialHubWorld" || s.name == "TutorialGameScene")
+        {
+            InitializeHealth();
+        }
+
     }
 
     void _OnHeal(HealEvent e) {
