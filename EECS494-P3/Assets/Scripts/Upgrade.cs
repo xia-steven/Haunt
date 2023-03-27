@@ -15,6 +15,7 @@ public class Upgrade : MonoBehaviour
     private Vector3 destination;
     private bool selected = false;
     private Inventory playerInventory;
+    private Subscription<TryInteractEvent> interact_subscription;
     
     
     // Start is called before the first frame update
@@ -23,6 +24,7 @@ public class Upgrade : MonoBehaviour
         origin = transform.position;
         destination = new Vector3(origin.x, origin.y + bobDistance, origin.z);
         playerInventory = GameObject.Find("Player").GetComponent<Inventory>();
+        interact_subscription = EventBus.Subscribe<TryInteractEvent>(OnPurchase);
 
     }
 
@@ -73,10 +75,10 @@ public class Upgrade : MonoBehaviour
         Debug.Log("BobDown: " + selected);
     }
 
-    public void OnPurchase()
+    private void OnPurchase(TryInteractEvent e)
     {
-        Debug.Log("Attempted purchase," + selected);
-        if (selected && playerInventory.GetCoins() >= cost)
+        Debug.Log("Attempted purchase," + Vector3.Distance(transform.position, playerInventory.gameObject.transform.position));
+        if (Vector3.Distance(transform.position, playerInventory.gameObject.transform.position) < 1f && playerInventory.GetCoins() >= cost)
         {
             EventBus.Publish(new CoinEvent(-cost));
             ApplyUpgrade();
@@ -88,5 +90,10 @@ public class Upgrade : MonoBehaviour
     protected virtual void ApplyUpgrade()
     {
         
+    }
+
+    private void OnDestroy()
+    {
+        EventBus.Unsubscribe<TryInteractEvent>(interact_subscription);
     }
 }
