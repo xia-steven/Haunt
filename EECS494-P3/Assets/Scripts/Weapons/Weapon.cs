@@ -163,6 +163,11 @@ public abstract class Weapon : MonoBehaviour {
             EventBus.Publish(new WeaponSwapEvent(this));
         firing = false;
     }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
 }
 
 public class FireEvent {
