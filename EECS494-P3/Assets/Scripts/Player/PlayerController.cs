@@ -187,6 +187,18 @@ public class PlayerController : MonoBehaviour {
         playerEnabled = true;
     }
 
+    private bool IsWall(Vector3 direction)
+    {
+        int wallLayer = LayerMask.GetMask("Walls");
+        RaycastHit hit;
+        Debug.DrawRay(transform.position, direction, Color.magenta);
+        if (Physics.Raycast(transform.position, direction, out hit, col.bounds.extents.magnitude, wallLayer))
+        {
+            return true;
+        }
+
+        return false;
+    }
     private void Update() {
         if (!playerEnabled) return;
 
@@ -238,6 +250,7 @@ public class PlayerController : MonoBehaviour {
         if (!playerEnabled) return;
 
         if (!isDodging) {
+            Debug.Log(IsWall(movement));
             rb.MovePosition(rb.position + moveSpeed * Time.fixedDeltaTime * movement.normalized);
         }
 
@@ -249,6 +262,8 @@ public class PlayerController : MonoBehaviour {
         {
             EventBus.Publish<OverPitEvent>(new OverPitEvent(gameObject));
         }
+        
+        
     }
 
     private void OnCollisionEnter(Collision collision)
