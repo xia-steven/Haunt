@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barrelLength: 1.15
   rifleSprite: {fileID: 8963161378742004249}
-  bulletDelay: 0.2
+  bulletDelay: 0.18
   tapDelay: 0.1
 --- !u!1 &1962310841784963166
 GameObject:

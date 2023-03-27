@@ -86,6 +86,7 @@ public abstract class Weapon : MonoBehaviour {
     {
         EventBus.Unsubscribe<FireEvent>(fireEventSubscription);
         EventBus.Unsubscribe<ReloadEvent>(reloadEventSubscription);
+        SceneManager.sceneLoaded -= OnSceneLoad;
     }
 
     protected virtual void _OnEnablePlayer(EnablePlayerEvent e)

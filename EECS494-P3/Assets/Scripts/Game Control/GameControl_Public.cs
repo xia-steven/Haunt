@@ -152,6 +152,8 @@ partial class GameControl : MonoBehaviour {
         if (SceneManager.GetActiveScene().name == "GameScene") ++day;
         nightStartTime = Time.time;
 
+        Debug.Log("Starting Night");
+
         isNight = true;
         instance.StartCoroutine(NightUpdate());
     }

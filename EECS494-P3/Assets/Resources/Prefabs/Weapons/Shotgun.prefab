@@ -49,7 +49,7 @@ MonoBehaviour:
   barrelLength: 1.1
   shotgunSprite: {fileID: 7860175128343921836}
   bulletDelay: 1
-  tapDelay: 0.98
+  tapDelay: 0.49
   spread: 30
 --- !u!1 &1962310841784963166
 GameObject:

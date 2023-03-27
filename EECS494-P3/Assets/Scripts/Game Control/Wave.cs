@@ -56,7 +56,7 @@ public class Wave {
         }
 
         //spawn pedestal enemies
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 0; i < 1; ++i) {
             spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
             newMember = Object.Instantiate(potentialMembers[2], spawnPos, Quaternion.identity).GetComponent<IsWaveMember>();
             newMember.Init(this, nextId);

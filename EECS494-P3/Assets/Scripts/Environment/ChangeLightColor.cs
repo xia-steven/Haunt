@@ -56,7 +56,14 @@ public class ChangeLightColor : MonoBehaviour {
     IEnumerator ChangeColor() {
         //TODO: Make less horrible
         yield return null;
-        duration = GameControl.NightTimeRemaining;
+        if(GameControl.Day == 0)
+        {
+            duration = 15f;
+        }
+        else
+        {
+            duration = GameControl.NightTimeRemaining;
+        }
 
 
         float initial_time = Time.time;

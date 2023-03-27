@@ -13,6 +13,7 @@ public class TeleporterDisableDuringWave : MonoBehaviour {
         if(!GameControl.NightEnding)
         {
             tp.Active = false;
+            activated = false;
         }
     }
 
@@ -22,8 +23,9 @@ public class TeleporterDisableDuringWave : MonoBehaviour {
             activated = true;
             tp.Active = true;
         }
-        else {
+        else if (!GameControl.NightEnding) {
             tp.Active = false;
+            activated = false;
         }
     }
 }
