@@ -115,6 +115,7 @@ public class PlayerHasHealth : HasHealth {
         {
             Debug.Log("TutorialGameScene Loaded");
             health = initialMaxHealth;
+            maxHealth = initialMaxHealth;
             transform.position = new Vector3(0, 0.5f, 0);
         }
         else if (s.name == "GameScene")
