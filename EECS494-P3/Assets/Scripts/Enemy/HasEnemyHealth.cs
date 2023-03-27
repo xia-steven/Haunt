@@ -32,15 +32,15 @@ public class HasEnemyHealth : HasHealth
         StartCoroutine(FlashRed());
         if (health <= 0)
         {
-            
-            if (Random.Range(0, 100) < 20)
+            int roulletteBall = Random.Range(0, 100);
+            if (roulletteBall < 18)
             {
                 Instantiate(healthPrefab, transform.position, Quaternion.identity);
-            }
-            else
+            } else if (roulletteBall >= 18 && roulletteBall < 55)
             {
                 Instantiate(coinPrefab, transform.position, Quaternion.identity);
             }
+
             Destroy(gameObject);
         }
         return true;
