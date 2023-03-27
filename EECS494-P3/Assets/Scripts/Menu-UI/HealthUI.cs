@@ -76,7 +76,7 @@ public class HealthUI : MonoBehaviour {
             heartValueTracker.RemoveAt(i);
         }
 
-        int numPips = (IsPlayer.instance.GetInitialMaxHealth() + 1) / 2;
+        int numPips = (IsPlayer.instance.GetMaxHealth() + 1) / 2;
 
         for (int i = 0; i < numPips; ++i)
         {

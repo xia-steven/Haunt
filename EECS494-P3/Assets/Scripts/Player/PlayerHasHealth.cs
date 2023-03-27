@@ -14,6 +14,7 @@ public class PlayerHasHealth : HasHealth {
     [SerializeField] int tutorialDeathMessageID = 6;
 
     public int initialMaxHealth = 0;
+    private int trueMaxHealth;
     private bool isInvincible = false;
 
     // Start is called before the first frame update
@@ -25,6 +26,7 @@ public class PlayerHasHealth : HasHealth {
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         initialMaxHealth = maxHealth;
+        trueMaxHealth = maxHealth;
     }
 
 
@@ -72,12 +74,14 @@ public class PlayerHasHealth : HasHealth {
     public void UpgradeHealth()
     {
         maxHealth += 2;
+        trueMaxHealth += 2;
         health = maxHealth;
     }
 
     public void ResetHealthToInitial()
     {
         maxHealth = initialMaxHealth;
+        trueMaxHealth = initialMaxHealth;
         health = initialMaxHealth;
     }
     
@@ -127,7 +131,6 @@ public class PlayerHasHealth : HasHealth {
 
     public void ResetHealth()
     {
-        maxHealth = initialMaxHealth;
-        health = maxHealth;
+        maxHealth = trueMaxHealth;
     }
 }
