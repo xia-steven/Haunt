@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3310355338106689481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3310355338106689483}
+  - component: {fileID: 3310355338106689480}
+  m_Layer: 0
+  m_Name: CrosshairCursor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3310355338106689483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3310355338106689481}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 24.0337, y: -76.560104, z: 87.54042}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3310355338106689480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3310355338106689481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0bd955be1b898d479b63cbac679295c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultCursor: {fileID: 0}
+  reloadCursors:
+  - {fileID: 2800000, guid: d136ebbeadeb54048bbc5f5974a88d16, type: 3}
+  - {fileID: 2800000, guid: 9a877f8f9e36767469d54a44f75d3afc, type: 3}
+  - {fileID: 2800000, guid: 6ed9807877244cd44b3707bde598cc84, type: 3}
+  - {fileID: 2800000, guid: 621fb764ed8bdc24eb0badd54902193e, type: 3}
+  - {fileID: 2800000, guid: 2084635c0103bf84eae605e5acec727e, type: 3}
+  - {fileID: 2800000, guid: 1dc85ee2ade982e49b9280282911dad6, type: 3}
+  - {fileID: 2800000, guid: 0b2b1fc4056e95b4aac45954e8348e91, type: 3}
+  - {fileID: 2800000, guid: 4e11294842888804588ff5bda064bffd, type: 3}
+  - {fileID: 2800000, guid: b3ae9c2e812be444e830d02b9a01bb18, type: 3}
+  - {fileID: 2800000, guid: 034d38732f0c798439e79ba190ec9e2c, type: 3}
+  - {fileID: 2800000, guid: ff65a0cea56b3304796cd8330495d024, type: 3}
+  - {fileID: 2800000, guid: 23b9a7fee506b6545be3eae60715d14c, type: 3}
+  - {fileID: 2800000, guid: da3c5e14f0ee89042b54990b9df6d271, type: 3}
+  - {fileID: 2800000, guid: d0aad66c698910b4ca681ae686ed53b5, type: 3}
+  - {fileID: 2800000, guid: bc5caa7ea8a9ddf42bbbc6e545fa0a69, type: 3}
+  - {fileID: 2800000, guid: eec94ea8b130bc54bbe43bc2a97d56d7, type: 3}
+  - {fileID: 2800000, guid: dd14b5876eae2cc43a2511cc0c31bacd, type: 3}
+  flashRedCursors:
+  - {fileID: 2800000, guid: 0827df083d1cf914681b2c7177550c49, type: 3}
+  - {fileID: 2800000, guid: 99a56eb0f2b17e44e80b3f9405265448, type: 3}
+  - {fileID: 2800000, guid: d2b2ee8e99a2dbf458335a2eaa7932b0, type: 3}
+  - {fileID: 2800000, guid: e31383312fc80654ca5338fdaaad2f36, type: 3}
+  - {fileID: 2800000, guid: 0827df083d1cf914681b2c7177550c49, type: 3}
