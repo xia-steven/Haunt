@@ -6,6 +6,7 @@ using UnityEngine.Rendering;
 
 public class CrosshairCursorManager: MonoBehaviour
 {
+    public static CrosshairCursorManager instance;
     [SerializeField] Texture2D defaultCursor;
     [SerializeField] Texture2D[] reloadCursors;
     [SerializeField] Texture2D[] flashRedCursors;
@@ -13,11 +14,13 @@ public class CrosshairCursorManager: MonoBehaviour
     private Subscription<PlayerDamagedEvent> playerdamage_sub;
     private float reloadDuration = 1f;
     private float flashDuration = .25f;
+    private Vector2 clickPoint = new Vector2(16, 16);
 
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.SetCursor(defaultCursor, new Vector2(16,16), CursorMode.Auto);
+        instance = this
+        Cursor.SetCursor(defaultCursor, clickPoint, CursorMode.Auto);
         reload_sub = EventBus.Subscribe<ReloadEvent>(_OnReload);
         playerdamage_sub = EventBus.Subscribe<PlayerDamagedEvent>(_OnDamage);
     }
@@ -44,10 +47,10 @@ public class CrosshairCursorManager: MonoBehaviour
         float frames = reloadDuration/(float)reloadCursors.Length;
         for (int i = 1; i < reloadCursors.Length; i++)
         {
-            Cursor.SetCursor(reloadCursors[i], new Vector2(16,16), CursorMode.Auto);
+            Cursor.SetCursor(reloadCursors[i], clickPoint, CursorMode.Auto);
             yield return new WaitForSeconds(frames);
         }
-        Cursor.SetCursor(defaultCursor, new Vector2(16,16), CursorMode.Auto);
+        Cursor.SetCursor(defaultCursor, clickPoint, CursorMode.Auto);
     }
     
     private IEnumerator FlashRedAnimation(float duration)
@@ -55,11 +58,13 @@ public class CrosshairCursorManager: MonoBehaviour
         float frames = reloadDuration/(float)reloadCursors.Length;
         for (int i = 1; i < flashRedCursors.Length; i++)
         {
-            Cursor.SetCursor(flashRedCursors[i], new Vector2(16,16), CursorMode.Auto);
+            Cursor.SetCursor(flashRedCursors[i], clickPoint, CursorMode.Auto);
             yield return new WaitForSeconds(frames);
         }
-        Cursor.SetCursor(defaultCursor, new Vector2(16,16), CursorMode.Auto);
+        Cursor.SetCursor(defaultCursor, clickPoint, CursorMode.Auto);
     }
+    
+    
     
 
     private void OnDestroy()
