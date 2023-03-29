@@ -8,10 +8,7 @@ public class HealsPlayer : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Player")) {
-            //alter before publishing in case a subscriber references the new health
-            //only publish event if health increase was successful
-            if (other.gameObject.GetComponent<HasHealth>().AlterHealth(healAmount))
-                EventBus.Publish(new HealEvent(healAmount));
+            other.gameObject.GetComponent<PlayerHasHealth>().AlterHealth(healAmount);
         }
     }
 }

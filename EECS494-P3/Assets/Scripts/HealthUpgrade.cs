@@ -13,7 +13,6 @@ public class HealthUpgrade : Upgrade
         // if we JUST depended on communicating with both components via event,
         // the ui might try to update the pips before the HasHealth component
         // actually updated the health numbers
-        GameObject.Find("Player").GetComponent<PlayerHasHealth>().UpgradeHealth();
-        EventBus.Publish(new IncreaseMaxHealthEvent(2));
+        GameObject.Find("Player").GetComponent<PlayerHasHealth>().AddShield();
     }
 }

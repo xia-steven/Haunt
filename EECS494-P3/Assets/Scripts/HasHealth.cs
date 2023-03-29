@@ -11,10 +11,8 @@ public class HasHealth : MonoBehaviour {
     }
 
     // Update is called once per frame
-    public virtual bool AlterHealth(int healthDelta) {
-        if (health + healthDelta > maxHealth) return false;
+    public virtual void AlterHealth(int healthDelta) {
         health += healthDelta;
-        return true;
     }
 
     public int GetHealth() {
