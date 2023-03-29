@@ -14,9 +14,9 @@ public static class TimeManager
     //Expects a value in the range (0, 1]
     public static void SetTimeScale(float scale)
     {
-        if (scale <= 0.01f) scale = 0.01f;
-
         Time.timeScale = scale;
+        // Prevent division by 0
+        if (scale <= 0.01f) scale = 0.01f;
         Time.fixedDeltaTime = defaultFixedDT * (1 / scale);
     }
 }
