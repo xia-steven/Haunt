@@ -33,10 +33,13 @@ public class HasEnemyHealth : HasHealth
         if (health <= 0)
         {
             int roulletteBall = Random.Range(0, 100);
-            if (roulletteBall < 18)
+            // Only drop collectibles if not the tutorial day
+            if (roulletteBall < 18 && GameControl.Day != 0)
             {
                 Instantiate(healthPrefab, transform.position, Quaternion.identity);
-            } else if (roulletteBall >= 18 && roulletteBall < 55)
+            }
+            // Only drop collectibles if not the tutorial day 
+            else if (roulletteBall >= 18 && roulletteBall < 55 && GameControl.Day != 0)
             {
                 Instantiate(coinPrefab, transform.position, Quaternion.identity);
             }

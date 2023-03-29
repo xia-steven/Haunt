@@ -36,17 +36,17 @@ public class EnemyBase : MonoBehaviour {
     }
 
     protected void FixedUpdate() {
-        // Get player position
-        Transform player = IsPlayer.instance.transform;
+        // Get player/target position
+        Vector3 targetPosition = GetTarget();
 
-        // First, check if the enemy cannot pathfind directly to the player
-        Vector3 playerDirection = (player.position - transform.position).normalized;
+        // First, check if the enemy cannot pathfind directly to the player/target
+        Vector3 playerDirection = (targetPosition - transform.position).normalized;
         RaycastHit hit;
         // Ignore hits on other enemies
         int layerMask = ~LayerMask.GetMask("Enemy");
 
         if (state != EnemyState.AStarMovement &&
-            Physics.Raycast(transform.position, playerDirection, out hit, Vector3.Distance(player.position, transform.position), layerMask))
+            Physics.Raycast(transform.position, playerDirection, out hit, Vector3.Distance(targetPosition, transform.position), layerMask))
         {
             // Confirm that the raycast did not hit the player
             if (hit.transform.gameObject.tag != "Player")
@@ -67,7 +67,7 @@ public class EnemyBase : MonoBehaviour {
         }
 
         // Second, check if the enemy can attack the player from their current distance
-        if (state != EnemyState.Attacking && Vector3.Distance(player.position, transform.position) <= attributes.targetDistance)
+        if (state != EnemyState.Attacking && Vector3.Distance(targetPosition, transform.position) <= attributes.targetDistance)
         {
             if(!runningCoroutine)
             {
@@ -83,7 +83,7 @@ public class EnemyBase : MonoBehaviour {
         }
 
         // Finally, pathfind directly to the player
-        if (state != EnemyState.SimpleMovement && Vector3.Distance(player.position, transform.position) > attributes.targetDistance)
+        if (state != EnemyState.SimpleMovement && Vector3.Distance(targetPosition, transform.position) > attributes.targetDistance)
         {
             if (!runningCoroutine)
             {
@@ -108,6 +108,16 @@ public class EnemyBase : MonoBehaviour {
     {
         // MUST BE OVERRIDDEN TO RETURN CORRECT ENEMY ID
         return 0;
+    }
+
+    /// <summary>
+    /// This function is used to get the target of this enemy.  Almost always is the player, except 
+    /// for cleric enemies.
+    /// </summary>
+    /// <returns>Returns the target position of the enemy</returns>
+    public virtual Vector3 GetTarget()
+    {
+        return IsPlayer.instance.transform.position;
     }
 
     /// <summary>
