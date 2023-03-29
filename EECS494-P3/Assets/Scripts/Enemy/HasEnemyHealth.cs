@@ -46,6 +46,16 @@ public class HasEnemyHealth : HasHealth
         return true;
     }
 
+    /// <summary>
+    /// Called by enemybase to initialize the enemy's max health
+    /// </summary>
+    /// <param name="newMaxHealth"> New max health for the enemy</param>
+    public void setMaxHealth(int newMaxHealth)
+    {
+        maxHealth = newMaxHealth;
+        health = maxHealth;
+    }
+
     private IEnumerator FlashRed()
     {
         sr.color = Color.red;

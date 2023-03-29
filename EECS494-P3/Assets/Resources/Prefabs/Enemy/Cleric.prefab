@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2011468650931085444}
   - component: {fileID: -7598087067940200872}
   m_Layer: 8
-  m_Name: Pedestal_Enemy
+  m_Name: Cleric
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
