@@ -17,6 +17,6 @@ public class SkipTutorialBtn : MonoBehaviour
         GameControl.Day = 0;
         GameObject player = GameObject.Find("Player");
         PlayerHasHealth health = player.GetComponent<PlayerHasHealth>();
-        health.ResetHealthToInitial();
+        health.ResetHealth();
     }
 }

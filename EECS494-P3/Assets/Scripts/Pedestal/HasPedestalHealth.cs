@@ -18,12 +18,12 @@ public class HasPedestalHealth : HasHealth {
     }
 
 
-    public override bool AlterHealth(int healthDelta) {
+    public override void AlterHealth(int healthDelta) {
         // NOTE: health delta is treated backwards of standard health components
         // due to the player destroying pedestals and enemies 
         healthDelta = -healthDelta;
         if (health == 0 && healthDelta < 0 || health == PedestalMaxHealth && healthDelta > 0 ||
-            healthDelta == 0) return false;
+            healthDelta == 0) return;
 
         health = Mathf.Clamp(health + healthDelta, 0, PedestalMaxHealth);
 
@@ -47,6 +47,5 @@ public class HasPedestalHealth : HasHealth {
 
         pedestal.updateVisuals(health, PedestalMaxHealth);
 
-        return true;
     }
 }

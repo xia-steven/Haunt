@@ -425,9 +425,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPipPrefab: {fileID: 7779889319257763960, guid: e94f874aeeadd2f409ee6f663b39f712, type: 3}
-  fullHeartImage: {fileID: 1819651602, guid: 1bab7c4f1ebee384389602bc51b2d9a3, type: 3}
-  halfHeartImage: {fileID: -1400948854, guid: 1bab7c4f1ebee384389602bc51b2d9a3, type: 3}
-  tutorialDeathMessageID: 6
+  fullHeartImage: {fileID: 1194896083, guid: e5d93ac21d02aab4fb59c81e849afd0f, type: 3}
+  halfHeartImage: {fileID: -692663672, guid: e5d93ac21d02aab4fb59c81e849afd0f, type: 3}
+  emptyHeartImage: {fileID: 831070324, guid: e5d93ac21d02aab4fb59c81e849afd0f, type: 3}
+  lockedHeartImage: {fileID: -493797173, guid: e5d93ac21d02aab4fb59c81e849afd0f, type: 3}
   loadWaitTime: 0.2
 --- !u!114 &5059311064850653632
 MonoBehaviour:
