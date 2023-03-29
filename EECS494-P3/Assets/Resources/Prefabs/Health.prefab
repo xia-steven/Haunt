@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 470793184306117436}
   - component: {fileID: 1094618456979900168}
   - component: {fileID: 87641175731913332}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HeartSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 6909370433621505589}
   - component: {fileID: 6909370433621505586}
   - component: {fileID: 4411481891177563599}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}

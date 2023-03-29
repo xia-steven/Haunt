@@ -30,18 +30,22 @@ class PlayerDamagedEvent {
 }
 
 /// <summary>
-/// The PlayerHealed event is to be broadcast whenever the player heals damage. <br/>
-/// The default damage amount is 1 unless otherwise specified in the constructor.
+/// The HealthUIUpdate is used by anything that will change the state of the health bar. <br/>
+/// Mostly published by functions in PlayerHasHealth, as that's where the relevant health data resides.
 /// </summary>
-class PlayerHealedEvent {
-    public int damageHealed;
+class HealthUIUpdate {
+    public int updated_health;
+    public int updated_locked_health;
+    public int updated_shield_health;
 
-    public PlayerHealedEvent(int amount = 1) {
-        damageHealed = amount;
+    public HealthUIUpdate(int health, int locked_health, int shield_health) {
+        updated_health = health;
+        updated_locked_health = locked_health;
+        updated_shield_health = shield_health;
     }
 
     public override string ToString() {
-        return "Player Damage Event Sent: Healed " + damageHealed + " damage.";
+        return "Health UI State: Health: " + updated_health + ", Locked: " + updated_locked_health + ", Shields: " + updated_shield_health + ".";
     }
 }
 

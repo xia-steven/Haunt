@@ -26,18 +26,6 @@ public class IsPlayer : MonoBehaviour {
         return health.GetMaxHealth();
     }
 
-    public int GetInitialMaxHealth()
-    {
-        if(health.initialMaxHealth == 0)
-        {
-            return health.GetMaxHealth();
-        }
-        else
-        {
-            return health.initialMaxHealth;
-        }
-    }
-
     IEnumerator NaturalHealthRegen()
     {
         // Let everything load up

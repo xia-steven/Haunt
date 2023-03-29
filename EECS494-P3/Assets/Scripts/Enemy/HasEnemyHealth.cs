@@ -26,7 +26,7 @@ public class HasEnemyHealth : HasHealth
 
     }
 
-    public override bool AlterHealth(int healthDelta)
+    public override void AlterHealth(int healthDelta)
     {
         base.AlterHealth(healthDelta);
         StartCoroutine(FlashRed());
@@ -46,7 +46,6 @@ public class HasEnemyHealth : HasHealth
 
             Destroy(gameObject);
         }
-        return true;
     }
 
     /// <summary>

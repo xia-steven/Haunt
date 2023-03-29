@@ -13,9 +13,11 @@ public class PlayerHasHealth : HasHealth {
     [SerializeField] private float invincibilityTimer = 1f;
     [SerializeField] int tutorialDeathMessageID = 6;
 
-    public int initialMaxHealth = 0;
-    private int trueMaxHealth;
+    private const int maxHealth = 6;
+    private int lockedHealth = 0;
+    private int shieldHealth = 0;
     private bool isInvincible = false;
+    
 
     // Start is called before the first frame update
     void Start() {
@@ -25,30 +27,60 @@ public class PlayerHasHealth : HasHealth {
         messFinSub = EventBus.Subscribe<MessageFinishedEvent>(_OnTutorialDeathMessageFinished);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
-        initialMaxHealth = maxHealth;
-        trueMaxHealth = maxHealth;
     }
 
-
-    void _OnPlayerDamaged(PlayerDamagedEvent pde) {
-        if (!isInvincible)
+    public override void AlterHealth(int healthDelta)
+    {
+        health += healthDelta;
+        if (healthDelta > 0 && health > maxHealth - lockedHealth)
         {
-            
-            AlterHealth(-pde.damageTaken);
-            StartCoroutine(TriggerInvincibility());
+            health = maxHealth - lockedHealth;
+        } else if (healthDelta < 0)
+        {
+            if (health <= 0)
+            {
+                health = 0;
+                CheckIsDead();
+            }
         }
-        
+        EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
+    }
 
+    private bool CheckIsDead()
+    {
         Debug.Log("Game control day: " + GameControl.Day);
-        if (health == 0 && GameControl.Day > 0) {
+        if (health == 0 && GameControl.Day > 0)
+        {
             EventBus.Publish(new GameLossEvent());
+            return true;
         }
         else if (health == 0 && GameControl.Day <= 0)
         {
             // Tutorial day death
             EventBus.Publish(new TutorialMessageEvent(tutorialDeathMessageID, GetInstanceID(), KeyCode.Mouse0));
+            return true;
+        }
+
+        return false;
+    }
+    void _OnPlayerDamaged(PlayerDamagedEvent pde) {
+        if (!isInvincible)
+        {
+            if (shieldHealth > 0)
+            {
+                shieldHealth -= 1;
+                EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
+            }
+            else
+            {
+                AlterHealth(-pde.damageTaken);
+            }
+            
+            StartCoroutine(TriggerInvincibility());
         }
     }
+    
+    
 
     void _OnTutorialDeathMessageFinished(MessageFinishedEvent mfe)
     {
@@ -60,31 +92,31 @@ public class PlayerHasHealth : HasHealth {
     }
 
     void _OnPedestalDied(PedestalDestroyedEvent pde) {
-        maxHealth += 2;
+        lockedHealth -= 2;
+        Debug.Log("Player received pedestal death, locked: " + lockedHealth);
+        EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
         
     }
 
     void _OnPedestalRepaired(PedestalRepairedEvent pre) {
-        maxHealth -= 2;
-        if (health > maxHealth) {
-            AlterHealth(maxHealth - health);
+        lockedHealth += 2;
+        Debug.Log("Player received pedestal repair, locked: " + lockedHealth);
+
+        if (health > maxHealth-lockedHealth) {
+            AlterHealth(maxHealth-lockedHealth - health);
         }
+        // AlterHealth will also publish an update to the ui--let's see if it's idempotent 
+        EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
+
     }
 
-    public void UpgradeHealth()
+    public void AddShield()
     {
-        maxHealth += 2;
-        trueMaxHealth += 2;
-        health = maxHealth;
+        shieldHealth += 2;
+        EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
+
     }
 
-    public void ResetHealthToInitial()
-    {
-        maxHealth = initialMaxHealth;
-        trueMaxHealth = initialMaxHealth;
-        health = initialMaxHealth;
-    }
-    
     private IEnumerator TriggerInvincibility()
     {
         isInvincible = true;
@@ -118,8 +150,10 @@ public class PlayerHasHealth : HasHealth {
         if (s.name == "TutorialGameScene" || s.name == "TutorialHubWorld")
         {
             Debug.Log("TutorialGameScene Loaded");
-            health = initialMaxHealth;
-            maxHealth = initialMaxHealth;
+            health = 4;
+            lockedHealth = 2;
+            shieldHealth = 0;
+            EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
             transform.position = new Vector3(0, 0.5f, 0);
         }
         else if (s.name == "GameScene")
@@ -131,6 +165,7 @@ public class PlayerHasHealth : HasHealth {
 
     public void ResetHealth()
     {
-        maxHealth = trueMaxHealth;
+        lockedHealth = 0;
+        health = maxHealth;
     }
 }

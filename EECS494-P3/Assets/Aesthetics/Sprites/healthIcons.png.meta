@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1bab7c4f1ebee384389602bc51b2d9a3
+guid: e5d93ac21d02aab4fb59c81e849afd0f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -70,7 +70,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -117,43 +117,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: healthIcon_0
+      name: healthIcons_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 4
-        width: 34
-        height: 32
+        x: 5
+        y: 8
+        width: 32
+        height: 27
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8407dc7c65cbb9048bb0dd454de1dd66
-      internalID: 1819651602
+      spriteID: 0d50109b38b5eba40a1ac44d8bb554ce
+      internalID: 1194896083
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: healthIcon_1
+      name: healthIcons_1
       rect:
         serializedVersion: 2
-        x: 41
-        y: 4
-        width: 34
-        height: 32
+        x: 42
+        y: 8
+        width: 32
+        height: 27
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 88512f7d25d56544d9446d8192bbf34a
-      internalID: -1400948854
+      spriteID: d71d7745bfa3c5c48a6195c426ba35e8
+      internalID: -692663672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: healthIcons_2
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 8
+        width: 32
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 715e62128ee93484f9892e8ec678a22a
+      internalID: 831070324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: healthIcons_3
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 8
+        width: 32
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4784a28821da8c4b88bea9154345bb3
+      internalID: -493797173
       vertices: []
       indices: 
       edges: []
@@ -169,8 +211,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      healthIcon_0: 1819651602
-      healthIcon_1: -1400948854
+      healthIcons_0: 1194896083
+      healthIcons_1: -692663672
+      healthIcons_2: 831070324
+      healthIcons_3: -493797173
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
