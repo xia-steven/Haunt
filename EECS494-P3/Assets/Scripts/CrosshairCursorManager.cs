@@ -19,54 +19,34 @@ public class CrosshairCursorManager: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        instance = this
+        instance = this;
         Cursor.SetCursor(defaultCursor, clickPoint, CursorMode.Auto);
         reload_sub = EventBus.Subscribe<ReloadEvent>(_OnReload);
         playerdamage_sub = EventBus.Subscribe<PlayerDamagedEvent>(_OnDamage);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    
     private void _OnReload(ReloadEvent e)
     {
-        StartCoroutine(ReloadAnimation(reloadDuration));
+        StartCoroutine(AnimateKeyframes(reloadCursors,reloadDuration));
         
     }
 
     private void _OnDamage(PlayerDamagedEvent e)
     {
-        StartCoroutine(FlashRedAnimation(flashDuration));
+        StartCoroutine(AnimateKeyframes(flashRedCursors, flashDuration));
     }
-    private IEnumerator ReloadAnimation(float duration)
-    {
-        float frames = reloadDuration/(float)reloadCursors.Length;
-        for (int i = 1; i < reloadCursors.Length; i++)
-        {
-            Cursor.SetCursor(reloadCursors[i], clickPoint, CursorMode.Auto);
-            yield return new WaitForSeconds(frames);
-        }
-        Cursor.SetCursor(defaultCursor, clickPoint, CursorMode.Auto);
-    }
-    
-    private IEnumerator FlashRedAnimation(float duration)
-    {
-        float frames = reloadDuration/(float)reloadCursors.Length;
-        for (int i = 1; i < flashRedCursors.Length; i++)
-        {
-            Cursor.SetCursor(flashRedCursors[i], clickPoint, CursorMode.Auto);
-            yield return new WaitForSeconds(frames);
-        }
-        Cursor.SetCursor(defaultCursor, clickPoint, CursorMode.Auto);
-    }
-    
-    
-    
 
+    private IEnumerator AnimateKeyframes(Texture2D[] keyframes, float duration)
+    {
+        float secs_per_frame = duration/(float)keyframes.Length;
+        for (int i = 1; i < keyframes.Length; i++)
+        {
+            Cursor.SetCursor(keyframes[i], clickPoint, CursorMode.Auto);
+            yield return new WaitForSeconds(secs_per_frame);
+        }
+        Cursor.SetCursor(defaultCursor, clickPoint, CursorMode.Auto);
+    }
+    
     private void OnDestroy()
     {
         EventBus.Unsubscribe(reload_sub);
