@@ -27,9 +27,9 @@ public class Wave {
         spawnPoints = _spawnPoints;
         spawnPedestals = _spawnPedestals;
 
-        potentialMembers.Add(Resources.Load("Prefabs/Test Prefabs/Melee_Enemy") as GameObject); //melee
-        potentialMembers.Add(Resources.Load("Prefabs/Test Prefabs/Ranged_Enemy") as GameObject); //ranged
-        potentialMembers.Add(Resources.Load("Prefabs/Test Prefabs/Pedestal_Enemy") as GameObject); //exorcist
+        potentialMembers.Add(Resources.Load("Prefabs/Enemy/PeasantTorch") as GameObject); //torch
+        potentialMembers.Add(Resources.Load("Prefabs/Enemy/PeasantPitchfork") as GameObject); //pitchfork
+        potentialMembers.Add(Resources.Load("Prefabs/Enemy/Cleric") as GameObject); //cleric
 
         Init();
     }

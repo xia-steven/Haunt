@@ -1,0 +1,75 @@
+{
+    "key": "EnemyData",
+    "allEnemies": [
+        {
+            "name": "PeasantTorch",
+            "moveSpeed": 1.0,
+            "targetDistance": 0.75,
+            "health": 3,
+            "attackSpeed": 2.0
+        },
+        {
+            "name": "PeasantPitchfork",
+            "moveSpeed": 1.0,
+            "targetDistance": 1.5,
+            "health": 3,
+            "attackSpeed": 2.0
+        },
+        {
+            "name": "Archer",
+            "moveSpeed": 1.0,
+            "targetDistance": 3.0,
+            "health": 4,
+            "attackSpeed": 2.0
+        },
+        {
+            "name": "EliteArcher",
+            "moveSpeed": 1.5,
+            "targetDistance": 4.0,
+            "health": 6,
+            "attackSpeed": 2.0
+        },
+        {
+            "name": "MultiArcher",
+            "moveSpeed": 1.25,
+            "targetDistance": 2.0,
+            "health": 4,
+            "attackSpeed": 2.0
+        },
+        {
+            "name": "Arbalest",
+            "moveSpeed": 1.0,
+            "targetDistance": 4.0,
+            "health": 4,
+            "attackSpeed": 2.0
+        },
+        {
+            "name": "Demolition",
+            "moveSpeed": 1.0,
+            "targetDistance": 2.5,
+            "health": 5,
+            "attackSpeed": 2.0
+        },
+        {
+            "name": "Thief",
+            "moveSpeed": 2.0,
+            "targetDistance": 1.0,
+            "health": 5,
+            "attackSpeed": 2.0
+        },
+        {
+            "name": "MagicArcher",
+            "moveSpeed": 1.25,
+            "targetDistance": 3.0,
+            "health": 4,
+            "attackSpeed": 2.0
+        },
+        {
+            "name": "Cleric",
+            "moveSpeed": 0.5,
+            "targetDistance": 1.5,
+            "health": 4,
+            "attackSpeed": 2.0
+        }
+    ]
+}

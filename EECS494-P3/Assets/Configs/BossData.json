@@ -1,0 +1,7 @@
+{
+    "key": "BossData",
+    "name": "MasterCleric",
+    "moveSpeed": 5.0,
+    "targetDistance": 10.0,
+    "health": 100
+}

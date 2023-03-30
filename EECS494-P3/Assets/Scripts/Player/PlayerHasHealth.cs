@@ -35,19 +35,27 @@ public class PlayerHasHealth : HasHealth {
 
     public override void AlterHealth(int healthDelta)
     {
-        health += healthDelta;
-        if (healthDelta > 0 && health > maxHealth - lockedHealth)
+        if(!isInvincible)
         {
-            health = maxHealth - lockedHealth;
-        } else if (healthDelta < 0)
-        {
-            if (health <= 0)
+            health += healthDelta;
+            if (healthDelta > 0 && health > maxHealth - lockedHealth)
             {
-                health = 0;
-                CheckIsDead();
+                health = maxHealth - lockedHealth;
             }
+            else if (healthDelta < 0)
+            {
+                if (health <= 0)
+                {
+                    health = 0;
+                    CheckIsDead();
+                }
+
+                // Invincibility if losing damage
+                StartCoroutine(TriggerInvincibility());
+            }
+
+            EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
         }
-        EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
     }
 
     private bool CheckIsDead()

@@ -64,7 +64,7 @@ partial class GameControl : MonoBehaviour {
 
     void OnSceneLoaded(Scene s, LoadSceneMode m)
     {
-        if (s.name == "GameScene")
+        if (s.name == "GameScene" || s.name == "LAB_Caleb")
         {
             Debug.Log("GameScene Loaded");
             StartCoroutine(StartOnDelay(StartNight));

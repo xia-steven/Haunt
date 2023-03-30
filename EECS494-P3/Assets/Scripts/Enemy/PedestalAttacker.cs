@@ -21,7 +21,7 @@ public class PedestalAttacker : EnemyBase {
 
     private new void Start() {
         base.Start();
-        speed = 1.5f;
+        baseSpeed = 1.5f;
         switchPedestalSub = EventBus.Subscribe<PedestalDestroyedEvent>(pedestalDied);
         addPedestalSub = EventBus.Subscribe<PedestalRepairedEvent>(pedestalRepaired);
         StartCoroutine(WaitAndFindPath());
