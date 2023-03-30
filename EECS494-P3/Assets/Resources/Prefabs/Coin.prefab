@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07952aa48a7fc4478591f800a034e80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scale: 1
 --- !u!1 &4681487817877854835
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,7 +131,6 @@ GameObject:
   - component: {fileID: 4681487817877854837}
   - component: {fileID: 4681487817877854836}
   - component: {fileID: 4681487817877854839}
-  - component: {fileID: 4681487817877854838}
   m_Layer: 9
   m_Name: Coin
   m_TagString: Untagged
@@ -181,16 +181,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value: 1
   coin_collected_sound: {fileID: 8300000, guid: 8fafa9d39b1218946b1a9ce67e4934d3, type: 3}
---- !u!114 &4681487817877854838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4681487817877854835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bea78e7617b741e4eb115797f5419f26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerExclusive: 1
