@@ -314,3 +314,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosiveRadius: 1.5
+  oneShotEnemies: 1

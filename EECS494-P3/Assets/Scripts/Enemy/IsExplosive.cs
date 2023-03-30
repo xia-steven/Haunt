@@ -5,6 +5,7 @@ using UnityEngine;
 public class IsExplosive : MonoBehaviour
 {
     [SerializeField] float explosiveRadius = 2.0f;
+    [SerializeField] bool oneShotEnemies = false;
 
     // Used to prevent spawning objects on quit
     bool quitting = false;
@@ -37,7 +38,8 @@ public class IsExplosive : MonoBehaviour
             else if (hit.TryGetComponent<HasEnemyHealth>(out enemyHit))
             {
                 // Kill the enemy
-                enemyHit.AlterHealth(-1000);
+                int damageAmount = oneShotEnemies ? -1000 : -1;
+                enemyHit.AlterHealth(damageAmount);
             }
 
         }
