@@ -33,7 +33,7 @@ public class IsExplosive : MonoBehaviour
 
             if(hit.TryGetComponent<PlayerHasHealth>(out playerHit))
             {
-                EventBus.Publish(new PlayerDamagedEvent(1));
+                playerHit.AlterHealth(-1);
             }
             else if (hit.TryGetComponent<HasEnemyHealth>(out enemyHit))
             {

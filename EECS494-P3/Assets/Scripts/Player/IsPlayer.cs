@@ -32,7 +32,7 @@ public class IsPlayer : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
         while(health.GetHealth() > 0)
         {
-            EventBus.Publish(new PlayerDamagedEvent(-1));
+            health.AlterHealth(1);
             yield return new WaitForSeconds(5.0f);
         }
     }
