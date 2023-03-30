@@ -34,10 +34,12 @@ public class PlayerHasHealth : HasHealth {
     public override void AlterHealth(int healthDelta)
     {
         // healing
-        if (healthDelta > 0 && health > maxHealth - lockedHealth)
+        if (healthDelta > 0)
         {
             health += healthDelta;
-            health = maxHealth - lockedHealth;
+            if (health > maxHealth - lockedHealth)
+                health = maxHealth - lockedHealth;
+
         }
         // damage
         else if (healthDelta < 0)

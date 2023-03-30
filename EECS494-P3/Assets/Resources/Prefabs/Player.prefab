@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07952aa48a7fc4478591f800a034e80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scale: 1
 --- !u!1 &4925935061097164007
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,7 +141,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.8, z: 1}
+  m_Size: {x: 0.6875, y: 0.4375, z: 0.4375}
   m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!1 &5067998880475344235
 GameObject:
@@ -576,9 +577,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 6
+  id: 0
   invincibilityTimer: 1
   tutorialDeathMessageID: 6
-  initialMaxHealth: 0
 --- !u!114 &1953417845474465346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -712,3 +713,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07952aa48a7fc4478591f800a034e80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scale: 1
