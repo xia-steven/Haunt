@@ -21,6 +21,9 @@ public class EnemyBase : MonoBehaviour {
     protected int currentPathIndex;
     protected List<Vector3> pathVectorList;
     protected Transform tf_;
+    
+    // Player variables
+    protected PlayerHasHealth playerHealth;
 
     protected virtual void Start() {
         // Initialize components and transform
@@ -33,6 +36,9 @@ public class EnemyBase : MonoBehaviour {
 
         // Set max health
         enemyHealth.setMaxHealth(attributes.health);
+        
+        // Get player attributes
+        playerHealth = GameObject.Find("Player").GetComponent<PlayerHasHealth>();
 
     }
 
@@ -237,7 +243,7 @@ public class EnemyBase : MonoBehaviour {
     {
         if(other.gameObject.tag == "Player")
         {
-            EventBus.Publish(new PlayerDamagedEvent(1));
+            playerHealth.AlterHealth(-1);
         }
     }
 }

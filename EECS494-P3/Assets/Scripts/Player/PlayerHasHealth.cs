@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerHasHealth : HasHealth {
-    Subscription<PlayerDamagedEvent> damageSub;
     Subscription<PedestalDestroyedEvent> pedDestSub;
     Subscription<PedestalRepairedEvent> pedRepSub;
     Subscription<MessageFinishedEvent> messFinSub;
@@ -23,7 +22,6 @@ public class PlayerHasHealth : HasHealth {
 
     // Start is called before the first frame update
     void Start() {
-        damageSub = EventBus.Subscribe<PlayerDamagedEvent>(_OnPlayerDamaged);
         pedDestSub = EventBus.Subscribe<PedestalDestroyedEvent>(_OnPedestalDied);
         pedRepSub = EventBus.Subscribe<PedestalRepairedEvent>(_OnPedestalRepaired);
         messFinSub = EventBus.Subscribe<MessageFinishedEvent>(_OnTutorialDeathMessageFinished);
@@ -35,27 +33,41 @@ public class PlayerHasHealth : HasHealth {
 
     public override void AlterHealth(int healthDelta)
     {
-        if(!isInvincible)
+        // healing
+        if (healthDelta > 0 && health > maxHealth - lockedHealth)
         {
             health += healthDelta;
-            if (healthDelta > 0 && health > maxHealth - lockedHealth)
+            health = maxHealth - lockedHealth;
+        }
+        // damage
+        else if (healthDelta < 0)
+        {
+            if (!isInvincible)
             {
-                health = maxHealth - lockedHealth;
-            }
-            else if (healthDelta < 0)
-            {
-                if (health <= 0)
+                if (shieldHealth > 0)
                 {
-                    health = 0;
-                    CheckIsDead();
+                    shieldHealth -= 1;
                 }
-
-                // Invincibility if losing damage
+                else
+                {
+                    health += healthDelta;
+                }
+                EventBus.Publish(new PlayerDamagedEvent(healthDelta));
                 StartCoroutine(TriggerInvincibility());
             }
+            
+            // death check
+            if (health <= 0)
+            {
+                health = 0;
+                CheckIsDead();
+            }
 
-            EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
+            // Invincibility if losing damage
+            StartCoroutine(TriggerInvincibility());
         }
+
+        EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
     }
 
     private bool CheckIsDead()
@@ -75,24 +87,8 @@ public class PlayerHasHealth : HasHealth {
 
         return false;
     }
-    void _OnPlayerDamaged(PlayerDamagedEvent pde) {
-        if (!isInvincible)
-        {
-            if (shieldHealth > 0)
-            {
-                shieldHealth -= 1;
-                EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
-            }
-            else
-            {
-                AlterHealth(-pde.damageTaken);
-            }
-            
-            StartCoroutine(TriggerInvincibility());
-        }
-    }
-    
-    
+
+
 
     void _OnTutorialDeathMessageFinished(MessageFinishedEvent mfe)
     {

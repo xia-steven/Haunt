@@ -53,7 +53,7 @@ public abstract class Bullet : MonoBehaviour {
         if (playerHealth != null)
         {
             Debug.Log("Player damaged");
-            EventBus.Publish<PlayerDamagedEvent>(new PlayerDamagedEvent(-damage));
+            playerHealth.AlterHealth(damage);
         }
 
         // Alter health if collided has health

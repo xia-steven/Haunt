@@ -45,7 +45,7 @@ public class IsPit : MonoBehaviour {
             // Teleport player outside the pit
             player.transform.position = adjustedPosition;
 
-            EventBus.Publish(new PlayerDamagedEvent(1));
+            player.GetComponent<PlayerHasHealth>().AlterHealth(-1);
         }
     }
 
