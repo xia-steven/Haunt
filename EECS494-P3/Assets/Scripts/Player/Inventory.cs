@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
     private GameObject pistol;
     private GameObject rifle;
     private GameObject shotgun;
+    private GameObject sword;
     private int coins = 0;
 
     private Subscription<SwapEvent> swapEventSubscription;
@@ -31,8 +32,10 @@ public class Inventory : MonoBehaviour
         // Equip all weapons (will be removed) TODO
         rifle = Resources.Load<GameObject>("Prefabs/Weapons/Rifle");
         shotgun = Resources.Load<GameObject>("Prefabs/Weapons/Shotgun");
+        sword = Resources.Load<GameObject>("Prefabs/Weapons/Sword");
         Equip(rifle);
         Equip(shotgun);
+        Equip(sword);
 
         // Swap to pistol on load (will be removed) TODO
         EventBus.Publish<SwapSpecificEvent>(new SwapSpecificEvent(1));

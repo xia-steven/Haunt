@@ -177,7 +177,7 @@ public abstract class Weapon : MonoBehaviour {
         firing = false;
     }
 
-    protected void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (!isPlayer) return;
 
