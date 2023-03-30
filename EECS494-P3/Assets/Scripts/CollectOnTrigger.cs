@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class CollectOnTrigger : MonoBehaviour
@@ -10,10 +11,11 @@ public class CollectOnTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerPhysical"))
         {
             AudioSource.PlayClipAtPoint(coin_collected_sound, transform.position);
             EventBus.Publish(new CoinEvent(value));
+            Destroy(gameObject);
         }
             
     }
