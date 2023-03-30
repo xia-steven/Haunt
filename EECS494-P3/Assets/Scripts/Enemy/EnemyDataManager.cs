@@ -18,11 +18,6 @@ public class EnemyDataManager : MonoBehaviour
         else Destroy(this.gameObject);
 
         DontDestroyOnLoad(gameObject);
-    }
-
-    // Load config data in start to make sure config manager is ready
-    private void Start()
-    {
 
         // Load data
         data = ConfigManager.GetData<EnemyData>(configName);

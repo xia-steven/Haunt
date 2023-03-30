@@ -22,7 +22,7 @@ public class EnemyBase : MonoBehaviour {
     protected List<Vector3> pathVectorList;
     protected Transform tf_;
 
-    protected void Start() {
+    protected virtual void Start() {
         // Initialize components and transform
         rb = GetComponent<Rigidbody>();
         enemyHealth = GetComponent<HasEnemyHealth>();
@@ -33,6 +33,7 @@ public class EnemyBase : MonoBehaviour {
 
         // Set max health
         enemyHealth.setMaxHealth(attributes.health);
+
     }
 
     protected void FixedUpdate() {

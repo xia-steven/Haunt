@@ -29,11 +29,13 @@ public class EnemyAttributes
     public float moveSpeed;
     public float targetDistance;
     public int health;
+    public float attackSpeed;
 
 
     public override string ToString()
     {
         string output = "Enemy " + name + " has " + health + " health, a moveSpeed of " + moveSpeed +
+            ", an attack speed of " + attackSpeed + 
             ", and a target distance of " + targetDistance + " units.";
         return output;
     }
