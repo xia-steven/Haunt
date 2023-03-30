@@ -37,6 +37,13 @@ public abstract class Weapon : MonoBehaviour {
 
     // Time it takes gun to reload
     protected float reloadTime;
+    protected SpriteRenderer spriteRenderer;
+    // Time between bullets
+    [SerializeField] protected float bulletDelay = 0.6f;
+    // Time between tap firing
+    [SerializeField] protected float tapDelay = 0.2f;
+
+
     public float ReloadTime {
         get { return reloadTime; }
         private set{ }
@@ -115,6 +122,11 @@ public abstract class Weapon : MonoBehaviour {
         Debug.Log("Base reload called");
     }
 
+    protected virtual void GunReload()
+    {
+        Debug.Log("Base gun-specific reload called");
+    }
+
     // Fires a projectile of type Bullet in specified direction
     public void FireProjectile(GameObject bullet, Vector3 direction, Transform start, float bulletSpeed, Shooter shooter) {
         // Set spawn position based on barrel length
@@ -165,6 +177,67 @@ public abstract class Weapon : MonoBehaviour {
         firing = false;
     }
 
+    protected void FixedUpdate()
+    {
+        if (!isPlayer) return;
+
+        // Get the screen position of the cursor
+        Vector3 screenPos = Input.mousePosition;
+        Vector3 direction = Vector3.zero;
+
+        // Create a ray from the camera through the cursor position
+        Ray ray = Camera.main.ScreenPointToRay(screenPos);
+
+        // Find the point where the ray intersects the plane that contains the player
+        Plane groundPlane = new Plane(Vector3.up, transform.position);
+        if (groundPlane.Raycast(ray, out float distanceToGround) && playerEnabled)
+        {
+            // Calculate the direction vector from the player to the intersection point
+            Vector3 hitPoint = ray.GetPoint(distanceToGround);
+            direction = hitPoint - transform.position;
+
+            // Check if gun sprite needs to be flipped
+            if (direction.x < 0)
+            {
+                spriteRenderer.flipY = true;
+            }
+            else
+            {
+                spriteRenderer.flipY = false;
+            }
+
+            // Calculate the rotation that points in the direction of the intersection point
+            Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+
+            // Set the rotation of the gun object
+            transform.rotation = rotation;
+        }
+
+        // Fire bullet if ammo in clip, trigger is down, last bullet was not fired recently, last tap was not recent, not reloading
+        if (currentClipAmount > 0 && firing && (Time.time - lastBullet >= bulletDelay) && (Time.time - lastTap >= tapDelay) && !isReloading)
+        {
+            WeaponFire(direction);
+        } else if (firing && (Time.time - lastBullet >= bulletDelay) && (Time.time - lastTap >= tapDelay) && !isReloading)
+        {
+            GunReload();
+        }
+    }
+
+    protected virtual void WeaponFire(Vector3 direction)
+    {
+        Debug.Log("Base WeaponFire");
+    }
+
+    protected bool CanReload()
+    {
+        if (!isReloading && currentClipAmount != fullClipAmount)
+        {
+            return true;
+        }
+
+        return false; 
+    }
+
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoad;
@@ -187,6 +260,16 @@ public class ReloadEvent {
 
     public ReloadEvent(GameObject _reloader) {
         reloader = _reloader;
+    }
+}
+
+public class ReloadStartedEvent
+{
+    public float reloadTime;
+
+    public ReloadStartedEvent(float _reloadTime)
+    {
+        reloadTime = _reloadTime;
     }
 }
 

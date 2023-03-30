@@ -10,7 +10,7 @@ public class AmmoUI : MonoBehaviour
     [SerializeField] GameObject bulletTick;
 
     Subscription<WeaponSwapEvent> swapSub;
-    Subscription<ReloadEvent> reloadSub;
+    Subscription<ReloadStartedEvent> reloadSub;
 
     List<GameObject> shellInstances = new List<GameObject>();
 
@@ -27,7 +27,7 @@ public class AmmoUI : MonoBehaviour
     void Awake()
     {
         swapSub = EventBus.Subscribe<WeaponSwapEvent>(_OnSwap);
-        reloadSub = EventBus.Subscribe<ReloadEvent>(_OnReload);
+        reloadSub = EventBus.Subscribe<ReloadStartedEvent>(_OnReload);
     }
 
     // Update is called once per frame
@@ -117,7 +117,7 @@ public class AmmoUI : MonoBehaviour
     }
 
 
-    void _OnReload(ReloadEvent e)
+    void _OnReload(ReloadStartedEvent e)
     {
         if (gameObject.activeInHierarchy) StartCoroutine(ReloadOverTime());
     }
