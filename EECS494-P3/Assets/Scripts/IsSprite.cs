@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class IsSprite : MonoBehaviour
 {
+    public float scale = 1.0f;
     void Start()
     {
-        transform.localScale = new Vector3(1, 1 / CameraStretch.instance.height, 1);
+        transform.localScale = new Vector3(scale, scale / CameraStretch.instance.height, scale);
     }
 }

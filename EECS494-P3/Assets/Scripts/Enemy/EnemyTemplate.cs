@@ -25,7 +25,7 @@ public class EnemyTemplate : EnemyBase {
             // (initialize bullets/projectiles, strafe, dash at target, etc.)
 
 
-            yield return null;
+            yield return new WaitForSeconds(attributes.attackSpeed);
         }
 
         // Let update know that we're done

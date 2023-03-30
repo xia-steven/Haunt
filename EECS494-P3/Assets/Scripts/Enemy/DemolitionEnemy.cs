@@ -2,39 +2,41 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ArbalestEnemy : EnemyBase {
-    float projectileSpeed = 7.0f;
-    float projectileLifetime = 2.0f;
-    GameObject arbalestBullet;
+// TODO: Rename file and class to enemy name
+public class DemolitionEnemy : EnemyBase {
+    float projectileSpeed = 4.0f;
+    float projectileLifetime = 3.0f;
+    GameObject demolitionBullet;
+
 
     protected override void Start()
     {
         base.Start();
 
-        arbalestBullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/ArbalestShot");
+        demolitionBullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/DemolitionShot");
 
-        ArbalestProjectile proj = arbalestBullet.GetComponent<ArbalestProjectile>();
+        DemolitionProjectile proj = demolitionBullet.GetComponent<DemolitionProjectile>();
         proj.setLifetime(projectileLifetime);
     }
 
     // Override enemy ID to load from config
     public override int GetEnemyID()
     {
-        return 5;
+        // TODO: Change returned value to enemyID (index in config file)
+        return 6;
     }
 
     // Override attack function
     public override IEnumerator EnemyAttack()
     {
         // TODO: Remove or change debug statement
-        Debug.Log("Arbalest Enemy starting attack");
-
-        // Slight attack delay
-        yield return new WaitForSeconds(0.25f);
+        Debug.Log("Demolition Enemy starting attack");
 
         // While attacking
         while(state == EnemyState.Attacking)
         {
+            // TODO: Perform attack here
+            // (initialize bullets/projectiles, strafe, dash at target, etc.)
             Vector3 targetPosition = IsPlayer.instance.transform.position;
 
             Vector3 direction = targetPosition - transform.position;
@@ -42,7 +44,7 @@ public class ArbalestEnemy : EnemyBase {
             direction = direction.normalized;
 
 
-            fireBullet(arbalestBullet, direction, Shooter.Enemy, projectileSpeed);
+            fireBullet(demolitionBullet, direction, Shooter.Enemy, projectileSpeed);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }
@@ -50,5 +52,4 @@ public class ArbalestEnemy : EnemyBase {
         // Let update know that we're done
         runningCoroutine = false;
     }
-
 }

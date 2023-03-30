@@ -218,6 +218,28 @@ public class EnemyBase : MonoBehaviour {
         }
     }
 
+    // Base function to use for firing projectiles
+    protected void fireBullet(GameObject bullet, Vector3 direction, Shooter shooter, float projectileSpeed)
+    {
+        // Spawn bullet at barrel of gun
+        GameObject projectile = Instantiate(bullet, transform.position, Quaternion.identity);
+
+        // Set shooter to holder of gun (enemy or player)
+        projectile.GetComponent<Bullet>().SetShooter(shooter);
+
+        // Give bullet its velocity
+        Rigidbody rb = projectile.GetComponent<Rigidbody>();
+        rb.velocity = direction * projectileSpeed;
+    }
+
+    // Damage the player if they touch the enemy
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Player")
+        {
+            EventBus.Publish(new PlayerDamagedEvent(1));
+        }
+    }
 }
 
 

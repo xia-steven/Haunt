@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.45584598, g: 0.1372549, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.22712395, b: 0.4056604, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -208,10 +208,11 @@ GameObject:
   - component: {fileID: -2126332816895569608}
   - component: {fileID: 2309572555269806338}
   - component: {fileID: -5851982813740912598}
-  - component: {fileID: 7619542920419964898}
   - component: {fileID: 1365097214977346424}
+  - component: {fileID: 5020056025764861587}
+  - component: {fileID: 7125629374098353377}
   m_Layer: 8
-  m_Name: Arbalest
+  m_Name: Demolition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276,18 +277,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
---- !u!114 &7619542920419964898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5176294668627473358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88f1d5a456370fb4392526aea67cc607, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1365097214977346424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,3 +289,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36285adb985ddf4f8bb70c73b47b6de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5020056025764861587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5176294668627473358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cf5063c62f22e84fa9eb8d819aea73c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7125629374098353377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5176294668627473358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39bde91afff8a594e9f8f77f3eb8db60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosiveRadius: 1.5
