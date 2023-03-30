@@ -17,7 +17,6 @@ public abstract class Bullet : MonoBehaviour {
 
     public void SetShooter(Shooter entity)
     {
-        Debug.Log("Shooter set to: " + entity);
         shooter = entity;
     }
 

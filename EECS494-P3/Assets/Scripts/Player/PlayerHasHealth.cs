@@ -10,6 +10,8 @@ public class PlayerHasHealth : HasHealth {
     Subscription<PedestalRepairedEvent> pedRepSub;
     Subscription<MessageFinishedEvent> messFinSub;
 
+    public int id;
+
     [SerializeField] private float invincibilityTimer = 1f;
     [SerializeField] int tutorialDeathMessageID = 6;
 
@@ -27,6 +29,8 @@ public class PlayerHasHealth : HasHealth {
         messFinSub = EventBus.Subscribe<MessageFinishedEvent>(_OnTutorialDeathMessageFinished);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
+        
+        id = Random.Range(0, 1000);
     }
 
     public override void AlterHealth(int healthDelta)
@@ -164,9 +168,10 @@ public class PlayerHasHealth : HasHealth {
             EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
             transform.position = new Vector3(0, 0.5f, 0);
         }
-        else if (s.name == "GameScene")
+        else if (s.name == "GameScene" || s.name == "HubWorld")
         {
             Debug.Log("GameScene Loaded");
+            EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
             transform.position = new Vector3(0, 0.5f, 0);
         }
     }
@@ -175,5 +180,6 @@ public class PlayerHasHealth : HasHealth {
     {
         lockedHealth = 0;
         health = maxHealth;
+        shieldHealth = 0;
     }
 }
