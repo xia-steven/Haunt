@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//defunct
 public class HealthUpgrade : Upgrade
 {
+    /*
     protected override void ApplyUpgrade()
     {
         // we do it this way (reaching directly into PlayerHasHealth code)
@@ -15,4 +17,5 @@ public class HealthUpgrade : Upgrade
         // actually updated the health numbers
         GameObject.Find("Player").GetComponent<PlayerHasHealth>().AddShield();
     }
+    */
 }

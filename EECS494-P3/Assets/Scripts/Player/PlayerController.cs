@@ -252,7 +252,7 @@ public class PlayerController : MonoBehaviour {
 
         if (!isDodging) {
             //Debug.Log(IsWall(movement));
-            rb.MovePosition(rb.position + moveSpeed * Time.fixedDeltaTime * movement.normalized);
+            rb.MovePosition(rb.position + moveSpeed * PlayerModifiers.moveSpeed * Time.fixedDeltaTime * movement.normalized);
         }
 
         Ray ray = new Ray(transform.position, Vector3.down);

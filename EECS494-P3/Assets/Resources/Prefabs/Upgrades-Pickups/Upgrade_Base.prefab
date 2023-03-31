@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7308358738084548282}
   - component: {fileID: 7308358738084548283}
   - component: {fileID: 7308358738084548281}
-  - component: {fileID: 7308358738084548280}
+  - component: {fileID: 3360607816912201934}
   m_Layer: 0
-  m_Name: HealthUpgrade
+  m_Name: Upgrade_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,7 +100,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 5, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7308358738084548280
+--- !u!114 &3360607816912201934
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,13 +109,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7308358738084548228}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 900c11f4d51f68745b5c68d6eb6bb0e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 653c036957291e9479d8ef6e2cd23a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bobDistance: 0.5
+  bobDistance: 1
   bobSpeed: 3
-  itemDescription: {fileID: 7308358739357875301}
-  cost: 10
+  itemDescription: {fileID: 7308358739357875227}
 --- !u!1 &7308358739357875301
 GameObject:
   m_ObjectHideFlags: 0
