@@ -41,7 +41,8 @@
         {
             "type" : 6,
             "cost" : 10,
-            "rate1" : 1.25,
+            "rate1" : 1.4,
+            "duration" : 2.5,
             "description" : "Deal extra damage while standing still"
         },
         {

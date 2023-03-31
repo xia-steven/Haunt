@@ -55,8 +55,8 @@ public class Pistol : Weapon {
         isReloading = true;
         Debug.Log("Reloading");
 
-        EventBus.Publish<ReloadStartedEvent>(new ReloadStartedEvent(reloadTime));
-        yield return new WaitForSeconds(reloadTime);
+        EventBus.Publish<ReloadStartedEvent>(new ReloadStartedEvent(reloadTime * PlayerModifiers.reloadSpeed));
+        yield return new WaitForSeconds(reloadTime * PlayerModifiers.reloadSpeed);
 
         // TODO: change to line up with inventory ammo
         ReloadInfinite();

@@ -215,14 +215,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Health Upgrade: Increase max health by +1 and refills hearts
-
-    Cost:
-    10 coins
-
-    [E] to purchase'
+  m_text: BLANK UPGRADE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fa1a7652d3c6ee044b4f961399146534, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8b5b7a7f8af028e45be9677639d9bc44, type: 2}
   m_sharedMaterial: {fileID: 634601541077458116, guid: fa1a7652d3c6ee044b4f961399146534, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -289,6 +284,6 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_renderer: {fileID: 7308358739357875226}
   m_maskType: 0
