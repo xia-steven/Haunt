@@ -10,7 +10,7 @@ public class CrosshairCursorManager: MonoBehaviour
     [SerializeField] Texture2D defaultCursor;
     [SerializeField] Texture2D[] reloadCursors;
     [SerializeField] Texture2D[] flashRedCursors;
-    private Subscription<ReloadEvent> reload_sub;
+    private Subscription<ReloadStartedEvent> reload_sub;
     private Subscription<PlayerDamagedEvent> playerdamage_sub;
     private float reloadDuration = 1f;
     private float flashDuration = .25f;
@@ -21,11 +21,11 @@ public class CrosshairCursorManager: MonoBehaviour
     {
         instance = this;
         Cursor.SetCursor(defaultCursor, clickPoint, CursorMode.Auto);
-        reload_sub = EventBus.Subscribe<ReloadEvent>(_OnReload);
+        reload_sub = EventBus.Subscribe<ReloadStartedEvent>(_OnReload);
         playerdamage_sub = EventBus.Subscribe<PlayerDamagedEvent>(_OnDamage);
     }
 
-    private void _OnReload(ReloadEvent e)
+    private void _OnReload(ReloadStartedEvent e)
     {
         StartCoroutine(AnimateKeyframes(reloadCursors,reloadDuration));
         
