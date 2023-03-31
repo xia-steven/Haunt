@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class ThiefKnife : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+
+    protected void OnTriggerEnter(Collider other)
     {
-        
+        GameObject collided = other.gameObject;
+
+        // Don't collide with specified items
+        if (collided.layer == LayerMask.NameToLayer("Special"))
+        {
+            return;
+        }
+
+        PlayerHasHealth playerHealth = collided.GetComponent<PlayerHasHealth>();
+        if (playerHealth != null)
+        {
+            Debug.Log("Player damaged from thief knife");
+            playerHealth.AlterHealth(1);
+        }
+
     }
 }

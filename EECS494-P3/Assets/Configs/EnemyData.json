@@ -53,7 +53,7 @@
         {
             "name": "Thief",
             "moveSpeed": 2.0,
-            "targetDistance": 1.0,
+            "targetDistance": 1.5,
             "health": 2,
             "attackSpeed": 2.0
         },
