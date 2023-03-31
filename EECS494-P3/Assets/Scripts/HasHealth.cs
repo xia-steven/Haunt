@@ -7,6 +7,7 @@ public class HasHealth : MonoBehaviour {
     protected int health;
 
     private void Awake() {
+        Debug.Log("Setting Health to " + maxHealth);
         health = maxHealth;
     }
 
