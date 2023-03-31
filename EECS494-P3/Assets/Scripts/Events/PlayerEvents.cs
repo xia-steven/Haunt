@@ -174,6 +174,20 @@ public class TryInteractEvent
 }
 
 /// <summary>
+/// Sent from purchasable object to the shopController and/or the other weapon in the shop
+/// </summary>
+public class WeaponPurchasedEvent
+{
+    public GameObject weapon;
+
+    public WeaponPurchasedEvent(GameObject _purchase)
+    {
+        weapon = _purchase;
+    }
+    
+}
+
+/// <summary>
 /// This event is sent whenever the player detects themselves over a pit
 /// </summary>
 class OverPitEvent

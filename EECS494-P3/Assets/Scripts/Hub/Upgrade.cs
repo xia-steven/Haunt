@@ -10,7 +10,7 @@ public class Upgrade : MonoBehaviour
     [SerializeField] private float bobDistance = 1f;
     [SerializeField] private float bobSpeed = 3f;
     [SerializeField] GameObject itemDescription;
-    [SerializeField] private int cost = 10;
+    [SerializeField] protected int cost = 10;
     private Vector3 origin;
     private Vector3 destination;
     private bool selected = false;

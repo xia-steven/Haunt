@@ -5,6 +5,7 @@ using UnityEngine;
 public class Sword : Weapon
 {
     private bool isSwinging = false;
+    private bool switchSwing = false;
 
     [SerializeField] private float swingArc = 90f;
     [SerializeField] private float swingTime = 0.5f;
@@ -48,6 +49,15 @@ public class Sword : Weapon
             Vector3 hitPoint = ray.GetPoint(distanceToGround);
             direction = hitPoint - transform.position;
 
+            // Check sword placement based on cursor location
+            if (direction.x < 0)
+            {
+                switchSwing = true;
+            } else
+            {
+                switchSwing = false;
+            }
+
             // Shift rotation half a swing to the left so swing is started in correct location
             Quaternion shift = Quaternion.AngleAxis((-swingArc / 2f) - 90, Vector3.up );
             direction = shift * direction;
@@ -78,9 +88,14 @@ public class Sword : Weapon
         // Calculate the rotation for the start of the swinging sword
         Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
 
-        // Set the initial rotation of the swinging sword
+        // Set the initial rotation and position of the swinging sword
         swingSword.transform.rotation = rotation;
         swingSword.GetComponent<SwingSword>().SetUp(swingArc / swingTime);
+        // Check if sword needs to be moved to other side of player
+        if (switchSwing)
+        {
+            swingSword.transform.position = new Vector3(swingSword.transform.position.x - 0.5f, swingSword.transform.position.y, swingSword.transform.position.z);
+        }
 
         yield return new WaitForSeconds(swingTime);
 

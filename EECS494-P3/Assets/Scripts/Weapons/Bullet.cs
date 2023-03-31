@@ -64,6 +64,12 @@ public abstract class Bullet : MonoBehaviour {
             health.AlterHealth(damage);
         }
 
+        // Don't destroy upon melee collision
+        if (collided.layer == LayerMask.NameToLayer("Melee"))
+        {
+            return;
+        }
+
         Destroy(gameObject);
     }
 
