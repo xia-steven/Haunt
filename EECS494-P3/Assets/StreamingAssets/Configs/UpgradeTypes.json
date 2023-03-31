@@ -1,0 +1,55 @@
+{
+    "key" : "UpgradeTypes",
+    "types" : [
+        {
+            "type" : 0,
+            "cost" : 10,
+            "description" : "Dashing through bullets reflects them"
+        },
+        {
+            "type" : 1,
+            "cost" : 10,
+            "description" : "Dashing leaves behind an explosive"
+        },
+        {
+            "type" : 2,
+            "cost" : 10,
+            "rate1" : 1.1,
+            "rate2" : 1.25,
+            "duration" : 5,
+            "description" : "Taking damage increases speed and damage for a short time"
+        },
+        {
+            "type" : 3,
+            "cost" : 10,
+            "rate1" : 2,
+            "duration" : 5,
+            "description" : "The first shot after dashing deals double damage"
+        },
+        {
+            "type" : 4,
+            "cost" : 10,
+            "description" : "Shots pierce the first enemy",
+            "maxOwnable" : 2
+        },
+        {
+            "type" : 5,
+            "cost" : 0,
+            "rate1" : 1.2,
+            "description" : "Increases speed"
+        },
+        {
+            "type" : 6,
+            "cost" : 10,
+            "rate1" : 1.25,
+            "description" : "Deal extra damage while standing still"
+        },
+        {
+            "type" : 7,
+            "cost" : 10,
+            "rate1" : 1.2,
+            "description" : "Makes reloads faster",
+            "maxOwnable" : 2
+        }
+    ]
+}
