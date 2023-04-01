@@ -16,6 +16,8 @@ public class Sword : Weapon
 
     protected override void Awake()
     {
+        speedMultiplier = 1.1f;
+
         base.Awake();
 
         currentClipAmount = 0;

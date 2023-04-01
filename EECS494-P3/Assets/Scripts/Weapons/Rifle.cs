@@ -12,6 +12,8 @@ public class Rifle : Weapon
 
     protected override void Awake()
     {
+        speedMultiplier = 0.8f;
+
         base.Awake();
 
         currentClipAmount = 30;

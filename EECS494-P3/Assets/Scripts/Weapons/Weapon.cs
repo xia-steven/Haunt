@@ -64,6 +64,8 @@ public abstract class Weapon : MonoBehaviour {
     [SerializeField] protected float barrelLength = 0.5f;
     // How much the screen should shake on bullets firing
     [SerializeField] protected float screenShakeStrength = 0.05f;
+    // Buffs/nerfs on player speed for specific guns
+    [SerializeField] protected float speedMultiplier = 1f;
 
     protected Subscription<FireEvent> fireEventSubscription;
     protected Subscription<ReloadEvent> reloadEventSubscription;
@@ -76,6 +78,7 @@ public abstract class Weapon : MonoBehaviour {
     {
         lastBullet = 0;
         lastTap = 0;
+        PlayerModifiers.moveSpeed *= speedMultiplier;
         SceneManager.sceneLoaded += OnSceneLoad;
     }
 
