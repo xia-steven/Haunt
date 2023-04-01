@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TutorialPedestalAttacker : EnemyBase {
     public static Dictionary<int, Vector3> pedestalPositions = new Dictionary<int, Vector3>
-        {{ 1, new Vector3(8, 0, -9) }};
+        { { 1, new Vector3(8, 0, -9) } };
 
     private Subscription<PedestalDestroyedEvent> switchPedestalSub;
     private Subscription<PedestalRepairedEvent> addPedestalSub;
@@ -75,8 +75,7 @@ public class TutorialPedestalAttacker : EnemyBase {
         StartCoroutine(pedetalCoroutine(event_.pedestalUUID));
     }
 
-    private void pedestalRepaired(PedestalRepairedEvent event_)
-    {
+    private void pedestalRepaired(PedestalRepairedEvent event_) {
         StartCoroutine(pedetalCoroutine(event_.pedestalUUID));
     }
 }
