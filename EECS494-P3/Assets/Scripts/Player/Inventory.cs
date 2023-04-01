@@ -32,12 +32,12 @@ public class Inventory : MonoBehaviour
         Equip(pistol);
 
         // Equip all weapons (will be removed) TODO
-        rifle = Resources.Load<GameObject>("Prefabs/Weapons/Rifle");
-        shotgun = Resources.Load<GameObject>("Prefabs/Weapons/Shotgun");
-        sword = Resources.Load<GameObject>("Prefabs/Weapons/Sword");
-        Equip(rifle);
-        Equip(shotgun);
-        Equip(sword);
+        // rifle = Resources.Load<GameObject>("Prefabs/Weapons/Rifle");
+        // shotgun = Resources.Load<GameObject>("Prefabs/Weapons/Shotgun");
+        // sword = Resources.Load<GameObject>("Prefabs/Weapons/Sword");
+        // Equip(rifle);
+        // Equip(shotgun);
+        // Equip(sword);
 
         // Swap to pistol on load (will be removed) TODO
         EventBus.Publish<SwapSpecificEvent>(new SwapSpecificEvent(1));
@@ -127,7 +127,7 @@ public class Inventory : MonoBehaviour
 
     private void _OnWeaponPurchase(WeaponPurchasedEvent e)
     {
-        Equip(shotgun);
+        Equip(e.weapon);
     }
 
     private void OnDestroy()

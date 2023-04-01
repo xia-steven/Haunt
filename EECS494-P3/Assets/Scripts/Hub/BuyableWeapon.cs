@@ -3,10 +3,20 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ShotgunUpgrade : IsBuyable
+public class BuyableWeapon : IsBuyable
 {
+    public enum WeaponType
+    {
+        Shotgun,
+        Rifle,
+        Sword,
+        Sniper
+    }
+
+    [SerializeField] private WeaponType weapon;
+
     private int initialCost = 0;
-    private int actualCost = 10;
+    [SerializeField] int actualCost = 10;
     private Subscription<WeaponPurchasedEvent> weaponPurchasedSubscription;
 
     protected override void Awake()
@@ -22,9 +32,8 @@ public class ShotgunUpgrade : IsBuyable
     protected override void Apply()
     {
         GameObject shotgun;
-        shotgun = Resources.Load<GameObject>("Prefabs/Weapons/Shotgun");
-        EventBus.Publish(new WeaponPurchasedEvent(shotgun));
-        Destroy(gameObject);
+        GameObject weaponToEquip = Resources.Load<GameObject>("Prefabs/Weapons/" + weapon.ToString());
+        EventBus.Publish(new WeaponPurchasedEvent(weaponToEquip));
     }
 
     private void _OnOtherWeaponPurchase(WeaponPurchasedEvent e)
