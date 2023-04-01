@@ -33,6 +33,7 @@ public class PlayerHasHealth : HasHealth {
 
     public override void AlterHealth(int healthDelta)
     {
+        Debug.Log("ALTERHEALTH: " + healthDelta);
         // healing
         if (healthDelta > 0)
         {
@@ -168,14 +169,23 @@ public class PlayerHasHealth : HasHealth {
         }
         else if (s.name == "GameScene" || s.name == "HubWorld")
         {
-            Debug.Log("GameScene Loaded");
-            EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
+            lockedHealth = 0;
             transform.position = new Vector3(0, 0.5f, 0);
         }
+        StartCoroutine(DelayUIUpdateOnSceneLoad());
     }
 
+    // waits for the new scene's UI to load before sending the update
+    // ensuring correct # of hearts are displayed
+    IEnumerator DelayUIUpdateOnSceneLoad()
+    {
+        yield return null;
+        EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
+
+    }
     public void ResetHealth()
     {
+        Debug.Log("HERE!!!");
         lockedHealth = 0;
         health = maxHealth;
         shieldHealth = 0;
