@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NewBehaviourScript : Upgrade
 {
-    [SerializeField] float explosiveRadius = 2.0f;
     [SerializeField] bool oneShotEnemies = false;
+    private float explosiveRadius;
     private GameObject player;
     private Subscription<PlayerDodgeEvent> dodgeEvent;
 
@@ -24,6 +24,7 @@ public class NewBehaviourScript : Upgrade
     protected override void Apply()
     {
         player = GameObject.Find("Player");
+        explosiveRadius = thisData.rate1;
         base.Apply();
     }
 
