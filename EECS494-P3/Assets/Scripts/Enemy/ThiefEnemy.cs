@@ -1,10 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 // TODO: Rename file and class to enemy name
 public class ThiefEnemy : EnemyBase {
-    Hashtable unwalkableTiles;
     ThiefKnife knife;
     GameObject knifeObject;
     float windupSpeed = 1.0f;
@@ -18,9 +19,14 @@ public class ThiefEnemy : EnemyBase {
     int maxZSpawn = 10;
     int maxSpawnAttempts = 10;
 
+    Vector3 spawnPos;
+
     protected override void Start()
     {
         base.Start();
+
+        // Get spawn location
+        spawnPos = transform.position;
 
         knife = GetComponentInChildren<ThiefKnife>();
         Debug.Log(knife);
@@ -68,7 +74,7 @@ public class ThiefEnemy : EnemyBase {
             // teleport away
             rb.velocity = Vector3.zero;
             GameObject smoke = Instantiate(thiefSmoke, transform.position, Quaternion.identity);
-            Destroy(smoke, 1.0f);
+            // Smoke will destroy itself
             transform.position = GetTeleportLocation();
 
 
@@ -87,23 +93,40 @@ public class ThiefEnemy : EnemyBase {
         bool valid = false;
         int count = 0;
 
-        float xCoord = Random.Range(minXSpawn, maxXSpawn + 1);
-        float zCoord = Random.Range(minZSpawn, maxZSpawn + 1);
+        int xCoord = 0;
+        int zCoord = 0;
+        Vector3 testPos = spawnPos;
 
         while (valid == false && count < maxSpawnAttempts)
         {
-            break;
+            xCoord = Random.Range(minXSpawn, maxXSpawn + 1);
+            zCoord = Random.Range(minZSpawn, maxZSpawn + 1);
+            testPos = new Vector3(xCoord, 0.5f, zCoord);
+            Vector3 camCoords = Camera.main.WorldToScreenPoint(testPos);
+            // Check if outside of camera bounds
+            if(camCoords.x > Screen.width || camCoords.x < 0 || camCoords.y > Screen.height || camCoords.y < 0)
+            {
+                // Make sure the enemy can't spawn in the center island
+                if(xCoord > 4 || xCoord < -4 || zCoord < -3 || zCoord > 3)
+                {
+                    if(Pathfinding.Instance.GetGrid().GetGridObject(testPos).isWalkable)
+                    {
+                        valid = true;
+                    }
+                    // If valid is still true, we can spawn here
+                }
+            }
+
+            ++count;
+        }
+        
+        if(valid == false)
+        {
+            Debug.Log("Failed to find a suitable spawn point after " + count + " attempts.  Defaulting to enemy spawn");
+            return spawnPos;
         }
 
 
-        return new Vector3(xCoord, 0.5f, zCoord);
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Camera camera = Camera.main;
-        Vector3 p = camera.ViewportToWorldPoint(new Vector3(1, 1, camera.nearClipPlane));
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(p, 0.1F);
+        return testPos;
     }
 }

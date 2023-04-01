@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7755776197362713899}
   - component: {fileID: 5032051411561513729}
   - component: {fileID: 8508327758935876016}
+  - component: {fileID: 1402840771689172116}
   m_Layer: 0
   m_Name: ThiefSmoke
   m_TagString: Untagged
@@ -98,3 +99,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 5
+--- !u!114 &1402840771689172116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948908080908658276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ebaf66315e4deb4c814eebdc769936e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
