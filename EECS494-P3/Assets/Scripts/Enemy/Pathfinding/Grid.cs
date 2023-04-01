@@ -11,7 +11,9 @@
  */
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Grid<T> {
     public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
@@ -85,6 +87,7 @@ public class Grid<T> {
         if (x >= 0 && z >= 0 && x < width && z < height) {
             return gridArray[x, z];
         }
+
         return default;
     }
 

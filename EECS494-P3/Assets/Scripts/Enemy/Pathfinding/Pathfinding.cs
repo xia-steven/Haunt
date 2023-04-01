@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pathfinding {
     private const int MOVE_STRAIGHT_COST = 10;
-    private const int MOVE_DIAGONAL_COST = 14;
+    private const int MOVE_DIAGONAL_COST = 100000000;
 
     public static Pathfinding Instance { get; private set; }
 
@@ -23,8 +23,12 @@ public class Pathfinding {
     }
 
     public List<Vector3> FindPath(Vector3 startWorldPosition, Vector3 endWorldPosition) {
-        grid.GetXZ(startWorldPosition, out var startX, out var startZ);
         grid.GetXZ(endWorldPosition, out var endX, out var endZ);
+        return FindPath(startWorldPosition, endX, endZ);
+    }
+
+    public List<Vector3> FindPath(Vector3 startWorldPosition, int endX, int endZ) {
+        grid.GetXZ(startWorldPosition, out var startX, out var startZ);
 
         var path = FindPath(startX, startZ, endX, endZ);
         if (path == null) {
@@ -40,7 +44,7 @@ public class Pathfinding {
         return vectorPath;
     }
 
-    public List<PathNode> FindPath(int startX, int startZ, int endX, int endZ) {
+    private List<PathNode> FindPath(int startX, int startZ, int endX, int endZ) {
         var startNode = grid.GetGridObject(startX, startZ);
         var endNode = grid.GetGridObject(endX, endZ);
 
