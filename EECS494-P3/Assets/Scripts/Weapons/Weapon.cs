@@ -62,6 +62,8 @@ public abstract class Weapon : MonoBehaviour {
     protected bool isReloading = false;
     // Length of gun barrel for bullet spawning - will be gun specific due to masking / variability of sprites
     [SerializeField] protected float barrelLength = 0.5f;
+    // How much the screen should shake on bullets firing
+    [SerializeField] protected float screenShakeStrength = 0.05f;
 
     protected Subscription<FireEvent> fireEventSubscription;
     protected Subscription<ReloadEvent> reloadEventSubscription;
@@ -94,8 +96,8 @@ public abstract class Weapon : MonoBehaviour {
 
     protected void UnSubscribe()
     {
-        EventBus.Unsubscribe<FireEvent>(fireEventSubscription);
-        EventBus.Unsubscribe<ReloadEvent>(reloadEventSubscription);
+        EventBus.Unsubscribe(fireEventSubscription);
+        EventBus.Unsubscribe(reloadEventSubscription);
         SceneManager.sceneLoaded -= OnSceneLoad;
     }
 
@@ -118,7 +120,6 @@ public abstract class Weapon : MonoBehaviour {
             // Allows for click spamming but not hold spamming
             lastBullet = 0;
         }
-
     }
 
     protected virtual void _OnReload(ReloadEvent e) {

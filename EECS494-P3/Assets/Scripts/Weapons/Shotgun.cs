@@ -20,6 +20,7 @@ public class Shotgun : Weapon
         fullClipAmount = 5;
         reloadTime = 2.0f;
         type = "shotgun";
+        screenShakeStrength = 0.08f;
 
         Subscribe();
 
@@ -102,6 +103,9 @@ public class Shotgun : Weapon
 
         lastBullet = Time.time;
         lastTap = Time.time;
+
+        // Shake screen
+        EventBus.Publish(new ScreenShakeEvent(screenShakeStrength));
     }
 
     protected override void GunReload()

@@ -197,3 +197,14 @@ class ResetInventoryEvent
         return "Reset Inventory Event sent";
     }
 }
+
+/// <summary>
+/// This event is sent to reload all weapons in player's inventory
+/// </summary>
+public class ReloadAllEvent
+{
+    public override string ToString()
+    {
+        return "Reload All Event sent";
+    }
+}

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Pistol : Weapon {
     protected GameObject wielder;
     protected GameObject basicBullet;
+    [SerializeField] protected float bulletSpread = 10f;
 
     // Sprite of pistol - necessary so it can be flipped
     [SerializeField] protected GameObject pistolSprite;
@@ -15,6 +16,7 @@ public class Pistol : Weapon {
         currentClipAmount = 8;
         fullClipAmount = 8;
         reloadTime = 0.5f;
+        screenShakeStrength = 0f;
         type = "pistol";
 
         Subscribe();
@@ -55,7 +57,7 @@ public class Pistol : Weapon {
         isReloading = true;
         Debug.Log("Reloading");
 
-        EventBus.Publish<ReloadStartedEvent>(new ReloadStartedEvent(reloadTime * PlayerModifiers.reloadSpeed));
+        EventBus.Publish(new ReloadStartedEvent(reloadTime * PlayerModifiers.reloadSpeed));
         yield return new WaitForSeconds(reloadTime * PlayerModifiers.reloadSpeed);
 
         // TODO: change to line up with inventory ammo
@@ -69,12 +71,20 @@ public class Pistol : Weapon {
         direction.y = 0;
         direction = direction.normalized;
 
-        FireProjectile(basicBullet, direction, transform, BasicBullet.bulletSpeed, Shooter.Player);
+        Quaternion spread = Quaternion.AngleAxis(Random.Range(-bulletSpread, bulletSpread) / 2f, Vector3.up);
+
+        Vector3 randomDirection = spread * direction;
+        randomDirection = randomDirection.normalized;
+
+        FireProjectile(basicBullet, randomDirection, transform, BasicBullet.bulletSpeed, Shooter.Player);
         // Give the player unlimited ammo for now
         currentClipAmount--;
 
         lastBullet = Time.time;
         lastTap = Time.time;
+
+        // Shake screen
+        EventBus.Publish(new ScreenShakeEvent(screenShakeStrength));
     }
 
     protected override void GunReload()

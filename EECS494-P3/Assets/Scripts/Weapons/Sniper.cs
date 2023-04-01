@@ -26,6 +26,7 @@ public class Sniper : Weapon
         fullClipAmount = 1;
         reloadTime = 1.5f;
         type = "pistol";
+        screenShakeStrength = 1.25f;
 
         Subscribe();
 
@@ -157,6 +158,9 @@ public class Sniper : Weapon
 
         lineRenderer.endWidth = 0.04f;
         GunReload();
+
+        // Shake screen
+        EventBus.Publish(new ScreenShakeEvent(screenShakeStrength));
     }
 
     private void OnDestroy()
