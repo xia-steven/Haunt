@@ -251,6 +251,16 @@ public abstract class Weapon : MonoBehaviour {
     {
         SceneManager.sceneLoaded -= OnSceneLoad;
     }
+
+    private void OnDisable()
+    {
+        if (isReloading)
+        {
+            StopAllCoroutines();
+            ReloadInfinite();
+            isReloading = false;
+        }
+    }
 }
 
 public class FireEvent {
