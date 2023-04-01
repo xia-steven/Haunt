@@ -27,7 +27,7 @@ public class CrosshairCursorManager: MonoBehaviour
 
     private void _OnReload(ReloadStartedEvent e)
     {
-        StartCoroutine(AnimateKeyframes(reloadCursors,reloadDuration));
+        StartCoroutine(AnimateKeyframes(reloadCursors,e.reloadTime));
         
     }
 
