@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8827236361465823315}
   - component: {fileID: 8827236361465823313}
   - component: {fileID: 8827236361465823314}
+  - component: {fileID: 3597016097392966160}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -46,7 +47,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!212 &8827236361465823314
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -99,6 +100,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3597016097392966160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8827236361465823308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14c4750f7c5846f4aac9cb99933c9ba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bobDistance: 1
+  bobSpeed: 3
+  selectedSprite: {fileID: 1944606124, guid: d0120b67eb61ef140800757a4eab709a, type: 3}
+  itemDescription: {fileID: 0}
+  weapon: 0
 --- !u!1 &8827236361590305254
 GameObject:
   m_ObjectHideFlags: 0
