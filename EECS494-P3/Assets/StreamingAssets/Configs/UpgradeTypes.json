@@ -8,7 +8,8 @@
         },
         {
             "type" : 1,
-            "cost" : 10,
+            "cost": 10,
+            "rate1": 20,
             "description" : "Dashing leaves behind an explosive"
         },
         {
@@ -28,7 +29,8 @@
         },
         {
             "type" : 4,
-            "cost" : 10,
+            "cost": 10,
+            "rate1": 1,
             "description" : "Shots pierce the first enemy",
             "maxOwnable" : 2
         },

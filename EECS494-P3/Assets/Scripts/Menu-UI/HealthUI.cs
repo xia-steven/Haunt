@@ -5,16 +5,19 @@ using UnityEngine.UI;
 
 public class HealthUI : MonoBehaviour {
     [SerializeField] GameObject healthPipPrefab;
+    [SerializeField] private GameObject shieldPipPrefab;
 
     [SerializeField] Sprite fullHeartImage;
     [SerializeField] Sprite halfHeartImage;
     [SerializeField] Sprite emptyHeartImage;
     [SerializeField] Sprite lockedHeartImage;
-
-    [SerializeField] float loadWaitTime = 0.2f;
+    [SerializeField] Sprite fullShieldImage;
+    [SerializeField] Sprite brokenShieldImage;
     
     List<Image> healthPips = new List<Image>();
-
+    private List<Image> shieldPips = new List<Image>();
+    private int maxShields = 6;
+    
     Subscription<HealthUIUpdate> ui_update_event;
 
     // Start is called before the first frame update
@@ -22,22 +25,9 @@ public class HealthUI : MonoBehaviour {
         ui_update_event = EventBus.Subscribe<HealthUIUpdate>(_OnUpdate);
 
         InitializeHealth();
-        //StartCoroutine(loadHealth());
+        InitializeShields();
     }
-
-    private IEnumerator loadHealth() {
-        int maxHealth = IsPlayer.instance.GetMaxHealth();
-        for (int i = 0; i < healthPips.Count; ++i) {
-            yield return new WaitForSeconds(loadWaitTime);
-            healthPips[i].enabled = true;
-            healthPips[i].sprite = halfHeartImage;
-            if (maxHealth / 2 > i) {
-                yield return new WaitForSeconds(loadWaitTime);
-                healthPips[i].sprite = fullHeartImage;
-            }
-        }
-    }
-
+    
     void InitializeHealth()
     {
         for (int i = 0; i < IsPlayer.instance.GetMaxHealth()/2; ++i)
@@ -46,6 +36,20 @@ public class HealthUI : MonoBehaviour {
             newPip.transform.localScale = Vector3.one;
             newPip.transform.SetParent(transform, false);
             healthPips.Add(newPip.GetComponent<Image>());
+        }
+        
+        
+    }
+
+    void InitializeShields()
+    {
+        for (int i = 0; i < maxShields/2; ++i)
+        {
+            GameObject newPip = Instantiate(shieldPipPrefab, transform.localPosition, Quaternion.identity);
+            newPip.transform.localScale = Vector3.one;
+            newPip.transform.SetParent(transform, false);
+            shieldPips.Add(newPip.GetComponent<Image>());
+            shieldPips[i].color = new Color(0,0,0,0);
         }
     }
 
@@ -75,28 +79,28 @@ public class HealthUI : MonoBehaviour {
         {
             healthPips[i].sprite = emptyHeartImage;
         }
-        
-        // add any shields to UI
-        
+        // shield UI update
+        int fullShields = e.updated_shield_health / 2;
+        int halfShields = e.updated_shield_health % 2;
+        for (int i = 0; i < fullShields; ++i)
+        {
+            shieldPips[i].sprite = fullShieldImage;
+            shieldPips[i].color = new Color(1, 1, 1, 1);
+        }
+
+        for (int i = fullShields; i < shieldPips.Count; i++)
+        {
+            shieldPips[i].color = new Color(0, 0, 0, 0);
+        }
+
+        if (halfShields == 1)
+        {
+            shieldPips[fullShields].sprite = brokenShieldImage;
+            shieldPips[fullShields].color = new Color(1, 1, 1, 1);
+        }
+
     }
-    
 
-    
-
-
-
-    // combines the effects of a pedestal being destroyed with a heal event
-    void _OnMaxHealthIncrease(IncreaseMaxHealthEvent e)
-    {
-        GameObject newPip = Instantiate(healthPipPrefab, transform.localPosition, Quaternion.identity);
-        newPip.transform.localScale = Vector3.one;
-        newPip.transform.SetParent(transform, false);
-        healthPips.Add(newPip.GetComponentsInChildren<Image>()[1]);
-        healthPips[healthPips.Count - 1].enabled = false;
-        
-        var newHealth = IsPlayer.instance.GetHealth();
-    }
-    
 
     private void OnDestroy() {
         EventBus.Unsubscribe(ui_update_event);

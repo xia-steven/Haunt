@@ -6,11 +6,14 @@ public class Rifle : Weapon
 {
     protected GameObject wielder;
     protected GameObject basicBullet;
+    [SerializeField] protected float bulletSpread = 20f;
 
     [SerializeField] protected GameObject rifleSprite;
 
     protected override void Awake()
     {
+        speedMultiplier = 0.8f;
+
         base.Awake();
 
         currentClipAmount = 30;
@@ -72,12 +75,20 @@ public class Rifle : Weapon
         direction.y = 0;
         direction = direction.normalized;
 
-        FireProjectile(basicBullet, direction, transform, BasicBullet.bulletSpeed, Shooter.Player);
+        Quaternion spread = Quaternion.AngleAxis(Random.Range(-bulletSpread, bulletSpread) / 2f, Vector3.up);
+
+        Vector3 randomDirection = spread * direction;
+        randomDirection = randomDirection.normalized;
+
+        FireProjectile(basicBullet, randomDirection, transform, BasicBullet.bulletSpeed, Shooter.Player);
         // Give the player unlimited ammo for now
         currentClipAmount--;
 
         lastBullet = Time.time;
         lastTap = Time.time;
+
+        // Shake screen
+        EventBus.Publish(new ScreenShakeEvent(screenShakeStrength));
     }
 
     protected override void GunReload()

@@ -7,6 +7,7 @@ public abstract class Bullet : MonoBehaviour {
     protected int damage = -1;
     protected Shooter shooter;
     protected float firedTime;
+    protected int pierced = 0;
 
     [SerializeField] protected float bulletLife = 1.0f;
 
@@ -18,6 +19,11 @@ public abstract class Bullet : MonoBehaviour {
     public void SetShooter(Shooter entity)
     {
         shooter = entity;
+    }
+
+    public Shooter GetShooter()
+    {
+        return shooter;
     }
 
     protected void OnTriggerEnter(Collider other)
@@ -62,6 +68,7 @@ public abstract class Bullet : MonoBehaviour {
         {
             Debug.Log("Health altered");
             health.AlterHealth(damage);
+            pierced++;
         }
 
         // Don't destroy upon melee collision
@@ -70,7 +77,15 @@ public abstract class Bullet : MonoBehaviour {
             return;
         }
 
-        Destroy(gameObject);
+        // If collided with enemy (from player shooter), check piercing amount otherwise destroy outright if not hitting enemy
+        if (collided.layer == LayerMask.NameToLayer("Enemy") && shooter == Shooter.Player && pierced >= PlayerModifiers.maxPierce)
+        {
+            Destroy(gameObject);
+        }
+        else if (collided.layer != LayerMask.NameToLayer("Enemy"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     protected void Update()

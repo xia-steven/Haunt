@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour
     private GameObject rifle;
     private GameObject shotgun;
     private GameObject sword;
+    private GameObject sniper;
     private int coins = 0;
 
     private Subscription<SwapEvent> swapEventSubscription;
@@ -18,6 +19,7 @@ public class Inventory : MonoBehaviour
     private Subscription<CoinEvent> coinEventSubscription;
     private Subscription<ResetInventoryEvent> resetInventorySubscription;
     private Subscription<WeaponPurchasedEvent> weaponPurchasedSubscription;
+    private Subscription<ReloadAllEvent> reloadAllSubscription;
 
     private void Awake()
     {
@@ -26,18 +28,21 @@ public class Inventory : MonoBehaviour
         swapSpecificSubscription = EventBus.Subscribe<SwapSpecificEvent>(_OnSpecificSwap);
         resetInventorySubscription = EventBus.Subscribe<ResetInventoryEvent>(_OnResetInventory);
         weaponPurchasedSubscription = EventBus.Subscribe<WeaponPurchasedEvent>(_OnWeaponPurchase);
+        reloadAllSubscription = EventBus.Subscribe<ReloadAllEvent>(_OnReloadAll);
 
         // Equip pistol on load
         pistol = Resources.Load<GameObject>("Prefabs/Weapons/Pistol");
         Equip(pistol);
 
         // Equip all weapons (will be removed) TODO
-        // rifle = Resources.Load<GameObject>("Prefabs/Weapons/Rifle");
-        // shotgun = Resources.Load<GameObject>("Prefabs/Weapons/Shotgun");
+        rifle = Resources.Load<GameObject>("Prefabs/Weapons/Rifle");
+        shotgun = Resources.Load<GameObject>("Prefabs/Weapons/Shotgun");
         // sword = Resources.Load<GameObject>("Prefabs/Weapons/Sword");
-        // Equip(rifle);
-        // Equip(shotgun);
+        sniper = Resources.Load<GameObject>("Prefabs/Weapons/Sniper");
+        Equip(rifle);
+        Equip(shotgun);
         // Equip(sword);
+        Equip(sniper);
 
         // Swap to pistol on load (will be removed) TODO
         EventBus.Publish<SwapSpecificEvent>(new SwapSpecificEvent(1));
@@ -125,6 +130,14 @@ public class Inventory : MonoBehaviour
         Equip(pistol);
     }
 
+    private void _OnReloadAll(ReloadAllEvent e)
+    {
+        for (int i = 0; i < numWeapons; i++)
+        {
+            weapons[i].GetComponent<Weapon>().ReloadInfinite();
+        }
+    }
+
     private void _OnWeaponPurchase(WeaponPurchasedEvent e)
     {
         Equip(e.weapon);
@@ -132,11 +145,12 @@ public class Inventory : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventBus.Unsubscribe<SwapEvent>(swapEventSubscription);
-        EventBus.Unsubscribe<CoinEvent>(coinEventSubscription);
-        EventBus.Unsubscribe<SwapSpecificEvent>(swapSpecificSubscription);
-        EventBus.Unsubscribe<ResetInventoryEvent>(resetInventorySubscription);
-        EventBus.Unsubscribe<WeaponPurchasedEvent>(weaponPurchasedSubscription);
+        EventBus.Unsubscribe(swapEventSubscription);
+        EventBus.Unsubscribe(coinEventSubscription);
+        EventBus.Unsubscribe(swapSpecificSubscription);
+        EventBus.Unsubscribe(resetInventorySubscription);
+        EventBus.Unsubscribe(weaponPurchasedSubscription);
+        EventBus.Unsubscribe(reloadAllSubscription);
     }
 }
 

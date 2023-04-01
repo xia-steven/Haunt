@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Pathfinding {
     private const int MOVE_STRAIGHT_COST = 10;
-    private const int MOVE_DIAGONAL_COST = 100000;
+    private const int MOVE_DIAGONAL_COST = 100000000;
 
     public static Pathfinding Instance { get; private set; }
 
     private readonly Grid<PathNode> grid;
-    private List<PathNode> openList;
-    private List<PathNode> closedList;
+    private HashSet<PathNode> openList;
+    private HashSet<PathNode> closedList;
 
     public Pathfinding(int width, int height, Vector3 origin) {
         Instance = this;
@@ -22,8 +23,12 @@ public class Pathfinding {
     }
 
     public List<Vector3> FindPath(Vector3 startWorldPosition, Vector3 endWorldPosition) {
-        grid.GetXZ(startWorldPosition, out var startX, out var startZ);
         grid.GetXZ(endWorldPosition, out var endX, out var endZ);
+        return FindPath(startWorldPosition, endX, endZ);
+    }
+
+    public List<Vector3> FindPath(Vector3 startWorldPosition, int endX, int endZ) {
+        grid.GetXZ(startWorldPosition, out var startX, out var startZ);
 
         var path = FindPath(startX, startZ, endX, endZ);
         if (path == null) {
@@ -39,7 +44,7 @@ public class Pathfinding {
         return vectorPath;
     }
 
-    public List<PathNode> FindPath(int startX, int startZ, int endX, int endZ) {
+    private List<PathNode> FindPath(int startX, int startZ, int endX, int endZ) {
         var startNode = grid.GetGridObject(startX, startZ);
         var endNode = grid.GetGridObject(endX, endZ);
 
@@ -48,8 +53,8 @@ public class Pathfinding {
             return null;
         }
 
-        openList = new List<PathNode> { startNode };
-        closedList = new List<PathNode>();
+        openList = new HashSet<PathNode> { startNode };
+        closedList = new HashSet<PathNode>();
 
         for (var x = 0; x < grid.GetWidth(); x++) {
             for (var z = 0; z < grid.GetHeight(); z++) {
@@ -153,11 +158,12 @@ public class Pathfinding {
         return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, zDistance) + MOVE_STRAIGHT_COST * remaining;
     }
 
-    private static PathNode GetLowestFCostNode(IReadOnlyList<PathNode> pathNodeList) {
-        var lowestFCostNode = pathNodeList[0];
-        for (var i = 1; i < pathNodeList.Count; i++) {
-            if (pathNodeList[i].fCost < lowestFCostNode.fCost) {
-                lowestFCostNode = pathNodeList[i];
+    private static PathNode GetLowestFCostNode(HashSet<PathNode> pathNodeList) {
+        var lowestFCostNode = pathNodeList.First();
+
+        foreach (var node in pathNodeList) {
+            if (node.fCost < lowestFCostNode.fCost) {
+                lowestFCostNode = node;
             }
         }
 

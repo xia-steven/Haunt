@@ -74,6 +74,7 @@ partial class GameControl : MonoBehaviour {
             StartCoroutine(StartOnDelay(DayUpdate));
         }
         TimeManager.ResetTimeScale();
+        EventBus.Publish<ReloadAllEvent>(new ReloadAllEvent());
     }
 
     private void OnDisable()

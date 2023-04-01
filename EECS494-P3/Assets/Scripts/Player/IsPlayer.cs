@@ -26,24 +26,20 @@ public class IsPlayer : MonoBehaviour {
         return health.GetMaxHealth();
     }
 
-    IEnumerator NaturalHealthRegen()
-    {
+    private IEnumerator NaturalHealthRegen() {
         // Let everything load up
         yield return new WaitForSeconds(1.0f);
-        while(health.GetHealth() > 0)
-        {
+        while (health.GetHealth() > 0) {
             health.AlterHealth(1);
             yield return new WaitForSeconds(5.0f);
         }
     }
 
-    public static void SetPosition(Vector3 newPos)
-    {
+    public static void SetPosition(Vector3 newPos) {
         instance.transform.position = newPos;
     }
 
-    public void ResetHealth()
-    {
+    public void ResetHealth() {
         health.ResetHealth();
     }
 }

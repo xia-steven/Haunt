@@ -46,10 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a8ffa1f85c15d942823274db6709460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barrelLength: 0.7
-  pistolSprite: {fileID: 3235131618428306483}
   bulletDelay: 0.3
   tapDelay: 0.25
+  barrelLength: 0.7
+  screenShakeStrength: 0.05
+  bulletSpread: 10
+  pistolSprite: {fileID: 3235131618428306483}
 --- !u!1 &1962310841784963166
 GameObject:
   m_ObjectHideFlags: 0

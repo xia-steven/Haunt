@@ -3,62 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class IsPit : MonoBehaviour {
-    float pitDepth = 1.0f;
     Vector3 horizontalOffset = Vector3.zero;
     float xSize;
     float zSize;
-    private bool isDodging = false;
-    private bool overPit = false;
-    private float pitResetDistance = 1.1f;
-
-    private Subscription<PlayerDodgeEvent> playerDodgeSubscription;
-    private Subscription<OverPitEvent> overPitSubscription;
 
     private void Start() {
         BoxCollider col = GetComponent<BoxCollider>();
         xSize = col.size.x;
         zSize = col.size.z;
-
-        playerDodgeSubscription = EventBus.Subscribe<PlayerDodgeEvent>(_OnPlayerDodge);
-        overPitSubscription = EventBus.Subscribe<OverPitEvent>(_OnOverPit);
     }
-
-    private void _OnPlayerDodge(PlayerDodgeEvent e)
-    {
-        isDodging = e.start;
-    }
-
-    private void _OnOverPit(OverPitEvent e)
-    {
-        GameObject player = e.player;
-
-        // Checks that player is not dodging and over this current pit
-        if (!isDodging && overPit)
-        {
-            Debug.Log("Player in pit");
-            // Add offset to player position in the pit
-            Vector3 adjustedPosition = player.transform.position + (horizontalOffset * pitResetDistance);
-            // Round values to teleport the player to the center of a square
-            // Removed for now as seems to only bring the player close to pits and doesn't seem necessary
-            // adjustedPosition.z = Mathf.Round(adjustedPosition.z);
-            // adjustedPosition.x = Mathf.Round(adjustedPosition.x);
-            // Teleport player outside the pit
-            player.transform.position = adjustedPosition;
-
-            player.GetComponent<PlayerHasHealth>().AlterHealth(-1);
-        }
-    }
-
 
     private void OnTriggerEnter(Collider other) {
-        IsPlayer isPlayer = other.GetComponent<IsPlayer>();
-
-        if (isPlayer == null) {
-            return;
-        }
-
-        overPit = true;
-
         float xOffsetMag = Mathf.Abs(other.transform.position.x - transform.position.x);
         float zOffsetMag = Mathf.Abs(other.transform.position.z - transform.position.z);
 
@@ -84,47 +39,14 @@ public class IsPit : MonoBehaviour {
             horizontalOffset = Vector3.left;
         }
 
-        Debug.Log(horizontalOffset);
+        EventBus.Publish<OverPitEvent>(new OverPitEvent(other.gameObject, horizontalOffset, true));
     }
 
 
     private void OnTriggerExit(Collider other)
     {
-        IsPlayer isPlayer = other.GetComponent<IsPlayer>();
-
-        if (isPlayer == null)
-        {
-            return;
-        }
-
-        overPit = false;
+        EventBus.Publish<OverPitEvent>(new OverPitEvent(other.gameObject, horizontalOffset, false));
     }
-
-    /*
-    private void OnTriggerExit(Collider other) {
-        IsPlayer isPlayer = other.GetComponent<IsPlayer>();
-
-        if (isPlayer == null) {
-            return;
-        }
-
-
-        // If the player fell in the pit
-        if (other.transform.position.y < transform.position.y) {
-            Debug.Log("Player in pit");
-            // Add offset to player position in the pit
-            Vector3 adjustedPosition = other.transform.position + teleportOffset(other.transform);
-            // Round values to teleport the player to the center of a square
-            adjustedPosition.z = Mathf.Round(adjustedPosition.z);
-            adjustedPosition.x = Mathf.Round(adjustedPosition.x);
-            // Teleport player outside the pit
-            other.transform.position = adjustedPosition;
-
-            EventBus.Publish(new PlayerDamagedEvent(1));
-        }
-    }
-    */
-
 
     private Vector3 teleportOffset(Transform other) {
         Vector3 offset = Vector3.zero;
@@ -134,5 +56,18 @@ public class IsPit : MonoBehaviour {
         offset.y = 0.5f;
 
         return offset;
+    }
+}
+
+public class OverPitEvent 
+{
+    public GameObject entered;
+    public Vector3 horizontalOffset;
+    public bool over;
+    public OverPitEvent(GameObject _entered, Vector3 _horizontalOffset, bool _over)
+    {
+        entered = _entered;
+        horizontalOffset = _horizontalOffset;
+        over = _over;
     }
 }

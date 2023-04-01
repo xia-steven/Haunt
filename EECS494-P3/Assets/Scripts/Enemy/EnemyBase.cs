@@ -47,28 +47,28 @@ public class EnemyBase : MonoBehaviour {
     protected void FixedUpdate() {
         // var grid = Pathfinding.Instance.GetGrid();
         // if (!grid.GetGridObject(IsPlayer.instance.transform.position).isWalkable) {
-        //     Debug.Log("Unwalkable");
         //     rb.velocity = Vector3.zero;
         //     return;
         // }
 
         // Get player/target position
-        var targetPosition = GetTarget();
+        var playerPosition = GetTarget();
 
         // First, check if the enemy cannot pathfind directly to the player/target
-        var playerDirection = (targetPosition - transform.position).normalized;
+        var playerDirection = (playerPosition - transform.position).normalized;
         // Ignore hits on other enemies
         var layerMask = ~LayerMask.GetMask("Enemy");
 
         if (state != EnemyState.AStarMovement &&
             Physics.Raycast(transform.position, playerDirection, out var hit,
-                Vector3.Distance(targetPosition, transform.position), layerMask)) {
+                Vector3.Distance(playerPosition, transform.position), layerMask)) {
             // Confirm that the raycast did not hit the player
             if (!hit.transform.gameObject.CompareTag("Player")) {
                 if (!runningCoroutine) {
                     state = EnemyState.AStarMovement;
                     runningCoroutine = true;
-                    StartCoroutine(MoveWithAStar());
+                    PathfindingController.FindClosestWalkable(playerPosition, out var x, out var y);
+                    StartCoroutine(MoveWithAStar(x, y));
                 }
                 else {
                     // Set idle to wait for previous state to finish
@@ -81,7 +81,7 @@ public class EnemyBase : MonoBehaviour {
 
         // Second, check if the enemy can attack the player from their current distance
         if (state != EnemyState.Attacking &&
-            Vector3.Distance(targetPosition, transform.position) <= attributes.targetDistance) {
+            Vector3.Distance(playerPosition, transform.position) <= attributes.targetDistance) {
             if (!runningCoroutine) {
                 state = EnemyState.Attacking;
                 runningCoroutine = true;
@@ -97,7 +97,7 @@ public class EnemyBase : MonoBehaviour {
 
         // Finally, pathfind directly to the player
         if (state != EnemyState.SimpleMovement &&
-            Vector3.Distance(targetPosition, transform.position) > attributes.targetDistance) {
+            Vector3.Distance(playerPosition, transform.position) > attributes.targetDistance) {
             if (!runningCoroutine) {
                 state = EnemyState.SimpleMovement;
                 runningCoroutine = true;
@@ -150,27 +150,32 @@ public class EnemyBase : MonoBehaviour {
     /// variable is used to track when to stop.
     /// </summary>
     /// <returns></returns>
-    public virtual IEnumerator MoveWithAStar() {
+    public virtual IEnumerator MoveWithAStar(int targetX, int targetZ) {
         // Start player position updating
-        StartCoroutine(updatePathfindingVector());
+        StartCoroutine(updatePathfindingVector(targetX, targetZ));
 
         while (state == EnemyState.AStarMovement) {
             if (pathVectorList != null) {
+                if (currentPathIndex >= pathVectorList.Count) {
+                    currentPathIndex = pathVectorList.Count - 1;
+                }
+
                 var targetPosition = pathVectorList[currentPathIndex] + PathfindingController.map.origin;
-                if (Vector3.Distance(transform.position, targetPosition) > 0.5f) {
+                if (Vector3.Distance(transform.position, targetPosition) > 0.1f) {
                     var moveDir = (targetPosition - transform.position).normalized;
                     tf_.position += Time.deltaTime * baseSpeed * attributes.moveSpeed * moveDir;
                 }
                 else {
-                    currentPathIndex++;
-                    if (currentPathIndex >= pathVectorList.Count) {
+                    if (++currentPathIndex >= pathVectorList.Count) {
                         pathVectorList = null;
+                        currentPathIndex = 0;
                         rb.velocity = Vector3.zero;
                     }
                 }
             }
             else {
                 rb.velocity = Vector3.zero;
+                currentPathIndex = 0;
             }
 
             // Only run movement on fixed updates
@@ -190,6 +195,10 @@ public class EnemyBase : MonoBehaviour {
             // Get player position
             var playerPosition = IsPlayer.instance.transform.position;
 
+            if (!Pathfinding.Instance.GetGrid().GetGridObject(playerPosition).isWalkable) {
+                Debug.Log("hello");
+            }
+
             // Get direction to move
             var direction = (playerPosition - transform.position).normalized;
             // Remove any y coordinate (shouldn't be any)
@@ -204,10 +213,10 @@ public class EnemyBase : MonoBehaviour {
         runningCoroutine = false;
     }
 
-    private IEnumerator updatePathfindingVector() {
+    private IEnumerator updatePathfindingVector(int targetX, int targetZ) {
         while (state == EnemyState.AStarMovement) {
             // Set player position
-            pathVectorList = Pathfinding.Instance.FindPath(transform.position, IsPlayer.instance.transform.position);
+            pathVectorList = Pathfinding.Instance.FindPath(transform.position, targetX, targetZ);
 
             // Recalculate the player path every second
             yield return new WaitForSeconds(1.0f);
@@ -223,8 +232,7 @@ public class EnemyBase : MonoBehaviour {
         projectile.GetComponent<Bullet>().SetShooter(shooter);
 
         // Give bullet its velocity
-        var rb_ = projectile.GetComponent<Rigidbody>();
-        rb_.velocity = direction * projectileSpeed;
+        projectile.GetComponent<Rigidbody>().velocity = direction * projectileSpeed;
     }
 
     // Damage the player if they touch the enemy
