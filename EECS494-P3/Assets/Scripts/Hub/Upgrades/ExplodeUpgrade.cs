@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : Upgrade
+public class ExplodeUpgrade : Upgrade
 {
     [SerializeField] bool oneShotEnemies = false;
     private float explosiveRadius;

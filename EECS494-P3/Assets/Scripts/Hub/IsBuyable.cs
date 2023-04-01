@@ -46,6 +46,7 @@ public class IsBuyable : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PlayerPhysical"))
         {
+            Debug.Log(gameObject.name + " triggered");
             selected = true;
             sr.sprite = selectedSprite;
         }
