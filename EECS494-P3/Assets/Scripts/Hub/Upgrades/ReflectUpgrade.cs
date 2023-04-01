@@ -7,7 +7,6 @@ public class ReflectUpgrade : Upgrade
     private GameObject dashShield;
     private GameObject appliedShield;
     private GameObject player;
-    private float duration;
     private Subscription<PlayerDodgeEvent> dodgeEvent;
 
 
