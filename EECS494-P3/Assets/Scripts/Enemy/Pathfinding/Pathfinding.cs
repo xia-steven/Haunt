@@ -1,16 +1,4 @@
-﻿/* 
-    ------------------- Code Monkey -------------------
-
-    Thank you for downloading this package
-    I hope you find it useful in your projects
-    If you have any questions let me know
-    Cheers!
-
-               unitycodemonkey.com
-    --------------------------------------------------
- */
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Pathfinding {
@@ -25,7 +13,6 @@ public class Pathfinding {
 
     public Pathfinding(int width, int height, Vector3 origin) {
         Instance = this;
-        // var origin = Vector3.zero;
         grid = new Grid<PathNode>(width, height, 1f, origin,
             (g, x, z) => new PathNode(g, x, z));
     }

@@ -130,7 +130,7 @@ public class Inventory : MonoBehaviour
 
     private void _OnWeaponPurchase(WeaponPurchasedEvent e)
     {
-        Equip(shotgun);
+        Equip(e.weapon);
     }
 
     private void OnDestroy()
