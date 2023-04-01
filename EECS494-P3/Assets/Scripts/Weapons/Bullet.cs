@@ -20,6 +20,11 @@ public abstract class Bullet : MonoBehaviour {
         shooter = entity;
     }
 
+    public Shooter GetShooter()
+    {
+        return shooter;
+    }
+
     protected void OnTriggerEnter(Collider other)
     {
         GameObject collided = other.gameObject;
