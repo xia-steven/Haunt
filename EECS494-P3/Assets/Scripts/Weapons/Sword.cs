@@ -21,6 +21,7 @@ public class Sword : Weapon
         currentClipAmount = 0;
         fullClipAmount = 0;
         type = "sword";
+        screenShakeStrength = 0f;
 
         Subscribe();
 

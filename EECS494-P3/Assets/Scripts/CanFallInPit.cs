@@ -6,10 +6,14 @@ public class CanFallInPit : MonoBehaviour
 {
     private float groundDistance = 0.5f;
     private float pitResetDistance = 1.1f;
+    [SerializeField] private float duration = 0.2f; // the time it takes for the sprite to shrink
+    [SerializeField] private float scale = 0.5f; // the final scale of the sprite in hole
     private bool playerEnabled = true;
     private bool overPit = false;
     private bool isDodging = false;
+    private bool isFalling = false;
     private Vector3 horizontalOffset;
+    private Vector3 originalScale; // the original scale of the sprite
     Subscription<OverPitEvent> overPitEventSubscription;
     Subscription<DisablePlayerEvent> disablePlayerEventSubscription;
     Subscription<EnablePlayerEvent> enablePlayerEventSubscription;
@@ -22,6 +26,8 @@ public class CanFallInPit : MonoBehaviour
         disablePlayerEventSubscription = EventBus.Subscribe<DisablePlayerEvent>(_OnDisableMovement);
         enablePlayerEventSubscription = EventBus.Subscribe<EnablePlayerEvent>(_OnEnableMovement);
         playerDodgeEventSubscription = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
+
+        originalScale = transform.localScale; // get the original scale of the sprite
     }
 
     private void _OnOverPit(OverPitEvent e)
@@ -66,7 +72,7 @@ public class CanFallInPit : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (overPit)
+        if (overPit && !isFalling)
         {
             Vector3 rightRayLocation = new Vector3(transform.position.x + 3 * (objectSprite.bounds.size.x / 8), transform.position.y, transform.position.z);
             Vector3 leftRayLocation = new Vector3(transform.position.x - 3 * (objectSprite.bounds.size.x / 8), transform.position.y, transform.position.z);
@@ -107,10 +113,42 @@ public class CanFallInPit : MonoBehaviour
         Debug.Log("Player fell into pit");
 
         // Play pit falling animation
+        isFalling = true;
+        StartCoroutine(FallInPit());
+    }
 
-        Vector3 adjustedPosition = transform.position + (horizontalOffset * pitResetDistance);
-        transform.position = adjustedPosition;
-        GetComponent<PlayerHasHealth>().AlterHealth(-1);
+    private IEnumerator FallInPit()
+    {
+        float elapsed = 0.0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+
+            float t = Mathf.Clamp01(elapsed / duration); // calculate the current time as a fraction of the total duration
+            float s = Mathf.Lerp(originalScale.x, scale, t); // calculate the current scale based on the current time
+
+            transform.localScale = new Vector3(s, s, s); // set the scale of the sprite
+
+            yield return null;
+        }
+
+        transform.localScale = new Vector3(scale, scale, scale); // ensure the final scale is set correctly
+
+        // Move player back to location they should be in
+        if (gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            transform.localScale = originalScale;
+            Vector3 adjustedPosition = transform.position + (horizontalOffset * pitResetDistance);
+            transform.position = adjustedPosition;
+            GetComponent<PlayerHasHealth>().AlterHealth(-1);
+        }
+        else
+        {
+            // Enemy always dies on falling into pit
+            Destroy(gameObject);
+        }
+        isFalling = false;
     }
 
     private void EnemyPit()
@@ -118,8 +156,6 @@ public class CanFallInPit : MonoBehaviour
         Debug.Log("Enemy fell into pit");
 
         // Play pit falling animation
-
-        // Enemy always dies on falling into pit
-        Destroy(gameObject);
+        StartCoroutine(FallInPit());
     }
 }
