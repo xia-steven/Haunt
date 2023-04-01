@@ -98,8 +98,8 @@ public class IsPedestal : MonoBehaviour {
         return playerDestroyed; 
     }
 
-    public void updateVisuals(int curr, int max) {
-        float healthfraction = (float)curr / max;
+    public void updateVisuals(float curr, float max) {
+        float healthfraction = curr / max;
 
         healthBarImage.fillAmount = healthfraction;
 

@@ -46,6 +46,11 @@ public class IsExplosive : MonoBehaviour {
         Destroy(spawnedVisual, 0.15f);
     }
 
+    public void setExplosiveRadius(float newRadius)
+    {
+        explosiveRadius = newRadius;
+    }
+
     private void OnApplicationQuit() {
         quitting = true;
     }

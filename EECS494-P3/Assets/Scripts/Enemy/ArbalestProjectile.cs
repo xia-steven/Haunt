@@ -11,9 +11,6 @@ public class ArbalestProjectile : EnemyBasicBullet {
         rb = GetComponent<Rigidbody>();
     }
 
-    public void setLifetime(float lifetime) {
-        bulletLife = lifetime;
-    }
 
     private void Update() {
         base.Update();
