@@ -12,7 +12,7 @@ public class PedestalInfo {
     }
 }
 
-public class PedestalAttacker : EnemyBase {
+public class ClericEnemy : EnemyBase {
     private Subscription<PedestalDestroyedEvent> switchPedestalSub;
     private Subscription<PedestalRepairedEvent> addPedestalSub;
 

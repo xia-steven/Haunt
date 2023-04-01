@@ -3,17 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// The PlayerPositionEvent event is to be broadcast where the player is.
-/// </summary>
-class PlayerPositionEvent {
-    public Vector3 position;
-
-    public PlayerPositionEvent(Vector3 pos) {
-        position = pos;
-    }
-}
-
-/// <summary>
 /// The PlayerDamaged event is to be broadcast whenever the player takes damage. <br/>
 /// The default damage amount is 1 unless otherwise specified in the constructor.
 /// </summary>
