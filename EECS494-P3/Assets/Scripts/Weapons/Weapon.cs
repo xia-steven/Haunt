@@ -35,6 +35,9 @@ public abstract class Weapon : MonoBehaviour {
     // Determines whether weapon is currently firing or not - used for automatic weapons
     protected bool firing = false;
 
+    // Direction that gun in facing for overwritten FixedUpdates
+    protected Vector3 gunDirection;
+
     // Time it takes gun to reload
     protected float reloadTime;
     protected SpriteRenderer spriteRenderer;
@@ -195,6 +198,8 @@ public abstract class Weapon : MonoBehaviour {
             // Calculate the direction vector from the player to the intersection point
             Vector3 hitPoint = ray.GetPoint(distanceToGround);
             direction = hitPoint - transform.position;
+
+            gunDirection = direction;
 
             // Check if gun sprite needs to be flipped
             if (direction.x < 0)
