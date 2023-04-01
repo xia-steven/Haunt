@@ -188,24 +188,6 @@ public class WeaponPurchasedEvent
 }
 
 /// <summary>
-/// This event is sent whenever the player detects themselves over a pit
-/// </summary>
-class OverPitEvent
-{
-    public GameObject player;
-
-    public OverPitEvent(GameObject _player)
-    {
-        player = _player;
-    }
-
-    public override string ToString()
-    {
-        return "Over Pit Event sent";
-    }
-}
-
-/// <summary>
 /// This event is sent to reset the player's inventory back to just a base pistol
 /// </summary>
 class ResetInventoryEvent
