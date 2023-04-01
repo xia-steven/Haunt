@@ -24,7 +24,6 @@ public class PlayerController : MonoBehaviour {
     private bool isDodging = false;
     private bool dodgePressed = false;
     private float dodgeRollTimer = 1f;
-    private float groundDistance = 0.5f;
     Subscription<DisablePlayerEvent> disableMoveSub;
     Subscription<EnablePlayerEvent> enableMoveSub;
     Subscription<TutorialDodgeStartEvent> dodgeStartSub;
@@ -254,17 +253,6 @@ public class PlayerController : MonoBehaviour {
             //Debug.Log(IsWall(movement));
             rb.MovePosition(rb.position + moveSpeed * PlayerModifiers.moveSpeed * Time.fixedDeltaTime * movement.normalized);
         }
-
-        Ray ray = new Ray(transform.position, Vector3.down);
-        Debug.DrawRay(ray.origin, ray.direction * groundDistance, Color.red);
-
-        // Check directly under the player for ground - if no ground send "falling in pit" event
-        if (!Physics.Raycast(ray, groundDistance))
-        {
-            EventBus.Publish<OverPitEvent>(new OverPitEvent(gameObject));
-        }
-        
-        
     }
 
     private void OnCollisionEnter(Collision collision)
