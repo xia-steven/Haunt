@@ -45,12 +45,11 @@ public class EnemyBase : MonoBehaviour {
     }
 
     protected void FixedUpdate() {
-        // var grid = Pathfinding.Instance.GetGrid();
-        // if (!grid.GetGridObject(IsPlayer.instance.transform.position).isWalkable) {
-        //     Debug.Log("Unwalkable");
-        //     rb.velocity = Vector3.zero;
-        //     return;
-        // }
+        var grid = Pathfinding.Instance.GetGrid();
+        if (!grid.GetGridObject(IsPlayer.instance.transform.position).isWalkable) {
+            rb.velocity = Vector3.zero;
+            return;
+        }
 
         // Get player/target position
         var targetPosition = GetTarget();
@@ -157,7 +156,7 @@ public class EnemyBase : MonoBehaviour {
         while (state == EnemyState.AStarMovement) {
             if (pathVectorList != null) {
                 var targetPosition = pathVectorList[currentPathIndex] + PathfindingController.map.origin;
-                if (Vector3.Distance(transform.position, targetPosition) > 0.5f) {
+                if (Vector3.Distance(transform.position, targetPosition) > 1.05f) {
                     var moveDir = (targetPosition - transform.position).normalized;
                     tf_.position += Time.deltaTime * baseSpeed * attributes.moveSpeed * moveDir;
                 }
@@ -223,8 +222,7 @@ public class EnemyBase : MonoBehaviour {
         projectile.GetComponent<Bullet>().SetShooter(shooter);
 
         // Give bullet its velocity
-        var rb_ = projectile.GetComponent<Rigidbody>();
-        rb_.velocity = direction * projectileSpeed;
+        projectile.GetComponent<Rigidbody>().velocity = direction * projectileSpeed;
     }
 
     // Damage the player if they touch the enemy
