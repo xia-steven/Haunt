@@ -8,39 +8,34 @@ public class MagicArcherEnemy : EnemyBase {
     float projectileLifetime = 3.0f;
     GameObject magicArcherBullet;
 
-    protected override void Start()
-    {
+    protected override void Start() {
         base.Start();
 
         magicArcherBullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/MagicArcherShot");
 
-        MagicArcherProjectile proj = magicArcherBullet.GetComponent<MagicArcherProjectile>();
+        var proj = magicArcherBullet.GetComponent<MagicArcherProjectile>();
         proj.setLifetime(projectileLifetime);
     }
 
 
     // Override enemy ID to load from config
-    public override int GetEnemyID()
-    {
-        // TODO: Change returned value to enemyID (index in config file)
+    public override int GetEnemyID() {
         return 8;
     }
 
     // Override attack function
-    public override IEnumerator EnemyAttack()
-    {
+    public override IEnumerator EnemyAttack() {
         // TODO: Remove or change debug statement
         Debug.Log("Magic Archer Enemy starting attack");
 
         // While attacking
-        while(state == EnemyState.Attacking)
-        {
+        while (state == EnemyState.Attacking) {
             // TODO: Perform attack here
             // (initialize bullets/projectiles, strafe, dash at target, etc.)
 
-            Vector3 targetPosition = IsPlayer.instance.transform.position;
+            var targetPosition = IsPlayer.instance.transform.position;
 
-            Vector3 direction = targetPosition - transform.position;
+            var direction = targetPosition - transform.position;
             direction.y = 0;
             direction = direction.normalized;
 

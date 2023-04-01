@@ -7,8 +7,7 @@ public class ArbalestEnemy : EnemyBase {
     float projectileLifetime = 2.0f;
     GameObject arbalestBullet;
 
-    protected override void Start()
-    {
+    protected override void Start() {
         base.Start();
 
         arbalestBullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/ArbalestShot");
@@ -18,14 +17,12 @@ public class ArbalestEnemy : EnemyBase {
     }
 
     // Override enemy ID to load from config
-    public override int GetEnemyID()
-    {
+    public override int GetEnemyID() {
         return 5;
     }
 
     // Override attack function
-    public override IEnumerator EnemyAttack()
-    {
+    public override IEnumerator EnemyAttack() {
         // TODO: Remove or change debug statement
         Debug.Log("Arbalest Enemy starting attack");
 
@@ -33,8 +30,7 @@ public class ArbalestEnemy : EnemyBase {
         yield return new WaitForSeconds(0.25f);
 
         // While attacking
-        while(state == EnemyState.Attacking)
-        {
+        while (state == EnemyState.Attacking) {
             Vector3 targetPosition = IsPlayer.instance.transform.position;
 
             Vector3 direction = targetPosition - transform.position;
@@ -50,5 +46,4 @@ public class ArbalestEnemy : EnemyBase {
         // Let update know that we're done
         runningCoroutine = false;
     }
-
 }

@@ -3,23 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class ArbalestProjectile : EnemyBasicBullet
-{
+public class ArbalestProjectile : EnemyBasicBullet {
     Rigidbody rb;
     float rotationSpeed = 1.3f;
 
-    private void Start()
-    {
+    private void Start() {
         rb = GetComponent<Rigidbody>();
     }
 
-    public void setLifetime(float lifetime)
-    {
+    public void setLifetime(float lifetime) {
         bulletLife = lifetime;
     }
 
-    private void Update()
-    {
+    private void Update() {
         base.Update();
 
         // Slight seeking code
@@ -27,7 +23,8 @@ public class ArbalestProjectile : EnemyBasicBullet
 
         Vector3 targetDirection = (playerPosition - transform.position).normalized;
 
-        Vector3 newDirection = Vector3.RotateTowards(rb.velocity, targetDirection, rotationSpeed * Time.deltaTime, 0.0f);
+        Vector3 newDirection =
+            Vector3.RotateTowards(rb.velocity, targetDirection, rotationSpeed * Time.deltaTime, 0.0f);
 
         float currSpeed = rb.velocity.magnitude;
 

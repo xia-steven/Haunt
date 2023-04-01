@@ -4,8 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(HasEnemyHealth))]
-public class IsBoss : MonoBehaviour
-{
+public class IsBoss : MonoBehaviour {
     string configName = "BossData";
     BossAttributes bossData;
 
@@ -13,8 +12,7 @@ public class IsBoss : MonoBehaviour
     Rigidbody rb;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         // Load config
         bossData = ConfigManager.GetData<BossAttributes>(configName);
 
@@ -24,8 +22,5 @@ public class IsBoss : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Update() { }
 }
