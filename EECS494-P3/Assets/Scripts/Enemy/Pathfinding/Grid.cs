@@ -85,7 +85,6 @@ public class Grid<T> {
         if (x >= 0 && z >= 0 && x < width && z < height) {
             return gridArray[x, z];
         }
-
         return default;
     }
 
