@@ -114,7 +114,7 @@ public class PlayerHasHealth : HasHealth {
         Debug.Log("Player received pedestal repair, locked: " + lockedHealth);
 
         if (health > maxHealth-lockedHealth) {
-            AlterHealth(maxHealth-lockedHealth - health);
+            health = maxHealth-lockedHealth;
         }
         // AlterHealth will also publish an update to the ui--let's see if it's idempotent 
         EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
