@@ -29,6 +29,7 @@ public class PathfindingController : MonoBehaviour {
         map = ConfigManager.GetData<MapData>("map");
         pathfinding = new Pathfinding(map.dimension.x, map.dimension.y, map.origin);
         foreach (var tile in map.unwalkableTiles) {
+            Debug.Log("hello");
             pathfinding.GetNode(tile.x, tile.y).SetIsWalkable(false);
         }
     }
