@@ -6,15 +6,17 @@ public class ShopController : MonoBehaviour
 {
     
     // All Available Shop Upgrades, set up in Unity Editor
-    [SerializeField] private GameObject[] dayOneWeapons;
-    [SerializeField] private GameObject[] dayTwoWeapons;
-    [SerializeField] private GameObject[] dayThreeWeapons;
-    [SerializeField] private GameObject restoreHealth;
-    [SerializeField] private GameObject[] shieldUpgrades;
-    [SerializeField] private GameObject[] unpurchasedWeapons;
     [SerializeField] private GameObject[] upgradePool;
-    
-    
+    [SerializeField] private GameObject weaponTableRight;
+    [SerializeField] private GameObject weaponTableLeft;
+    [SerializeField] private GameObject topUpgradeTable;
+    [SerializeField] private GameObject sideUpgradeTable;
+
+    private GameObject shotgunPrefab;
+    private GameObject minigunPrefab;
+    private GameObject sniperPrefab;
+    private GameObject swordPrefab;
+
     
     // pulled from GameControl to determine what's on sale
     private int day; 
@@ -24,6 +26,11 @@ public class ShopController : MonoBehaviour
  
     void Start()
     {
+        // load weapon purchasables
+        shotgunPrefab = Resources.Load<GameObject>("Prefabs/Hub/Shotgun");
+        minigunPrefab = Resources.Load<GameObject>("Prefabs/Hub/Minigun");
+        sniperPrefab = Resources.Load<GameObject>("Prefabs/Hub/Sniper");
+        swordPrefab = Resources.Load<GameObject>("Prefabs/Hub/Sword");
         day = GameControl.Day;
         playerInventory = IsPlayer.instance.gameObject.GetComponent<Inventory>();
         InitShop();
@@ -43,30 +50,27 @@ public class ShopController : MonoBehaviour
                 DayThreeShop();
                 break;
         }
-        
-        
-        
+        InitRandomUpgrades();
     }
     
     
     void DayOneShop()
     {
-        foreach (GameObject weapon in dayOneWeapons)
-        {
-            weapon.SetActive(true);
-        }
-
+        GameObject shotgun = Instantiate(shotgunPrefab);
+        GameObject sniper = Instantiate(sniperPrefab);
+        shotgun.transform.SetParent( weaponTableLeft.transform, false);
+        sniper.transform.SetParent( weaponTableRight.transform, false);
     }
     void DayTwoShop()
     {
-        foreach (GameObject weapon in dayTwoWeapons)
-        {
-            weapon.SetActive(true);
-        }
+        GameObject minigun = Instantiate(minigunPrefab);
+        GameObject sword = Instantiate(swordPrefab);
+        minigun.transform.SetParent( weaponTableLeft.transform, false);
+        sword.transform.SetParent( weaponTableRight.transform, false);
     }
     void DayThreeShop()
     {
-        // determine which weapons should be available to the player based on what's in their inventory
+        // todo determine which weapons should be available to the player based on what's in their inventory
         
     }
 
@@ -80,10 +84,8 @@ public class ShopController : MonoBehaviour
         {
             iter2 = Random.Range(0, range);
         }
-        GameObject upgrade1 = upgradePool[Random.Range(0, range)];
-        GameObject upgrade2 = upgradePool[Random.Range(0, range)];
-        upgrade1.SetActive(true);
-        upgrade2.SetActive(true);
+        GameObject upgrade1 = Instantiate(upgradePool[iter1], topUpgradeTable.transform, false);
+        GameObject upgrade2 = Instantiate(upgradePool[iter2], sideUpgradeTable.transform, false);
     }
     
 }

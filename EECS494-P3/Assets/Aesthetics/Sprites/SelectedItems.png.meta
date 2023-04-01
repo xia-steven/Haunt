@@ -120,12 +120,12 @@ TextureImporter:
       name: SelectedItems_0
       rect:
         serializedVersion: 2
-        x: 19
-        y: 156
+        x: 14
+        y: 151
         width: 30
         height: 35
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -141,12 +141,12 @@ TextureImporter:
       name: SelectedItems_1
       rect:
         serializedVersion: 2
-        x: 59
-        y: 162
+        x: 54
+        y: 157
         width: 20
         height: 19
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -162,12 +162,12 @@ TextureImporter:
       name: SelectedItems_2
       rect:
         serializedVersion: 2
-        x: 86
-        y: 160
+        x: 81
+        y: 155
         width: 31
         height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0, y: 0.66}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -183,12 +183,12 @@ TextureImporter:
       name: SelectedItems_3
       rect:
         serializedVersion: 2
-        x: 120
-        y: 169
+        x: 115
+        y: 164
         width: 28
         height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -204,12 +204,12 @@ TextureImporter:
       name: SelectedItems_4
       rect:
         serializedVersion: 2
-        x: 15
-        y: 106
+        x: 10
+        y: 101
         width: 36
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -225,12 +225,12 @@ TextureImporter:
       name: SelectedItems_5
       rect:
         serializedVersion: 2
-        x: 54
-        y: 106
+        x: 49
+        y: 101
         width: 36
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -246,12 +246,12 @@ TextureImporter:
       name: SelectedItems_6
       rect:
         serializedVersion: 2
-        x: 95
-        y: 106
+        x: 90
+        y: 101
         width: 36
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -267,12 +267,12 @@ TextureImporter:
       name: SelectedItems_7
       rect:
         serializedVersion: 2
-        x: 15
-        y: 68
+        x: 10
+        y: 63
         width: 36
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -288,12 +288,12 @@ TextureImporter:
       name: SelectedItems_8
       rect:
         serializedVersion: 2
-        x: 54
-        y: 68
+        x: 49
+        y: 63
         width: 36
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -309,12 +309,12 @@ TextureImporter:
       name: SelectedItems_9
       rect:
         serializedVersion: 2
-        x: 95
-        y: 68
+        x: 90
+        y: 63
         width: 36
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -330,12 +330,12 @@ TextureImporter:
       name: SelectedItems_10
       rect:
         serializedVersion: 2
-        x: 15
-        y: 30
+        x: 10
+        y: 25
         width: 36
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -351,12 +351,12 @@ TextureImporter:
       name: SelectedItems_11
       rect:
         serializedVersion: 2
-        x: 54
-        y: 30
+        x: 49
+        y: 25
         width: 36
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -364,6 +364,69 @@ TextureImporter:
       bones: []
       spriteID: bb6cd5043cb72b84aaad49e79cfc08e9
       internalID: -2020864089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SelectedItems_12
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 29
+        width: 51
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24a17ac5b05bcf54e9f5a74f2eabd488
+      internalID: 2142671685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SelectedItems_13
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 2
+        width: 50
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 395f8627d0035ca44a61284f8efc0a07
+      internalID: -1804902154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SelectedItems_14
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 3
+        width: 38
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 201ae9d1b4afcb94d976f0daf668084e
+      internalID: 517602927
       vertices: []
       indices: 
       edges: []
@@ -383,6 +446,9 @@ TextureImporter:
       SelectedItems_1: -80788293
       SelectedItems_10: -652237440
       SelectedItems_11: -2020864089
+      SelectedItems_12: 2142671685
+      SelectedItems_13: -1804902154
+      SelectedItems_14: 517602927
       SelectedItems_2: 1947007763
       SelectedItems_3: 1944606124
       SelectedItems_4: -931952705

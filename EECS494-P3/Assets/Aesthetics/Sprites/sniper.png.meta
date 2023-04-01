@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9bf6d4bf09c9fd44b906628fd3eb5959
+guid: a6c371d9a81a15c4e9b8fab11569c5e2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: swords_0
+      name: sniper_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 39
-        width: 42
-        height: 13
+        x: 8
+        y: 43
+        width: 47
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a17d3f7a20c6d0f439627c3daf4aab19
-      internalID: 1456022749
+      spriteID: fbbdebace5e1ff042846cc14c5f589b5
+      internalID: 1881261779
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: swords_1
+      name: sniper_1
       rect:
         serializedVersion: 2
-        x: 4
+        x: 12
         y: 17
-        width: 46
-        height: 17
+        width: 34
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,29 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1d78f48aa9eecf49b90181ff6e475aa
-      internalID: -1571043111
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: swords_2
-      rect:
-        serializedVersion: 2
-        x: 6
-        y: 4
-        width: 32
-        height: 4
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ba6632be6ff1b7442a3657ef725dcdc9
-      internalID: 1486384732
+      spriteID: 8e009018cdc1dbe4da8e47cb847b9435
+      internalID: 800093021
       vertices: []
       indices: 
       edges: []
@@ -190,9 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      swords_0: 1456022749
-      swords_1: -1571043111
-      swords_2: 1486384732
+      sniper_0: 1881261779
+      sniper_1: 800093021
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
