@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d0120b67eb61ef140800757a4eab709a
+guid: ef7ccde5eddc6f148878180c96b9688f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SelectedItems_0
+      name: upgrades_0
       rect:
         serializedVersion: 2
-        x: 19
-        y: 156
-        width: 30
-        height: 35
+        x: 2
+        y: 94
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71b91ba8d3fc2924494de095336bf0ae
-      internalID: -1394547023
+      spriteID: f5fafbcc8458b224a9e7364d1728dbe2
+      internalID: 1805898608
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SelectedItems_1
+      name: upgrades_1
       rect:
         serializedVersion: 2
-        x: 59
-        y: 162
-        width: 20
-        height: 19
+        x: 41
+        y: 94
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b23d88bf87a242340a5090db473859c2
-      internalID: -80788293
+      spriteID: 59fb81d623fc10d488d3bdab46653466
+      internalID: -23206553
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SelectedItems_2
+      name: upgrades_2
       rect:
         serializedVersion: 2
-        x: 86
-        y: 160
-        width: 31
-        height: 22
+        x: 82
+        y: 94
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5898d87c85b2e748ab2dad3ca93f0ba
-      internalID: 1947007763
+      spriteID: b8f5e2a8b9377a4438d85ff0c9851bee
+      internalID: -2082095417
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SelectedItems_3
+      name: upgrades_3
       rect:
         serializedVersion: 2
-        x: 120
-        y: 169
-        width: 28
-        height: 10
+        x: 3
+        y: 56
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,20 +194,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3b8703af6c65f254d987ed72ca12ad89
-      internalID: 1944606124
+      spriteID: 466f2d73a59063d4c90a18273524aed3
+      internalID: -1157353935
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SelectedItems_4
+      name: upgrades_4
       rect:
         serializedVersion: 2
-        x: 15
-        y: 106
-        width: 36
-        height: 36
+        x: 41
+        y: 56
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,20 +215,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c845243416cbd241b3b23ef2a4d6037
-      internalID: -931952705
+      spriteID: e0829ca7eb9239744b2ea6bd94829bf2
+      internalID: -743745691
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SelectedItems_5
+      name: upgrades_5
       rect:
         serializedVersion: 2
-        x: 54
-        y: 106
-        width: 36
-        height: 36
+        x: 82
+        y: 56
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,20 +236,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cae9f59cac40af4468b07c8dd3556643
-      internalID: 1781948965
+      spriteID: 324b10c05f4f7674c9870a44ff1378bb
+      internalID: -1061985439
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SelectedItems_6
+      name: upgrades_6
       rect:
         serializedVersion: 2
-        x: 95
-        y: 106
-        width: 36
-        height: 36
+        x: 3
+        y: 18
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,20 +257,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 05693966d8c115149bd9292091cfc3bc
-      internalID: 1004251609
+      spriteID: 2167d5034473aef41a44f8aa6c98a2a7
+      internalID: -672875955
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SelectedItems_7
+      name: upgrades_7
       rect:
         serializedVersion: 2
-        x: 15
-        y: 68
-        width: 36
-        height: 36
+        x: 41
+        y: 18
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,92 +278,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7dd2eca3dc7135a46bd02b51ec2a3325
-      internalID: 996005686
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SelectedItems_8
-      rect:
-        serializedVersion: 2
-        x: 54
-        y: 68
-        width: 36
-        height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c4234907907d13d46b97847a607c5b37
-      internalID: -1038429635
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SelectedItems_9
-      rect:
-        serializedVersion: 2
-        x: 95
-        y: 68
-        width: 36
-        height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3389213e0901d9f45a7e8a2834c88745
-      internalID: 1256744101
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SelectedItems_10
-      rect:
-        serializedVersion: 2
-        x: 15
-        y: 30
-        width: 36
-        height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 12734673bf7437c40aab932e6e0e5633
-      internalID: -652237440
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SelectedItems_11
-      rect:
-        serializedVersion: 2
-        x: 54
-        y: 30
-        width: 36
-        height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bb6cd5043cb72b84aaad49e79cfc08e9
-      internalID: -2020864089
+      spriteID: fa239f9f89f32d047852ec42960cf464
+      internalID: -1292485839
       vertices: []
       indices: 
       edges: []
@@ -379,18 +295,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SelectedItems_0: -1394547023
-      SelectedItems_1: -80788293
-      SelectedItems_10: -652237440
-      SelectedItems_11: -2020864089
-      SelectedItems_2: 1947007763
-      SelectedItems_3: 1944606124
-      SelectedItems_4: -931952705
-      SelectedItems_5: 1781948965
-      SelectedItems_6: 1004251609
-      SelectedItems_7: 996005686
-      SelectedItems_8: -1038429635
-      SelectedItems_9: 1256744101
+      upgrades_0: 1805898608
+      upgrades_1: -23206553
+      upgrades_2: -2082095417
+      upgrades_3: -1157353935
+      upgrades_4: -743745691
+      upgrades_5: -1061985439
+      upgrades_6: -672875955
+      upgrades_7: -1292485839
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
