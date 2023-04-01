@@ -13,4 +13,9 @@ public class EnemyBasicBullet : Bullet
         damage = -1;
         bulletLife = 3.0f;
     }
+
+    public void setLifetime(float lifetime)
+    {
+        bulletLife = lifetime;
+    }
 }

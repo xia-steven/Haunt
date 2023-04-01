@@ -70,7 +70,7 @@ public class PlayerHasHealth : HasHealth {
             StartCoroutine(TriggerInvincibility());
         }
 
-        EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
+        EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
     }
 
     private bool CheckIsDead()
@@ -105,7 +105,7 @@ public class PlayerHasHealth : HasHealth {
     void _OnPedestalDied(PedestalDestroyedEvent pde) {
         lockedHealth -= 2;
         Debug.Log("Player received pedestal death, locked: " + lockedHealth);
-        EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
+        EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
         
     }
 
@@ -117,14 +117,14 @@ public class PlayerHasHealth : HasHealth {
             health = maxHealth-lockedHealth;
         }
         // AlterHealth will also publish an update to the ui--let's see if it's idempotent 
-        EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
+        EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
 
     }
 
     public void AddShield()
     {
         shieldHealth += 2;
-        EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
+        EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
 
     }
 
@@ -164,7 +164,7 @@ public class PlayerHasHealth : HasHealth {
             health = 4;
             lockedHealth = 2;
             shieldHealth = 0;
-            EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
+            EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
             transform.position = new Vector3(0, 0.5f, 0);
         }
         else if (s.name == "GameScene" || s.name == "HubWorld")
@@ -180,7 +180,7 @@ public class PlayerHasHealth : HasHealth {
     IEnumerator DelayUIUpdateOnSceneLoad()
     {
         yield return null;
-        EventBus.Publish(new HealthUIUpdate(health, lockedHealth, shieldHealth));
+        EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
 
     }
     public void ResetHealth()

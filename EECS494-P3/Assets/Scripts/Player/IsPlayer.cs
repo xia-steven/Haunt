@@ -18,11 +18,11 @@ public class IsPlayer : MonoBehaviour {
         // starting to phase this out of the game
     }
 
-    public int GetHealth() {
+    public float GetHealth() {
         return health.GetHealth();
     }
 
-    public int GetMaxHealth() {
+    public float GetMaxHealth() {
         return health.GetMaxHealth();
     }
 
