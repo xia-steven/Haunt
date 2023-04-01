@@ -59,7 +59,7 @@ public class PathfindingController : MonoBehaviour {
                 targetZ = front.second;
                 return;
             }
-            
+
             if (!visited.Contains(new Pair<int, int>(front.first, front.second + 1))) {
                 bfs.Enqueue(new Pair<int, int>(front.first, front.second + 1));
                 visited.Add(new Pair<int, int>(front.first, front.second + 1));

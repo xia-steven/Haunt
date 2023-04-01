@@ -2,46 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IsExplosive : MonoBehaviour
-{
+public class IsExplosive : MonoBehaviour {
     [SerializeField] float explosiveRadius = 2.0f;
     [SerializeField] bool oneShotEnemies = false;
 
     // Used to prevent spawning objects on quit
     bool quitting = false;
 
-    private void OnDestroy()
-    {
-        if(!quitting)
-        {
+    private void OnDestroy() {
+        if (!quitting) {
             explode();
         }
     }
 
-    void explode()
-    {
+    void explode() {
         Debug.Log("Exploding");
 
-        
+
         // Perform hit
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosiveRadius);
 
-        foreach (Collider hit in hitColliders)
-        {
+        foreach (Collider hit in hitColliders) {
             PlayerHasHealth playerHit;
             HasEnemyHealth enemyHit;
 
-            if(hit.TryGetComponent<PlayerHasHealth>(out playerHit))
-            {
+            if (hit.TryGetComponent<PlayerHasHealth>(out playerHit)) {
                 playerHit.AlterHealth(-1);
             }
-            else if (hit.TryGetComponent<HasEnemyHealth>(out enemyHit))
-            {
+            else if (hit.TryGetComponent<HasEnemyHealth>(out enemyHit)) {
                 // Kill the enemy
                 int damageAmount = oneShotEnemies ? -1000 : -1;
                 enemyHit.AlterHealth(damageAmount);
             }
-
         }
 
         // Show visual
@@ -59,8 +51,12 @@ public class IsExplosive : MonoBehaviour
         explosiveRadius = newRadius;
     }
 
-    private void OnApplicationQuit()
+    public void setExplosiveRadius(float newRadius)
     {
+        explosiveRadius = newRadius;
+    }
+
+    private void OnApplicationQuit() {
         quitting = true;
     }
 }

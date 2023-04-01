@@ -21,8 +21,7 @@ public class ThiefEnemy : EnemyBase {
 
     Vector3 spawnPos;
 
-    protected override void Start()
-    {
+    protected override void Start() {
         base.Start();
 
         // Get spawn location
@@ -37,22 +36,20 @@ public class ThiefEnemy : EnemyBase {
     }
 
     // Override enemy ID to load from config
-    public override int GetEnemyID()
-    {
+    public override int GetEnemyID() {
         // TODO: Change returned value to enemyID (index in config file)
         return 7;
     }
 
     // Override attack function
-    public override IEnumerator EnemyAttack()
-    {
+    public override IEnumerator EnemyAttack() {
         // TODO: Remove or change debug statement
         Debug.Log("Thief Enemy starting attack");
         Vector3 direction = (IsPlayer.instance.transform.position - transform.position).normalized;
 
         // Calculate the rotation that points in the direction of the intersection point
         Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
-        
+
 
         // Set the rotation of the knife
         knifeObject.transform.rotation = rotation;
@@ -61,8 +58,7 @@ public class ThiefEnemy : EnemyBase {
         knifeObject.SetActive(true);
 
         // While attacking
-        while (state == EnemyState.Attacking)
-        {
+        while (state == EnemyState.Attacking) {
             // slight backwards windup
             rb.velocity = -direction * windupSpeed;
             yield return new WaitForSeconds(windupTime);
@@ -88,8 +84,7 @@ public class ThiefEnemy : EnemyBase {
     }
 
 
-    Vector3 GetTeleportLocation()
-    {
+    Vector3 GetTeleportLocation() {
         bool valid = false;
         int count = 0;
 
@@ -97,20 +92,16 @@ public class ThiefEnemy : EnemyBase {
         int zCoord = 0;
         Vector3 testPos = spawnPos;
 
-        while (valid == false && count < maxSpawnAttempts)
-        {
+        while (valid == false && count < maxSpawnAttempts) {
             xCoord = Random.Range(minXSpawn, maxXSpawn + 1);
             zCoord = Random.Range(minZSpawn, maxZSpawn + 1);
             testPos = new Vector3(xCoord, 0.5f, zCoord);
             Vector3 camCoords = Camera.main.WorldToScreenPoint(testPos);
             // Check if outside of camera bounds
-            if(camCoords.x > Screen.width || camCoords.x < 0 || camCoords.y > Screen.height || camCoords.y < 0)
-            {
+            if (camCoords.x > Screen.width || camCoords.x < 0 || camCoords.y > Screen.height || camCoords.y < 0) {
                 // Make sure the enemy can't spawn in the center island
-                if(xCoord > 4 || xCoord < -4 || zCoord < -3 || zCoord > 3)
-                {
-                    if(Pathfinding.Instance.GetGrid().GetGridObject(testPos).isWalkable)
-                    {
+                if (xCoord > 4 || xCoord < -4 || zCoord < -3 || zCoord > 3) {
+                    if (Pathfinding.Instance.GetGrid().GetGridObject(testPos).isWalkable) {
                         valid = true;
                     }
                     // If valid is still true, we can spawn here
@@ -119,9 +110,8 @@ public class ThiefEnemy : EnemyBase {
 
             ++count;
         }
-        
-        if(valid == false)
-        {
+
+        if (valid == false) {
             Debug.Log("Failed to find a suitable spawn point after " + count + " attempts.  Defaulting to enemy spawn");
             return spawnPos;
         }

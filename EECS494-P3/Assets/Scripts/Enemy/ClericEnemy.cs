@@ -12,12 +12,16 @@ public class PedestalInfo {
     }
 }
 
-public class PedestalAttacker : EnemyBase {
+public class ClericEnemy : EnemyBase {
     private Subscription<PedestalDestroyedEvent> switchPedestalSub;
     private Subscription<PedestalRepairedEvent> addPedestalSub;
 
     private float prevTime;
     public int pedestalTimeout;
+
+    public override int GetEnemyID() {
+        return 9;
+    }
 
     private new void Start() {
         base.Start();

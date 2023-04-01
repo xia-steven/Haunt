@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDataManager : MonoBehaviour
-{
+public class EnemyDataManager : MonoBehaviour {
     static EnemyDataManager instance;
 
     static EnemyData data;
@@ -11,8 +10,7 @@ public class EnemyDataManager : MonoBehaviour
     string configName = "EnemyData";
 
     // Enforce singleton in awake
-    void Awake()
-    {
+    void Awake() {
         //enforce singleton
         if (instance == null) instance = this;
         else Destroy(this.gameObject);
@@ -23,15 +21,13 @@ public class EnemyDataManager : MonoBehaviour
         data = ConfigManager.GetData<EnemyData>(configName);
     }
 
-    public static EnemyAttributes GetEnemyAttributes(int enemyID)
-    {
-        if(enemyID < 0 || enemyID >= data.allEnemies.Count)
-        {
-            Debug.LogWarning("Enemy Data Manager: could not find enemy with index/ID " + enemyID + ".  Returning null.");
+    public static EnemyAttributes GetEnemyAttributes(int enemyID) {
+        if (enemyID < 0 || enemyID >= data.allEnemies.Count) {
+            Debug.LogWarning("Enemy Data Manager: could not find enemy with index/ID " + enemyID +
+                             ".  Returning null.");
             return null;
         }
-        else
-        {
+        else {
             return data.allEnemies[enemyID];
         }
     }

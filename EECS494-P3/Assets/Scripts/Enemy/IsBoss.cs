@@ -48,8 +48,7 @@ public class IsBoss : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         // Load config
         bossData = ConfigManager.GetData<BossAttributes>(configName);
 
