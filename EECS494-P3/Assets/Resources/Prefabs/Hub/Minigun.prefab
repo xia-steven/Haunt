@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5803620379799455151}
   - component: {fileID: 5803620379799455148}
   - component: {fileID: 3147626010867563680}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Minigun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5803620380048789718}
   - component: {fileID: 5803620380048789721}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

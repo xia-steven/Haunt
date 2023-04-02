@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5721908687729431789}
   - component: {fileID: 5721908687729431788}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5721908688139117913}
   - component: {fileID: 5721908688139117914}
   - component: {fileID: 289288124594249496}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}

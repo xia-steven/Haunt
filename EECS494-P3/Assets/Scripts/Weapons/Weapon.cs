@@ -252,7 +252,7 @@ public abstract class Weapon : MonoBehaviour {
         SceneManager.sceneLoaded -= OnSceneLoad;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         if (isReloading)
         {

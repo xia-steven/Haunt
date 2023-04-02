@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4063285443127321514}
   - component: {fileID: 4063285443127321513}
   - component: {fileID: 4063285443127321508}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RageUpgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4063285443910694579}
   - component: {fileID: 4063285443910694732}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3283331254623216980}
   - component: {fileID: 3283331254623216983}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3283331254833157205}
   - component: {fileID: 3283331254833157210}
   - component: {fileID: 3283331254833157211}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ExplodingDash
   m_TagString: Untagged
   m_Icon: {fileID: 0}

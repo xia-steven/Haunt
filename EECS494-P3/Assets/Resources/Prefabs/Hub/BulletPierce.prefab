@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9060257252596034511}
   - component: {fileID: 9060257252596034512}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 9060257253339197275}
   - component: {fileID: 9060257253339197274}
   - component: {fileID: 9060257253339197273}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BulletPierce
   m_TagString: Untagged
   m_Icon: {fileID: 0}

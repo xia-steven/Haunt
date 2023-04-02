@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3826594249980819605}
   - component: {fileID: 3826594249980819606}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3826594250541003775}
   - component: {fileID: 3826594250541003774}
   - component: {fileID: 3826594250541003773}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ReloadUpgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
