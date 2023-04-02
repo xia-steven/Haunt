@@ -22,7 +22,7 @@ public class CameraMovement : MonoBehaviour
 
     private Vector3 offset;
     private Vector3 playerOffset;
-    private Vector3 mouseOffset;
+    private Vector3 mousePosition;
 
     bool locked = false;
 
@@ -59,33 +59,25 @@ public class CameraMovement : MonoBehaviour
         {
             return;
         }
-
-        playerOffset = player.position - transform.position;
         Vector3 mouse = Input.mousePosition;
         mouse.z = 1;
-        mouseOffset = -(Camera.main.ScreenToWorldPoint(mouse));
-        offset = playerOffset * playerOffsetProportion + mouseOffset * (1 - playerOffsetProportion);
+        mousePosition = (Camera.main.ScreenToWorldPoint(mouse));
+        Vector3 normalVec = (new Vector3(0, -1, 1)).normalized;
+
+        mousePosition = mousePosition + normalVec * (-mousePosition.y / normalVec.y); 
+
+        offset = player.position * playerOffsetProportion + mousePosition * (1 - playerOffsetProportion);
         // Remove y offset
         offset.y = 0;
 
 
+        // Make sure offset doesn't exceed values farther than the player (plus a small offset)
+        offset.x = Mathf.Clamp(offset.x, minXoffset + player.position.x, maxXoffset + player.position.x);
+        float newXPos = Mathf.Clamp(offset.x + camOffsetFromPlayer.x, xRoomMin, xRoomMax);
 
-        // Only adjust cam if offset is too high
-        if (offset.x < maxXoffset && offset.x > minXoffset && 
-            (offset.z + camOffsetFromPlayer.z < maxZoffset && offset.z + camOffsetFromPlayer.z > minZoffset))
-        {
-            //IsMoving = false;
-            //return;
-        }
+        offset.z = Mathf.Clamp(offset.z, minZoffset + player.position.z, maxZoffset + player.position.z);
+        float newZPos = Mathf.Clamp(offset.z + camOffsetFromPlayer.z, zRoomMin, zRoomMax);
 
-        IsMoving = true;
-
-        // Make sure offset doesn't exceed values
-        offset.x = Mathf.Clamp(offset.x + camOffsetFromPlayer.x, minXoffset, maxXoffset);
-        float newXPos = Mathf.Clamp(player.position.x - offset.x + camOffsetFromPlayer.x, xRoomMin, xRoomMax);
-
-        offset.z = Mathf.Clamp(offset.z + camOffsetFromPlayer.z, minZoffset, maxZoffset);
-        float newZPos = Mathf.Clamp(player.position.z - offset.z + camOffsetFromPlayer.z, zRoomMin, zRoomMax);
 
         Vector3 newPos = Vector3.Lerp(transform.position, (new Vector3(newXPos, this.transform.position.y, newZPos)), camMoveSpeed * Time.deltaTime);
         this.transform.position = newPos;
