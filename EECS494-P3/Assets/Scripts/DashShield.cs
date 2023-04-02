@@ -19,6 +19,7 @@ public class DashShield : MonoBehaviour
         {
             if (bullet.GetShooter() == Shooter.Enemy)
             {
+                bullet.SetShooter(Shooter.Player);
                 Rigidbody rb = collided.GetComponent<Rigidbody>();
                 rb.velocity = -rb.velocity;
             }
@@ -27,6 +28,7 @@ public class DashShield : MonoBehaviour
         {
             if (Time.time - miniBullet.GetLastReverse() >= timeBetweenReversal)
             {
+                miniBullet.ChangeParentShooter(Shooter.Player);
                 Rigidbody rb = miniBullet.GetParentRB();
                 rb.velocity = -rb.velocity;
                 miniBullet.SetLastReverse();
