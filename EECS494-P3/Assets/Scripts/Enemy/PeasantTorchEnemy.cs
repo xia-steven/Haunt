@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PeasantTorchEnemy : EnemyBase {
     private GameObject torchObject;
-    private const float swingTime = 0.5f;
-    private const float swingSpeed = 1;
 
     // Override enemy ID to load from config
     public override int GetEnemyID() {
@@ -14,7 +12,7 @@ public class PeasantTorchEnemy : EnemyBase {
 
     protected override void Start() {
         base.Start();
-        torchObject = GetComponentInChildren<ThiefKnife>().gameObject;
+        torchObject = GetComponentInChildren<Torch>().gameObject;
         torchObject.SetActive(false);
     }
 
@@ -30,23 +28,22 @@ public class PeasantTorchEnemy : EnemyBase {
 
         // Set the rotation of the knife
         torchObject.transform.rotation = rotation;
-        torchObject.transform.Rotate(-90, 0, 0);
+        torchObject.transform.Rotate(0, 90, 0);
 
         torchObject.SetActive(true);
 
         // While attacking
         while (state == EnemyState.Attacking) {
-            // slight backwards windup
-            // rb.velocity = -direction * windupSpeed;
-            // yield return new WaitForSeconds(windupTime);
-            //
-            // // dash towards the player
-            // rb.velocity = direction * dashSpeed;
-            // yield return new WaitForSeconds(dashTime);
+            torchObject.GetComponent<Rigidbody>().angularVelocity = new Vector3(0, -10, 0);
 
-            // teleport away
-            rb.velocity = Vector3.zero;
-            
+            yield return new WaitForSeconds(0.33f);
+
+            torchObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+            yield return new WaitForSeconds(0.1f);
+
+            torchObject.SetActive(false);
+
             yield return new WaitForSeconds(attributes.attackSpeed);
         }
 

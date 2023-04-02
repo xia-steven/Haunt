@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 1365097214977346424}
   - component: {fileID: 6816005336703555316}
   m_Layer: 8
-  m_Name: MagicArcher
+  m_Name: MultiArcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

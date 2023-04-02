@@ -4,13 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Torch : MonoBehaviour {
-    private Rigidbody rb;
-
-    private void Start() {
-        rb = GetComponent<Rigidbody>();
-    }
-
-    protected void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter(Collider other) {
+        Debug.Log("Collision detected");
         var collided = other.gameObject;
 
         // Don't collide with specified items
