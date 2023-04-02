@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
     public float moveSpeed = 5f;
@@ -51,7 +52,9 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnDodge(InputAction.CallbackContext value) {
-        if (!playerEnabled) return;
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (!playerEnabled || sceneName == "HubWorld" || sceneName == "TutorialHubWorld") return;
+
         if (dodgeRollCooldownTimer > 0) {
             return;
         }
