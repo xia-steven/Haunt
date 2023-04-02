@@ -19,6 +19,10 @@ public class ClericEnemy : EnemyBase {
     private float prevTime;
     public int pedestalTimeout;
 
+    public override int GetEnemyID() {
+        return 9;
+    }
+
     private new void Start() {
         base.Start();
         baseSpeed = 1.5f;
