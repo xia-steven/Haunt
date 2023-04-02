@@ -701,6 +701,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5351816852632551901, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7452458581787944280, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
       propertyPath: m_Name
       value: HubWorld

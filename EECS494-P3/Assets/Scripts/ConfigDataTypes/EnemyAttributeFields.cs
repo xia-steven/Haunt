@@ -26,11 +26,13 @@ public class EnemyAttributes {
     public float targetDistance;
     public int health;
     public float attackSpeed;
+    public bool isRanged;
 
 
     public override string ToString() {
         var output = "Enemy " + name + " has " + health + " health, a moveSpeed of " + moveSpeed +
                      ", an attack speed of " + attackSpeed +
+                     ", is ranged bool: " + isRanged +
                      ", and a target distance of " + targetDistance + " units.";
         return output;
     }

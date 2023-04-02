@@ -35,7 +35,7 @@ public class Sword : Weapon
     // Overwrite FixedUpdate to alter rotation of sword and change firing method
     protected override void FixedUpdate()
     {
-        if (!isPlayer) return;
+        if (!shotByPlayer) return;
 
         // Get the screen position of the cursor
         Vector3 screenPos = Input.mousePosition;

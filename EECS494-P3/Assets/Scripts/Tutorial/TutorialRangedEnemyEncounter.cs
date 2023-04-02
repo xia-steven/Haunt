@@ -41,7 +41,7 @@ public class TutorialRangedEnemyEncounter : MonoBehaviour
         EventBus.Publish(new TutorialLockCameraEvent(new Vector3(-1, 12, -12)));
 
         // Wait for bullet to reach the right spot
-        yield return new WaitForSeconds(4.25f);
+        yield return new WaitForSeconds(3.25f);
 
         // Send the tutorial message
         EventBus.Publish(new TutorialMessageEvent(tutorialMessageID, GetInstanceID(), KeyCode.Space, true));
