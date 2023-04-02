@@ -532,6 +532,10 @@ PrefabInstance:
       propertyPath: spawners.Array.data[5]
       value: 
       objectReference: {fileID: 950348631}
+    - target: {fileID: 711694074749793866, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2913283851423250065, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

@@ -76,7 +76,14 @@ public class IsTeleporter : MonoBehaviour
         if (isUsable)
         {
             IsPlayer.SetPosition(new Vector3(0, .25f, 0));
-            SceneManager.LoadScene(otherScene);
+            if(GameControl.Day != 3 || SceneManager.GetActiveScene().name != "HubWorld")
+            {
+                SceneManager.LoadScene(otherScene);
+            }
+            else if (SceneManager.GetActiveScene().name == "HubWorld")
+            {
+                SceneManager.LoadScene("LAB_BossTesting");
+            }
         }
     }
 }

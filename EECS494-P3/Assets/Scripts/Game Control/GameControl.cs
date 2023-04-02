@@ -64,7 +64,7 @@ partial class GameControl : MonoBehaviour {
 
     void OnSceneLoaded(Scene s, LoadSceneMode m)
     {
-        if (s.name == "GameScene" || s.name == "LAB_Caleb")
+        if (s.name == "GameScene")
         {
             Debug.Log("GameScene Loaded");
             StartCoroutine(StartOnDelay(StartNight));
@@ -162,7 +162,7 @@ partial class GameControl : MonoBehaviour {
     //DayUpdate runs while it is day
     private IEnumerator DayUpdate() {
         yield return null;
-        if (day == data.maxDays) WinGame();
+        //if (day == data.maxDays) WinGame();
         
         while (!isNight)
         {
