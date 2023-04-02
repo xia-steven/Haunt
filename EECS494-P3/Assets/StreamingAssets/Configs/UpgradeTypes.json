@@ -9,7 +9,7 @@
         {
             "type" : 1,
             "cost": 10,
-            "rate1": 20,
+            "rate1": 1.5,
             "description" : "Dashing leaves behind an explosive"
         },
         {

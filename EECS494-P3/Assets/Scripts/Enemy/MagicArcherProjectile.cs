@@ -8,6 +8,9 @@ public class MagicArcherProjectile : EnemyBasicBullet {
 
     GameObject miniBullet;
 
+    // Time since last reversal
+    public float lastReverse = 0f;
+
     // Scale of the bullet
     float scale = 0.23f;
     int gridWidth = 5;
