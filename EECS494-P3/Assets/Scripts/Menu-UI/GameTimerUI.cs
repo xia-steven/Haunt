@@ -22,6 +22,10 @@ public class GameTimerUI : MonoBehaviour {
                 StartCoroutine(Flash());
             }
         }
+        else if (GameControl.IsNight && !flashing)
+        {
+            text.text = "Sunrise: " + remaining;
+        }
     }
 
     IEnumerator Flash()

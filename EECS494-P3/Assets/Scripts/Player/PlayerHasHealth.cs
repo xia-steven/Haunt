@@ -161,10 +161,7 @@ public class PlayerHasHealth : HasHealth {
         if (s.name == "TutorialGameScene" || s.name == "TutorialHubWorld")
         {
             Debug.Log("TutorialGameScene Loaded");
-            health = 4;
-            lockedHealth = 2;
             shieldHealth = 0;
-            EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
             transform.position = new Vector3(0, 0.5f, 0);
         }
         else if (s.name == "GameScene" || s.name == "HubWorld")
