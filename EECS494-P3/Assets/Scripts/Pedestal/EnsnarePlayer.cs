@@ -28,6 +28,9 @@ public class EnsnarePlayer : MonoBehaviour
                 playerShadow = child;
             }
         }
+
+        // Initially have the line renderer disabled
+        rend.enabled = false;
     }
 
     // Update is called once per frame
