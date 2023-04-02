@@ -52,9 +52,9 @@ public abstract class Weapon : MonoBehaviour {
         private set{ }
     }
 
-    protected bool isPlayer = true;
-    public bool IsPlayer {
-        get { return isPlayer; }
+    protected bool shotByPlayer = true;
+    public bool ShotByPlayer {
+        get { return shotByPlayer; }
         private set{ }
     }
 
@@ -84,7 +84,7 @@ public abstract class Weapon : MonoBehaviour {
 
     void OnSceneLoad(Scene s, LoadSceneMode m)
     {
-        if(gameObject.activeInHierarchy && isPlayer)
+        if(gameObject.activeInHierarchy && shotByPlayer)
         {
             EventBus.Publish(new WeaponSwapEvent(this));
         }
@@ -179,14 +179,14 @@ public abstract class Weapon : MonoBehaviour {
 
     public void OnEnable()
     {
-        if (isPlayer)
+        if (shotByPlayer)
             EventBus.Publish(new WeaponSwapEvent(this));
         firing = false;
     }
 
     protected virtual void FixedUpdate()
     {
-        if (!isPlayer) return;
+        if (!shotByPlayer) return;
 
         // Get the screen position of the cursor
         Vector3 screenPos = Input.mousePosition;

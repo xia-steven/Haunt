@@ -56,8 +56,13 @@ public class EnemyBase : MonoBehaviour {
         if (state != EnemyState.AStarMovement &&
             Physics.Raycast(transform.position, playerDirection, out var hit,
                 Vector3.Distance(targetPosition, transform.position), layerMask)) {
+            if(hit.transform.gameObject.CompareTag("Pit") && attributes.isRanged && 
+                Vector3.Distance(targetPosition, transform.position) <= attributes.targetDistance)
+            {
+                // Do nothing - can attack if not already attacking
+            }
             // Confirm that the raycast did not hit the player
-            if (!hit.transform.gameObject.CompareTag("Player")) {
+            else if (!hit.transform.gameObject.CompareTag("Player")) {
                 if (!runningCoroutine) {
                     state = EnemyState.AStarMovement;
                     runningCoroutine = true;

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7376307152422015654}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Pit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 3513382811402995813}
   m_Layer: 9
   m_Name: 1-1-Pit
-  m_TagString: Untagged
+  m_TagString: Pit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

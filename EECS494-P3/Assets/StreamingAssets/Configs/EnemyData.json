@@ -6,70 +6,80 @@
             "moveSpeed": 1.0,
             "targetDistance": 1.0,
             "health": 3,
-            "attackSpeed": 2.0
+            "attackSpeed": 2.0,
+            "isRanged": false
         },
         {
             "name": "PeasantPitchfork",
             "moveSpeed": 1.0,
             "targetDistance": 1.5,
             "health": 3,
-            "attackSpeed": 2.0
+            "attackSpeed": 2.0,
+            "isRanged": false
         },
         {
             "name": "Archer",
             "moveSpeed": 1.0,
             "targetDistance": 3.0,
             "health": 4,
-            "attackSpeed": 2.0
+            "attackSpeed": 2.0,
+            "isRanged": true
         },
         {
             "name": "EliteArcher",
             "moveSpeed": 1.5,
             "targetDistance": 4.0,
             "health": 6,
-            "attackSpeed": 2.0
+            "attackSpeed": 2.0,
+            "isRanged": true
         },
         {
             "name": "MultiArcher",
             "moveSpeed": 1.25,
             "targetDistance": 2.0,
             "health": 4,
-            "attackSpeed": 2.0
+            "attackSpeed": 2.0,
+            "isRanged": true
         },
         {
             "name": "Arbalest",
             "moveSpeed": 1.0,
-            "targetDistance": 4.0,
+            "targetDistance": 5.0,
             "health": 4,
-            "attackSpeed": 2.0
+            "attackSpeed": 2.0,
+            "isRanged": true
         },
         {
             "name": "Demolition",
             "moveSpeed": 1.0,
             "targetDistance": 2.5,
             "health": 5,
-            "attackSpeed": 2.0
+            "attackSpeed": 2.0,
+            "isRanged": true
         },
         {
             "name": "Thief",
             "moveSpeed": 2.0,
             "targetDistance": 1.5,
             "health": 2,
-            "attackSpeed": 2.0
+            "attackSpeed": 2.0,
+            "isRanged": false
         },
         {
             "name": "MagicArcher",
             "moveSpeed": 1.25,
             "targetDistance": 3.0,
             "health": 4,
-            "attackSpeed": 2.0
+            "attackSpeed": 2.0,
+            "isRanged": true
         },
         {
             "name": "Cleric",
             "moveSpeed": 0.5,
             "targetDistance": 1.5,
             "health": 4,
-            "attackSpeed": 2.0
+            "attackSpeed": 2.0,
+            "isRanged": false
         }
     ]
 }
