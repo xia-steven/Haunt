@@ -13,6 +13,8 @@ public class EnemyPistol : Pistol
         playerPos = new Vector3();
 
         basicBullet = Resources.Load<GameObject>("Prefabs/Weapons/EnemyBasicBullet");
+
+        lastBullet = Time.time;
     }
 
     private void Update()
