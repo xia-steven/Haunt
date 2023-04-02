@@ -11,89 +11,75 @@ public abstract class Bullet : MonoBehaviour {
 
     [SerializeField] protected float bulletLife = 1.0f;
 
-    protected virtual void Awake()
-    {
+    protected virtual void Awake() {
         firedTime = Time.time;
     }
 
-    public void SetShooter(Shooter entity)
-    {
+    public void SetShooter(Shooter entity) {
         shooter = entity;
     }
 
-    public Shooter GetShooter()
-    {
+    public Shooter GetShooter() {
         return shooter;
     }
 
-    protected void OnTriggerEnter(Collider other)
-    {
-        GameObject collided = other.gameObject;
+    protected void OnTriggerEnter(Collider other) {
+        var collided = other.gameObject;
 
         // Don't collide with specified items
-        if (collided.layer == LayerMask.NameToLayer("Special"))
-        {
+        if (collided.layer == LayerMask.NameToLayer("Special")) {
             return;
         }
 
         // Make sure player can't shoot themselves
-        if (collided.layer == LayerMask.NameToLayer("Player") && shooter == Shooter.Player)
-        {
+        if (collided.layer == LayerMask.NameToLayer("Player") && shooter == Shooter.Player) {
             return;
         }
 
         // Make sure ememy can't shoot themselves or other enemies
-        if (collided.layer == LayerMask.NameToLayer("Enemy") && shooter == Shooter.Enemy)
-        {
+        if (collided.layer == LayerMask.NameToLayer("Enemy") && shooter == Shooter.Enemy) {
             return;
         }
 
         // Alter pedestal health if collided is pedestal and shot by player
         HasPedestalHealth pedHealth = collided.GetComponent<HasPedestalHealth>();
-        if (pedHealth != null && shooter == Shooter.Player)
-        {
+        if (pedHealth != null && shooter == Shooter.Player) {
             pedHealth.AlterHealth(-damage);
         }
 
         PlayerHasHealth playerHealth = collided.GetComponent<PlayerHasHealth>();
-        if (playerHealth != null)
-        {
+        if (playerHealth != null) {
             Debug.Log("Player damaged");
             playerHealth.AlterHealth(damage);
         }
 
         // Alter health if collided has health
         HasHealth health = collided.GetComponent<HasHealth>();
-        if (health != null && pedHealth == null && playerHealth == null)
-        {
+        if (health != null && pedHealth == null && playerHealth == null) {
             Debug.Log("Health altered");
             health.AlterHealth(damage);
             pierced++;
         }
 
         // Don't destroy upon melee collision
-        if (collided.layer == LayerMask.NameToLayer("Melee"))
-        {
+        if (collided.layer == LayerMask.NameToLayer("Melee")) {
             return;
         }
 
         // If collided with enemy (from player shooter), check piercing amount otherwise destroy outright if not hitting enemy
-        if (collided.layer == LayerMask.NameToLayer("Enemy") && shooter == Shooter.Player && pierced >= PlayerModifiers.maxPierce)
-        {
+        if (collided.layer == LayerMask.NameToLayer("Enemy") && shooter == Shooter.Player &&
+            pierced >= PlayerModifiers.maxPierce) {
             Destroy(gameObject);
         }
-        else if (collided.layer != LayerMask.NameToLayer("Enemy"))
-        {
+        else if (collided.layer != LayerMask.NameToLayer("Enemy")) {
             Destroy(gameObject);
         }
     }
 
-    protected void Update()
-    {
+    protected void Update() {
         // Destroy bullet after a certain amount of time
         float passedTime = Time.time - firedTime;
-        if (passedTime >= bulletLife)
-        {
+        if (passedTime >= bulletLife) {
             Destroy(gameObject);
         }
     }
