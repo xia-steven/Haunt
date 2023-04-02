@@ -22,9 +22,6 @@ public class PeasantPitchforkEnemy : EnemyBase {
 
     // Override attack function
     public override IEnumerator EnemyAttack() {
-        var direction = (IsPlayer.instance.transform.position - transform.position).normalized;
-        direction.y = 0;
-
         // While attacking
         while (state == EnemyState.Attacking) {
             float t = 0;
@@ -34,6 +31,8 @@ public class PeasantPitchforkEnemy : EnemyBase {
                 yield return new WaitForSeconds(0.02f);
             }
 
+            var direction = (IsPlayer.instance.transform.position - transform.position).normalized;
+            direction.y = 0;
             rb.velocity = dashSpeed * direction;
             yield return new WaitForSeconds(dashTime);
             rb.velocity = Vector3.zero;

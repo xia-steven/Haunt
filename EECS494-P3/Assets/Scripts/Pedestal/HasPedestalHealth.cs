@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(IsPedestal))]
 public class HasPedestalHealth : HasHealth {
-    [SerializeField] int PedestalMaxHealth = 5;
+    public static int PedestalMaxHealth = 5;
     [SerializeField] AudioClip damageSound;
     [SerializeField] AudioClip breakSound;
     [SerializeField] AudioClip healSound;
