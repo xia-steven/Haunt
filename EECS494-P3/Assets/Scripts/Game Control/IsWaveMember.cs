@@ -12,6 +12,6 @@ public class IsWaveMember : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        owner.LoseMember(id);
+        if (owner != null) owner.LoseMember(id);
     }
 }

@@ -115,7 +115,6 @@ public class PlayerController : MonoBehaviour {
     {
         if (value.started)
         {
-            Debug.Log(value.ReadValue<float>());
             if (value.ReadValue<float>() > 0)
             {
                 EventBus.Publish<SwapEvent>(new SwapEvent(1));
