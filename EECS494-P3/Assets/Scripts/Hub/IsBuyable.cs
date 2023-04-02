@@ -28,6 +28,7 @@ public class IsBuyable : MonoBehaviour
 
     private void OnPurchase(TryInteractEvent e)
     {
+        Debug.Log("Purchase attempted for " + gameObject);
         if (selected && playerInventory.GetCoins() >= cost)
         {
             EventBus.Publish(new CoinEvent(-cost));

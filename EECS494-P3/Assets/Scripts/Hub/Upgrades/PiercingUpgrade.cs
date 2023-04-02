@@ -20,10 +20,4 @@ public class PiercingUpgrade : Upgrade
         PlayerModifiers.maxPierce += thisData.rate1;
         base.Apply();
     }
-
-    protected override void OnDestroy()
-    {
-        PlayerModifiers.maxPierce -= thisData.rate1;
-        base.OnDestroy();
-    }
 }
