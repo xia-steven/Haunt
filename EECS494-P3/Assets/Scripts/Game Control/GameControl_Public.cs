@@ -175,13 +175,20 @@ partial class GameControl : MonoBehaviour {
         instance.StartCoroutine(NightEndingUpdate());
     }
 
-    public void ResetGame() {
+    public static void ResetGame() {
         // Day 0 is the tutorial night, start 1 below that
         day = -1;
 
-        gameActive = false;
-        gamePaused = false;
+        instance.gameActive = false;
+        instance.gamePaused = false;
         isNight = false;
-        nightEnding = false;
+        instance.nightEnding = false;
+
+        Time.timeScale = 1;
+        AudioListener.pause = false;
+
+        Destroy(IsPlayer.instance.gameObject);
+
+        SceneManager.LoadScene("TutorialHubWorld");
     }
 }
