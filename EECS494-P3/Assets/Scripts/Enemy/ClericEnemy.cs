@@ -15,6 +15,7 @@ public class PedestalInfo {
 public class ClericEnemy : EnemyBase {
     private Subscription<PedestalDestroyedEvent> switchPedestalSub;
     private Subscription<PedestalRepairedEvent> addPedestalSub;
+    private Vector3 currentTargetPedestal;
 
     private float prevTime;
     public int pedestalTimeout;
@@ -23,26 +24,60 @@ public class ClericEnemy : EnemyBase {
         return 9;
     }
 
+    public override Vector3 GetTarget() {
+        return findClosestPedestal();
+    }
+
     private new void Start() {
         base.Start();
-        baseSpeed = 1.5f;
+        // TODO: REMEMBER TO CHANGE ME BACK!
+        baseSpeed = attributes.moveSpeed * 5;
         switchPedestalSub = EventBus.Subscribe<PedestalDestroyedEvent>(pedestalDied);
         addPedestalSub = EventBus.Subscribe<PedestalRepairedEvent>(pedestalRepaired);
-        StartCoroutine(WaitAndFindPath());
+        SetTargetPosition(findClosestPedestal());
+    }
+
+    private new void FixedUpdate() {
+        if (pathVectorList != null) {
+            var targetPosition = pathVectorList[currentPathIndex] + PathfindingController.map.origin;
+            if (Vector3.Distance(transform.position, targetPosition) > 0.5f) {
+                var moveDir = (targetPosition - transform.position).normalized;
+                tf_.position += Time.deltaTime * baseSpeed * moveDir;
+            }
+            else {
+                if (++currentPathIndex >= pathVectorList.Count) {
+                    pathVectorList = null;
+                    rb.velocity = Vector3.zero;
+                }
+            }
+        }
+        else {
+            rb.velocity = Vector3.zero;
+        }
+    }
+
+    private static IEnumerator AttackPedestal(HasHealth h) {
+        while (h.GetHealth() < HasPedestalHealth.PedestalMaxHealth) {
+            h.AlterHealth(-1);
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.layer == LayerMask.NameToLayer("Pedestal")) {
             var h = other.gameObject.GetComponent<HasPedestalHealth>();
             if (h != null) {
-                h.AlterHealth(-5000);
+                StartCoroutine(AttackPedestal(h));
             }
+        }
+        else if (other.gameObject.CompareTag("Player")) {
+            playerHealth.AlterHealth(-1);
         }
     }
 
-    private int findClosestPedestal() {
+    private Vector3 findClosestPedestal() {
         if (PathfindingController.pedestalInfos.All(ped => !ped.Value.destroyed)) {
-            return 0;
+            return Vector3.zero;
         }
 
         var closestDist = float.MaxValue;
@@ -59,12 +94,7 @@ public class ClericEnemy : EnemyBase {
             }
         }
 
-        return closest;
-    }
-
-    private IEnumerator WaitAndFindPath() {
-        yield return null;
-        SetTargetPosition(PathfindingController.pedestalInfos[findClosestPedestal()].position);
+        return PathfindingController.pedestalInfos[closest].position;
     }
 
     private void SetTargetPosition(Vector3 pos) {
@@ -76,9 +106,9 @@ public class ClericEnemy : EnemyBase {
         }
     }
 
-    private IEnumerator pedetalCoroutine() {
+    private IEnumerator pedestalCoroutine() {
         yield return new WaitForSeconds(pedestalTimeout);
-        SetTargetPosition(PathfindingController.pedestalInfos[findClosestPedestal()].position);
+        SetTargetPosition(findClosestPedestal());
     }
 
     private void pedestalDied(PedestalDestroyedEvent event_) {
@@ -94,11 +124,11 @@ public class ClericEnemy : EnemyBase {
                 break;
         }
 
-        StartCoroutine(pedetalCoroutine());
+        StartCoroutine(pedestalCoroutine());
     }
 
     private void pedestalRepaired(PedestalRepairedEvent event_) {
         PathfindingController.pedestalInfos[event_.pedestalUUID].destroyed = false;
-        SetTargetPosition(PathfindingController.pedestalInfos[findClosestPedestal()].position);
+        SetTargetPosition(findClosestPedestal());
     }
 }

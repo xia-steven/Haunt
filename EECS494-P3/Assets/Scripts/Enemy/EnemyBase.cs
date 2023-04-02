@@ -45,29 +45,23 @@ public class EnemyBase : MonoBehaviour {
     }
 
     protected void FixedUpdate() {
-        // var grid = Pathfinding.Instance.GetGrid();
-        // if (!grid.GetGridObject(IsPlayer.instance.transform.position).isWalkable) {
-        //     rb.velocity = Vector3.zero;
-        //     return;
-        // }
-
         // Get player/target position
-        var playerPosition = GetTarget();
+        var targetPosition = GetTarget();
 
         // First, check if the enemy cannot pathfind directly to the player/target
-        var playerDirection = (playerPosition - transform.position).normalized;
+        var playerDirection = (targetPosition - transform.position).normalized;
         // Ignore hits on other enemies
         var layerMask = ~LayerMask.GetMask("Enemy");
 
         if (state != EnemyState.AStarMovement &&
             Physics.Raycast(transform.position, playerDirection, out var hit,
-                Vector3.Distance(playerPosition, transform.position), layerMask)) {
+                Vector3.Distance(targetPosition, transform.position), layerMask)) {
             // Confirm that the raycast did not hit the player
             if (!hit.transform.gameObject.CompareTag("Player")) {
                 if (!runningCoroutine) {
                     state = EnemyState.AStarMovement;
                     runningCoroutine = true;
-                    PathfindingController.FindClosestWalkable(playerPosition, out var x, out var y);
+                    PathfindingController.FindClosestWalkable(targetPosition, out var x, out var y);
                     StartCoroutine(MoveWithAStar(x, y));
                 }
                 else {
@@ -81,7 +75,7 @@ public class EnemyBase : MonoBehaviour {
 
         // Second, check if the enemy can attack the player from their current distance
         if (state != EnemyState.Attacking &&
-            Vector3.Distance(playerPosition, transform.position) <= attributes.targetDistance) {
+            Vector3.Distance(targetPosition, transform.position) <= attributes.targetDistance) {
             if (!runningCoroutine) {
                 state = EnemyState.Attacking;
                 runningCoroutine = true;
@@ -97,7 +91,7 @@ public class EnemyBase : MonoBehaviour {
 
         // Finally, pathfind directly to the player
         if (state != EnemyState.SimpleMovement &&
-            Vector3.Distance(playerPosition, transform.position) > attributes.targetDistance) {
+            Vector3.Distance(targetPosition, transform.position) > attributes.targetDistance) {
             if (!runningCoroutine) {
                 state = EnemyState.SimpleMovement;
                 runningCoroutine = true;
@@ -194,10 +188,6 @@ public class EnemyBase : MonoBehaviour {
         while (state == EnemyState.SimpleMovement) {
             // Get player position
             var playerPosition = IsPlayer.instance.transform.position;
-
-            if (!Pathfinding.Instance.GetGrid().GetGridObject(playerPosition).isWalkable) {
-                Debug.Log("hello");
-            }
 
             // Get direction to move
             var direction = (playerPosition - transform.position).normalized;
