@@ -46,6 +46,5 @@ public class HasPedestalHealth : HasHealth {
         }
 
         pedestal.updateVisuals(health, PedestalMaxHealth);
-
     }
 }

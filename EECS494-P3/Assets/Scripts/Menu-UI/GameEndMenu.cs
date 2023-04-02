@@ -17,14 +17,7 @@ public class GameEndMenu : MonoBehaviour {
     }
 
     void _Loss(GameLossEvent e) {
-        foreach (Transform child in gameOverUI.transform) {
-            if (child.name == "Restart") {
-                EventSystem.current.SetSelectedGameObject(child.gameObject);
-            }
-        }
-
-        Time.timeScale = 0;
-        gameOverUI.SetActive(true);
+        StartCoroutine(ShowLossMenu(e));
     }
 
     void _Win(GameWinEvent e) {
@@ -36,5 +29,24 @@ public class GameEndMenu : MonoBehaviour {
 
         Time.timeScale = 0;
         gameWinUI.SetActive(true);
+    }
+
+    IEnumerator ShowLossMenu(GameLossEvent e)
+    {
+        while(!e.finishedDeathAnimation)
+        {
+            yield return null;
+        }
+
+        foreach (Transform child in gameOverUI.transform)
+        {
+            if (child.name == "Restart")
+            {
+                EventSystem.current.SetSelectedGameObject(child.gameObject);
+            }
+        }
+
+        Time.timeScale = 0;
+        gameOverUI.SetActive(true);
     }
 }
