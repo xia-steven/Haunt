@@ -312,7 +312,7 @@ public class IsBoss : MonoBehaviour
                 if(hitObj.collider.TryGetComponent<PlayerHasHealth>(out hitPlayer))
                 {
                     // Damage player
-                    hitPlayer.AlterHealth(-1);
+                    hitPlayer.AlterHealth(-1, DeathCauses.Enemy);
                 }
             }
 

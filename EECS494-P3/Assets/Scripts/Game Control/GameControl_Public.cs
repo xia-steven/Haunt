@@ -89,7 +89,7 @@ partial class GameControl : MonoBehaviour {
     /// Ends the game with a loss via the event bus.
     /// </summary>
     public static void LoseGame() {
-        EventBus.Publish(new GameLossEvent());
+        EventBus.Publish(new GameLossEvent(IsPlayer.instance.LastDamaged()));
     }
 
     static Subscription<GameLossEvent> lossSub;

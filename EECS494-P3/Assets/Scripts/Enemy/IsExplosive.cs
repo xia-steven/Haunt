@@ -27,7 +27,7 @@ public class IsExplosive : MonoBehaviour {
             HasEnemyHealth enemyHit;
 
             if (hit.TryGetComponent<PlayerHasHealth>(out playerHit)) {
-                playerHit.AlterHealth(-1);
+                playerHit.AlterHealth(-1, DeathCauses.Enemy);
             }
             else if (hit.TryGetComponent<HasEnemyHealth>(out enemyHit)) {
                 // Kill the enemy

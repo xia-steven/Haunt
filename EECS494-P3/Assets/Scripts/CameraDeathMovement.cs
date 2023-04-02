@@ -39,7 +39,7 @@ public class CameraDeathMovement : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Alpha0))
         {
-            EventBus.Publish(new GameLossEvent());
+            EventBus.Publish(new GameLossEvent(IsPlayer.instance.LastDamaged()));
         }
         else if (Input.GetKeyDown(KeyCode.Alpha9))
         {

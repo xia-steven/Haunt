@@ -7,6 +7,7 @@ public class IsPlayer : MonoBehaviour {
     public static IsPlayer instance;
 
     private PlayerHasHealth health;
+    private DeathCauses lastDamaged;
 
     // Start is called before the first frame update
     void Awake() {
@@ -41,5 +42,15 @@ public class IsPlayer : MonoBehaviour {
 
     public void ResetHealth() {
         health.ResetHealth();
+    }
+
+    public void SetLastDamaged(DeathCauses damager)
+    {
+        lastDamaged = damager;
+    }
+
+    public DeathCauses LastDamaged()
+    {
+        return lastDamaged;
     }
 }

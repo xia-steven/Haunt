@@ -23,9 +23,13 @@ class GameLossEvent {
     public override string ToString() {
         return "Game Loss Event Sent";
     }
+    public GameLossEvent(DeathCauses _cause)
+    {
+        cause = _cause;
+    }
 }
 
-enum DeathCauses { 
+public enum DeathCauses { 
     Pit,
     Enemy,
     Pedestal
