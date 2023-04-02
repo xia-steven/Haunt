@@ -27,4 +27,9 @@ public class MagicArcherMiniBullet : MonoBehaviour {
     {
         return parent.lastReverse;
     }
+
+    public void ChangeParentShooter(Shooter newShooter)
+    {
+        parent.SetShooter(newShooter);
+    }
 }
