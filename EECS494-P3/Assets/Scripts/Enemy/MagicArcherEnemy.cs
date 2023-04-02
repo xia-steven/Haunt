@@ -2,7 +2,6 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-// TODO: Rename file and class to enemy name
 public class MagicArcherEnemy : EnemyBase {
     float projectileSpeed = 4.0f;
     float projectileLifetime = 3.0f;

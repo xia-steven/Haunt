@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0.5218656, b: 0, a: 1}
+  m_Color: {r: 0.16277553, g: 0.40392157, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -209,9 +209,9 @@ GameObject:
   - component: {fileID: 2309572555269806338}
   - component: {fileID: -5851982813740912598}
   - component: {fileID: 1365097214977346424}
-  - component: {fileID: -7748355774294237283}
+  - component: {fileID: 6816005336703555316}
   m_Layer: 8
-  m_Name: Archer
+  m_Name: MagicArcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -288,7 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36285adb985ddf4f8bb70c73b47b6de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-7748355774294237283
+--- !u!114 &6816005336703555316
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -297,6 +297,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5176294668627473358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e3ce91446354863ba427e4ac6543f5a, type: 3}
+  m_Script: {fileID: 11500000, guid: ce9a9760d3699854cbe87644f379edae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
