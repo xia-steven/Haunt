@@ -35,3 +35,36 @@ public class EnemyAttributes {
         return output;
     }
 }
+
+public class EnemyWaveData : Savable
+{
+    public List<SpawnableEnemies> nightlyEnemies;
+    public List<SpawnAttributes> enemySpawnData;
+
+    public List<float> nightlyPropMelee;
+
+    [System.Serializable]
+    public struct SpawnAttributes
+    {
+        public string path;
+        public int weight;
+        public bool isMelee;
+    }
+}
+
+[System.Serializable]
+public class SpawnableEnemies
+{
+    public List<int> indices;
+
+    public int this[int key] 
+    {
+        get {
+            return indices[key];
+        }
+
+        private set {
+
+        }
+    }
+}

@@ -1,0 +1,60 @@
+{
+    "key" : "EnemyWaveData",
+    "nightlyEnemies" : [
+        {"indices": [0, 1, 2, 4]},
+        {"indices": [0, 1, 2, 3, 4, 5, 8]},
+        {"indices": [0, 1, 2, 3, 4, 5, 6, 7, 8]}
+    ],
+    "enemySpawnData" : [
+        {
+            "path" : "Prefabs/Enemy/PeasantTorch",
+            "weight" : 4,
+            "isMelee" : true
+        },
+        {
+            "path" : "Prefabs/Enemy/PeasantPitchfork",
+            "weight" : 4,
+            "isMelee" : true
+        },
+        {
+            "path" : "Prefabs/Enemy/Archer",
+            "weight" : 5,
+            "isMelee" : false
+        },
+        {
+            "path" : "Prefabs/Enemy/EliteArcher",
+            "weight" : 3,
+            "isMelee" : false
+        },
+        {
+            "path" : "Prefabs/Enemy/MultiArcher",
+            "weight" : 2,
+            "isMelee" : false
+        },
+        {
+            "path" : "Prefabs/Enemy/Arbalest",
+            "weight" : 2,
+            "isMelee" : false
+        },
+        {
+            "path" : "Prefabs/Enemy/Demolition",
+            "weight" : 2,
+            "isMelee" : false
+        },
+        {
+            "path" : "Prefabs/Enemy/Thief",
+            "weight" : 2,
+            "isMelee" : true
+        },
+        {
+            "path" : "Prefabs/Enemy/MagicArcher",
+            "weight" : 2,
+            "isMelee" : false
+        },
+        {
+            "path" : "Prefabs/Enemy/Cleric"
+        }
+    ],
+
+    "nightlyPropMelee" : [0.6, 0.4, 0.25]
+}
