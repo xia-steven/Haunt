@@ -57,7 +57,11 @@ partial class GameControl : MonoBehaviour {
     /// </summary>
     public static float NightTimeRemaining {
         get {
-            if (isNight && !instance.nightEnding)
+            if(day == 0)
+            {
+                return 15 - (Time.time - instance.nightStartTime);
+            }
+            else if (isNight && !instance.nightEnding)
                 return instance.data.nightLength - (Time.time - instance.nightStartTime);
             else
                 return -1;

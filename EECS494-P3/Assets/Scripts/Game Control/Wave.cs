@@ -61,7 +61,9 @@ public class Wave
 
             /* GET ENEMY TYPE */
             //see if is melee
-            bool isMelee = Random.value < spawnData.nightlyPropMelee[GameControl.Day-1];
+            // Make sure the day isn't negative for the tutorial
+            int gameDay = (GameControl.Day - 1) >= 0 ? GameControl.Day - 1 : 0;
+            bool isMelee = Random.value < spawnData.nightlyPropMelee[gameDay];
 
             //get idx of potentialMembers that new enemy will be
             int spawnIdx;
