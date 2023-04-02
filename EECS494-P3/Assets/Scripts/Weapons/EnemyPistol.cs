@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyPistol : Pistol
-{
+public class EnemyPistol : Pistol {
     Vector3 playerPos;
 
 
-    protected override void Awake()
-    {
+    protected override void Awake() {
         shotByPlayer = false;
         playerPos = new Vector3();
 
@@ -17,19 +15,15 @@ public class EnemyPistol : Pistol
         lastBullet = Time.time;
     }
 
-    private void Update()
-    {
+    private void Update() {
         playerPos = IsPlayer.instance.transform.position;
 
         // Fire bullets based on delays - tap is between bursts and bullet is between individual bullets
         // Enemy pistol fires one bullet every 3 seconds
-        if (Time.time - lastBullet >= tapDelay)
-        {
+        if (Time.time - lastBullet >= tapDelay) {
             Vector3 direction = playerPos - transform.position;
             direction.y = 0;
             direction = direction.normalized;
-
-            //Debug.Log(basicBullet);
 
             FireProjectile(basicBullet, direction, transform, EnemyBasicBullet.bulletSpeed, Shooter.Enemy);
 

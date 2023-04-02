@@ -34,13 +34,15 @@ public class PeasantTorchEnemy : EnemyBase {
 
         // While attacking
         while (state == EnemyState.Attacking) {
+            yield return new WaitForSeconds(0.33f);
+
             torchObject.GetComponent<Rigidbody>().angularVelocity = new Vector3(0, -10, 0);
 
             yield return new WaitForSeconds(0.33f);
 
             torchObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.33f);
 
             torchObject.SetActive(false);
 

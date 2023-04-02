@@ -9,7 +9,7 @@ public class MagicArcherProjectile : EnemyBasicBullet {
     GameObject miniBullet;
 
     // Time since last reversal
-    public float lastReverse = 0f;
+    public float lastReverse;
 
     // Scale of the bullet
     float scale = 0.23f;
@@ -50,7 +50,7 @@ public class MagicArcherProjectile : EnemyBasicBullet {
         }
     }
 
-    public void setLifetime(float lifetime) {
+    public new void setLifetime(float lifetime) {
         bulletLife = lifetime;
     }
 
