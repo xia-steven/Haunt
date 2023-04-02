@@ -2,8 +2,8 @@ using System.Collections;
 using UnityEngine;
 
 public class ArcherEnemy : EnemyBase {
-    private const float projectileSpeed = 5f;
-    private GameObject Bullet;
+    protected float projectileSpeed = 5f;
+    protected GameObject Bullet;
 
     protected override void Start() {
         base.Start();
