@@ -4,7 +4,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-// TODO: Rename file and class to enemy name
 public class ThiefEnemy : EnemyBase {
     ThiefKnife knife;
     GameObject knifeObject;

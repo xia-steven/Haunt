@@ -120,12 +120,12 @@ TextureImporter:
       name: altar_0
       rect:
         serializedVersion: 2
-        x: 47
-        y: 16
+        x: 48
+        y: 15
         width: 32
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -141,12 +141,12 @@ TextureImporter:
       name: altar_1
       rect:
         serializedVersion: 2
-        x: 175
-        y: 16
+        x: 176
+        y: 15
         width: 32
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -162,12 +162,12 @@ TextureImporter:
       name: altar_2
       rect:
         serializedVersion: 2
-        x: 303
-        y: 16
+        x: 304
+        y: 15
         width: 32
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -183,12 +183,12 @@ TextureImporter:
       name: altar_3
       rect:
         serializedVersion: 2
-        x: 431
-        y: 16
+        x: 432
+        y: 15
         width: 32
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -204,12 +204,12 @@ TextureImporter:
       name: altar_4
       rect:
         serializedVersion: 2
-        x: 559
-        y: 16
+        x: 560
+        y: 15
         width: 32
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -225,12 +225,12 @@ TextureImporter:
       name: altar_5
       rect:
         serializedVersion: 2
-        x: 687
-        y: 16
+        x: 688
+        y: 15
         width: 32
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -246,12 +246,12 @@ TextureImporter:
       name: altar_6
       rect:
         serializedVersion: 2
-        x: 815
-        y: 16
+        x: 816
+        y: 15
         width: 32
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -267,12 +267,12 @@ TextureImporter:
       name: altar_7
       rect:
         serializedVersion: 2
-        x: 943
-        y: 16
+        x: 944
+        y: 15
         width: 32
         height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -288,12 +288,12 @@ TextureImporter:
       name: altar_8
       rect:
         serializedVersion: 2
-        x: 1071
-        y: 16
+        x: 1072
+        y: 15
         width: 32
         height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -309,12 +309,12 @@ TextureImporter:
       name: altar_9
       rect:
         serializedVersion: 2
-        x: 1199
-        y: 16
+        x: 1200
+        y: 15
         width: 32
         height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -330,12 +330,12 @@ TextureImporter:
       name: altar_10
       rect:
         serializedVersion: 2
-        x: 1327
-        y: 16
+        x: 1328
+        y: 15
         width: 32
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -351,12 +351,12 @@ TextureImporter:
       name: altar_11
       rect:
         serializedVersion: 2
-        x: 1455
-        y: 16
+        x: 1456
+        y: 15
         width: 32
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -372,12 +372,12 @@ TextureImporter:
       name: altar_12
       rect:
         serializedVersion: 2
-        x: 1583
-        y: 16
+        x: 1584
+        y: 15
         width: 32
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -385,6 +385,132 @@ TextureImporter:
       bones: []
       spriteID: 9edb102bde935e049860192f718a985c
       internalID: -1385153014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: altar_13
+      rect:
+        serializedVersion: 2
+        x: 1712
+        y: 15
+        width: 32
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b525a8a5f977cb4b95283cf641d9a0e
+      internalID: -1505083887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: altar_14
+      rect:
+        serializedVersion: 2
+        x: 1840
+        y: 15
+        width: 32
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0f9f8268800bbb408302464bf27f5ae
+      internalID: 1164263288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: altar_15
+      rect:
+        serializedVersion: 2
+        x: 1968
+        y: 15
+        width: 32
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 139333a68e99ec440a7047f80cc6b529
+      internalID: 530004285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: altar_16
+      rect:
+        serializedVersion: 2
+        x: 2096
+        y: 15
+        width: 32
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c117b513084b8234482fe504f7df906c
+      internalID: 1831949415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: altar_17
+      rect:
+        serializedVersion: 2
+        x: 2224
+        y: 15
+        width: 32
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aad28637021da5a42a409accb0296536
+      internalID: -772533549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: altar_18
+      rect:
+        serializedVersion: 2
+        x: 2352
+        y: 15
+        width: 32
+        height: 61
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44c5d5b7dfa6c6c4d8bbf10c5a39fb10
+      internalID: 967860029
       vertices: []
       indices: 
       edges: []
@@ -405,6 +531,12 @@ TextureImporter:
       altar_10: -1899408108
       altar_11: 1857728055
       altar_12: -1385153014
+      altar_13: -1505083887
+      altar_14: 1164263288
+      altar_15: 530004285
+      altar_16: 1831949415
+      altar_17: -772533549
+      altar_18: 967860029
       altar_2: 2045828763
       altar_3: -2060575449
       altar_4: 1870492127
