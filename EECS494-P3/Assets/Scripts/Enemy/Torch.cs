@@ -16,7 +16,7 @@ public class Torch : MonoBehaviour {
         var playerHealth = collided.GetComponent<PlayerHasHealth>();
         if (playerHealth != null) {
             Debug.Log("Player damaged from torch");
-            playerHealth.AlterHealth(1);
+            playerHealth.AlterHealth(-1);
         }
     }
 }
