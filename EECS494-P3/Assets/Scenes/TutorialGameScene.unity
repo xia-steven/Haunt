@@ -999,9 +999,9 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294951002
       objectReference: {fileID: 0}
-    - target: {fileID: 5059311065477073500, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 205.99997
+    - target: {fileID: 5059311065477073501, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5378286916379416224, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: xRoomMax
