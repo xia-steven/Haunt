@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4423372735798058875}
   - component: {fileID: 4423372735798058874}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 4423372735968190400}
   - component: {fileID: 4423372735968190401}
   - component: {fileID: 4423372735968190402}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 20
-  m_Sprite: {fileID: 81937540, guid: 094a1260fd9abdd4599b3ea97af9d8a7, type: 3}
+  m_Sprite: {fileID: 1881261779, guid: a6c371d9a81a15c4e9b8fab11569c5e2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -132,7 +132,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletDelay: 0.6
   tapDelay: 0.2
-  barrelLength: 0.875
+  barrelLength: 1.4
+  screenShakeStrength: 0.05
+  speedMultiplier: 1
   sniperSprite: {fileID: 2517271372512087574}
   laserColor: {r: 0.9245283, g: 0.13519046, b: 0.13519046, a: 0}
   flashColor: {r: 1, g: 1, b: 1, a: 0}

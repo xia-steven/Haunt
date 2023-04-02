@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3189625495154033283}
   - component: {fileID: 3189625495154033292}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3189625496595847772}
   - component: {fileID: 3189625496595847763}
   - component: {fileID: 3189625496595847762}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: StationaryUpgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}

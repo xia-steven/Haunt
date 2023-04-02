@@ -11,6 +11,7 @@ public class Sniper : Weapon
     private float raycastLength = 100f;
     private LineRenderer lineRenderer;
     private int damage = -5;
+    private bool isFiring = false;
 
     // Sprite of pistol - necessary so it can be flipped
     [SerializeField] protected GameObject sniperSprite;
@@ -136,6 +137,7 @@ public class Sniper : Weapon
 
     private IEnumerator SniperFire()
     {
+        isFiring = true;
         lineRenderer.material.color = flashColor;
         lineRenderer.endWidth = 0.06f;
 
@@ -157,6 +159,7 @@ public class Sniper : Weapon
         yield return new WaitForSeconds(0.1f);
 
         lineRenderer.endWidth = 0.04f;
+        isFiring = false;
         GunReload();
 
         // Shake screen
@@ -166,5 +169,15 @@ public class Sniper : Weapon
     private void OnDestroy()
     {
         UnSubscribe();
+    }
+
+    protected override void OnDisable()
+    {
+        if (isReloading || isFiring)
+        {
+            lineRenderer.material.color = laserColor;
+            lineRenderer.endWidth = 0.04f;
+        }
+        base.OnDisable();
     }
 }
