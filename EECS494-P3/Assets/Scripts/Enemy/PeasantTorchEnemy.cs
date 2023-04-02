@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PeasantTorchEnemy : EnemyBase {
     private GameObject torchObject;
+    private const float swingTime = 0.5f;
+    private const float swingSpeed = 1;
 
     // Override enemy ID to load from config
     public override int GetEnemyID() {
@@ -35,12 +37,12 @@ public class PeasantTorchEnemy : EnemyBase {
         // While attacking
         while (state == EnemyState.Attacking) {
             // slight backwards windup
-            rb.velocity = -direction * windupSpeed;
-            yield return new WaitForSeconds(windupTime);
-
-            // dash towards the player
-            rb.velocity = direction * dashSpeed;
-            yield return new WaitForSeconds(dashTime);
+            // rb.velocity = -direction * windupSpeed;
+            // yield return new WaitForSeconds(windupTime);
+            //
+            // // dash towards the player
+            // rb.velocity = direction * dashSpeed;
+            // yield return new WaitForSeconds(dashTime);
 
             // teleport away
             rb.velocity = Vector3.zero;
