@@ -15,9 +15,20 @@ class GameStartEvent {
 /// The GameLoss event is broadcast when the game is lost.
 /// </summary>
 class GameLossEvent {
+
+    public DeathCauses cause = DeathCauses.Pedestal;
+    public bool finishedDeathAnimation = false;
+    // Only set if death cause is an enemy
+    public Vector3 enemyPos = Vector3.zero;
     public override string ToString() {
         return "Game Loss Event Sent";
     }
+}
+
+enum DeathCauses { 
+    Pit,
+    Enemy,
+    Pedestal
 }
 
 /// <summary>
