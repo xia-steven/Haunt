@@ -70365,6 +70365,10 @@ PrefabInstance:
       propertyPath: Pedestals.Array.data[2]
       value: 
       objectReference: {fileID: 1581399560}
+    - target: {fileID: 636489005147853752, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 641650401560064576, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: spawners.Array.size
       value: 4
@@ -70392,6 +70396,10 @@ PrefabInstance:
     - target: {fileID: 641650401560064576, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: spawners.Array.data[5]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 711694074749793866, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2913283851423250065, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_AnchorMax.y
@@ -70616,6 +70624,10 @@ PrefabInstance:
     - target: {fileID: 8674698338506272342, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -106.04425
+      objectReference: {fileID: 0}
+    - target: {fileID: 8743609692584397732, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}

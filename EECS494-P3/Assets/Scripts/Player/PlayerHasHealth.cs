@@ -123,6 +123,7 @@ public class PlayerHasHealth : HasHealth {
 
         if (health > maxHealth-lockedHealth) {
             health = maxHealth-lockedHealth;
+            CheckIsDead();
         }
         // AlterHealth will also publish an update to the ui--let's see if it's idempotent 
         EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));

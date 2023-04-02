@@ -45,6 +45,8 @@ public class BossHasHealth : HasHealth
             Destroy(this.gameObject);
             // Hide health bar on death
             healthBarImage.gameObject.SetActive(false);
+
+            GameControl.WinGame();
         }
         else
         {

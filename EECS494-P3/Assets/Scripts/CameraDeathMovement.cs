@@ -57,6 +57,7 @@ public class CameraDeathMovement : MonoBehaviour
 
         // Disable the player
         EventBus.Publish(new DisablePlayerEvent());
+        //TimeManager.SetTimeScale(0);
 
         // Get the player 
         GameObject player = IsPlayer.instance.gameObject;
@@ -98,7 +99,7 @@ public class CameraDeathMovement : MonoBehaviour
                 yield return null;
             }
         }
-        else if (gle.cause == DeathCauses.Enemy)
+        else //if (gle.cause == DeathCauses.Enemy)
         {
             initial_time = Time.time;
             progress = (Time.time - initial_time) / fallOntoGroundTime;
@@ -124,14 +125,15 @@ public class CameraDeathMovement : MonoBehaviour
                 yield return null;
             }
         }
-        else
-        {
-            // Died to pit???
-        }
+        //else
+        //{
+        // Died to pit???
+        //}
 
 
         // Enable the player?
         //EventBus.Publish(new EnablePlayerEvent());
+        //TimeManager.ResetTimeScale();
 
         // Note that we finished the death animation
         gle.finishedDeathAnimation = true;
