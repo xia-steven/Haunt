@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PedestalInfo {
     public Vector3 position;
@@ -54,6 +56,11 @@ public class ClericEnemy : EnemyBase {
         else {
             rb.velocity = Vector3.zero;
         }
+    }
+
+    private void OnDestroy() {
+        EventBus.Unsubscribe(switchPedestalSub);
+        EventBus.Unsubscribe(addPedestalSub);
     }
 
     private static IEnumerator AttackPedestal(HasHealth h) {
