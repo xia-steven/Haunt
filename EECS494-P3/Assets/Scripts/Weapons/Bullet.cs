@@ -50,7 +50,7 @@ public abstract class Bullet : MonoBehaviour {
         PlayerHasHealth playerHealth = collided.GetComponent<PlayerHasHealth>();
         if (playerHealth != null) {
             Debug.Log("Player damaged");
-            playerHealth.AlterHealth(damage);
+            playerHealth.AlterHealth(damage, DeathCauses.Enemy);
         }
 
         // Alter health if collided has health

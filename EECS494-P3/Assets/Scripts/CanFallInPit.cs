@@ -141,7 +141,7 @@ public class CanFallInPit : MonoBehaviour
             transform.localScale = originalScale;
             Vector3 adjustedPosition = transform.position + (horizontalOffset * pitResetDistance);
             transform.position = adjustedPosition;
-            GetComponent<PlayerHasHealth>().AlterHealth(-1);
+            GetComponent<PlayerHasHealth>().AlterHealth(-1, DeathCauses.Pit);
         }
         else
         {

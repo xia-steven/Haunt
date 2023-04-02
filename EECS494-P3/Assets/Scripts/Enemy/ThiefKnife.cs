@@ -14,7 +14,7 @@ public class ThiefKnife : MonoBehaviour {
         PlayerHasHealth playerHealth = collided.GetComponent<PlayerHasHealth>();
         if (playerHealth != null) {
             Debug.Log("Player damaged from thief knife");
-            playerHealth.AlterHealth(1);
+            playerHealth.AlterHealth(-1, DeathCauses.Enemy);
         }
     }
 }

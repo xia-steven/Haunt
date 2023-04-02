@@ -78,7 +78,7 @@ public class ClericEnemy : EnemyBase {
             }
         }
         else if (other.gameObject.CompareTag("Player")) {
-            playerHealth.AlterHealth(-1);
+            playerHealth.AlterHealth(-1, DeathCauses.Enemy);
         }
     }
 

@@ -233,7 +233,7 @@ public class EnemyBase : MonoBehaviour {
     // Damage the player if they touch the enemy
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Player")) {
-            playerHealth.AlterHealth(-1);
+            playerHealth.AlterHealth(-1, DeathCauses.Enemy);
         }
     }
 }

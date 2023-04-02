@@ -73,12 +73,18 @@ public class PlayerHasHealth : HasHealth {
         EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
     }
 
+    public void AlterHealth(int healthDelta, DeathCauses damager)
+    {
+        IsPlayer.instance.SetLastDamaged(damager);
+        AlterHealth(healthDelta);
+    }
+
     private bool CheckIsDead()
     {
         Debug.Log("Game control day: " + GameControl.Day);
         if (health == 0 && GameControl.Day > 0)
         {
-            EventBus.Publish(new GameLossEvent());
+            EventBus.Publish(new GameLossEvent(IsPlayer.instance.LastDamaged()));
             return true;
         }
         else if (health == 0 && GameControl.Day <= 0)
@@ -112,6 +118,8 @@ public class PlayerHasHealth : HasHealth {
     void _OnPedestalRepaired(PedestalRepairedEvent pre) {
         lockedHealth += 2;
         Debug.Log("Player received pedestal repair, locked: " + lockedHealth);
+
+        IsPlayer.instance.SetLastDamaged(DeathCauses.Pedestal);
 
         if (health > maxHealth-lockedHealth) {
             health = maxHealth-lockedHealth;
