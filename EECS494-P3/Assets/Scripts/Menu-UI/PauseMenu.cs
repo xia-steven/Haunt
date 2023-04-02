@@ -68,14 +68,9 @@ public class PauseMenu : MonoBehaviour {
     }
 
 
-    public void RestartLevel() {
-        isPaused = false;
-        Time.timeScale = 1;
-        AudioListener.pause = false;
-        GameControl.Day = 0;
-        IsPlayer.instance.ResetHealth();
-
-        SceneManager.LoadScene("TutorialHubWorld");
+    public void RestartLevel() 
+    {
+        GameControl.ResetGame();
     }
 
     public void QuitGame()
