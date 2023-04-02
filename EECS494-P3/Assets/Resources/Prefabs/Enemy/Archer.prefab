@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: -5851982813740912598}
   - component: {fileID: 1365097214977346424}
   m_Layer: 8
-  m_Name: MultishotArcher
+  m_Name: Archer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
