@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class SkipToBoss : MonoBehaviour
 {
 
-
     public void onSkipToBoss()
     {
         SceneManager.LoadScene("LAB_BossTesting");
