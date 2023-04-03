@@ -53,7 +53,7 @@ public class Inventory : MonoBehaviour
         weapons[numWeapons] = Instantiate(weapon, transform);
 
         // Unequip current weapon and equip new weapon
-        weapons[currentWeapon].SetActive(false);
+        if (currentWeapon != numWeapons) weapons[currentWeapon].SetActive(false);
         weapons[numWeapons].SetActive(true);
 
         currentWeapon = numWeapons;
@@ -92,7 +92,7 @@ public class Inventory : MonoBehaviour
         if (weapons[actualSlot] != null)
         {
             // "Remove" currently equipped weapon
-            weapons[currentWeapon].SetActive(false);
+            if (actualSlot != currentWeapon) weapons[currentWeapon].SetActive(false);
 
             // "Equip" new weapon based on input
             currentWeapon = actualSlot;
