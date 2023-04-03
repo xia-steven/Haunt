@@ -9,6 +9,7 @@ public class HasEnemyHealth : HasHealth {
     private GameObject healthPrefab;
     private SpriteRenderer sr;
     private Color normalColor;
+    private bool isCleric = false;
 
     private void Start() {
         coinPrefab = Resources.Load<GameObject>("Prefabs/Coin");
@@ -27,11 +28,11 @@ public class HasEnemyHealth : HasHealth {
         if (health <= 0) {
             var roulletteBall = Random.Range(0, 100);
             // Only drop collectibles if not the tutorial day
-            if (roulletteBall < 18 && GameControl.Day != 0) {
+            if (roulletteBall < 40 && GameControl.Day != 0 && isCleric) {
                 Instantiate(healthPrefab, transform.position, Quaternion.identity);
             }
             // Only drop collectibles if not the tutorial day
-            else if (roulletteBall >= 18 && roulletteBall < 55 && GameControl.Day != 0) {
+            else if (roulletteBall >= 40 && roulletteBall < 80 && GameControl.Day != 0) {
                 Instantiate(coinPrefab, transform.position, Quaternion.identity);
             }
 
@@ -52,5 +53,10 @@ public class HasEnemyHealth : HasHealth {
         sr.color = Color.red;
         yield return new WaitForSeconds(.1f);
         sr.color = normalColor;
+    }
+
+    public void setClericStatus(bool cleric)
+    {
+        isCleric = cleric;
     }
 }
