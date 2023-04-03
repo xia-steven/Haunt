@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,9 @@ public class IsBuyable : MonoBehaviour
     [SerializeField] private Sprite selectedSprite;
     [SerializeField] protected int cost;
     // access to a sub-object
-    [SerializeField] protected TextMeshPro itemDescription;
+    protected GameObject itemDescription;
+    protected TextMeshPro descriptionText;
+    protected TextMeshPro costText;
 
     protected Inventory playerInventory;
     protected Subscription<TryInteractEvent> interact_subscription;
@@ -24,6 +27,31 @@ public class IsBuyable : MonoBehaviour
         interact_subscription = EventBus.Subscribe<TryInteractEvent>(OnPurchase);
         sr = GetComponent<SpriteRenderer>();
         defaultSprite = sr.sprite;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).name == "ItemDescription")
+            {
+                itemDescription = transform.GetChild(i).gameObject;
+                for (int j = 0; j < itemDescription.transform.childCount; j++)
+                {
+                    if (itemDescription.transform.GetChild(j).name == "Text")
+                    {
+                        descriptionText = itemDescription.transform.GetChild(j).gameObject.GetComponent<TextMeshPro>();
+                    }
+                    if (itemDescription.transform.GetChild(j).name == "Cost")
+                    {
+                        costText = itemDescription.transform.GetChild(j).gameObject.GetComponent<TextMeshPro>();
+                    }
+                }
+            }
+
+        }
+         
+    }
+
+    protected void Start()
+    {
+        itemDescription.SetActive(false);
     }
 
     private void OnPurchase(TryInteractEvent e)
@@ -50,6 +78,13 @@ public class IsBuyable : MonoBehaviour
             Debug.Log(gameObject.name + " triggered");
             selected = true;
             sr.sprite = selectedSprite;
+            if (itemDescription)
+            {
+                Debug.Log(costText.text);
+                itemDescription.SetActive(true);
+                costText.text = cost.ToString();
+            }
+
         }
                 
     
@@ -61,6 +96,9 @@ public class IsBuyable : MonoBehaviour
         {
             selected = false;
             sr.sprite = defaultSprite;
+            if (itemDescription)
+                itemDescription.SetActive(false);
+
         }
     }
 
