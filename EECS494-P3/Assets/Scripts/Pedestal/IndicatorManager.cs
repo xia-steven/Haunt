@@ -16,8 +16,7 @@ public class IndicatorManager : MonoBehaviour
     float xModifier = 1f;
     float yModifier = 1f;
 
-    Subscription<PedestalDestroyedEvent> destSub;
-    Subscription<PedestalRepairedEvent> repSub;
+    Subscription<PedestalPartialEvent> healSub;
 
     // Start is called before the first frame update
     void Start()
@@ -37,24 +36,17 @@ public class IndicatorManager : MonoBehaviour
         xModifier = canvasSize.x / Screen.width;
         yModifier = canvasSize.y / Screen.height * Mathf.Sqrt(2);
 
-        destSub = EventBus.Subscribe<PedestalDestroyedEvent>(_onPedestalDestroy);
-        repSub = EventBus.Subscribe<PedestalRepairedEvent>(_onPedestalRepair);
+        healSub = EventBus.Subscribe<PedestalPartialEvent>(_onPedestalPartial);
     }
 
     private void OnDestroy()
     {
-        EventBus.Unsubscribe(destSub);
-        EventBus.Unsubscribe(repSub);
+        EventBus.Unsubscribe(healSub);
     }
 
-    void _onPedestalDestroy(PedestalDestroyedEvent pde)
+    void _onPedestalPartial(PedestalPartialEvent phe)
     {
-        indicatorArrows[pde.pedestalUUID - 1].SetActive(false);
-    }
-
-    void _onPedestalRepair(PedestalRepairedEvent pre)
-    {
-        indicatorArrows[pre.pedestalUUID - 1].SetActive(true);
+        indicatorArrows[phe.pedestalUUID - 1].SetActive(phe.turnOn);
     }
 
 

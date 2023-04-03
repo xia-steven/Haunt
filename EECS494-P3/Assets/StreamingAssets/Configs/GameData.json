@@ -1,7 +1,7 @@
 {
     "key": "GameData",
     "maxDays": 3,
-    "nightLength": 120.0,
+    "nightLength": 60.0,
     "waveTimeout": 20.0,
     "updateFrequency": 0.5,
     "waveDailyScale": 2.5,

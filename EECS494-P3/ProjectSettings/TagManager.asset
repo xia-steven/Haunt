@@ -42,3 +42,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: ShopDescriptions
+    uniqueID: 1296895283
+    locked: 0

@@ -26,7 +26,11 @@ public class Upgrade : IsBuyable
     protected virtual void Start()
     {
         if (thisData != null)
+        {
             descriptionText.text = thisData.description;
+            cost = thisData.cost;
+        }
+            
         base.Start();
     }
 

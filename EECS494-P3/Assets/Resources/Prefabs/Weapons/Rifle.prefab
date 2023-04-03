@@ -50,6 +50,7 @@ MonoBehaviour:
   tapDelay: 0.1
   barrelLength: 1.15
   screenShakeStrength: 0.05
+  speedMultiplier: 1
   bulletSpread: 20
   rifleSprite: {fileID: 8963161378742004249}
 --- !u!1 &1962310841784963166

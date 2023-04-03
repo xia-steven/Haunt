@@ -75,7 +75,7 @@
         },
         {
             "name": "Cleric",
-            "moveSpeed": 0.5,
+            "moveSpeed": 1.25,
             "targetDistance": 1.5,
             "health": 4,
             "attackSpeed": 2.0,

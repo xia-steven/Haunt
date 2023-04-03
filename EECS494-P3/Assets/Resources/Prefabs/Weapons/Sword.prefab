@@ -132,6 +132,8 @@ MonoBehaviour:
   bulletDelay: 0
   tapDelay: 0.5
   barrelLength: 0
+  screenShakeStrength: 0.05
+  speedMultiplier: 1
   swingArc: 90
   swingTime: 0.2
   swordSprite: {fileID: 7930269580964346772}

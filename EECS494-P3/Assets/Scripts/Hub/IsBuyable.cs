@@ -8,7 +8,7 @@ public class IsBuyable : MonoBehaviour
 {
     
     [SerializeField] private Sprite selectedSprite;
-    [SerializeField] protected int cost;
+    protected int cost = 2;
     // access to a sub-object
     protected GameObject itemDescription;
     protected TextMeshPro descriptionText;

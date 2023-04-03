@@ -776,6 +776,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldTable
       objectReference: {fileID: 0}
+    - target: {fileID: 3143033636960120348, guid: a951c3e6f3a66764daf64e1645f6e196, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400698818022145117, guid: a951c3e6f3a66764daf64e1645f6e196, type: 3}
+      propertyPath: m_text
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5387884465326010606, guid: a951c3e6f3a66764daf64e1645f6e196, type: 3}
+      propertyPath: m_text
+      value: Gives you a temporary extra heart
+      objectReference: {fileID: 0}
     - target: {fileID: 5857915805050559941, guid: a951c3e6f3a66764daf64e1645f6e196, type: 3}
       propertyPath: cost
       value: 5
@@ -856,6 +868,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 803004943413218009, guid: f35b23e2e5b8c8444ab3eb0b26c8454c, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 803004943413218009, guid: f35b23e2e5b8c8444ab3eb0b26c8454c, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1296895283
+      objectReference: {fileID: 0}
+    - target: {fileID: 2459372561907001669, guid: f35b23e2e5b8c8444ab3eb0b26c8454c, type: 3}
+      propertyPath: m_text
+      value: Fully restores your health
+      objectReference: {fileID: 0}
     - target: {fileID: 3745576956661954744, guid: f35b23e2e5b8c8444ab3eb0b26c8454c, type: 3}
       propertyPath: m_Name
       value: HealthTable
@@ -904,9 +928,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4862377417606018999, guid: f35b23e2e5b8c8444ab3eb0b26c8454c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495565426476132674, guid: f35b23e2e5b8c8444ab3eb0b26c8454c, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194281605790819830, guid: f35b23e2e5b8c8444ab3eb0b26c8454c, type: 3}
+      propertyPath: m_text
+      value: '2
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534828751836133728, guid: f35b23e2e5b8c8444ab3eb0b26c8454c, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6909616998986857958, guid: f35b23e2e5b8c8444ab3eb0b26c8454c, type: 3}
       propertyPath: cost
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633430255941810371, guid: f35b23e2e5b8c8444ab3eb0b26c8454c, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f35b23e2e5b8c8444ab3eb0b26c8454c, type: 3}

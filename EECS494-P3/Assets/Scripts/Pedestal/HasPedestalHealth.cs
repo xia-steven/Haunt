@@ -53,17 +53,24 @@ public class HasPedestalHealth : HasHealth {
             // Let other systems know the enemies repaired a pedestal
             pedestal.PedestalRepaired();
             AudioSource.PlayClipAtPoint(restoreSound, transform.position);
+            EventBus.Publish<PedestalPartialEvent>(new PedestalPartialEvent(pedestal.getUUID(), false));
         }
         else if (healthDelta > 0)
         {
             AudioSource.PlayClipAtPoint(healSound, transform.position);
+            EventBus.Publish<PedestalPartialEvent>(new PedestalPartialEvent(pedestal.getUUID(), true));
         }
         else if (healthDelta < 0)
         {
             anim.SetTrigger("TookDamage");
             AudioSource.PlayClipAtPoint(damageSound, transform.position);
         }
-        Debug.Log("end "+ health/PedestalMaxHealth);
+
+        if(health == 0)
+        {
+            EventBus.Publish<PedestalPartialEvent>(new PedestalPartialEvent(pedestal.getUUID(), false));
+        }
+
         // Health should be a value between 0 and 1, ie pct of full health
         anim.SetFloat("Health",(float)health / (float)PedestalMaxHealth);
     }

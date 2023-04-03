@@ -9,7 +9,7 @@ using UnityEngine;
 public class EnemyBase : MonoBehaviour {
     // Base enemy variables
     protected float baseSpeed = 3.0f;
-    private HasEnemyHealth enemyHealth;
+    protected HasEnemyHealth enemyHealth;
 
     protected Rigidbody rb;
 
