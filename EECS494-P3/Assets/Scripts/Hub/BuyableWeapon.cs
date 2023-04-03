@@ -28,6 +28,12 @@ public class BuyableWeapon : IsBuyable
 
         base.Awake();
     }
+    
+    protected virtual void Start()
+    {
+        descriptionText.text = gameObject.name;
+        base.Start();
+    }
 
     protected override void Apply()
     {
