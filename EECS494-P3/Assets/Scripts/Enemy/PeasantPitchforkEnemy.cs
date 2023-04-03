@@ -6,7 +6,7 @@ public class PeasantPitchforkEnemy : EnemyBase {
     private float dashTime;
     private float dashSpeed;
     private SpriteRenderer sprite;
-
+    private Color initialCol;
 
     // Override enemy ID to load from config
     public override int GetEnemyID() {
@@ -18,6 +18,7 @@ public class PeasantPitchforkEnemy : EnemyBase {
         dashTime = 0.25f;
         dashSpeed = 2 * attributes.targetDistance / dashTime;
         sprite = GetComponentInChildren<SpriteRenderer>();
+        initialCol = sprite.color;
     }
 
     // Override attack function
@@ -27,7 +28,7 @@ public class PeasantPitchforkEnemy : EnemyBase {
             float t = 0;
             for (var i = 0; i < 50; ++i) {
                 t += 0.02f;
-                sprite.color = Color.Lerp(Color.magenta, Color.red, t);
+                sprite.color = Color.Lerp(initialCol, Color.red, t);
                 yield return new WaitForSeconds(0.02f);
             }
 
@@ -36,7 +37,7 @@ public class PeasantPitchforkEnemy : EnemyBase {
             rb.velocity = dashSpeed * direction;
             yield return new WaitForSeconds(dashTime);
             rb.velocity = Vector3.zero;
-            sprite.color = Color.magenta;
+            sprite.color = initialCol;
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }

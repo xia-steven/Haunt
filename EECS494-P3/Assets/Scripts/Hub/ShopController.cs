@@ -11,6 +11,8 @@ public class ShopController : MonoBehaviour
     [SerializeField] private GameObject weaponTableLeft;
     [SerializeField] private GameObject topUpgradeTable;
     [SerializeField] private GameObject sideUpgradeTable;
+    [SerializeField] GameObject healthRestore;
+    [SerializeField] GameObject shield;
 
     private GameObject shotgunPrefab;
     private GameObject minigunPrefab;
@@ -40,17 +42,24 @@ public class ShopController : MonoBehaviour
     {
         switch (day)
         {
+            // Tutorial day is 0
+            case(0):
+                healthRestore.SetActive(false);
+                shield.SetActive(false);
+                break;
             case(1):
                 DayOneShop();
+                InitRandomUpgrades();
                 break;
             case(2):
                 DayTwoShop();
+                InitRandomUpgrades();
                 break;
             case(3):
                 DayThreeShop();
+                InitRandomUpgrades();
                 break;
         }
-        InitRandomUpgrades();
     }
     
     

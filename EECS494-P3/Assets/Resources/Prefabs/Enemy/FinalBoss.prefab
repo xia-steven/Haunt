@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 1702138906439512309}
   - component: {fileID: 7080845073249181226}
   - component: {fileID: 2296375083092533535}
+  - component: {fileID: 8078121917910637294}
   m_Layer: 0
   m_Name: FinalBoss
   m_TagString: Untagged
@@ -299,6 +300,27 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!95 &8078121917910637294
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3226477732891980714}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8eee5daad9e548c43a5d85dcfc2c6884, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3226477733417184676
 GameObject:
   m_ObjectHideFlags: 0

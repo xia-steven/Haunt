@@ -17,7 +17,7 @@ public class HasExplodeUpgrade : MonoBehaviour
     // Explode on dash finish
     private void _OnDodge(PlayerDodgeEvent e)
     {
-        if (!e.start)
+        if (e.start)
         {
             // Perform hit
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosiveRadius);
@@ -35,8 +35,7 @@ public class HasExplodeUpgrade : MonoBehaviour
                 }
                 else if (hit.TryGetComponent<HasPedestalHealth>(out pedestalHit))
                 {
-                    // Damage pedestal
-                    pedestalHit.AlterHealth(-1);
+                    pedestalHit.AlterHealth(1);
                 }
             }
 
