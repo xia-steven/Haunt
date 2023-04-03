@@ -191,6 +191,8 @@ partial class GameControl : MonoBehaviour {
         Time.timeScale = 1;
         AudioListener.pause = false;
 
+        PlayerModifiers.resetModifiers();
+
         Destroy(IsPlayer.instance.gameObject);
 
         SceneManager.LoadScene("TutorialHubWorld");
