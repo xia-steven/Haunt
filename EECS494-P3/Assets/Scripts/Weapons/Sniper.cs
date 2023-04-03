@@ -26,7 +26,7 @@ public class Sniper : Weapon
         currentClipAmount = 1;
         fullClipAmount = 1;
         reloadTime = 1.5f;
-        type = "pistol";
+        type = "sniper";
         screenShakeStrength = 1.25f;
 
         Subscribe();

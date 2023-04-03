@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AmmoUI : MonoBehaviour
 {
@@ -28,6 +29,18 @@ public class AmmoUI : MonoBehaviour
     {
         swapSub = EventBus.Subscribe<WeaponSwapEvent>(_OnSwap);
         reloadSub = EventBus.Subscribe<ReloadStartedEvent>(_OnReload);
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
+
+    void OnSceneLoad(Scene s, LoadSceneMode m)
+    {
+        /*StartCoroutine(AfterLoad());*/
+    }
+
+    IEnumerator AfterLoad()
+    {
+        yield return null;
+        current = Weapon.activeWeapon;
     }
 
     // Update is called once per frame
@@ -49,6 +62,7 @@ public class AmmoUI : MonoBehaviour
 
     void _OnSwap(WeaponSwapEvent e)
     {
+
         if (!gameObject.activeInHierarchy) return;
 
         swapped = true;
@@ -72,6 +86,14 @@ public class AmmoUI : MonoBehaviour
         else if (weaponType == "shotgun")
         {
             gunImg.sprite = Resources.LoadAll<Sprite>("Textures-Sprites/shotguns")[1];
+        }
+        else if (weaponType == "sniper")
+        {
+            gunImg.sprite = Resources.LoadAll<Sprite>("Textures-Sprites/sniper")[0];
+        }
+        else if (weaponType == "sword")
+        {
+            gunImg.sprite = Resources.LoadAll<Sprite>("Textures-Sprites/swords")[1];
         }
 
         gunImg.SetNativeSize();
@@ -163,5 +185,11 @@ public class AmmoUI : MonoBehaviour
 
             shellInstances[i].SetActive(false);
         }
+    }
+
+    private void OnDestroy()
+    {
+        
+        SceneManager.sceneLoaded -= OnSceneLoad;
     }
 }

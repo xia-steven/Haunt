@@ -12,7 +12,7 @@ public class IsPlayer : MonoBehaviour {
     // Start is called before the first frame update
     void Awake() {
         if (instance == null) instance = this;
-        else Destroy(gameObject);
+        else if (instance != this) Destroy(gameObject);
 
         health = GetComponent<PlayerHasHealth>();
         //StartCoroutine(NaturalHealthRegen());

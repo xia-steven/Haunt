@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 // Weapon base class
 
 public abstract class Weapon : MonoBehaviour {
+
+    public static Weapon activeWeapon;
     // Number of bullets in one clip - necessary for all guns
     protected int fullClipAmount = 8;
     public int FullClipAmount {
@@ -72,22 +74,18 @@ public abstract class Weapon : MonoBehaviour {
     protected Subscription<EnablePlayerEvent> enablePlayerSubscription;
     protected Subscription<DisablePlayerEvent> disablePlayerSubscription;
 
-    bool hasDoneInitialBroadcast;
 
     protected virtual void Awake()
     {
         lastBullet = 0;
         lastTap = 0;
         PlayerModifiers.moveSpeed *= speedMultiplier;
-        SceneManager.sceneLoaded += OnSceneLoad;
+        SceneManager.sceneUnloaded += OnSceneUnload;
     }
 
-    void OnSceneLoad(Scene s, LoadSceneMode m)
+    void OnSceneUnload(Scene s)
     {
-        if(gameObject.activeInHierarchy && shotByPlayer)
-        {
-            EventBus.Publish(new WeaponSwapEvent(this));
-        }
+        gameObject.SetActive(false);
     }
 
     protected void Subscribe() {
@@ -101,7 +99,7 @@ public abstract class Weapon : MonoBehaviour {
     {
         EventBus.Unsubscribe(fireEventSubscription);
         EventBus.Unsubscribe(reloadEventSubscription);
-        SceneManager.sceneLoaded -= OnSceneLoad;
+        SceneManager.sceneUnloaded += OnSceneUnload;
     }
 
     protected virtual void _OnEnablePlayer(EnablePlayerEvent e)
@@ -180,7 +178,9 @@ public abstract class Weapon : MonoBehaviour {
     public void OnEnable()
     {
         if (shotByPlayer)
+        {
             EventBus.Publish(new WeaponSwapEvent(this));
+        }
         firing = false;
     }
 
@@ -249,7 +249,7 @@ public abstract class Weapon : MonoBehaviour {
 
     private void OnDestroy()
     {
-        SceneManager.sceneLoaded -= OnSceneLoad;
+        SceneManager.sceneUnloaded += OnSceneUnload;
     }
 
     protected virtual void OnDisable()
