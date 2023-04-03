@@ -80,12 +80,6 @@ public abstract class Weapon : MonoBehaviour {
         lastBullet = 0;
         lastTap = 0;
         PlayerModifiers.moveSpeed *= speedMultiplier;
-        SceneManager.sceneUnloaded += OnSceneUnload;
-    }
-
-    void OnSceneUnload(Scene s)
-    {
-        gameObject.SetActive(false);
     }
 
     protected void Subscribe() {
@@ -99,7 +93,6 @@ public abstract class Weapon : MonoBehaviour {
     {
         EventBus.Unsubscribe(fireEventSubscription);
         EventBus.Unsubscribe(reloadEventSubscription);
-        SceneManager.sceneUnloaded += OnSceneUnload;
     }
 
     protected virtual void _OnEnablePlayer(EnablePlayerEvent e)
@@ -245,11 +238,6 @@ public abstract class Weapon : MonoBehaviour {
         }
 
         return false; 
-    }
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneUnloaded += OnSceneUnload;
     }
 
     protected virtual void OnDisable()

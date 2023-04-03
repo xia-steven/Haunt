@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Inventory : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
+        if (IsPlayer.instance.gameObject != gameObject) return;
+
         swapEventSubscription = EventBus.Subscribe<SwapEvent>(_OnSwitchWeapon);
         coinEventSubscription = EventBus.Subscribe<CoinEvent>(_OnCoinChange);
         swapSpecificSubscription = EventBus.Subscribe<SwapSpecificEvent>(_OnSpecificSwap);
@@ -45,7 +48,14 @@ public class Inventory : MonoBehaviour
         // Equip(sniper);
 
         // Swap to pistol on load (will be removed) TODO
-        EventBus.Publish<SwapSpecificEvent>(new SwapSpecificEvent(1));
+        //EventBus.Publish<SwapSpecificEvent>(new SwapSpecificEvent(1));
+
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
+
+    void OnSceneLoad(Scene s, LoadSceneMode m)
+    {
+        EventBus.Publish(new SwapSpecificEvent(currentWeapon+1));
     }
 
     public void Equip(GameObject weapon)
@@ -92,7 +102,7 @@ public class Inventory : MonoBehaviour
         if (weapons[actualSlot] != null)
         {
             // "Remove" currently equipped weapon
-            if (actualSlot != currentWeapon) weapons[currentWeapon].SetActive(false);
+            weapons[currentWeapon].SetActive(false);
 
             // "Equip" new weapon based on input
             currentWeapon = actualSlot;
@@ -151,6 +161,8 @@ public class Inventory : MonoBehaviour
         EventBus.Unsubscribe(resetInventorySubscription);
         EventBus.Unsubscribe(weaponPurchasedSubscription);
         EventBus.Unsubscribe(reloadAllSubscription);
+        
+        SceneManager.sceneLoaded -= OnSceneLoad;
     }
 }
 
