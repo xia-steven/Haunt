@@ -25,8 +25,8 @@ public class Upgrade : IsBuyable
     // Use start in child classes to deal with thisData
     protected virtual void Start()
     {
-        if (thisData != null)
-            itemDescription.text = thisData.description;
+        ///if (thisData != null)
+            //itemDescription.text = thisData.description;
     }
 
 }

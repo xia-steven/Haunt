@@ -9,7 +9,7 @@ public class IsBuyable : MonoBehaviour
     [SerializeField] private Sprite selectedSprite;
     [SerializeField] protected int cost;
     // access to a sub-object
-    [SerializeField] protected TextMeshPro itemDescription;
+    [SerializeField] protected GameObject itemDescription;
 
     protected Inventory playerInventory;
     protected Subscription<TryInteractEvent> interact_subscription;
@@ -24,6 +24,15 @@ public class IsBuyable : MonoBehaviour
         interact_subscription = EventBus.Subscribe<TryInteractEvent>(OnPurchase);
         sr = GetComponent<SpriteRenderer>();
         defaultSprite = sr.sprite;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).name == "ItemDescription")
+            {
+                itemDescription = transform.GetChild(i).gameObject;
+            }
+
+        }
+         
     }
 
     private void OnPurchase(TryInteractEvent e)
@@ -50,6 +59,8 @@ public class IsBuyable : MonoBehaviour
             Debug.Log(gameObject.name + " triggered");
             selected = true;
             sr.sprite = selectedSprite;
+            if (itemDescription)
+                itemDescription.SetActive(true);
         }
                 
     
@@ -61,6 +72,9 @@ public class IsBuyable : MonoBehaviour
         {
             selected = false;
             sr.sprite = defaultSprite;
+            if (itemDescription)
+                itemDescription.SetActive(false);
+
         }
     }
 
