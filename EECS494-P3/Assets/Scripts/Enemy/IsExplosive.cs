@@ -25,6 +25,7 @@ public class IsExplosive : MonoBehaviour {
         foreach (Collider hit in hitColliders) {
             PlayerHasHealth playerHit;
             HasEnemyHealth enemyHit;
+            HasPedestalHealth pedestalHit;
 
             if (hit.TryGetComponent<PlayerHasHealth>(out playerHit)) {
                 playerHit.AlterHealth(-1, DeathCauses.Enemy);
@@ -33,6 +34,10 @@ public class IsExplosive : MonoBehaviour {
                 // Kill the enemy
                 int damageAmount = oneShotEnemies ? -1000 : -1;
                 enemyHit.AlterHealth(damageAmount);
+            }
+            else if (hit.TryGetComponent<HasPedestalHealth>(out pedestalHit))
+            {
+                pedestalHit.AlterHealth(1);
             }
         }
 

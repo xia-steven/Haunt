@@ -778,6 +778,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a951c3e6f3a66764daf64e1645f6e196, type: 3}
+--- !u!1 &1115299626179855789 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1115299626398720118, guid: a951c3e6f3a66764daf64e1645f6e196, type: 3}
+  m_PrefabInstance: {fileID: 1115299626179855788}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1115299626179855790 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1115299626449112835, guid: a951c3e6f3a66764daf64e1645f6e196, type: 3}
+  m_PrefabInstance: {fileID: 1115299626179855788}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2454529066720479328
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -892,6 +902,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f35b23e2e5b8c8444ab3eb0b26c8454c, type: 3}
+--- !u!1 &3745576957084677012 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3745576956661954744, guid: f35b23e2e5b8c8444ab3eb0b26c8454c, type: 3}
+  m_PrefabInstance: {fileID: 3745576957084677011}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3745576957084677013 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3745576957024950064, guid: f35b23e2e5b8c8444ab3eb0b26c8454c, type: 3}
+  m_PrefabInstance: {fileID: 3745576957084677011}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4517888503546254941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1137,6 +1157,18 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5351816852632551901, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
+      propertyPath: shield
+      value: 
+      objectReference: {fileID: 1115299626179855790}
+    - target: {fileID: 5351816852632551901, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
+      propertyPath: shieldTable
+      value: 
+      objectReference: {fileID: 1115299626179855789}
+    - target: {fileID: 5351816852632551901, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
+      propertyPath: healthRestore
+      value: 
+      objectReference: {fileID: 3745576957084677013}
+    - target: {fileID: 5351816852632551901, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
       propertyPath: topUpgradeTable
       value: 
       objectReference: {fileID: 7651936404787808868}
@@ -1152,6 +1184,10 @@ PrefabInstance:
       propertyPath: weaponTableRight
       value: 
       objectReference: {fileID: 488794113}
+    - target: {fileID: 5351816852632551901, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
+      propertyPath: healthRestoreTable
+      value: 
+      objectReference: {fileID: 3745576957084677012}
     - target: {fileID: 5351816852632551901, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
       propertyPath: upgradePool.Array.size
       value: 8
