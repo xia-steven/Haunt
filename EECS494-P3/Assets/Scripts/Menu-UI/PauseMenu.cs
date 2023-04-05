@@ -70,7 +70,7 @@ public class PauseMenu : MonoBehaviour {
 
     public void RestartLevel() 
     {
-        GameControl.ResetGame();
+        GameControl.ResetGame("TutorialHubWorld");
     }
 
     public void QuitGame()
@@ -83,7 +83,6 @@ public class PauseMenu : MonoBehaviour {
         isPaused = false;
         Time.timeScale = 1;
         AudioListener.pause = false;
-        SceneManager.LoadScene("MainMenu");
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainMenu"));
+        GameControl.ResetGame("MainMenu");
     }
 }

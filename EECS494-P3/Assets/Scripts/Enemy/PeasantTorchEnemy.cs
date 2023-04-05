@@ -34,7 +34,6 @@ public class PeasantTorchEnemy : EnemyBase {
         // While attacking
         while (state == EnemyState.Attacking)
         {
-            yield return new WaitForSeconds(attributes.attackSpeed / 2);
 
             torchObject.SetActive(true);
 
@@ -50,7 +49,7 @@ public class PeasantTorchEnemy : EnemyBase {
 
             torchObject.SetActive(false);
 
-            yield return new WaitForSeconds(attributes.attackSpeed / 2);
+            yield return new WaitForSeconds(attributes.attackSpeed);
         }
 
 

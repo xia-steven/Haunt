@@ -179,7 +179,7 @@ partial class GameControl : MonoBehaviour {
         instance.StartCoroutine(NightEndingUpdate());
     }
 
-    public static void ResetGame() {
+    public static void ResetGame(string sceneName) {
         // Day 0 is the tutorial night, start 1 below that
         day = -1;
 
@@ -195,6 +195,6 @@ partial class GameControl : MonoBehaviour {
 
         Destroy(IsPlayer.instance.gameObject);
 
-        SceneManager.LoadScene("TutorialHubWorld");
+        SceneManager.LoadScene(sceneName);
     }
 }
