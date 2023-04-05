@@ -3,8 +3,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class ArbalestEnemy : EnemyBase {
-    float projectileSpeed = 7.0f;
-    float projectileLifetime = 2.0f;
     GameObject arbalestBullet;
 
     protected override void Start() {
@@ -13,7 +11,7 @@ public class ArbalestEnemy : EnemyBase {
         arbalestBullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/ArbalestShot");
 
         ArbalestProjectile proj = arbalestBullet.GetComponent<ArbalestProjectile>();
-        proj.setLifetime(projectileLifetime);
+        proj.setLifetime(attributes.projetileLifetime);
     }
 
     // Override enemy ID to load from config
@@ -38,7 +36,7 @@ public class ArbalestEnemy : EnemyBase {
             direction = direction.normalized;
 
 
-            fireBullet(arbalestBullet, direction, Shooter.Enemy, projectileSpeed);
+            fireBullet(arbalestBullet, direction, Shooter.Enemy, attributes.projectileSpeed);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }

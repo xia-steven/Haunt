@@ -30,26 +30,29 @@ public class PeasantTorchEnemy : EnemyBase {
         torchObject.transform.rotation = rotation;
         torchObject.transform.Rotate(0, 90, 0);
 
-        torchObject.SetActive(true);
 
         // While attacking
-        while (state == EnemyState.Attacking) {
-            yield return new WaitForSeconds(0.33f);
+        while (state == EnemyState.Attacking)
+        {
+            yield return new WaitForSeconds(attributes.attackSpeed / 2);
+
+            torchObject.SetActive(true);
+
+            yield return new WaitForSeconds(attributes.swingTime);
 
             torchObject.GetComponent<Rigidbody>().angularVelocity = new Vector3(0, -10, 0);
 
-            yield return new WaitForSeconds(0.33f);
+            yield return new WaitForSeconds(attributes.swingTime);
 
             torchObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
-            yield return new WaitForSeconds(0.33f);
+            yield return new WaitForSeconds(attributes.swingTime);
 
             torchObject.SetActive(false);
 
-            yield return new WaitForSeconds(attributes.attackSpeed);
+            yield return new WaitForSeconds(attributes.attackSpeed / 2);
         }
 
-        torchObject.SetActive(false);
 
         // Let update know that we're done
         runningCoroutine = false;

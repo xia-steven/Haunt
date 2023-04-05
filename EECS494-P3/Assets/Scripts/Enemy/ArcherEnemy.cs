@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 
 public class ArcherEnemy : EnemyBase {
-    protected float projectileSpeed = 5f;
     protected GameObject Bullet;
 
     protected override void Start() {
@@ -28,7 +27,7 @@ public class ArcherEnemy : EnemyBase {
             direction = direction.normalized;
 
 
-            fireBullet(Bullet, direction, Shooter.Enemy, projectileSpeed);
+            fireBullet(Bullet, direction, Shooter.Enemy, attributes.projectileSpeed);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }

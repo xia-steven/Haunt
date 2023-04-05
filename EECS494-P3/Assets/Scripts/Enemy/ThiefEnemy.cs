@@ -7,16 +7,7 @@ using UnityEngine.UI;
 public class ThiefEnemy : EnemyBase {
     ThiefKnife knife;
     GameObject knifeObject;
-    float windupSpeed = 1.0f;
-    float dashSpeed = 10.0f;
-    float windupTime = 0.3f;
-    float dashTime = 0.25f;
     GameObject thiefSmoke;
-    int minXSpawn = -17;
-    int maxXSpawn = 17;
-    int minZSpawn = -11;
-    int maxZSpawn = 10;
-    int maxSpawnAttempts = 10;
 
     Vector3 spawnPos;
 
@@ -59,12 +50,12 @@ public class ThiefEnemy : EnemyBase {
         // While attacking
         while (state == EnemyState.Attacking) {
             // slight backwards windup
-            rb.velocity = -direction * windupSpeed;
-            yield return new WaitForSeconds(windupTime);
+            rb.velocity = -direction * attributes.windupSpeed;
+            yield return new WaitForSeconds(attributes.windupTime);
 
             // dash towards the player
-            rb.velocity = direction * dashSpeed;
-            yield return new WaitForSeconds(dashTime);
+            rb.velocity = direction * attributes.dashSpeed;
+            yield return new WaitForSeconds(attributes.dashTime);
 
             // teleport away
             rb.velocity = Vector3.zero;
@@ -91,9 +82,9 @@ public class ThiefEnemy : EnemyBase {
         int zCoord = 0;
         Vector3 testPos = spawnPos;
 
-        while (valid == false && count < maxSpawnAttempts) {
-            xCoord = Random.Range(minXSpawn, maxXSpawn + 1);
-            zCoord = Random.Range(minZSpawn, maxZSpawn + 1);
+        while (valid == false && count < attributes.maxThiefSpawnAttempt) {
+            xCoord = Random.Range(attributes.minXThiefSpawn, attributes.maxXThiefSpawn + 1);
+            zCoord = Random.Range(attributes.minZThiefSpawn, attributes.maxZThiefSpawn + 1);
             testPos = new Vector3(xCoord, 0.5f, zCoord);
             Vector3 camCoords = Camera.main.WorldToScreenPoint(testPos);
             // Check if outside of camera bounds

@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 public class MultiArcherEnemy : ArcherEnemy {
     protected override void Start() {
         base.Start();
-        projectileSpeed = 3f;
         Bullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/MultiArcherBullet");
     }
 
@@ -34,9 +33,9 @@ public class MultiArcherEnemy : ArcherEnemy {
             bullet2.Normalize();
             bulletMid.Normalize();
 
-            fireBullet(Bullet, bulletMid, Shooter.Enemy, projectileSpeed);
-            fireBullet(Bullet, bullet1, Shooter.Enemy, projectileSpeed);
-            fireBullet(Bullet, bullet2, Shooter.Enemy, projectileSpeed);
+            fireBullet(Bullet, bulletMid, Shooter.Enemy, attributes.projectileSpeed);
+            fireBullet(Bullet, bullet1, Shooter.Enemy, attributes.projectileSpeed);
+            fireBullet(Bullet, bullet2, Shooter.Enemy, attributes.projectileSpeed);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }

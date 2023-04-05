@@ -3,8 +3,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class DemolitionEnemy : EnemyBase {
-    float projectileSpeed = 4.0f;
-    float projectileLifetime = 3.0f;
     GameObject demolitionBullet;
 
 
@@ -15,7 +13,7 @@ public class DemolitionEnemy : EnemyBase {
         demolitionBullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/DemolitionShot");
 
         DemolitionProjectile proj = demolitionBullet.GetComponent<DemolitionProjectile>();
-        proj.setLifetime(projectileLifetime);
+        proj.setLifetime(attributes.projetileLifetime);
     }
 
     // Override enemy ID to load from config
@@ -43,7 +41,7 @@ public class DemolitionEnemy : EnemyBase {
             direction = direction.normalized;
 
 
-            fireBullet(demolitionBullet, direction, Shooter.Enemy, projectileSpeed);
+            fireBullet(demolitionBullet, direction, Shooter.Enemy, attributes.projectileSpeed);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }

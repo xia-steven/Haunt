@@ -3,8 +3,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class PeasantPitchforkEnemy : EnemyBase {
-    private float dashTime;
-    private float dashSpeed;
     private SpriteRenderer sprite;
     private Color initialCol;
 
@@ -15,8 +13,6 @@ public class PeasantPitchforkEnemy : EnemyBase {
 
     protected override void Start() {
         base.Start();
-        dashTime = 0.25f;
-        dashSpeed = 2 * attributes.targetDistance / dashTime;
         sprite = GetComponentInChildren<SpriteRenderer>();
         initialCol = sprite.color;
     }
@@ -34,8 +30,8 @@ public class PeasantPitchforkEnemy : EnemyBase {
 
             var direction = (IsPlayer.instance.transform.position - transform.position).normalized;
             direction.y = 0;
-            rb.velocity = dashSpeed * direction;
-            yield return new WaitForSeconds(dashTime);
+            rb.velocity = attributes.dashSpeed * (attributes.targetDistance / attributes.dashTime ) * direction;
+            yield return new WaitForSeconds(attributes.dashTime);
             rb.velocity = Vector3.zero;
             sprite.color = initialCol;
 

@@ -7,7 +7,8 @@
             "targetDistance": 1.0,
             "health": 3,
             "attackSpeed": 2.0,
-            "isRanged": false
+            "isRanged": false,
+            "swingTime": 0.33
         },
         {
             "name": "PeasantPitchfork",
@@ -15,7 +16,9 @@
             "targetDistance": 1.5,
             "health": 3,
             "attackSpeed": 2.0,
-            "isRanged": false
+            "isRanged": false,
+            "dashTime": 0.25,
+            "dashSpeed": 2.0
         },
         {
             "name": "Archer",
@@ -23,7 +26,8 @@
             "targetDistance": 3.0,
             "health": 4,
             "attackSpeed": 2.0,
-            "isRanged": true
+            "isRanged": true,
+            "projectileSpeed": 5.0
         },
         {
             "name": "EliteArcher",
@@ -31,7 +35,8 @@
             "targetDistance": 4.0,
             "health": 6,
             "attackSpeed": 2.0,
-            "isRanged": true
+            "isRanged": true,
+            "projectileSpeed": 5.5
         },
         {
             "name": "MultiArcher",
@@ -39,7 +44,8 @@
             "targetDistance": 2.0,
             "health": 4,
             "attackSpeed": 2.0,
-            "isRanged": true
+            "isRanged": true,
+            "projectileSpeed": 3.0
         },
         {
             "name": "Arbalest",
@@ -47,7 +53,9 @@
             "targetDistance": 5.0,
             "health": 4,
             "attackSpeed": 2.0,
-            "isRanged": true
+            "isRanged": true,
+            "projectileSpeed": 7.0,
+            "projectileLifetime": 2.0
         },
         {
             "name": "Demolition",
@@ -55,7 +63,9 @@
             "targetDistance": 2.5,
             "health": 5,
             "attackSpeed": 2.0,
-            "isRanged": true
+            "isRanged": true,
+            "projectileSpeed": 4.0,
+            "projectileLifetime": 3.0
         },
         {
             "name": "Thief",
@@ -63,7 +73,16 @@
             "targetDistance": 1.5,
             "health": 2,
             "attackSpeed": 2.0,
-            "isRanged": false
+            "isRanged": false,
+            "windupSpeed": 1.0,
+            "windupTime": 0.3,
+            "dashSpeed": 10.0,
+            "dashTime": 0.25,
+            "minXThiefSpawn": -17,
+            "maxXThiefSpawn": 17,
+            "minZThiefSpawn": -11,
+            "maxZThiefSpawn": 10,
+            "maxThiefSpawnAttempt": 10
         },
         {
             "name": "MagicArcher",
@@ -71,7 +90,9 @@
             "targetDistance": 3.0,
             "health": 4,
             "attackSpeed": 2.0,
-            "isRanged": true
+            "isRanged": true,
+            "projectileSpeed": 4.0,
+            "projectileLifetime": 3.0
         },
         {
             "name": "Cleric",

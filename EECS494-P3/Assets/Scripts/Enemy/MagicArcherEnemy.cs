@@ -3,8 +3,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class MagicArcherEnemy : EnemyBase {
-    float projectileSpeed = 4.0f;
-    float projectileLifetime = 3.0f;
     GameObject magicArcherBullet;
 
     protected override void Start() {
@@ -13,7 +11,7 @@ public class MagicArcherEnemy : EnemyBase {
         magicArcherBullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/MagicArcherShot");
 
         var proj = magicArcherBullet.GetComponent<MagicArcherProjectile>();
-        proj.setLifetime(projectileLifetime);
+        proj.setLifetime(attributes.projetileLifetime);
     }
 
 
@@ -39,7 +37,7 @@ public class MagicArcherEnemy : EnemyBase {
             direction = direction.normalized;
 
 
-            fireBullet(magicArcherBullet, direction, Shooter.Enemy, projectileSpeed);
+            fireBullet(magicArcherBullet, direction, Shooter.Enemy, attributes.projectileSpeed);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }

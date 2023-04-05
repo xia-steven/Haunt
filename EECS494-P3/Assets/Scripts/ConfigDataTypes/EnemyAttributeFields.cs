@@ -27,6 +27,18 @@ public class EnemyAttributes {
     public int health;
     public float attackSpeed;
     public bool isRanged;
+    public int minXThiefSpawn;
+    public int maxXThiefSpawn;
+    public int minZThiefSpawn;
+    public int maxZThiefSpawn;
+    public int maxThiefSpawnAttempt;
+    public float windupSpeed;
+    public float windupTime;
+    public float dashSpeed;
+    public float dashTime;
+    public float swingTime;
+    public float projectileSpeed;
+    public float projetileLifetime;
 
 
     public override string ToString() {
