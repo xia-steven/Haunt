@@ -11,7 +11,7 @@ public class PiercingUpgrade : Upgrade
 
     protected override void Start()
     {
-        thisData = typesData.types[(int)UpgradeType.piercingShot];
+        thisData = typesData.types[(int)PurchaseableType.piercingShot];
         base.Start();
     }
 

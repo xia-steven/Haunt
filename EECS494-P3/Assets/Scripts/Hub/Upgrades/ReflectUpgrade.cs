@@ -11,7 +11,7 @@ public class ReflectUpgrade : Upgrade
 
     protected override void Start()
     {
-        thisData = typesData.types[(int)UpgradeType.dashReflect];
+        thisData = typesData.types[(int)PurchaseableType.dashReflect];
         base.Start();
     }
 

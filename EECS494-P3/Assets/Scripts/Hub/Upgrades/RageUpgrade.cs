@@ -11,7 +11,7 @@ public class RageUpgrade : Upgrade
 
     protected override void Start()
     {
-        thisData = typesData.types[(int)UpgradeType.damageRage];
+        thisData = typesData.types[(int)PurchaseableType.damageRage];
         base.Start();
     }
 

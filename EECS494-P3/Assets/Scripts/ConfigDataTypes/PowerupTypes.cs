@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpgradeTypesHolder : Savable
+public class PurchaseableTypesData : Savable
 {
     public List<UpgradeData> types;
 }
@@ -10,7 +10,7 @@ public class UpgradeTypesHolder : Savable
 [System.Serializable]
 public class UpgradeData
 {
-    public UpgradeType type;
+    public PurchaseableType type;
     public int cost;
     public float rate1;
     public float rate2;

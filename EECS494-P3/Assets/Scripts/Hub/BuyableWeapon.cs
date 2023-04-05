@@ -16,14 +16,16 @@ public class BuyableWeapon : IsBuyable
     [SerializeField] private WeaponType weapon;
 
     private int initialCost = 0;
-    [SerializeField] int actualCost = 10;
     private Subscription<WeaponPurchasedEvent> weaponPurchasedSubscription;
 
     protected override void Awake()
     {
-        // todo: figure out a way to set this to actual cost for the third night
-        // could just send a weapon purchase event potentially from shopcontrol?
-        cost = initialCost;
+
+        if(GameControl.Day != 3)
+        {
+            cost = initialCost;
+        }
+
         EventBus.Subscribe<WeaponPurchasedEvent>(_OnOtherWeaponPurchase);
 
         base.Awake();
@@ -31,7 +33,30 @@ public class BuyableWeapon : IsBuyable
     
     protected virtual void Start()
     {
-        descriptionText.text = gameObject.name;
+        if(weapon == WeaponType.Shotgun)
+        {
+            thisData = typesData.types[(int)PurchaseableType.shotgun];
+        }
+        else if (weapon == WeaponType.Rifle)
+        {
+            thisData = typesData.types[(int)PurchaseableType.minigun];
+        }
+        else if (weapon == WeaponType.Sniper)
+        {
+            thisData = typesData.types[(int)PurchaseableType.sniper];
+        }
+        else if (weapon == WeaponType.Sword)
+        {
+            thisData = typesData.types[(int)PurchaseableType.sword];
+        }
+
+        if(GameControl.Day == 3)
+        {
+            cost = thisData.cost;
+        }
+
+
+        descriptionText.text = thisData.description;
         base.Start();
     }
 
@@ -44,7 +69,7 @@ public class BuyableWeapon : IsBuyable
 
     private void _OnOtherWeaponPurchase(WeaponPurchasedEvent e)
     {
-        cost = actualCost;
+        cost = thisData.cost;
     }
 
     protected override void OnDestroy()

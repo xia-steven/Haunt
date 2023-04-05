@@ -48,7 +48,6 @@ public class HasPedestalHealth : HasHealth {
             AudioSource.PlayClipAtPoint(breakSound, transform.position);
         }
         else if (health == PedestalMaxHealth && pedestal.IsDestroyedByPlayer()) {
-            PedestalMaxHealth++;
             health = PedestalMaxHealth;
             // Let other systems know the enemies repaired a pedestal
             pedestal.PedestalRepaired();
