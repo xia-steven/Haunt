@@ -104,6 +104,8 @@ public class PlayerHasHealth : HasHealth {
         if(mfe.senderInstanceID == GetInstanceID())
         {
             // Restart tutorial scene
+            health = maxHealth;
+            lockedHealth = 0;
             SceneManager.LoadScene("TutorialGameScene");
         }
     }

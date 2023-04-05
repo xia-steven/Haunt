@@ -34,14 +34,10 @@ public class AmmoUI : MonoBehaviour
 
     void OnSceneLoad(Scene s, LoadSceneMode m)
     {
-        /*StartCoroutine(AfterLoad());*/
+        curClip = clipMax;
+        UpdateBulletCounts();
     }
 
-    IEnumerator AfterLoad()
-    {
-        yield return null;
-        current = Weapon.activeWeapon;
-    }
 
     // Update is called once per frame
     void Update()
