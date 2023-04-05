@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class IsTeleporter : MonoBehaviour
 {
     [SerializeField] string otherScene;
+    [SerializeField] private GameObject selectedRing;
     
     MeshRenderer visualRenderer;
     private Animator anim;
@@ -42,6 +44,17 @@ public class IsTeleporter : MonoBehaviour
         Debug.Log("IS Active: " + isActive);
         if (isActive && other.CompareTag("Player"))
         {
+            selectedRing.SetActive(true);
+            isUsable = true;
+            EventBus.Publish(new ToastRequestEvent("Press E To Teleport", true, KeyCode.E));
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (!isUsable && isActive && other.CompareTag("Player"))
+        {
+            selectedRing.SetActive(true);
             isUsable = true;
             EventBus.Publish(new ToastRequestEvent("Press E To Teleport", true, KeyCode.E));
         }
@@ -51,6 +64,7 @@ public class IsTeleporter : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            selectedRing.SetActive(false);
             isUsable = false;
         }
     }
