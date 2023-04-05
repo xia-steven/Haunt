@@ -7,11 +7,9 @@ using UnityEngine.SceneManagement;
 public class IsTeleporter : MonoBehaviour
 {
     [SerializeField] string otherScene;
-
-    [SerializeField] Material inactiveMat;
-    [SerializeField] Material activeMat;
-
+    
     MeshRenderer visualRenderer;
+    private Animator anim;
 
     bool isActive = true;
     public bool Active {
@@ -32,7 +30,7 @@ public class IsTeleporter : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        visualRenderer = GetComponent<MeshRenderer>();
+        anim = GetComponent<Animator>();
 
         Activate();
 
@@ -59,16 +57,18 @@ public class IsTeleporter : MonoBehaviour
 
     private void Activate()
     {
-        visualRenderer.material = activeMat;
-
+        Debug.Log((isActive));
         //activate other visuals here
+        anim.SetBool("isActive",isActive);
+        
     }
 
     private void Deactivate()
     {
-        visualRenderer.material = inactiveMat;
 
         //deactivate other visuals here
+        Debug.Log(isActive);
+        anim.SetBool("isActive",isActive);
     }
 
     public void _Interact(TryInteractEvent e)
