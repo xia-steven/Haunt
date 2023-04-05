@@ -95,6 +95,8 @@ GameObject:
   - component: {fileID: 4686557592162535052}
   - component: {fileID: 4686557592162535053}
   - component: {fileID: 4686557592162535090}
+  - component: {fileID: 4998661702936903479}
+  - component: {fileID: 7213401862592989175}
   m_Layer: 0
   m_Name: Melquiades
   m_TagString: Untagged
@@ -183,3 +185,29 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 1, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0.1}
+--- !u!65 &4998661702936903479
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4686557592162535091}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.2, y: 1, z: 1.4}
+  m_Center: {x: 0.3, y: 0, z: -1}
+--- !u!114 &7213401862592989175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4686557592162535091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 592602e6e36129c4883cfaf4ef92096c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactSprite: {fileID: 0}

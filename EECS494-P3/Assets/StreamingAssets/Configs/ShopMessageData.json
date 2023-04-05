@@ -1,0 +1,35 @@
+{
+    "key": "ShopMessageData",
+    "allMessages": [
+        {
+            "messages": [
+                "I see that {GHOST NAME} has brought another skeleton to life.  I am Melquiades the werewolf.",
+                "While you fight the villagers, I explore nearby realms for accessories to sell you.",
+                "Each night, I'll try to have a new weapon to give you, along with upgrades you can purchase."
+            ]
+        },
+        {
+            "messages": [
+                "Last night, I was able to find two new weapons:  a <b>shotgun</b> and a <b>sniper</b>.  Both are valid choices, but I can only give you one for free.",
+                "Also, be sure to check out the upgrades I was able to find."
+            ]
+        },
+        {
+            "messages": [
+                "Welcome back.  Today I can give you either a <b>minigun</b> or a <b>bazooka</b>.  If you desire both, feel free to buy the other.",
+                "?????"
+            ]
+        },
+        {
+            "messages": [
+                "Ah, I see you are still alive.  Most skeletons cannot make it this far.  Unfortunately, I could not find any new weapons for you last night.",
+                "As such, I am reselling some weapons from the previous couple nights.  Hopefully you can find them of good use."
+            ]
+        },
+        {
+            "messages": [
+                "Post boss fight???"
+            ]
+        }
+    ]
+}

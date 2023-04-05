@@ -25,3 +25,12 @@ https://opengameart.org/content/tiled-terrains
 
 Decorative sprites:
 https://opengameart.org/content/lpc-medieval-village-decorations
+
+Button sprites:
+Input Prompts Pixel 16× (1.0)
+Created/distributed by Kenney (www.kenney.nl)
+Creation date: 23-09-2021
+
+Speech bubbles:
+https://opengameart.org/content/2d-speech-bubbles
+Author Parriah

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialMessages : Savable
+public class MessageList : Savable
 {
-    public List<TutorialMessage> allMessages;
+    public List<MessageSet> allMessages;
 
-    public TutorialMessages()
+    public MessageList()
     {
-        allMessages = new List<TutorialMessage>();
+        allMessages = new List<MessageSet>();
     }
 
     public override string ToString()
@@ -24,11 +24,11 @@ public class TutorialMessages : Savable
 }
 
 [System.Serializable]
-public class TutorialMessage
+public class MessageSet
 {
     public List<string> messages;
 
-    public TutorialMessage()
+    public MessageSet()
     {
         messages = new List<string>();
     }
