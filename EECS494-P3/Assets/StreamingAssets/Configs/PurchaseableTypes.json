@@ -1,5 +1,5 @@
 {
-    "key": "UpgradeTypes",
+    "key": "PurchaseableTypes",
     "types": [
         {
             "type": 0,
@@ -53,6 +53,26 @@
             "rate1": 1.2,
             "description": "Makes reloads faster",
             "maxOwnable": 2
+        },
+        {
+            "type": 8,
+            "cost": 18,
+            "description": "Shotgun.  Perfect for crowds."
+        },
+        {
+            "type": 9,
+            "cost": 18,
+            "description": "Sniper.  Your aim better be good!"
+        },
+        {
+            "type": 10,
+            "cost": 18,
+            "description": "Minigun.  Unlimited powerrrrr."
+        },
+        {
+            "type": 11,
+            "cost": 18,
+            "description": "Sword.  When you want to get close."
         }
     ]
 }

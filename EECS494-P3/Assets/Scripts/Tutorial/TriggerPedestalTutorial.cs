@@ -9,6 +9,6 @@ public class TriggerPedestalTutorial : MonoBehaviour
     private void OnDestroy()
     {
         // Send the tutorial message
-        EventBus.Publish(new TutorialMessageEvent(tutorialMessageID, GetInstanceID()));
+        EventBus.Publish(new TutorialMessageEvent(tutorialMessageID, GetInstanceID(), false));
     }
 }

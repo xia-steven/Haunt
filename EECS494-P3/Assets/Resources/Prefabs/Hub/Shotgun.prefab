@@ -132,7 +132,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: -0.5, z: 0}
+  m_Center: {x: 0.33, y: -0.5, z: 0}
 --- !u!212 &5721908688139117914
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -198,10 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedSprite: {fileID: 1944606124, guid: d0120b67eb61ef140800757a4eab709a, type: 3}
-  cost: 0
-  itemDescription: {fileID: 0}
   weapon: 0
-  actualCost: 10
 --- !u!1001 &7581768533779852503
 PrefabInstance:
   m_ObjectHideFlags: 0

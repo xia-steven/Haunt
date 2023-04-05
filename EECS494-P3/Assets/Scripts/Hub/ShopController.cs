@@ -80,7 +80,50 @@ public class ShopController : MonoBehaviour
     void DayThreeShop()
     {
         // todo determine which weapons should be available to the player based on what's in their inventory
-        
+        List<string> currWeapons = playerInventory.GetCurrentWeapons();
+
+        List<GameObject> possibleWeapons = new List<GameObject>{ shotgunPrefab, sniperPrefab, minigunPrefab, swordPrefab };
+
+        for(int a = 0; a < currWeapons.Count; ++a )
+        {
+            if(currWeapons[a] == "Rifle")
+            {
+                possibleWeapons.Remove(minigunPrefab);
+            }
+            else if (currWeapons[a] == "Sword")
+            {
+                possibleWeapons.Remove(swordPrefab);
+            }
+            else if (currWeapons[a] == "Shotgun")
+            {
+                possibleWeapons.Remove(shotgunPrefab);
+            }
+            else if (currWeapons[a] == "Sniper")
+            {
+                possibleWeapons.Remove(sniperPrefab);
+            }
+        }
+
+        int firstIndex = Random.Range(0, possibleWeapons.Count);
+
+        if (possibleWeapons.Count > 0)
+        {
+            GameObject firstWeapon = Instantiate(possibleWeapons[firstIndex]);
+            firstWeapon.transform.SetParent(weaponTableLeft.transform, false);
+        }
+
+        if(possibleWeapons.Count > 1)
+        {
+            int secondIndex = Random.Range(0, possibleWeapons.Count);
+            // Make sure different weapon
+            while(secondIndex == firstIndex)
+            {
+                secondIndex = Random.Range(0, possibleWeapons.Count);
+            }
+            GameObject secondWeapon = Instantiate(possibleWeapons[secondIndex]);
+            secondWeapon.transform.SetParent(weaponTableRight.transform, false);
+        }
+
     }
 
     void InitRandomUpgrades()

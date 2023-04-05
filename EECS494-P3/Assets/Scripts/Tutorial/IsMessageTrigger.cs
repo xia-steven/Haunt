@@ -14,7 +14,7 @@ public class IsMessageTrigger : MonoBehaviour
 
         if(!sent && other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            EventBus.Publish(new TutorialMessageEvent(tutorialMessageID, GetInstanceID()));
+            EventBus.Publish(new TutorialMessageEvent(tutorialMessageID, GetInstanceID(), false));
             sent = true;
         }
     }

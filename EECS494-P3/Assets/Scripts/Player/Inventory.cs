@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
     private int numWeapons = 0;
     private int currentWeapon = 0;
     private GameObject[] weapons = new GameObject[10];
+    private List<string> ownedWeapons;
     private GameObject pistol;
     private GameObject rifle;
     private GameObject shotgun;
@@ -32,6 +33,8 @@ public class Inventory : MonoBehaviour
         resetInventorySubscription = EventBus.Subscribe<ResetInventoryEvent>(_OnResetInventory);
         weaponPurchasedSubscription = EventBus.Subscribe<WeaponPurchasedEvent>(_OnWeaponPurchase);
         reloadAllSubscription = EventBus.Subscribe<ReloadAllEvent>(_OnReloadAll);
+
+        ownedWeapons = new List<string>();
 
         // Equip pistol on load
         pistol = Resources.Load<GameObject>("Prefabs/Weapons/Pistol");
@@ -68,6 +71,8 @@ public class Inventory : MonoBehaviour
 
         currentWeapon = numWeapons;
         numWeapons++;
+        // Add weapon name to owned weapons
+        ownedWeapons.Add(weapon.name);
     }
 
     public void _OnSwitchWeapon(SwapEvent e)
@@ -116,6 +121,11 @@ public class Inventory : MonoBehaviour
     public int GetCoins()
     {
         return coins;
+    }
+
+    public List<string> GetCurrentWeapons()
+    {
+        return ownedWeapons;
     }
 
     private void _OnCoinChange(CoinEvent e)

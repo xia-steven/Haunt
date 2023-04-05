@@ -11,7 +11,7 @@ public class ReloadUpgrade : Upgrade
 
     protected override void Start()
     {
-        thisData = typesData.types[(int)UpgradeType.fastReload];
+        thisData = typesData.types[(int)PurchaseableType.fastReload];
         base.Start();
     }
 

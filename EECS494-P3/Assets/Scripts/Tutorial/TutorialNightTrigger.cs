@@ -35,7 +35,7 @@ public class TutorialNightTrigger : MonoBehaviour
     {
         if(!sent)
         {
-            EventBus.Publish(new TutorialMessageEvent(nightStartTutorialMessageID, GetInstanceID(), KeyCode.Mouse0, true));
+            EventBus.Publish(new TutorialMessageEvent(nightStartTutorialMessageID, GetInstanceID(), false, KeyCode.Mouse0, true));
             sent = true;
             StartCoroutine(startTutorialNight());
         }
@@ -64,6 +64,6 @@ public class TutorialNightTrigger : MonoBehaviour
 
     void onNightEnd(NightEndEvent nee)
     {
-        EventBus.Publish(new TutorialMessageEvent(nightEndTutorialMessageID, GetInstanceID()));
+        EventBus.Publish(new TutorialMessageEvent(nightEndTutorialMessageID, GetInstanceID(), false));
     }
 }

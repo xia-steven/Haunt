@@ -11,7 +11,7 @@ public class StationaryDamageUpgrade : Upgrade
 
     protected override void Start()
     {
-        thisData = typesData.types[(int)UpgradeType.stationaryDamage];
+        thisData = typesData.types[(int)PurchaseableType.stationaryDamage];
         base.Start();
     }
 

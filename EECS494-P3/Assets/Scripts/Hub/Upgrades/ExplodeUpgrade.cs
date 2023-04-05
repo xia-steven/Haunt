@@ -11,7 +11,7 @@ public class ExplodeUpgrade : Upgrade
 
     protected override void Start()
     {
-        thisData = typesData.types[(int)UpgradeType.dashExplode];
+        thisData = typesData.types[(int)PurchaseableType.dashExplode];
         base.Start();
     }
 

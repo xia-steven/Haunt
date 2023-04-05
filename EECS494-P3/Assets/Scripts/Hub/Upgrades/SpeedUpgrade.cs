@@ -11,7 +11,7 @@ public class SpeedUpgrade : Upgrade
 
     protected override void Start()
     {
-        thisData = typesData.types[(int)UpgradeType.speed];
+        thisData = typesData.types[(int)PurchaseableType.speed];
         base.Start();
     }
 

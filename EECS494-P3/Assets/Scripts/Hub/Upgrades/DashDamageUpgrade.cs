@@ -11,7 +11,7 @@ public class DashDamageUpgrade : Upgrade
 
     protected override void Start()
     {
-        thisData = typesData.types[(int)UpgradeType.doubleDashDamage];
+        thisData = typesData.types[(int)PurchaseableType.doubleDashDamage];
         base.Start();
     }
 
