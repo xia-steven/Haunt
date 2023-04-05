@@ -150,14 +150,16 @@ public class MessageEvent
     public KeyCode keyToWaitFor;
     public int senderInstanceID;
     public bool unpauseBeforeFade;
+    public bool pauseTime;
 
-    public MessageEvent(List<string> messages_in, int senderInstanceID_in, KeyCode keyToWaitFor_in = KeyCode.Mouse0,
+    public MessageEvent(List<string> messages_in, int senderInstanceID_in, bool pauseTime_in, KeyCode keyToWaitFor_in = KeyCode.Mouse0,
         bool unpauseBeforeFade_in = false)
     {
         messages = messages_in;
         keyToWaitFor = keyToWaitFor_in;
         senderInstanceID = senderInstanceID_in;
         unpauseBeforeFade = unpauseBeforeFade_in;
+        pauseTime = pauseTime_in;
     }
 }
 

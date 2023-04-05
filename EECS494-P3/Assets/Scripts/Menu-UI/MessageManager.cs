@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class MessageManager : MonoBehaviour
@@ -10,10 +11,14 @@ public class MessageManager : MonoBehaviour
     [SerializeField] TMP_Text text;
     [SerializeField] Image textBackground;
     [Tooltip("Number of frames to wait in between each character")]
-    [SerializeField] int textDelay = 12;
+    float textDelay = 0.04f;
 
     bool sendingMessage = false;
     Color backgroundOpaqueColor;
+
+    PlayerControls controls;
+    InputAction leftClickCallback;
+    bool exitEarly = false;
 
     Queue<MessageEvent> queuedMessages;
 
@@ -22,6 +27,11 @@ public class MessageManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        controls = new PlayerControls();
+        leftClickCallback = controls.Player.Fire;
+        leftClickCallback.Enable();
+        leftClickCallback.performed += SkipMessage;
+
         queuedMessages = new Queue<MessageEvent>();
         text.gameObject.SetActive(false);
         textBackground.gameObject.SetActive(false);
@@ -34,6 +44,7 @@ public class MessageManager : MonoBehaviour
     private void OnDestroy()
     {
         EventBus.Unsubscribe(messageSub);
+        leftClickCallback.Disable();
     }
 
     // Update is called once per frame
@@ -52,11 +63,21 @@ public class MessageManager : MonoBehaviour
         queuedMessages.Enqueue(mes);
     }
 
+    void SkipMessage(InputAction.CallbackContext context)
+    {
+        Debug.Log("woooooo");
+        exitEarly = true;
+    }
+
 
     IEnumerator SendMessage(MessageEvent message)
     {
-        // Set timescales to 0
-        TimeManager.SetTimeScale(0);
+
+        if(message.pauseTime)
+        {
+            // Set timescales to 0
+            TimeManager.SetTimeScale(0);
+        }
 
         // Fade In
         float initial_time = Time.realtimeSinceStartup;
@@ -79,10 +100,10 @@ public class MessageManager : MonoBehaviour
         for(int a = 0; a < message.messages.Count; ++a)
         {
             text.text = "";
-            bool exitEarly = false;
+            exitEarly = false;
             // Loop through each character for each string
             string currMessage = message.messages[a];
-            for(int b = 0; b < currMessage.Length && !exitEarly; ++b)
+            for(int b = 0; b < currMessage.Length; ++b)
             {
                 text.text += currMessage[b];
                 if(currMessage[b] == '<')
@@ -99,21 +120,15 @@ public class MessageManager : MonoBehaviour
                         text.text += currMessage[b];
                     }
                 }
-                // Wait textDelay frames before showing the next character
-                int count = 0;
-                while(count < textDelay && !exitEarly)
+                // Wait textDelay seconds before showing the next character
+                if(!exitEarly)
                 {
-                    // Allow user to break early
-                    if (Input.GetKeyDown(KeyCode.Mouse0))
-                    {
-                        text.text = currMessage;
-                        exitEarly = true;
-                    }
-
-                    count++;
-                    yield return null;
+                    yield return new WaitForSecondsRealtime(textDelay);
                 }
             }
+
+            // Make sure don't accidentally get previous left click
+            yield return null;
 
             // Wait for user to acknowledge the message
             while (!Input.GetKeyDown(message.keyToWaitFor))
@@ -124,8 +139,11 @@ public class MessageManager : MonoBehaviour
             yield return null;
         }
 
-        // Set timescales back to 1
-        TimeManager.ResetTimeScale();
+        if(message.pauseTime)
+        {
+            // Set timescales back to 1
+            TimeManager.ResetTimeScale();
+        }
 
         // Let other scripts know the message finished
         Debug.Log("Finished message from sender " + message.senderInstanceID);
@@ -154,4 +172,6 @@ public class MessageManager : MonoBehaviour
         text.color = textColor;
         sendingMessage = false;
     }
+
+
 }

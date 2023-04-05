@@ -32,7 +32,7 @@ public class TutorialMessageManager : MonoBehaviour
             Debug.Log("Sending tutorial message");
             previousMessage = tme.messageID;
             // Send message event
-            EventBus.Publish(new MessageEvent(data.allMessages[tme.messageID].messages, tme.senderInstanceID, tme.keyToWaitFor, tme.unpauseBeforeFade));
+            EventBus.Publish(new MessageEvent(data.allMessages[tme.messageID].messages, tme.senderInstanceID, tme.pauseTime, tme.keyToWaitFor, tme.unpauseBeforeFade));
         } else
         {
             Debug.Log("Attempted to send an out of order message. Skipping");

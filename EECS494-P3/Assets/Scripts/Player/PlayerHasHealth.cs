@@ -90,7 +90,7 @@ public class PlayerHasHealth : HasHealth {
         else if (health == 0 && GameControl.Day <= 0)
         {
             // Tutorial day death
-            EventBus.Publish(new TutorialMessageEvent(tutorialDeathMessageID, GetInstanceID(), KeyCode.Mouse0));
+            EventBus.Publish(new TutorialMessageEvent(tutorialDeathMessageID, GetInstanceID(), true, KeyCode.Mouse0));
             return true;
         }
 

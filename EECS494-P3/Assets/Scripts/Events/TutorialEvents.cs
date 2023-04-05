@@ -28,14 +28,16 @@ public class TutorialMessageEvent
     public KeyCode keyToWaitFor;
     public int senderInstanceID;
     public bool unpauseBeforeFade;
+    public bool pauseTime;
 
-    public TutorialMessageEvent(int messageID_in, int senderInstanceID_in, KeyCode keyToWaitFor_in = KeyCode.Mouse0,
+    public TutorialMessageEvent(int messageID_in, int senderInstanceID_in, bool pauseTime_in, KeyCode keyToWaitFor_in = KeyCode.Mouse0,
         bool unpauseBeforeFade_in = false)
     {
         messageID = messageID_in;
         keyToWaitFor = keyToWaitFor_in;
         senderInstanceID = senderInstanceID_in;
         unpauseBeforeFade = unpauseBeforeFade_in;
+        pauseTime = pauseTime_in;
     }
 }
 

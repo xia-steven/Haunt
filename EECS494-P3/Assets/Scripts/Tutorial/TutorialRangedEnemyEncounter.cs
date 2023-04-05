@@ -44,7 +44,7 @@ public class TutorialRangedEnemyEncounter : MonoBehaviour
         yield return new WaitForSeconds(3.25f);
 
         // Send the tutorial message
-        EventBus.Publish(new TutorialMessageEvent(tutorialMessageID, GetInstanceID(), KeyCode.Space, true));
+        EventBus.Publish(new TutorialMessageEvent(tutorialMessageID, GetInstanceID(), true, KeyCode.Space, true));
 
         // Wait for message to finish
         while(!messageFinished)
