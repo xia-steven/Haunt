@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class IsTeleporter : MonoBehaviour
 {
     [SerializeField] string otherScene;
+    [SerializeField] private GameObject selectedRing;
     
     MeshRenderer visualRenderer;
     private Animator anim;
@@ -42,7 +41,7 @@ public class IsTeleporter : MonoBehaviour
 
         interactSub = EventBus.Subscribe<TryInteractEvent>(_Interact);
 
-        Object[] sprites = Resources.LoadAll("tilemap");
+        UnityEngine.Object[] sprites = Resources.LoadAll("tilemap");
         eSprite = (Sprite)sprites[360];
 
         ePrompt = new SpritePromptEvent(eSprite, KeyCode.E);
@@ -50,8 +49,9 @@ public class IsTeleporter : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (isActive && other.CompareTag("Player") && !sentPrompt)
+        if (!isUsable && isActive && other.CompareTag("Player") && !sentPrompt)
         {
+            selectedRing.SetActive(true);
             isUsable = true;
             ePrompt.cancelPrompt = false;
             EventBus.Publish<SpritePromptEvent>(ePrompt);
@@ -65,6 +65,7 @@ public class IsTeleporter : MonoBehaviour
         {
             ePrompt.cancelPrompt = true;
             sentPrompt = false;
+            selectedRing.SetActive(false);
             isUsable = false;
         }
     }

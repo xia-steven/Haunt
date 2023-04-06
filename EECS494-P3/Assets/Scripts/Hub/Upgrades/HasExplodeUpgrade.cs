@@ -40,14 +40,30 @@ public class HasExplodeUpgrade : MonoBehaviour
             }
 
             // Show visual
-            GameObject visual = Resources.Load<GameObject>("Prefabs/EnemyWeapons/ExplosionRadius");
-            GameObject spawnedVisual = Instantiate(visual, transform.position, Quaternion.identity);
+            
+            // IsSprite spriteScaler = spawnedVisual.GetComponentInChildren<IsSprite>();
+            // spriteScaler.scale = explosiveRadius * 2;
+            
 
-            IsSprite spriteScaler = spawnedVisual.GetComponentInChildren<IsSprite>();
-            spriteScaler.scale = explosiveRadius * 2;
-
-            Destroy(spawnedVisual, 0.15f);
+            // Destroy(spawnedVisual, explosion_anim.);
+            StartCoroutine(ExplosionAnimation());
         }
+    }
+
+    IEnumerator ExplosionAnimation()
+    {
+        // might want to change this visual to be ever-present but just deactivated
+        GameObject visual = Resources.Load<GameObject>("Prefabs/EnemyWeapons/ExplosionRadius");
+        GameObject spawnedVisual = Instantiate(visual, transform.position, Quaternion.identity);
+        Animator animator = spawnedVisual.GetComponentInChildren<Animator>();
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0); // get the current state info
+        while (stateInfo.normalizedTime < 1f) // wait for the animation to finish
+        {
+            stateInfo = animator.GetCurrentAnimatorStateInfo(0); // get the updated state info
+            yield return null;
+        }
+        Destroy(spawnedVisual);
+        
     }
 
     protected void OnDestroy()

@@ -109,6 +109,10 @@ public abstract class Weapon : MonoBehaviour {
 
     protected virtual void _OnFire(FireEvent e) {
         firing = e.state;
+        if (firing && currentClipAmount <= 0 && !isReloading)
+        {
+            GunReload();
+        }
         if (!firing)
         {
             // Allows for click spamming but not hold spamming
@@ -219,9 +223,6 @@ public abstract class Weapon : MonoBehaviour {
         if (currentClipAmount > 0 && firing && (Time.time - lastBullet >= bulletDelay) && (Time.time - lastTap >= tapDelay) && !isReloading)
         {
             WeaponFire(direction);
-        } else if (firing && (Time.time - lastBullet >= bulletDelay) && (Time.time - lastTap >= tapDelay) && !isReloading)
-        {
-            GunReload();
         }
     }
 
