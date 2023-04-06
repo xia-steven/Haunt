@@ -121,8 +121,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 23
+        y: 24
+        width: 24
         height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -141,9 +141,9 @@ TextureImporter:
       name: speech_bubble_small_spritesheet_1
       rect:
         serializedVersion: 2
-        x: 25
-        y: 0
-        width: 23
+        x: 24
+        y: 24
+        width: 24
         height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -154,6 +154,48 @@ TextureImporter:
       bones: []
       spriteID: 020274453a22a2141b5723a4d6484230
       internalID: -239764365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speech_bubble_small_spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e56f5b1f8b1e0a4b8df90205f15f6d5
+      internalID: -1994959160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: speech_bubble_small_spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9462469e0c4988c479d5341bb625d776
+      internalID: -220914875
       vertices: []
       indices: 
       edges: []
@@ -171,6 +213,8 @@ TextureImporter:
     nameFileIdTable:
       speech_bubble_small_spritesheet_0: -597584877
       speech_bubble_small_spritesheet_1: -239764365
+      speech_bubble_small_spritesheet_2: -1994959160
+      speech_bubble_small_spritesheet_3: -220914875
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

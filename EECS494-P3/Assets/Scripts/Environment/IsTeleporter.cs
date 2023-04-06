@@ -11,6 +11,12 @@ public class IsTeleporter : MonoBehaviour
     MeshRenderer visualRenderer;
     private Animator anim;
 
+
+    Sprite eSprite;
+    SpritePromptEvent ePrompt;
+
+    bool sentPrompt = false;
+
     bool isActive = true;
     public bool Active {
         get { return isActive; }
@@ -35,15 +41,21 @@ public class IsTeleporter : MonoBehaviour
         Activate();
 
         interactSub = EventBus.Subscribe<TryInteractEvent>(_Interact);
+
+        Object[] sprites = Resources.LoadAll("tilemap");
+        eSprite = (Sprite)sprites[360];
+
+        ePrompt = new SpritePromptEvent(eSprite, KeyCode.E);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        Debug.Log("IS Active: " + isActive);
-        if (isActive && other.CompareTag("Player"))
+        if (isActive && other.CompareTag("Player") && !sentPrompt)
         {
             isUsable = true;
-            EventBus.Publish(new ToastRequestEvent("Press E To Teleport", true, KeyCode.E));
+            ePrompt.cancelPrompt = false;
+            EventBus.Publish<SpritePromptEvent>(ePrompt);
+            sentPrompt = true;
         }
     }
 
@@ -51,6 +63,8 @@ public class IsTeleporter : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            ePrompt.cancelPrompt = true;
+            sentPrompt = false;
             isUsable = false;
         }
     }
