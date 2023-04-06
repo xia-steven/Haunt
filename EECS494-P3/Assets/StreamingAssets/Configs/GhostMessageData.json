@@ -1,0 +1,30 @@
+{
+    "key": "GhostMessageData",
+    "allMessages": [
+        {
+            "messages": [
+                "PRE TUTORIAL NIGHT HERE"
+            ]
+        },
+        {
+            "messages": [
+                "POST TUTORIAL NIGHT HERE"
+            ]
+        },
+        {
+            "messages": [
+                "POST NIGHT 1 HERE"
+            ]
+        },
+        {
+            "messages": [
+                "POST NIGHT 2 HERE"
+            ]
+        },
+        {
+            "messages": [
+                "POST NIGHT 3 HERE"
+            ]
+        }
+    ]
+}

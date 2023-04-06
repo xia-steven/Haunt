@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour {
     Subscription<TutorialDodgeStartEvent> dodgeStartSub;
     Subscription<TutorialDodgeEndEvent> dodgeEndSub;
 
+    Sprite interactSprite;
 
 
     private void Start() {

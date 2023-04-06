@@ -86,3 +86,21 @@ public class TutorialDodgeEndEvent
 {
     
 }
+
+/// <summary>
+/// The SpritePromptEvent is sent when a script wants to display
+/// a sprite next to the player.  Usually the sprites will be tutorial
+/// keys or interact prompts.
+/// </summary>
+public class SpritePromptEvent
+{
+    public Sprite sprite;
+    public KeyCode dismissKey;
+    public bool cancelPrompt = false;
+
+    public SpritePromptEvent(Sprite sprite_in, KeyCode dismissKey_in)
+    {
+        sprite = sprite_in;
+        dismissKey = dismissKey_in;
+    }
+}

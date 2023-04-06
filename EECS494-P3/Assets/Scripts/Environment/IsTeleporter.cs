@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class IsTeleporter : MonoBehaviour
@@ -12,6 +9,12 @@ public class IsTeleporter : MonoBehaviour
     
     MeshRenderer visualRenderer;
     private Animator anim;
+
+
+    Sprite eSprite;
+    SpritePromptEvent ePrompt;
+
+    bool sentPrompt = false;
 
     bool isActive = true;
     public bool Active {
@@ -37,26 +40,22 @@ public class IsTeleporter : MonoBehaviour
         Activate();
 
         interactSub = EventBus.Subscribe<TryInteractEvent>(_Interact);
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("IS Active: " + isActive);
-        if (isActive && other.CompareTag("Player"))
-        {
-            selectedRing.SetActive(true);
-            isUsable = true;
-            EventBus.Publish(new ToastRequestEvent("Press E To Teleport", true, KeyCode.E));
-        }
+        UnityEngine.Object[] sprites = Resources.LoadAll("tilemap");
+        eSprite = (Sprite)sprites[360];
+
+        ePrompt = new SpritePromptEvent(eSprite, KeyCode.E);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (!isUsable && isActive && other.CompareTag("Player"))
+        if (!isUsable && isActive && other.CompareTag("Player") && !sentPrompt)
         {
             selectedRing.SetActive(true);
             isUsable = true;
-            EventBus.Publish(new ToastRequestEvent("Press E To Teleport", true, KeyCode.E));
+            ePrompt.cancelPrompt = false;
+            EventBus.Publish<SpritePromptEvent>(ePrompt);
+            sentPrompt = true;
         }
     }
 
@@ -64,6 +63,8 @@ public class IsTeleporter : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            ePrompt.cancelPrompt = true;
+            sentPrompt = false;
             selectedRing.SetActive(false);
             isUsable = false;
         }
