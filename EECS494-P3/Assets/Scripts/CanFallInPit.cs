@@ -112,6 +112,9 @@ public class CanFallInPit : MonoBehaviour
 
         Debug.Log("Player fell into pit");
 
+        // Send end dodge routine in case fall happens half way through dodge
+        EventBus.Publish<TutorialDodgeEndEvent>(new TutorialDodgeEndEvent());
+
         // Play pit falling animation
         isFalling = true;
         StartCoroutine(FallInPit());
