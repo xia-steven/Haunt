@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1083753723157490141}
   - component: {fileID: 6421442548665186003}
   - component: {fileID: 8204069912766458918}
-  - component: {fileID: 1632184123009376169}
+  - component: {fileID: 8563193716535048124}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -26,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1361477307913409717}
-  m_LocalRotation: {x: 0.38268343, y: -0, z: -0, w: 0.92387956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.22999999, y: 0.23, z: 0.23}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6802490151260379698}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6421442548665186003
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -74,8 +74,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
-  m_Sprite: {fileID: 1560886345, guid: 43f42225af671164dbc7cf95eb3321f3, type: 3}
+  m_SortingOrder: 3
+  m_Sprite: {fileID: -1027097994, guid: 43f42225af671164dbc7cf95eb3321f3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 1
---- !u!95 &1632184123009376169
+--- !u!95 &8563193716535048124
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
