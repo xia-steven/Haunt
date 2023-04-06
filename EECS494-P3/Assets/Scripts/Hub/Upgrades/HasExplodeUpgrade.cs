@@ -6,12 +6,21 @@ public class HasExplodeUpgrade : MonoBehaviour
 {
     [SerializeField] bool oneShotEnemies = false;
     public float explosiveRadius;
+    private int numBombs = 4;
+    private float bombFrequency;
     private Subscription<PlayerDodgeEvent> dodgeEvent;
+    GameObject bomb;
 
     // Start is called before the first frame update
     void Start()
     {
         dodgeEvent = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
+
+        // Set how often bombs are dropped along trail
+        bombFrequency = IsPlayer.instance.gameObject.GetComponent<PlayerController>().dodgeRollDuration / numBombs;
+        Debug.Log("Bomb frequency: " + bombFrequency);
+
+        bomb = Resources.Load<GameObject>("Prefabs/Weapons/Bomb");
     }
 
     // Explode on dash finish
@@ -19,6 +28,7 @@ public class HasExplodeUpgrade : MonoBehaviour
     {
         if (e.start)
         {
+            /*
             // Perform hit
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosiveRadius);
 
@@ -47,6 +57,9 @@ public class HasExplodeUpgrade : MonoBehaviour
 
             // Destroy(spawnedVisual, explosion_anim.);
             StartCoroutine(ExplosionAnimation());
+            */
+
+            StartCoroutine(DropBombs());
         }
     }
 
@@ -64,6 +77,16 @@ public class HasExplodeUpgrade : MonoBehaviour
         }
         Destroy(spawnedVisual);
         
+    }
+
+    IEnumerator DropBombs()
+    {
+        // Drop the specified number of bombs at a constant frequency
+        for (int i = 0; i < numBombs; i++)
+        {
+            Instantiate(bomb, transform);
+            yield return new WaitForSeconds(bombFrequency);
+        }
     }
 
     protected void OnDestroy()
