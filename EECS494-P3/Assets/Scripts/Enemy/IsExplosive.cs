@@ -21,7 +21,15 @@ public class IsExplosive : MonoBehaviour {
 
 
         // Perform hit
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosiveRadius);
+        Collider[] hitColliders;
+        if (fromPlayer)
+        {
+            Debug.Log("Radius = " + explosiveRadius * PlayerModifiers.explosiveRadius);
+            hitColliders = Physics.OverlapSphere(transform.position, explosiveRadius * PlayerModifiers.explosiveRadius);
+        } else
+        {
+            hitColliders = Physics.OverlapSphere(transform.position, explosiveRadius);
+        }
 
         foreach (Collider hit in hitColliders) {
             PlayerHasHealth playerHit;
@@ -47,7 +55,14 @@ public class IsExplosive : MonoBehaviour {
         GameObject spawnedVisual = Instantiate(visual, transform.position, Quaternion.identity);
 
         IsSprite spriteScaler = spawnedVisual.GetComponentInChildren<IsSprite>();
-        spriteScaler.scale = explosiveRadius * 2;
+
+        if (fromPlayer)
+        {
+            spriteScaler.scale = explosiveRadius * 2 * PlayerModifiers.explosiveRadius;
+        } else
+        {
+            spriteScaler.scale = explosiveRadius * 2;
+        }
 
         Destroy(spawnedVisual, 0.15f);
     }

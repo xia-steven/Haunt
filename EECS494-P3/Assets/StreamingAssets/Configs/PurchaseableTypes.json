@@ -75,6 +75,17 @@
             "rate1": 90,
             "rate2": 0.2,
             "description": "Sword.  When you want to get close."
+        },
+        {
+            "type": 12,
+            "cost": 3,
+            "rate1": 2,
+            "description": "Explosive radius is doubled"
+        },
+        {
+            "type": 13,
+            "cost": 18,
+            "description": "Launcher.  BOOM!!"
         }
     ]
 }
