@@ -11,6 +11,7 @@ public class coordinate {
 
 public class MapData : Savable {
     public coordinate dimension;
+    public Vector3 origin;
     public List<coordinate> unwalkableTiles;
 }
 
@@ -32,12 +33,11 @@ public class PathfindingController : MonoBehaviour {
 
     private void Start() {
         pedestalInfos = new Dictionary<int, PedestalInfo> {
-            { 1, new PedestalInfo(new Vector3(10, 0, 0)) }, { 2, new PedestalInfo(new Vector3(-10, 0, 0)) },
-            { 3, new PedestalInfo(new Vector3(0, 0, -9)) }
+            { 1, new PedestalInfo(new Vector3(19, 0, 0)) }, { 2, new PedestalInfo(new Vector3(-19, 0, 0)) },
+            { 3, new PedestalInfo(new Vector3(0, 0, -13)) }
         };
         map = ConfigManager.GetData<MapData>("map");
-        pathfinding = new Pathfinding(map.dimension.x, map.dimension.y,
-            new Vector3(-(float)map.dimension.x / 2, 0, -(float)map.dimension.y / 2));
+        pathfinding = new Pathfinding(map.dimension.x, map.dimension.y, map.origin);
         foreach (var tile in map.unwalkableTiles) {
             pathfinding.GetNode(tile.x, tile.y).SetIsWalkable(false);
         }
