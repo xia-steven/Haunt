@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 4686557592162535090}
   - component: {fileID: 4998661702936903479}
   - component: {fileID: 961906241480330372}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Melquiades
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -313,6 +313,7 @@ MonoBehaviour:
   configName: ShopMessageData
   interactSprite: {fileID: 1059701814}
   initialBubble: {fileID: 6389529172779613980}
+  isGhost: 0
 --- !u!1 &6389529172779613980
 GameObject:
   m_ObjectHideFlags: 0
