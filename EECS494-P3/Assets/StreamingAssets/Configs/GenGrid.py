@@ -1,7 +1,7 @@
 import json
 
 dimension = {"x": 59, "y": 39}
-origin = {"x": -29.5, "y": 0, "z": -19.5}
+origin = {"x": -29.5, "y": 0, "z": -20.5}
 
 map_dict = {"key": "map", "dimension": dimension, "origin": origin, "unwalkableTiles": []}
 
