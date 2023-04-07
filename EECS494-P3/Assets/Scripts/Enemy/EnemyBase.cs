@@ -61,8 +61,7 @@ public class EnemyBase : MonoBehaviour {
                 // Do nothing - can attack if not already attacking
             }
             // Confirm that the raycast did not hit the player
-            else if (!hit.transform.gameObject.CompareTag("Player")) {
-                Debug.Log("hello");
+            else if (needAStar(hit)) {
                 if (!runningCoroutine) {
                     state = EnemyState.AStarMovement;
                     runningCoroutine = true;
@@ -109,6 +108,10 @@ public class EnemyBase : MonoBehaviour {
         }
     }
 
+    public virtual bool needAStar(RaycastHit hit) {
+        return !hit.transform.gameObject.CompareTag("Player");
+    }
+
     /// <summary>
     /// This function is used to get the enemy's attributes from the config value.
     /// Each unique enemy must override this to get the correct attributes
@@ -149,7 +152,7 @@ public class EnemyBase : MonoBehaviour {
     /// variable is used to track when to stop.
     /// </summary>
     /// <returns></returns>
-    public virtual IEnumerator MoveWithAStar(int targetX, int targetZ) {
+    public IEnumerator MoveWithAStar(int targetX, int targetZ) {
         // Start player position updating
         StartCoroutine(updatePathfindingVector(targetX, targetZ));
 
