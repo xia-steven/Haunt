@@ -7,22 +7,26 @@ public class TeleporterDisableUntilPurchase : MonoBehaviour {
     IsTeleporter tp;
     bool activated = false;
 
+    Subscription<ActivateTeleporterEvent> activateSub;
+
     private void Start() {
         tp = GetComponent<IsTeleporter>();
 
         tp.Active = false;
         activated = false;
+
+        activateSub = EventBus.Subscribe<ActivateTeleporterEvent>(onTeleporterActivate);
+    }
+
+    private void OnDestroy()
+    {
+        EventBus.Unsubscribe(activateSub);
     }
 
     // Update is called once per frame
-    void Update() {
-        if (!activated && GameControl.NightEnding) {
-            activated = true;
-            tp.Active = true;
-        }
-        else if (!GameControl.NightEnding) {
-            tp.Active = false;
-            activated = false;
-        }
-    }
+    private void onTeleporterActivate(ActivateTeleporterEvent ate)
+    {
+        activated = true;
+        tp.Active = true;
+    }   
 }

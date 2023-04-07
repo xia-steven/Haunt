@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 50802311708080287}
   m_LocalRotation: {x: 0.38268343, y: -0, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: 0.5, y: 1.2, z: 0}
+  m_LocalPosition: {x: -0.5, y: 1.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -239764365, guid: 047a16eac5138f845aae32c96d7f5307, type: 3}
+  m_Sprite: {fileID: -597584877, guid: 047a16eac5138f845aae32c96d7f5307, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -202,6 +202,7 @@ MonoBehaviour:
   configName: GhostMessageData
   interactSprite: {fileID: 50802311708080287}
   initialBubble: {fileID: 2471834519430160416}
+  isGhost: 1
 --- !u!65 &50802311806852393
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -213,7 +214,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 1, z: 3}
+  m_Size: {x: 2, y: 1, z: 2}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &2471834519430160416
 GameObject:
@@ -241,7 +242,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2471834519430160416}
   m_LocalRotation: {x: 0.38268343, y: -0, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: 0.5, y: 1.2, z: 0}
+  m_LocalPosition: {x: -0.5, y: 1.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -289,7 +290,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -220914875, guid: 047a16eac5138f845aae32c96d7f5307, type: 3}
+  m_Sprite: {fileID: -1994959160, guid: 047a16eac5138f845aae32c96d7f5307, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

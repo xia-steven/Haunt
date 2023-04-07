@@ -3,11 +3,6 @@
     "allMessages": [
         {
             "messages": [
-                "PRE TUTORIAL NIGHT HERE"
-            ]
-        },
-        {
-            "messages": [
                 "POST TUTORIAL NIGHT HERE"
             ]
         },
@@ -26,5 +21,9 @@
                 "POST NIGHT 3 HERE"
             ]
         }
+    ],
+    "initialTutorial": [
+        "Message 1",
+        "Message 2"
     ]
 }

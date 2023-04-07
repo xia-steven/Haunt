@@ -148,7 +148,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &167498673
 Transform:
   m_ObjectHideFlags: 0
@@ -430,11 +430,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
---- !u!4 &950348631 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6468321568443670559, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
-  m_PrefabInstance: {fileID: 928705911}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &998501369 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 797050022514877534, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
@@ -519,7 +514,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1106733812
 Transform:
   m_ObjectHideFlags: 0
@@ -628,11 +623,6 @@ MonoBehaviour:
   nightStartTutorialMessageID: 4
   nightEndTutorialMessageID: 5
   timerText: {fileID: 1543950432}
---- !u!4 &1863396811 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6468321569296663574, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
-  m_PrefabInstance: {fileID: 928705911}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2009628552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -836,6 +826,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 641650401560064576, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: spawners.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 641650401560064576, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: spawners.Array.data[0]
       value: 
       objectReference: {fileID: 905898370}
@@ -854,11 +848,11 @@ PrefabInstance:
     - target: {fileID: 641650401560064576, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: spawners.Array.data[4]
       value: 
-      objectReference: {fileID: 1863396811}
+      objectReference: {fileID: 0}
     - target: {fileID: 641650401560064576, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: spawners.Array.data[5]
       value: 
-      objectReference: {fileID: 950348631}
+      objectReference: {fileID: 0}
     - target: {fileID: 641650401560064583, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -959,6 +953,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4426098917429715812, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_RefResolutionX
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426098917429715812, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_RefResolutionY
+      value: 576
+      objectReference: {fileID: 0}
     - target: {fileID: 4675439111274480993, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_fontColor.b
       value: 1
@@ -989,11 +991,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5378286916379416224, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: zRoomMax
-      value: -5
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 5378286916379416224, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: zRoomMin
-      value: -19
+      value: -23
       objectReference: {fileID: 0}
     - target: {fileID: 6555660545693190635, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_fontColor32.rgba
