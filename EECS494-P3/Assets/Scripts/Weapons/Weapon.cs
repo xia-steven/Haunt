@@ -177,6 +177,7 @@ public abstract class Weapon : MonoBehaviour {
         if (shotByPlayer)
         {
             EventBus.Publish(new WeaponSwapEvent(this));
+            PlayerModifiers.moveSpeed = speedMultiplier;
         }
         firing = false;
     }
