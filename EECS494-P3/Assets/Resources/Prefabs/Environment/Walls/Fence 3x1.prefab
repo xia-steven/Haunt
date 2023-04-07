@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8878111004920273354}
   - component: {fileID: 5653940724845056510}
   - component: {fileID: 3945943423899515130}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FloorTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5938519412087188349}
   - component: {fileID: 4686913799883814798}
   - component: {fileID: 6510387510283861703}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FloorTile (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 221985071053926483}
   - component: {fileID: 8392752040335785988}
   - component: {fileID: 3649360353715443335}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Quad (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 5591624104566554864}
   - component: {fileID: 7034769498866853592}
   - component: {fileID: 7361899096595271692}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Quad (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 5525751824239695600}
   - component: {fileID: 3545671387518466834}
   - component: {fileID: 6919055803566299134}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 2601908161893722674}
   - component: {fileID: 7835264585982267960}
   - component: {fileID: 4208378317349275724}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FloorTile (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -508,7 +508,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7169257355386311170}
   - component: {fileID: 8348216644338632567}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fence 3x1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
