@@ -133,5 +133,7 @@ public enum PurchaseableType
     shotgun = 8,            //shotgun
     sniper = 9,             //sniper
     minigun = 10,           //minigun
-    sword = 11              //sword/bazooka (once implemented)
+    sword = 11,             //sword/bazooka (once implemented)
+    radius = 12,            //expands explosion radius
+    launcher = 13           //launcher
 }

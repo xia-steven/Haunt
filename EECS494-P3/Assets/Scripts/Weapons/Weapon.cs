@@ -263,7 +263,6 @@ public abstract class Weapon : MonoBehaviour {
         {
             Debug.Log("thisData for weapon set to null");
         }
-        
     }
 
     protected virtual void OnDisable()
