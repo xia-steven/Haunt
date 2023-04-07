@@ -39,25 +39,6 @@ public class ClericEnemy : EnemyBase {
         SetTargetPosition(findClosestPedestal());
     }
 
-    private new void FixedUpdate() {
-        if (pathVectorList != null) {
-            var targetPosition = pathVectorList[currentPathIndex] + PathfindingController.map.origin;
-            if (Vector3.Distance(transform.position, targetPosition) > 0.5f) {
-                var moveDir = (targetPosition - transform.position).normalized;
-                tf_.position += Time.deltaTime * baseSpeed * moveDir;
-            }
-            else {
-                if (++currentPathIndex >= pathVectorList.Count) {
-                    pathVectorList = null;
-                    rb.velocity = Vector3.zero;
-                }
-            }
-        }
-        else {
-            rb.velocity = Vector3.zero;
-        }
-    }
-
     private void OnDestroy() {
         EventBus.Unsubscribe(switchPedestalSub);
         EventBus.Unsubscribe(addPedestalSub);

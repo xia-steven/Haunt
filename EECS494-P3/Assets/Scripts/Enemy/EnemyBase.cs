@@ -62,6 +62,7 @@ public class EnemyBase : MonoBehaviour {
             }
             // Confirm that the raycast did not hit the player
             else if (!hit.transform.gameObject.CompareTag("Player")) {
+                Debug.Log("hello");
                 if (!runningCoroutine) {
                     state = EnemyState.AStarMovement;
                     runningCoroutine = true;
@@ -99,7 +100,7 @@ public class EnemyBase : MonoBehaviour {
             if (!runningCoroutine) {
                 state = EnemyState.SimpleMovement;
                 runningCoroutine = true;
-                StartCoroutine(MoveStraightToPlayer());
+                StartCoroutine(MoveStraightTowards(targetPosition));
             }
             else {
                 // Set idle to wait for previous state to finish
@@ -188,13 +189,10 @@ public class EnemyBase : MonoBehaviour {
     /// The EnemyState variable used to track when to stop.
     /// </summary>
     /// <returns></returns>
-    private IEnumerator MoveStraightToPlayer() {
+    private IEnumerator MoveStraightTowards(Vector3 target) {
         while (state == EnemyState.SimpleMovement) {
-            // Get player position
-            var playerPosition = IsPlayer.instance.transform.position;
-
             // Get direction to move
-            var direction = (playerPosition - transform.position).normalized;
+            var direction = (target - transform.position).normalized;
             // Remove any y coordinate (shouldn't be any)
             direction.y = 0;
 
