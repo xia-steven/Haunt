@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour {
 
     private void StartDodge(TutorialDodgeStartEvent tutorDodge = null)
     {
-        EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(true));
+        EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(true, movement));
         col.enabled = false; // start iframes, turn back on when dodge ends
         isDodging = true;
         //rb.useGravity = false;
@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour {
 
     private void StopDodge(TutorialDodgeEndEvent tutorDodge = null)
     {
-        EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(false));
+        EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(false, movement));
         col.enabled = true;
         dodgeRollTimer = 0;
         isDodging = false;

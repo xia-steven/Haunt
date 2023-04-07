@@ -71,7 +71,9 @@
         },
         {
             "type": 11,
-            "cost": 18,
+            "cost": 0,
+            "rate1": 90,
+            "rate2": 0.2,
             "description": "Sword.  When you want to get close."
         }
     ]

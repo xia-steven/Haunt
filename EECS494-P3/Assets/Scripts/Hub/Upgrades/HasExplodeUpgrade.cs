@@ -81,6 +81,8 @@ public class HasExplodeUpgrade : MonoBehaviour
 
     IEnumerator DropBombs()
     {
+        // Drop last bomb at last location
+        yield return new WaitForSeconds(bombFrequency);
         // Drop the specified number of bombs at a constant frequency
         for (int i = 0; i < numBombs; i++)
         {
