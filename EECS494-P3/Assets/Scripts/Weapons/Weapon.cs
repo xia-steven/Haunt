@@ -69,6 +69,9 @@ public abstract class Weapon : MonoBehaviour {
     // Buffs/nerfs on player speed for specific guns
     [SerializeField] protected float speedMultiplier = 1f;
 
+    protected static WeaponTypesData typesData;
+    protected WeaponData thisData;
+
     protected Subscription<FireEvent> fireEventSubscription;
     protected Subscription<ReloadEvent> reloadEventSubscription;
     protected Subscription<EnablePlayerEvent> enablePlayerSubscription;
@@ -77,6 +80,9 @@ public abstract class Weapon : MonoBehaviour {
 
     protected virtual void Awake()
     {
+        if (typesData == null)
+            typesData = ConfigManager.GetData<WeaponTypesData>("WeaponTypes");
+
         lastBullet = 0;
         lastTap = 0;
         PlayerModifiers.moveSpeed *= speedMultiplier;
@@ -177,6 +183,7 @@ public abstract class Weapon : MonoBehaviour {
         if (shotByPlayer)
         {
             EventBus.Publish(new WeaponSwapEvent(this));
+            PlayerModifiers.moveSpeed = speedMultiplier;
         }
         firing = false;
     }
@@ -241,6 +248,23 @@ public abstract class Weapon : MonoBehaviour {
         return false; 
     }
 
+    protected void SetData()
+    {
+        if (thisData != null)
+        {
+            type = thisData.name;
+            fullClipAmount = thisData.fullClip;
+            bulletDelay = thisData.bulletDelay;
+            tapDelay = thisData.tapDelay;
+            screenShakeStrength = thisData.screenShakeStrength;
+            speedMultiplier = thisData.speedMultiplier;
+            reloadTime = thisData.reloadTime;
+        } else
+        {
+            Debug.Log("thisData for weapon set to null");
+        }
+    }
+
     protected virtual void OnDisable()
     {
         if (isReloading)
@@ -295,4 +319,13 @@ public enum Shooter
 {
     Player,
     Enemy
+}
+
+public enum WeaponType
+{
+    pistol = 0,
+    rifle = 1,
+    shotgun = 2,
+    sniper = 3,
+    launcher = 4
 }

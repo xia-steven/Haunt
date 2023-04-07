@@ -96,10 +96,12 @@ class PlayerMeleeEvent {
 class PlayerDodgeEvent {
     // Set to true for starting a dodge and false for ending a dodge
     public bool start;
+    public Vector3 direction;
 
-    public PlayerDodgeEvent(bool _start)
+    public PlayerDodgeEvent(bool _start, Vector3 _direction)
     {
         start = _start;
+        direction = _direction;
     }
 
     public override string ToString() {

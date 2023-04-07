@@ -14,12 +14,10 @@ public class Launcher : Weapon
     protected override void Awake()
     {
         base.Awake();
+        thisData = typesData.types[(int)WeaponType.launcher];
 
-        currentClipAmount = 3;
-        fullClipAmount = 3;
-        reloadTime = 1.2f;
-        screenShakeStrength = 0.3f;
-        type = "launcher";
+        SetData();
+        currentClipAmount = fullClipAmount;
 
         Subscribe();
 

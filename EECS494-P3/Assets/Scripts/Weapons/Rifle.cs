@@ -12,14 +12,11 @@ public class Rifle : Weapon
 
     protected override void Awake()
     {
-        speedMultiplier = 0.8f;
-
         base.Awake();
+        thisData = typesData.types[(int)WeaponType.rifle];
 
-        currentClipAmount = 30;
-        fullClipAmount = 30;
-        reloadTime = 1.0f;
-        type = "rifle";
+        SetData();
+        currentClipAmount = fullClipAmount;
 
         Subscribe();
 

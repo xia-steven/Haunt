@@ -15,12 +15,10 @@ public class Shotgun : Weapon
     protected override void Awake()
     {
         base.Awake();
+        thisData = typesData.types[(int)WeaponType.shotgun];
 
-        currentClipAmount = 5;
-        fullClipAmount = 5;
-        reloadTime = 2.0f;
-        type = "shotgun";
-        screenShakeStrength = 0.08f;
+        SetData();
+        currentClipAmount = fullClipAmount;
 
         Subscribe();
 

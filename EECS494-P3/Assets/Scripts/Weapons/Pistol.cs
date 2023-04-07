@@ -12,12 +12,10 @@ public class Pistol : Weapon {
 
     protected override void Awake() {
         base.Awake();
+        thisData = typesData.types[(int)WeaponType.pistol];
 
-        currentClipAmount = 8;
-        fullClipAmount = 8;
-        reloadTime = 0.5f;
-        screenShakeStrength = 0f;
-        type = "pistol";
+        SetData();
+        currentClipAmount = fullClipAmount;
 
         Subscribe();
 

@@ -12,7 +12,7 @@ public class MultiArcherEnemy : ArcherEnemy {
     public override int GetEnemyID() {
         return 4;
     }
-    
+
     // Override attack function
     public override IEnumerator EnemyAttack() {
         // While attacking
@@ -24,7 +24,7 @@ public class MultiArcherEnemy : ArcherEnemy {
             var rotation1 = Quaternion.AngleAxis(-90 / Random.Range(2f, 5f), Vector3.up);
             var rotation2 = Quaternion.AngleAxis(90 / Random.Range(2f, 5f), Vector3.up);
             var rotationMid = Quaternion.AngleAxis(Random.Range(-10f, 10f), Vector3.up);
-            
+
             var bullet1 = rotation1 * direction;
             var bullet2 = rotation2 * direction;
             var bulletMid = rotationMid * direction;

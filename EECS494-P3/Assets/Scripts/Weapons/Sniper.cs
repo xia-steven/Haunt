@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Sniper : Weapon
@@ -19,15 +20,17 @@ public class Sniper : Weapon
     [SerializeField] protected Color flashColor;
     [SerializeField] protected Color reloadColor;
 
+    private float pierce = 1;
+    private RaycastHit[] hits;
+
     protected override void Awake()
     {
         base.Awake();
+        thisData = typesData.types[(int)WeaponType.sniper];
 
-        currentClipAmount = 1;
-        fullClipAmount = 1;
-        reloadTime = 1.5f;
-        type = "sniper";
-        screenShakeStrength = 1.25f;
+        SetData();
+        currentClipAmount = fullClipAmount;
+        pierce += PlayerModifiers.maxPierce;
 
         Subscribe();
 
@@ -59,10 +62,17 @@ public class Sniper : Weapon
 
         int layerMask = ~(1 << LayerMask.NameToLayer("Special"));
 
+        // Get all hits of raycast
+        hits = Physics.RaycastAll(raycastSpawn, transform.forward, layerMask, 100);
+
         // Set the positions of the LineRenderer to draw a line from the current position to the point of intersection
         if (Physics.Raycast(raycastSpawn, transform.forward, out RaycastHit hit, raycastLength, layerMask))
         {
+            // Set laser
             lineRenderer.SetPositions(new Vector3[] { barrelSpawn, hit.point });
+
+            // Sort hit array (now that we know objects were hit)
+            Array.Sort(hits, (x, y) => Vector3.Distance(raycastSpawn, x.point).CompareTo(Vector3.Distance(raycastSpawn, y.point)));
             lastHit = hit.collider.gameObject;
         }
         else
@@ -121,6 +131,9 @@ public class Sniper : Weapon
     {
         currentClipAmount--;
 
+        // Double check pierce amount (sniper can always pierce one)
+        pierce = PlayerModifiers.maxPierce + 1;
+
         StartCoroutine(SniperFire());
 
         lastBullet = Time.time;
@@ -141,23 +154,42 @@ public class Sniper : Weapon
         lineRenderer.material.color = flashColor;
         lineRenderer.endWidth = 0.06f;
 
-        // Alter pedestal health if collided is pedestal and shot by player
-        HasPedestalHealth pedHealth = lastHit.GetComponent<HasPedestalHealth>();
-        if (pedHealth != null)
+        Debug.Log("Beginning of loop");
+        for (int i = 0; i < pierce; i++)
         {
-            pedHealth.AlterHealth(-damage);
-        }
+            if (i >= hits.Length)
+            {
+                break;
+            }
 
-        // Alter health if collided has health
-        HasHealth health = lastHit.GetComponent<HasHealth>();
-        if (health != null && pedHealth == null)
-        {
-            Debug.Log("Health altered");
-            health.AlterHealth(damage);
+            // Alter pedestal health if collided is pedestal and shot by player
+            HasPedestalHealth pedHealth = hits[i].collider.gameObject.GetComponent<HasPedestalHealth>();
+            if (pedHealth != null)
+            {
+                pedHealth.AlterHealth(-damage);
+                // Pedestals count as "buildings" so don't pierce
+                break;
+            }
+
+            // Alter health if collided has health
+            HasHealth health = hits[i].collider.gameObject.GetComponent<HasHealth>();
+            if (health != null && pedHealth == null)
+            {
+                Debug.Log("Health altered");
+                health.AlterHealth(damage);
+            }
+
+            // Hit non-pedestal and non-enemy (most likely wall) so don't allow pierce
+            if (health == null && pedHealth == null)
+            {
+                break;
+            }
         }
+        Debug.Log("Got to end of loop");
 
         yield return new WaitForSeconds(0.1f);
 
+        Debug.Log("Beginning reload and line fix");
         lineRenderer.endWidth = 0.04f;
         isFiring = false;
         GunReload();

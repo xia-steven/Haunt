@@ -56,13 +56,12 @@ public class EnemyBase : MonoBehaviour {
         if (state != EnemyState.AStarMovement &&
             Physics.Raycast(transform.position, playerDirection, out var hit,
                 Vector3.Distance(targetPosition, transform.position), layerMask)) {
-            if(hit.transform.gameObject.CompareTag("Pit") && attributes.isRanged && 
-                Vector3.Distance(targetPosition, transform.position) <= attributes.targetDistance)
-            {
+            if (hit.transform.gameObject.CompareTag("Pit") && attributes.isRanged &&
+                Vector3.Distance(targetPosition, transform.position) <= attributes.targetDistance) {
                 // Do nothing - can attack if not already attacking
             }
             // Confirm that the raycast did not hit the player
-            else if (!hit.transform.gameObject.CompareTag("Player")) {
+            else if (needAStar(hit)) {
                 if (!runningCoroutine) {
                     state = EnemyState.AStarMovement;
                     runningCoroutine = true;
@@ -100,13 +99,17 @@ public class EnemyBase : MonoBehaviour {
             if (!runningCoroutine) {
                 state = EnemyState.SimpleMovement;
                 runningCoroutine = true;
-                StartCoroutine(MoveStraightToPlayer());
+                StartCoroutine(MoveStraightTowards(targetPosition));
             }
             else {
                 // Set idle to wait for previous state to finish
                 state = EnemyState.Idle;
             }
         }
+    }
+
+    public virtual bool needAStar(RaycastHit hit) {
+        return !hit.transform.gameObject.CompareTag("Player");
     }
 
     /// <summary>
@@ -149,7 +152,7 @@ public class EnemyBase : MonoBehaviour {
     /// variable is used to track when to stop.
     /// </summary>
     /// <returns></returns>
-    public virtual IEnumerator MoveWithAStar(int targetX, int targetZ) {
+    public IEnumerator MoveWithAStar(int targetX, int targetZ) {
         // Start player position updating
         StartCoroutine(updatePathfindingVector(targetX, targetZ));
 
@@ -189,13 +192,10 @@ public class EnemyBase : MonoBehaviour {
     /// The EnemyState variable used to track when to stop.
     /// </summary>
     /// <returns></returns>
-    private IEnumerator MoveStraightToPlayer() {
+    private IEnumerator MoveStraightTowards(Vector3 target) {
         while (state == EnemyState.SimpleMovement) {
-            // Get player position
-            var playerPosition = IsPlayer.instance.transform.position;
-
             // Get direction to move
-            var direction = (playerPosition - transform.position).normalized;
+            var direction = (target - transform.position).normalized;
             // Remove any y coordinate (shouldn't be any)
             direction.y = 0;
 

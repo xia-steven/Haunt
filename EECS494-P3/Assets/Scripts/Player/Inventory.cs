@@ -46,12 +46,12 @@ public class Inventory : MonoBehaviour
         // shotgun = Resources.Load<GameObject>("Prefabs/Weapons/Shotgun");
         // sword = Resources.Load<GameObject>("Prefabs/Weapons/Sword");
         // sniper = Resources.Load<GameObject>("Prefabs/Weapons/Sniper");
-        launcher = Resources.Load<GameObject>("Prefabs/Weapons/Launcher");
+        // launcher = Resources.Load<GameObject>("Prefabs/Weapons/Launcher");
         // Equip(rifle);
         // Equip(shotgun);
         // Equip(sword);
         // Equip(sniper);
-        Equip(launcher);
+        // Equip(launcher);
 
         // Swap to pistol on load (will be removed) TODO
         //EventBus.Publish<SwapSpecificEvent>(new SwapSpecificEvent(1));
