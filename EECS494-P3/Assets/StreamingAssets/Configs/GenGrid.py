@@ -37,6 +37,8 @@ setUnwalkableXY(22, 35, 8, 2)
 setUnwalkableXY(22, 14, 3, 1)
 setUnwalkableXY(22, 15, 6, 2)
 setUnwalkableXY(23, 17, 2, 7)
+setUnwalkableXY(22, 24, 6, 2)
+setUnwalkableXY(22, 26, 3, 1)
 
 with open('map.json', 'w') as f:
     json.dump(map_dict, f, indent=4)

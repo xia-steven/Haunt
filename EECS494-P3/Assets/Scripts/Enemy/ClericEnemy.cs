@@ -27,7 +27,11 @@ public class ClericEnemy : EnemyBase {
     }
 
     public override Vector3 GetTarget() {
-        return findClosestPedestal();
+        return currentTargetPedestal;
+    }
+
+    public override bool needAStar(RaycastHit hit) {
+        return hit.transform.gameObject.layer != LayerMask.NameToLayer("Pedestal");
     }
 
     private new void Start() {
@@ -36,26 +40,27 @@ public class ClericEnemy : EnemyBase {
         baseSpeed = attributes.moveSpeed;
         switchPedestalSub = EventBus.Subscribe<PedestalDestroyedEvent>(pedestalDied);
         addPedestalSub = EventBus.Subscribe<PedestalRepairedEvent>(pedestalRepaired);
-        SetTargetPosition(findClosestPedestal());
+        currentTargetPedestal = findClosestPedestal();
+        SetTargetPosition(currentTargetPedestal);
     }
 
-    private new void FixedUpdate() {
-        if (pathVectorList != null) {
-            var targetPosition = pathVectorList[currentPathIndex] + PathfindingController.map.origin;
-            if (Vector3.Distance(transform.position, targetPosition) > 0.5f) {
-                var moveDir = (targetPosition - transform.position).normalized;
-                tf_.position += Time.deltaTime * baseSpeed * moveDir;
-            }
-            else {
-                if (++currentPathIndex >= pathVectorList.Count) {
-                    pathVectorList = null;
-                    rb.velocity = Vector3.zero;
-                }
-            }
+    // Override attack function
+    public override IEnumerator EnemyAttack() {
+        // While attacking
+        while (state == EnemyState.Attacking) {
+            var targetPosition = IsPlayer.instance.transform.position;
+
+            var direction = targetPosition - transform.position;
+            direction.y = 0;
+            direction = direction.normalized;
+
+            // TODO: finish me
+
+            yield return new WaitForSeconds(attributes.attackSpeed);
         }
-        else {
-            rb.velocity = Vector3.zero;
-        }
+
+        // Let update know that we're done
+        runningCoroutine = false;
     }
 
     private void OnDestroy() {
@@ -63,24 +68,14 @@ public class ClericEnemy : EnemyBase {
         EventBus.Unsubscribe(addPedestalSub);
     }
 
-    private static IEnumerator AttackPedestal(HasHealth h) {
-        while (h.GetHealth() < HasPedestalHealth.PedestalMaxHealth) {
-            h.AlterHealth(-1);
-            yield return new WaitForSeconds(0.5f);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Pedestal")) {
-            var h = other.gameObject.GetComponent<HasPedestalHealth>();
-            if (h != null) {
-                StartCoroutine(AttackPedestal(h));
-            }
-        }
-        else if (other.gameObject.CompareTag("Player")) {
-            playerHealth.AlterHealth(-1, DeathCauses.Enemy);
-        }
-    }
+    // private void ToolOnTriggerEnter(Collider other) {
+    //     if (other.gameObject.layer == LayerMask.NameToLayer("Pedestal")) {
+    //         var h = other.gameObject.GetComponent<HasPedestalHealth>();
+    //         if (h != null) {
+    //             h.AlterHealth(-1);
+    //         }
+    //     }
+    // }
 
     private Vector3 findClosestPedestal() {
         if (PathfindingController.pedestalInfos.All(ped => !ped.Value.destroyed)) {
@@ -115,7 +110,8 @@ public class ClericEnemy : EnemyBase {
 
     private IEnumerator pedestalCoroutine() {
         yield return new WaitForSeconds(pedestalTimeout);
-        SetTargetPosition(findClosestPedestal());
+        currentTargetPedestal = findClosestPedestal();
+        SetTargetPosition(currentTargetPedestal);
     }
 
     private void pedestalDied(PedestalDestroyedEvent event_) {
@@ -136,6 +132,7 @@ public class ClericEnemy : EnemyBase {
 
     private void pedestalRepaired(PedestalRepairedEvent event_) {
         PathfindingController.pedestalInfos[event_.pedestalUUID].destroyed = false;
-        SetTargetPosition(findClosestPedestal());
+        currentTargetPedestal = findClosestPedestal();
+        SetTargetPosition(currentTargetPedestal);
     }
 }
