@@ -18,7 +18,7 @@ public class Shotgun : Weapon
 
         currentClipAmount = 5;
         fullClipAmount = 5;
-        reloadTime = 2.0f;
+        reloadTime = 1.75f;
         type = "shotgun";
         screenShakeStrength = 0.08f;
 

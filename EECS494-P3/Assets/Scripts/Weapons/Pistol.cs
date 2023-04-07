@@ -15,7 +15,7 @@ public class Pistol : Weapon {
 
         currentClipAmount = 8;
         fullClipAmount = 8;
-        reloadTime = 0.5f;
+        reloadTime = 0.3f;
         screenShakeStrength = 0f;
         type = "pistol";
 
