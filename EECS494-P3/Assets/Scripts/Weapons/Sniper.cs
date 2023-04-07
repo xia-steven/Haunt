@@ -26,12 +26,10 @@ public class Sniper : Weapon
     protected override void Awake()
     {
         base.Awake();
+        thisData = typesData.types[(int)WeaponType.sniper];
 
-        currentClipAmount = 1;
-        fullClipAmount = 1;
-        reloadTime = 1.5f;
-        type = "sniper";
-        screenShakeStrength = 0.8f;
+        SetData();
+        currentClipAmount = fullClipAmount;
         pierce += PlayerModifiers.maxPierce;
 
         Subscribe();
