@@ -44,8 +44,8 @@ public class ShopController : MonoBehaviour
         {
             // Tutorial day is 0
             case(0):
-                healthRestore.SetActive(false);
-                shield.SetActive(false);
+                //healthRestore.SetActive(false);
+                //shield.SetActive(false);
                 DayZeroShop();
                 InitRandomUpgrades();
                 break;
