@@ -68,15 +68,6 @@ public class ClericEnemy : EnemyBase {
         EventBus.Unsubscribe(addPedestalSub);
     }
 
-    // private void ToolOnTriggerEnter(Collider other) {
-    //     if (other.gameObject.layer == LayerMask.NameToLayer("Pedestal")) {
-    //         var h = other.gameObject.GetComponent<HasPedestalHealth>();
-    //         if (h != null) {
-    //             h.AlterHealth(-1);
-    //         }
-    //     }
-    // }
-
     private Vector3 findClosestPedestal() {
         if (PathfindingController.pedestalInfos.All(ped => !ped.Value.destroyed)) {
             return Vector3.zero;
