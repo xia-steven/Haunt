@@ -10,7 +10,8 @@ public class BuyableWeapon : IsBuyable
         Shotgun,
         Rifle,
         Sword,
-        Sniper
+        Sniper,
+        Launcher
     }
 
     [SerializeField] private WeaponType weapon;
@@ -48,6 +49,9 @@ public class BuyableWeapon : IsBuyable
         else if (weapon == WeaponType.Sword)
         {
             thisData = typesData.types[(int)PurchaseableType.sword];
+        } else if (weapon == WeaponType.Launcher)
+        {
+            thisData = typesData.types[(int)PurchaseableType.launcher];
         }
 
         if(GameControl.Day == 3)
@@ -62,7 +66,6 @@ public class BuyableWeapon : IsBuyable
 
     protected override void Apply()
     {
-        GameObject shotgun;
         GameObject weaponToEquip = Resources.Load<GameObject>("Prefabs/Weapons/" + weapon.ToString());
         EventBus.Publish(new WeaponPurchasedEvent(weaponToEquip));
     }
