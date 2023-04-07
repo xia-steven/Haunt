@@ -11,7 +11,6 @@ public class coordinate {
 
 public class MapData : Savable {
     public coordinate dimension;
-    public Vector3 origin;
     public List<coordinate> unwalkableTiles;
 }
 
@@ -37,7 +36,8 @@ public class PathfindingController : MonoBehaviour {
             { 3, new PedestalInfo(new Vector3(0, 0, -9)) }
         };
         map = ConfigManager.GetData<MapData>("map");
-        pathfinding = new Pathfinding(map.dimension.x, map.dimension.y, map.origin);
+        pathfinding = new Pathfinding(map.dimension.x, map.dimension.y,
+            new Vector3(-(float)map.dimension.x / 2, 0, -(float)map.dimension.y / 2));
         foreach (var tile in map.unwalkableTiles) {
             pathfinding.GetNode(tile.x, tile.y).SetIsWalkable(false);
         }
