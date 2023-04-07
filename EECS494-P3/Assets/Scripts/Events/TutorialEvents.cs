@@ -104,3 +104,13 @@ public class SpritePromptEvent
         dismissKey = dismissKey_in;
     }
 }
+
+/// <summary>
+/// The ActivateTeleporterEvent is sent when a script wants to activate
+/// a teleporter.  This is almost always sent in the hub to activate the teleporter 
+/// for the next night.
+/// </summary>
+public class ActivateTeleporterEvent
+{
+    
+}

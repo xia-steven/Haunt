@@ -46,6 +46,8 @@ public class ShopController : MonoBehaviour
             case(0):
                 healthRestore.SetActive(false);
                 shield.SetActive(false);
+                DayZeroShop();
+                InitRandomUpgrades();
                 break;
             case(1):
                 DayOneShop();
@@ -62,6 +64,12 @@ public class ShopController : MonoBehaviour
         }
     }
     
+    void DayZeroShop()
+    {
+        GameObject sword = Instantiate(swordPrefab);
+        sword.transform.SetParent(weaponTableRight.transform, false);
+
+    }
     
     void DayOneShop()
     {
@@ -73,6 +81,7 @@ public class ShopController : MonoBehaviour
     void DayTwoShop()
     {
         GameObject minigun = Instantiate(minigunPrefab);
+        // TODO Replace with bazooka
         GameObject sword = Instantiate(swordPrefab);
         minigun.transform.SetParent( weaponTableLeft.transform, false);
         sword.transform.SetParent( weaponTableRight.transform, false);

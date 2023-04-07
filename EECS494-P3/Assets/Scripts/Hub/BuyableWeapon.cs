@@ -68,6 +68,7 @@ public class BuyableWeapon : IsBuyable
     {
         GameObject weaponToEquip = Resources.Load<GameObject>("Prefabs/Weapons/" + weapon.ToString());
         EventBus.Publish(new WeaponPurchasedEvent(weaponToEquip));
+        EventBus.Publish(new ActivateTeleporterEvent());
     }
 
     private void _OnOtherWeaponPurchase(WeaponPurchasedEvent e)

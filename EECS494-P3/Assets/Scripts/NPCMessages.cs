@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NPCMessages : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class NPCMessages : MonoBehaviour
     MessageList NPCMessageData;
     [SerializeField] GameObject interactSprite;
     [SerializeField] GameObject initialBubble;
+    [SerializeField] bool isGhost = false;
     bool selected = false;
 
     bool spoken = false;
@@ -17,12 +19,14 @@ public class NPCMessages : MonoBehaviour
     SpritePromptEvent ePrompt;
 
     Subscription<TryInteractEvent> interactSubscription;
+    Subscription<MessageFinishedEvent> finishedSub;
 
     // Start is called before the first frame update
     void Start()
     {
         NPCMessageData = ConfigManager.GetData<MessageList>(configName);
         interactSubscription = EventBus.Subscribe<TryInteractEvent>(OnInteract);
+        finishedSub = EventBus.Subscribe<MessageFinishedEvent>(OnMessageFinished);
 
         interactSprite.SetActive(false);
         Object [] sprites = Resources.LoadAll("tilemap");
@@ -63,7 +67,31 @@ public class NPCMessages : MonoBehaviour
         {
             spoken = true;
             initialBubble.SetActive(false);
-            EventBus.Publish(new MessageEvent(NPCMessageData.allMessages[GameControl.Day].messages, GetInstanceID(), false));
+            if(SceneManager.GetActiveScene().name == "TutorialHubWorld")
+            {
+                // Ghost sends initial message
+                EventBus.Publish(new MessageEvent(NPCMessageData.initialTutorial, GetInstanceID(), false));
+            }
+            else
+            {
+                // Standard dialogue for the night
+                EventBus.Publish(new MessageEvent(NPCMessageData.allMessages[GameControl.Day].messages, GetInstanceID(), false));
+            }
         }
+    }
+
+    private void OnMessageFinished(MessageFinishedEvent mfe)
+    {
+        // Activate teleporter after first message
+        if(mfe.senderInstanceID == GetInstanceID() && isGhost && SceneManager.GetActiveScene().name == "TutorialHubWorld")
+        {
+            EventBus.Publish(new ActivateTeleporterEvent());
+        }
+        // Activate sword after first shopkeeper message
+        else if (mfe.senderInstanceID == GetInstanceID() && !isGhost && GameControl.Day == 0)
+        {
+
+        }
+
     }
 }
