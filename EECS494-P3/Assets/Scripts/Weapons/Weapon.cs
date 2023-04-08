@@ -6,35 +6,31 @@ using UnityEngine.SceneManagement;
 // Weapon base class
 
 public abstract class Weapon : MonoBehaviour {
-    public static Weapon activeWeapon;
 
+    public static Weapon activeWeapon;
     // Number of bullets in one clip - necessary for all guns
     protected int fullClipAmount = 8;
-
     public int FullClipAmount {
-        get => fullClipAmount;
+        get { return fullClipAmount; }
         private set { }
     }
 
     // Currently loaded bullets
     protected int currentClipAmount;
-
     public int CurrentClipAmount {
-        get => currentClipAmount;
+        get { return currentClipAmount; }
         private set { }
     }
 
     //weapon type (used to get sprite)
     protected string type;
-
     public string Type {
-        get => type;
+        get { return type; }
         private set { }
     }
 
     // Time of last bullet - used to see when last bullet was fired
     protected float lastBullet;
-
     // Time of last tap fire - used to limit spamming
     protected float lastTap;
 
@@ -46,38 +42,30 @@ public abstract class Weapon : MonoBehaviour {
 
     // Time it takes gun to reload
     protected float reloadTime;
-
     protected SpriteRenderer spriteRenderer;
-
     // Time between bullets
     [SerializeField] protected float bulletDelay = 0.6f;
-
     // Time between tap firing
     [SerializeField] protected float tapDelay = 0.2f;
 
 
     public float ReloadTime {
-        get => reloadTime;
-        private set { }
+        get { return reloadTime; }
+        private set{ }
     }
 
     protected bool shotByPlayer = true;
-
     public bool ShotByPlayer {
-        get => shotByPlayer;
-        private set { }
+        get { return shotByPlayer; }
+        private set{ }
     }
 
     protected bool playerEnabled = true;
-
     protected bool isReloading = false;
-
     // Length of gun barrel for bullet spawning - will be gun specific due to masking / variability of sprites
     [SerializeField] protected float barrelLength = 0.5f;
-
     // How much the screen should shake on bullets firing
     [SerializeField] protected float screenShakeStrength = 0.05f;
-
     // Buffs/nerfs on player speed for specific guns
     [SerializeField] protected float speedMultiplier = 1f;
 
@@ -90,7 +78,8 @@ public abstract class Weapon : MonoBehaviour {
     protected Subscription<DisablePlayerEvent> disablePlayerSubscription;
 
 
-    protected virtual void Awake() {
+    protected virtual void Awake()
+    {
         if (typesData == null)
             typesData = ConfigManager.GetData<WeaponTypesData>("WeaponTypes");
 
@@ -106,28 +95,32 @@ public abstract class Weapon : MonoBehaviour {
         disablePlayerSubscription = EventBus.Subscribe<DisablePlayerEvent>(_OnDisablePlayer);
     }
 
-    protected void UnSubscribe() {
+    protected void UnSubscribe()
+    {
         EventBus.Unsubscribe(fireEventSubscription);
         EventBus.Unsubscribe(reloadEventSubscription);
     }
 
-    protected virtual void _OnEnablePlayer(EnablePlayerEvent e) {
+    protected virtual void _OnEnablePlayer(EnablePlayerEvent e)
+    {
         Debug.Log("Player enabled in weapon");
         playerEnabled = true;
     }
 
-    protected virtual void _OnDisablePlayer(DisablePlayerEvent e) {
+    protected virtual void _OnDisablePlayer(DisablePlayerEvent e)
+    {
         Debug.Log("Player disabled in weapon");
         playerEnabled = false;
     }
 
     protected virtual void _OnFire(FireEvent e) {
         firing = e.state;
-        if (firing && currentClipAmount <= 0 && !isReloading) {
+        if (firing && currentClipAmount <= 0 && !isReloading)
+        {
             GunReload();
         }
-
-        if (!firing) {
+        if (!firing)
+        {
             // Allows for click spamming but not hold spamming
             lastBullet = 0;
         }
@@ -137,13 +130,13 @@ public abstract class Weapon : MonoBehaviour {
         Debug.Log("Base reload called");
     }
 
-    protected virtual void GunReload() {
+    protected virtual void GunReload()
+    {
         Debug.Log("Base gun-specific reload called");
     }
 
     // Fires a projectile of type Bullet in specified direction
-    public void FireProjectile(GameObject bullet, Vector3 direction, Transform start, float bulletSpeed,
-        Shooter shooter) {
+    public void FireProjectile(GameObject bullet, Vector3 direction, Transform start, float bulletSpeed, Shooter shooter) {
         // Set spawn position based on barrel length
         Vector3 barrelOffset = direction * barrelLength;
         Vector3 barrelSpawn = start.position + barrelOffset;
@@ -185,16 +178,18 @@ public abstract class Weapon : MonoBehaviour {
         currentClipAmount = fullClipAmount;
     }
 
-    public void OnEnable() {
-        if (shotByPlayer) {
+    public void OnEnable()
+    {
+        if (shotByPlayer)
+        {
             EventBus.Publish(new WeaponSwapEvent(this));
             PlayerModifiers.moveSpeed = speedMultiplier;
         }
-
         firing = false;
     }
 
-    protected virtual void FixedUpdate() {
+    protected virtual void FixedUpdate()
+    {
         if (!shotByPlayer) return;
 
         // Get the screen position of the cursor
@@ -206,7 +201,8 @@ public abstract class Weapon : MonoBehaviour {
 
         // Find the point where the ray intersects the plane that contains the player
         Plane groundPlane = new Plane(Vector3.up, transform.position);
-        if (groundPlane.Raycast(ray, out float distanceToGround) && playerEnabled) {
+        if (groundPlane.Raycast(ray, out float distanceToGround) && playerEnabled)
+        {
             // Calculate the direction vector from the player to the intersection point
             Vector3 hitPoint = ray.GetPoint(distanceToGround);
             direction = hitPoint - transform.position;
@@ -214,10 +210,12 @@ public abstract class Weapon : MonoBehaviour {
             gunDirection = direction;
 
             // Check if gun sprite needs to be flipped
-            if (direction.x < 0) {
+            if (direction.x < 0)
+            {
                 spriteRenderer.flipY = true;
             }
-            else {
+            else
+            {
                 spriteRenderer.flipY = false;
             }
 
@@ -229,26 +227,31 @@ public abstract class Weapon : MonoBehaviour {
         }
 
         // Fire bullet if ammo in clip, trigger is down, last bullet was not fired recently, last tap was not recent, not reloading
-        if (currentClipAmount > 0 && firing && (Time.time - lastBullet >= bulletDelay) &&
-            (Time.time - lastTap >= tapDelay) && !isReloading) {
+        if (currentClipAmount > 0 && firing && (Time.time - lastBullet >= bulletDelay) && (Time.time - lastTap >= tapDelay) && !isReloading)
+        {
             WeaponFire(direction);
         }
     }
 
-    protected virtual void WeaponFire(Vector3 direction) {
+    protected virtual void WeaponFire(Vector3 direction)
+    {
         Debug.Log("Base WeaponFire");
     }
 
-    protected bool CanReload() {
-        if (!isReloading && currentClipAmount != fullClipAmount) {
+    protected bool CanReload()
+    {
+        if (!isReloading && currentClipAmount != fullClipAmount)
+        {
             return true;
         }
 
-        return false;
+        return false; 
     }
 
-    protected void SetData() {
-        if (thisData != null) {
+    protected void SetData()
+    {
+        if (thisData != null)
+        {
             type = thisData.name;
             fullClipAmount = thisData.fullClip;
             bulletDelay = thisData.bulletDelay;
@@ -256,14 +259,16 @@ public abstract class Weapon : MonoBehaviour {
             screenShakeStrength = thisData.screenShakeStrength;
             speedMultiplier = thisData.speedMultiplier;
             reloadTime = thisData.reloadTime;
-        }
-        else {
+        } else
+        {
             Debug.Log("thisData for weapon set to null");
         }
     }
 
-    protected virtual void OnDisable() {
-        if (isReloading) {
+    protected virtual void OnDisable()
+    {
+        if (isReloading)
+        {
             StopAllCoroutines();
             ReloadInfinite();
             isReloading = false;
@@ -273,7 +278,6 @@ public abstract class Weapon : MonoBehaviour {
 
 public class FireEvent {
     public GameObject shooter;
-
     // True for firing false to stop firing
     public bool state;
 
@@ -291,28 +295,34 @@ public class ReloadEvent {
     }
 }
 
-public class ReloadStartedEvent {
+public class ReloadStartedEvent
+{
     public float reloadTime;
 
-    public ReloadStartedEvent(float _reloadTime) {
+    public ReloadStartedEvent(float _reloadTime)
+    {
         reloadTime = _reloadTime;
     }
 }
 
-public class WeaponSwapEvent {
+public class WeaponSwapEvent
+{
     public Weapon newWeapon;
 
-    public WeaponSwapEvent(Weapon _newWeapon) {
+    public WeaponSwapEvent(Weapon _newWeapon)
+    {
         newWeapon = _newWeapon;
     }
 }
 
-public enum Shooter {
+public enum Shooter
+{
     Player,
     Enemy
 }
 
-public enum WeaponType {
+public enum WeaponType
+{
     pistol = 0,
     rifle = 1,
     shotgun = 2,

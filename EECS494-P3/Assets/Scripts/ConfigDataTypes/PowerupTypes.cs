@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PurchaseableTypesData : Savable {
+public class PurchaseableTypesData : Savable
+{
     public List<UpgradeData> types;
 }
 
 [System.Serializable]
-public class UpgradeData {
+public class UpgradeData
+{
     public PurchaseableType type;
     public int cost;
     public float rate1;

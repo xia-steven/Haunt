@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class IndicatorManager : MonoBehaviour {
+public class IndicatorManager : MonoBehaviour
+{
     [SerializeField] List<GameObject> Pedestals;
 
     [SerializeField] GameObject IndicatorPrefab;
@@ -18,10 +19,12 @@ public class IndicatorManager : MonoBehaviour {
     Subscription<PedestalPartialEvent> healSub;
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
         indicatorArrows = new List<GameObject>();
 
-        for (int i = 0; i < Pedestals.Count; ++i) {
+        for (int i = 0; i < Pedestals.Count; ++i)
+        {
             GameObject newIndicator = Instantiate(IndicatorPrefab, transform.localPosition, Quaternion.identity);
             RectTransform indicatorRect = newIndicator.GetComponent<RectTransform>();
             indicatorRect.pivot = new Vector2(0.5f, 0);
@@ -30,30 +33,34 @@ public class IndicatorManager : MonoBehaviour {
             newIndicator.SetActive(false);
             indicatorArrows.Add(newIndicator);
         }
-
         xModifier = canvasSize.x / Screen.width;
         yModifier = canvasSize.y / Screen.height * Mathf.Sqrt(2);
 
         healSub = EventBus.Subscribe<PedestalPartialEvent>(_onPedestalPartial);
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         EventBus.Unsubscribe(healSub);
     }
 
-    void _onPedestalPartial(PedestalPartialEvent phe) {
+    void _onPedestalPartial(PedestalPartialEvent phe)
+    {
         indicatorArrows[phe.pedestalUUID - 1].SetActive(phe.turnOn);
     }
 
 
     // Update is called once per frame
-    void LateUpdate() {
+    void LateUpdate()
+    {
         // Code adapted from https://www.youtube.com/watch?v=gAQpR1GN0Os
-        for (int a = 0; a < Pedestals.Count; ++a) {
+        for(int a = 0; a < Pedestals.Count; ++a)
+        {
             Vector3 screenpos = Camera.main.WorldToScreenPoint(Pedestals[a].transform.position);
 
             // Behind us, invert coords
-            if (screenpos.z < 0) {
+            if (screenpos.z < 0)
+            {
                 screenpos *= -1;
             }
 
@@ -75,25 +82,31 @@ public class IndicatorManager : MonoBehaviour {
             Vector3 screenBounds = screenCenter;
 
             // Check if the pedestal is off the screen
-            if (screenpos.x < -screenBounds.x || screenpos.x > screenBounds.x
-                                              || screenpos.y < -screenBounds.y || screenpos.y > screenBounds.y) {
+            if (screenpos.x < -screenBounds.x || screenpos.x > screenBounds.x 
+                || screenpos.y < -screenBounds.y || screenpos.y > screenBounds.y)
+            {
                 // up
-                if (cos > 0) {
+                if(cos > 0)
+                {
                     screenpos = new Vector3(screenBounds.y / m, screenBounds.y, 0);
                 }
                 // down
-                else {
+                else
+                {
                     screenpos = new Vector3(-screenBounds.y / m, -screenBounds.y, 0);
                 }
 
                 // out of bounds on the left
-                if (screenpos.x > screenBounds.x) {
+                if(screenpos.x > screenBounds.x)
+                {
                     screenpos = new Vector3(screenBounds.x, screenBounds.x * m, 0);
                 }
                 // out of bounds on the right
-                else if (screenpos.x < -screenBounds.x) {
+                else if (screenpos.x < -screenBounds.x)
+                {
                     screenpos = new Vector3(-screenBounds.x, -screenBounds.x * m, 0);
                 }
+              
             }
 
             // Translate coordinates back

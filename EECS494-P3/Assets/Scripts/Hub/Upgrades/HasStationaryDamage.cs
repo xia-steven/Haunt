@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HasStationaryDamage : MonoBehaviour {
+public class HasStationaryDamage : MonoBehaviour
+{
     public float holdTime;
     public float dmgMod;
 
@@ -12,29 +13,37 @@ public class HasStationaryDamage : MonoBehaviour {
     bool holding = false;
     bool dmgIncreased = false;
 
-    private void Start() {
+    private void Start()
+    {
         StartCoroutine(PollForHold());
     }
 
     // Update is called once per frame
-    void Update() {
-        if (holding && !dmgIncreased) {
+    void Update()
+    {
+        if (holding && !dmgIncreased)
+        {
             PlayerModifiers.damage *= dmgMod;
             dmgIncreased = true;
         }
-        else if (!holding && dmgIncreased) {
+        else if (!holding && dmgIncreased)
+        {
             PlayerModifiers.damage /= dmgMod;
             dmgIncreased = false;
         }
     }
 
-    IEnumerator PollForHold() {
+    IEnumerator PollForHold()
+    {
+
         lastUpdate = Time.time;
         knownPos = IsPlayer.instance.transform.position;
 
-        while (true) {
+        while (true)
+        {
             // if player has moved, reset count
-            if (knownPos != IsPlayer.instance.transform.position) {
+            if (knownPos != IsPlayer.instance.transform.position)
+            {
                 lastUpdate = Time.time;
                 knownPos = IsPlayer.instance.transform.position;
                 holding = false;

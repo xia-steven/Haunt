@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyPistol : Pistol {
     Vector3 playerPos;
 
+
     protected override void Awake() {
         shotByPlayer = false;
         playerPos = new Vector3();

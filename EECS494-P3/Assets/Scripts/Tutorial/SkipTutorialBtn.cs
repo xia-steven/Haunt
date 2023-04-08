@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SkipTutorialBtn : MonoBehaviour {
-    public void onSkipTutorial() {
+public class SkipTutorialBtn : MonoBehaviour
+{
+
+
+    public void onSkipTutorial()
+    {
         SceneManager.LoadScene("GameScene");
         TimeManager.ResetTimeScale();
         // Enable player in case disabled

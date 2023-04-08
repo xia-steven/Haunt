@@ -5,12 +5,12 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
 
-public class MessageManager : MonoBehaviour {
+public class MessageManager : MonoBehaviour
+{
     [SerializeField] float fadeTime = 1.0f;
     [SerializeField] TMP_Text text;
     [SerializeField] Image textBackground;
     [SerializeField] Image clickIcon;
-
     [Tooltip("Number of frames to wait in between each character")]
     float textDelay = 0.04f;
 
@@ -26,7 +26,8 @@ public class MessageManager : MonoBehaviour {
     Subscription<MessageEvent> messageSub;
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
         controls = new PlayerControls();
         leftClickCallback = controls.Player.Fire;
         leftClickCallback.Enable();
@@ -41,31 +42,39 @@ public class MessageManager : MonoBehaviour {
         messageSub = EventBus.Subscribe<MessageEvent>(onMessageReceived);
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         EventBus.Unsubscribe(messageSub);
         leftClickCallback.Disable();
     }
 
     // Update is called once per frame
-    void Update() {
-        if (queuedMessages.Count > 0 && !sendingMessage) {
+    void Update()
+    {
+        if(queuedMessages.Count > 0 && !sendingMessage)
+        {
             sendingMessage = true;
             MessageEvent message = queuedMessages.Dequeue();
             StartCoroutine(SendMessage(message));
         }
     }
 
-    void onMessageReceived(MessageEvent mes) {
+    void onMessageReceived(MessageEvent mes)
+    {
         queuedMessages.Enqueue(mes);
     }
 
-    void SkipMessage(InputAction.CallbackContext context) {
+    void SkipMessage(InputAction.CallbackContext context)
+    {
         exitEarly = true;
     }
 
 
-    IEnumerator SendMessage(MessageEvent message) {
-        if (message.pauseTime) {
+    IEnumerator SendMessage(MessageEvent message)
+    {
+
+        if(message.pauseTime)
+        {
             // Set timescales to 0
             TimeManager.SetTimeScale(0);
         }
@@ -75,10 +84,11 @@ public class MessageManager : MonoBehaviour {
         float progress = (Time.realtimeSinceStartup - initial_time) / fadeTime;
         textBackground.gameObject.SetActive(true);
 
-        while (progress < 1.0f) {
+        while (progress < 1.0f)
+        {
             progress = (Time.realtimeSinceStartup - initial_time) / fadeTime;
             textBackground.color = new Color(backgroundOpaqueColor.r, backgroundOpaqueColor.g,
-                backgroundOpaqueColor.b, backgroundOpaqueColor.a * progress);
+                    backgroundOpaqueColor.b, backgroundOpaqueColor.a * progress);
 
             yield return null;
         }
@@ -88,28 +98,32 @@ public class MessageManager : MonoBehaviour {
         text.gameObject.SetActive(true);
         clickIcon.gameObject.SetActive(true);
         // Loop through each string
-        for (int a = 0; a < message.messages.Count; ++a) {
+        for (int a = 0; a < message.messages.Count; ++a)
+        {
             text.text = "";
             exitEarly = false;
             // Loop through each character for each string
             string currMessage = message.messages[a];
-            for (int b = 0; b < currMessage.Length; ++b) {
+            for(int b = 0; b < currMessage.Length; ++b)
+            {
                 text.text += currMessage[b];
-                if (currMessage[b] == '<') {
+                if(currMessage[b] == '<')
+                {
                     // Print the whole format code at once
-                    while (currMessage[b] != '>') {
+                    while(currMessage[b] != '>')
+                    {
                         b++;
-                        if (b >= currMessage.Length) {
+                        if(b >= currMessage.Length)
+                        {
                             Debug.LogError("Message Manager: format code not closed");
                             break;
                         }
-
                         text.text += currMessage[b];
                     }
                 }
-
                 // Wait textDelay seconds before showing the next character
-                if (!exitEarly) {
+                if(!exitEarly)
+                {
                     yield return new WaitForSecondsRealtime(textDelay);
                 }
             }
@@ -118,15 +132,16 @@ public class MessageManager : MonoBehaviour {
             yield return null;
 
             // Wait for user to acknowledge the message
-            while (!Input.GetKeyDown(message.keyToWaitFor)) {
+            while (!Input.GetKeyDown(message.keyToWaitFor))
+            {
                 yield return null;
             }
-
             // Go to the next frame for keydown to be false
             yield return null;
         }
 
-        if (message.pauseTime) {
+        if(message.pauseTime)
+        {
             // Set timescales back to 1
             TimeManager.ResetTimeScale();
         }
@@ -141,14 +156,15 @@ public class MessageManager : MonoBehaviour {
         Color textColor = text.color;
         Color prevIconColor = clickIcon.color;
 
-        while (progress < 1.0f) {
+        while (progress < 1.0f)
+        {
             progress = (Time.realtimeSinceStartup - initial_time) / fadeTime;
             // Fade out both the text background and text
             textBackground.color = new Color(backgroundOpaqueColor.r, backgroundOpaqueColor.g,
-                backgroundOpaqueColor.b, backgroundOpaqueColor.a * (1 - progress));
+                    backgroundOpaqueColor.b, backgroundOpaqueColor.a * (1 - progress));
             text.color = new Color(textColor.r, textColor.g, textColor.b, textColor.a * (1 - progress));
             clickIcon.color = new Color(prevIconColor.r, prevIconColor.g,
-                prevIconColor.b, prevIconColor.a * (1 - progress));
+                    prevIconColor.b, prevIconColor.a * (1 - progress));
 
             yield return null;
         }
@@ -161,4 +177,6 @@ public class MessageManager : MonoBehaviour {
         text.color = textColor;
         sendingMessage = false;
     }
+
+
 }

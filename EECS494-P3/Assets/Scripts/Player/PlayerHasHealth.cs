@@ -18,7 +18,7 @@ public class PlayerHasHealth : HasHealth {
     private int lockedHealth = 0;
     private int shieldHealth = 0;
     private bool isInvincible = false;
-
+    
 
     // Start is called before the first frame update
     void Start() {
@@ -27,34 +27,41 @@ public class PlayerHasHealth : HasHealth {
         messFinSub = EventBus.Subscribe<MessageFinishedEvent>(_OnTutorialDeathMessageFinished);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
-
+        
         id = Random.Range(0, 1000);
     }
 
-    public override void AlterHealth(int healthDelta) {
+    public override void AlterHealth(int healthDelta)
+    {
         Debug.Log("ALTERHEALTH: " + healthDelta);
         // healing
-        if (healthDelta > 0) {
+        if (healthDelta > 0)
+        {
             health += healthDelta;
             if (health > maxHealth - lockedHealth)
                 health = maxHealth - lockedHealth;
+
         }
         // damage
-        else if (healthDelta < 0) {
-            if (!isInvincible) {
-                if (shieldHealth > 0) {
+        else if (healthDelta < 0)
+        {
+            if (!isInvincible)
+            {
+                if (shieldHealth > 0)
+                {
                     shieldHealth -= 1;
                 }
-                else {
+                else
+                {
                     health += healthDelta;
                 }
-
                 EventBus.Publish(new PlayerDamagedEvent(healthDelta));
                 StartCoroutine(TriggerInvincibility());
             }
-
+            
             // death check
-            if (health <= 0) {
+            if (health <= 0)
+            {
                 health = 0;
                 CheckIsDead();
             }
@@ -66,18 +73,22 @@ public class PlayerHasHealth : HasHealth {
         EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
     }
 
-    public void AlterHealth(int healthDelta, DeathCauses damager) {
+    public void AlterHealth(int healthDelta, DeathCauses damager)
+    {
         IsPlayer.instance.SetLastDamaged(damager);
         AlterHealth(healthDelta);
     }
 
-    private bool CheckIsDead() {
+    private bool CheckIsDead()
+    {
         Debug.Log("Game control day: " + GameControl.Day);
-        if (health == 0 && GameControl.Day > 0) {
+        if (health == 0 && GameControl.Day > 0)
+        {
             EventBus.Publish(new GameLossEvent(IsPlayer.instance.LastDamaged()));
             return true;
         }
-        else if (health == 0 && GameControl.Day <= 0) {
+        else if (health == 0 && GameControl.Day <= 0)
+        {
             // Tutorial day death
             EventBus.Publish(new TutorialMessageEvent(tutorialDeathMessageID, GetInstanceID(), true, KeyCode.Mouse0));
             return true;
@@ -87,8 +98,11 @@ public class PlayerHasHealth : HasHealth {
     }
 
 
-    void _OnTutorialDeathMessageFinished(MessageFinishedEvent mfe) {
-        if (mfe.senderInstanceID == GetInstanceID()) {
+
+    void _OnTutorialDeathMessageFinished(MessageFinishedEvent mfe)
+    {
+        if(mfe.senderInstanceID == GetInstanceID())
+        {
             // Restart tutorial scene
             health = maxHealth;
             lockedHealth = 0;
@@ -100,6 +114,7 @@ public class PlayerHasHealth : HasHealth {
         lockedHealth -= 2;
         Debug.Log("Player received pedestal death, locked: " + lockedHealth);
         EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
+        
     }
 
     void _OnPedestalRepaired(PedestalRepairedEvent pre) {
@@ -108,26 +123,30 @@ public class PlayerHasHealth : HasHealth {
 
         IsPlayer.instance.SetLastDamaged(DeathCauses.Pedestal);
 
-        if (health > maxHealth - lockedHealth) {
-            health = maxHealth - lockedHealth;
+        if (health > maxHealth-lockedHealth) {
+            health = maxHealth-lockedHealth;
             CheckIsDead();
         }
-
         // AlterHealth will also publish an update to the ui--let's see if it's idempotent 
         EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
+
     }
 
-    public void AddShield() {
+    public void AddShield()
+    {
         shieldHealth += 2;
         EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
+
     }
 
-    private IEnumerator TriggerInvincibility() {
+    private IEnumerator TriggerInvincibility()
+    {
         isInvincible = true;
         float duration = 0;
         SpriteRenderer sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         Color normalColor = sr.color;
-        while (duration < invincibilityTimer) {
+        while (duration < invincibilityTimer)
+        {
             //Debug.Log("Inv_timer:" + duration);
             duration += 0.1f;
             normalColor.a = 1 - normalColor.a;
@@ -138,8 +157,8 @@ public class PlayerHasHealth : HasHealth {
         normalColor.a = 1;
         sr.color = normalColor;
         isInvincible = false;
-    }
 
+    }
     private void OnDestroy() {
         EventBus.Unsubscribe(pedDestSub);
         EventBus.Unsubscribe(pedRepSub);
@@ -148,28 +167,32 @@ public class PlayerHasHealth : HasHealth {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    void OnSceneLoaded(Scene s, LoadSceneMode m) {
-        if (s.name == "TutorialGameScene" || s.name == "TutorialHubWorld") {
+    void OnSceneLoaded(Scene s, LoadSceneMode m)
+    {
+        if (s.name == "TutorialGameScene" || s.name == "TutorialHubWorld")
+        {
             Debug.Log("TutorialGameScene Loaded");
             shieldHealth = 0;
             transform.position = new Vector3(0, 0.5f, 0);
         }
-        else if (s.name == "GameScene" || s.name == "HubWorld") {
+        else if (s.name == "GameScene" || s.name == "HubWorld")
+        {
             lockedHealth = 0;
             transform.position = new Vector3(0, 0.5f, 0);
         }
-
         StartCoroutine(DelayUIUpdateOnSceneLoad());
     }
 
     // waits for the new scene's UI to load before sending the update
     // ensuring correct # of hearts are displayed
-    IEnumerator DelayUIUpdateOnSceneLoad() {
+    IEnumerator DelayUIUpdateOnSceneLoad()
+    {
         yield return null;
         EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
-    }
 
-    public void ResetHealth() {
+    }
+    public void ResetHealth()
+    {
         Debug.Log("HERE!!!");
         lockedHealth = 0;
         health = maxHealth;

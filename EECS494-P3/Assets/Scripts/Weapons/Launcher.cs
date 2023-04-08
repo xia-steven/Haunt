@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Launcher : Weapon {
+public class Launcher : Weapon
+{
     protected GameObject wielder;
     protected GameObject launcherShot;
     [SerializeField] protected float bulletSpread = 5f;
@@ -10,7 +11,8 @@ public class Launcher : Weapon {
     // Sprite of launcher - necessary so it can be flipped
     [SerializeField] protected GameObject launcherSprite;
 
-    protected override void Awake() {
+    protected override void Awake()
+    {
         base.Awake();
         thisData = typesData.types[(int)WeaponType.launcher];
 
@@ -24,32 +26,38 @@ public class Launcher : Weapon {
         launcherShot = Resources.Load<GameObject>("Prefabs/Weapons/LauncherShot");
     }
 
-    protected override void _OnFire(FireEvent e) {
+    protected override void _OnFire(FireEvent e)
+    {
         if (!gameObject.activeInHierarchy) return;
 
         // Check if fire event comes from launcher holder
-        if (e.shooter != wielder) {
+        if (e.shooter != wielder)
+        {
             return;
         }
 
         base._OnFire(e);
     }
 
-    protected override void _OnReload(ReloadEvent e) {
+    protected override void _OnReload(ReloadEvent e)
+    {
         if (!gameObject.activeInHierarchy) return;
 
         // Check if reload event comes from launcher holder
-        if (e.reloader != wielder) {
+        if (e.reloader != wielder)
+        {
             return;
         }
 
-        if (CanReload()) {
+        if (CanReload())
+        {
             StartCoroutine(ReloadDelay());
         }
     }
 
 
-    private IEnumerator ReloadDelay() {
+    private IEnumerator ReloadDelay()
+    {
         isReloading = true;
         Debug.Log("Reloading");
 
@@ -62,7 +70,8 @@ public class Launcher : Weapon {
         isReloading = false;
     }
 
-    protected override void WeaponFire(Vector3 direction) {
+    protected override void WeaponFire(Vector3 direction)
+    {
         direction.y = 0;
         direction = direction.normalized;
 
@@ -82,13 +91,16 @@ public class Launcher : Weapon {
         EventBus.Publish(new ScreenShakeEvent(screenShakeStrength));
     }
 
-    protected override void GunReload() {
-        if (CanReload()) {
+    protected override void GunReload()
+    {
+        if (CanReload())
+        {
             StartCoroutine(ReloadDelay());
         }
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         UnSubscribe();
     }
 }

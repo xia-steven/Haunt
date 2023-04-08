@@ -39,16 +39,19 @@ class PedestalRepairedEvent {
 /// The pedestal partial event is sent when the enemies start repairing a pedestal. <br/>
 /// The pedestal's UUID must be specified in the constructor.
 /// </summary>
-class PedestalPartialEvent {
+class PedestalPartialEvent
+{
     public int pedestalUUID;
     public bool turnOn = false;
 
-    public PedestalPartialEvent(int UUID, bool turnOn_in) {
+    public PedestalPartialEvent(int UUID, bool turnOn_in)
+    {
         pedestalUUID = UUID;
         turnOn = turnOn_in;
     }
 
-    public override string ToString() {
+    public override string ToString()
+    {
         return "Pedestal Partial Event Sent: Pedestal " + pedestalUUID + " repaired.";
     }
 }

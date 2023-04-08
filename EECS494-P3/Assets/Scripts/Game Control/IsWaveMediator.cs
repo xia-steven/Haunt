@@ -15,29 +15,37 @@ public class IsWaveMediator : MonoBehaviour {
         if (Wave.spawnData == null) Wave.spawnData = ConfigManager.GetData<EnemyWaveData>("EnemyWaveData");
 
         //if tutorial, use night 1 table
-        if (SceneManager.GetActiveScene().name == "TutorialGameScene") {
+        if (SceneManager.GetActiveScene().name == "TutorialGameScene")
+        {
             PopulateTables(1);
         }
         //else, make table for current night
-        else if (SceneManager.GetActiveScene().name == "GameScene") {
+        else if (SceneManager.GetActiveScene().name == "GameScene")
+        {
             PopulateTables(Mathf.Clamp(GameControl.Day, 1, 3));
         }
     }
 
-    private void PopulateTables(int night) {
+    private void PopulateTables(int night)
+    {
         //reset tables
         Wave.meleeTable = new List<int>();
         Wave.rangedTable = new List<int>();
 
         //populate tables
-        foreach (int idx in Wave.spawnData.nightlyEnemies[night - 1].indices) {
-            if (Wave.spawnData.enemySpawnData[idx].isMelee) {
-                for (int i = 0; i < Wave.spawnData.enemySpawnData[idx].weight; ++i) {
+        foreach (int idx in Wave.spawnData.nightlyEnemies[night-1].indices)
+        {
+            if (Wave.spawnData.enemySpawnData[idx].isMelee)
+            {
+                for(int i = 0; i < Wave.spawnData.enemySpawnData[idx].weight; ++i)
+                {
                     Wave.meleeTable.Add(idx);
                 }
             }
-            else {
-                for (int i = 0; i < Wave.spawnData.enemySpawnData[idx].weight; ++i) {
+            else
+            {
+                for(int i = 0; i < Wave.spawnData.enemySpawnData[idx].weight; ++i)
+                {
                     Wave.rangedTable.Add(idx);
                 }
             }

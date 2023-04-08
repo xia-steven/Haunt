@@ -34,8 +34,7 @@ class HealthUIUpdate {
     }
 
     public override string ToString() {
-        return "Health UI State: Health: " + updated_health + ", Locked: " + updated_locked_health + ", Shields: " +
-               updated_shield_health + ".";
+        return "Health UI State: Health: " + updated_health + ", Locked: " + updated_locked_health + ", Shields: " + updated_shield_health + ".";
     }
 }
 
@@ -99,7 +98,8 @@ class PlayerDodgeEvent {
     public bool start;
     public Vector3 direction;
 
-    public PlayerDodgeEvent(bool _start, Vector3 _direction) {
+    public PlayerDodgeEvent(bool _start, Vector3 _direction)
+    {
         start = _start;
         direction = _direction;
     }
@@ -121,19 +121,23 @@ class PlayerInteractEvent {
 /// <summary>
 /// The CoinCollectedEvent is to be broadcast whenever the player collects a coin.
 /// </summary>
-class CoinEvent {
+class CoinEvent
+{
     public int coinValue;
-
+    
     public CoinEvent(int value = 1) {
         coinValue = value;
     }
+    
 }
 
 /// <summary>
 /// This event is sent whenever a script wants to disable player controls
 /// </summary>
-public class DisablePlayerEvent {
-    public override string ToString() {
+public class DisablePlayerEvent
+{
+    public override string ToString()
+    {
         return "Disable Player Event sent";
     }
 }
@@ -141,8 +145,10 @@ public class DisablePlayerEvent {
 /// <summary>
 /// This event is sent whenever a script wants to enable player controls
 /// </summary>
-public class EnablePlayerEvent {
-    public override string ToString() {
+public class EnablePlayerEvent
+{
+    public override string ToString()
+    {
         return "Enable Player Event sent";
     }
 }
@@ -150,8 +156,10 @@ public class EnablePlayerEvent {
 /// <summary>
 /// This event is sent whenever the player attempts to interact by using the interact key
 /// </summary>
-public class TryInteractEvent {
-    public override string ToString() {
+public class TryInteractEvent
+{
+    public override string ToString()
+    {
         return "Interact Attempt Event sent";
     }
 }
@@ -159,19 +167,24 @@ public class TryInteractEvent {
 /// <summary>
 /// Sent from purchasable object to the shopController and/or the other weapon in the shop
 /// </summary>
-public class WeaponPurchasedEvent {
+public class WeaponPurchasedEvent
+{
     public GameObject weapon;
 
-    public WeaponPurchasedEvent(GameObject _purchase) {
+    public WeaponPurchasedEvent(GameObject _purchase)
+    {
         weapon = _purchase;
     }
+    
 }
 
 /// <summary>
 /// This event is sent to reset the player's inventory back to just a base pistol
 /// </summary>
-class ResetInventoryEvent {
-    public override string ToString() {
+class ResetInventoryEvent
+{
+    public override string ToString()
+    {
         return "Reset Inventory Event sent";
     }
 }
@@ -179,8 +192,10 @@ class ResetInventoryEvent {
 /// <summary>
 /// This event is sent to reload all weapons in player's inventory
 /// </summary>
-public class ReloadAllEvent {
-    public override string ToString() {
+public class ReloadAllEvent
+{
+    public override string ToString()
+    {
         return "Reload All Event sent";
     }
 }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Inventory : MonoBehaviour {
+public class Inventory : MonoBehaviour
+{
     private int numWeapons = 0;
     private int currentWeapon = 0;
     private GameObject[] weapons = new GameObject[10];
@@ -23,7 +24,8 @@ public class Inventory : MonoBehaviour {
     private Subscription<WeaponPurchasedEvent> weaponPurchasedSubscription;
     private Subscription<ReloadAllEvent> reloadAllSubscription;
 
-    private void Awake() {
+    private void Awake()
+    {
         if (IsPlayer.instance.gameObject != gameObject) return;
 
         swapEventSubscription = EventBus.Subscribe<SwapEvent>(_OnSwitchWeapon);
@@ -57,11 +59,13 @@ public class Inventory : MonoBehaviour {
         SceneManager.sceneLoaded += OnSceneLoad;
     }
 
-    void OnSceneLoad(Scene s, LoadSceneMode m) {
-        EventBus.Publish(new SwapSpecificEvent(currentWeapon + 1));
+    void OnSceneLoad(Scene s, LoadSceneMode m)
+    {
+        EventBus.Publish(new SwapSpecificEvent(currentWeapon+1));
     }
 
-    public void Equip(GameObject weapon) {
+    public void Equip(GameObject weapon)
+    {
         weapons[numWeapons] = Instantiate(weapon, transform);
 
         // Unequip current weapon and equip new weapon
@@ -74,65 +78,74 @@ public class Inventory : MonoBehaviour {
         ownedWeapons.Add(weapon.name);
     }
 
-    public void _OnSwitchWeapon(SwapEvent e) {
-        if (e.swapDirection > 0) {
+    public void _OnSwitchWeapon(SwapEvent e)
+    {
+        if (e.swapDirection > 0)
+        {
             weapons[currentWeapon].SetActive(false);
             currentWeapon++;
-            if (currentWeapon >= numWeapons) {
+            if (currentWeapon >= numWeapons)
+            {
                 currentWeapon = 0;
             }
-
             weapons[currentWeapon].SetActive(true);
-        }
-        else if (e.swapDirection < 1) {
+        } else if (e.swapDirection < 1)
+        {
             weapons[currentWeapon].SetActive(false);
             currentWeapon--;
-            if (currentWeapon < 0) {
+            if (currentWeapon < 0)
+            {
                 currentWeapon = numWeapons - 1;
             }
-
             weapons[currentWeapon].SetActive(true);
         }
     }
 
-    public void _OnSpecificSwap(SwapSpecificEvent e) {
+    public void _OnSpecificSwap(SwapSpecificEvent e)
+    {
         int newEquipped = e.newEquipped;
         int actualSlot = newEquipped - 1;
 
         // Check if weapon exists in slot
-        if (weapons[actualSlot] != null) {
+        if (weapons[actualSlot] != null)
+        {
             // "Remove" currently equipped weapon
             weapons[currentWeapon].SetActive(false);
 
             // "Equip" new weapon based on input
             currentWeapon = actualSlot;
             weapons[currentWeapon].SetActive(true);
-        }
-        else {
+        } else
+        {
             Debug.Log("Attempted equip of empty weapon slot.");
         }
     }
 
-    public int GetCoins() {
+    public int GetCoins()
+    {
         return coins;
     }
 
-    public List<string> GetCurrentWeapons() {
+    public List<string> GetCurrentWeapons()
+    {
         return ownedWeapons;
     }
 
-    private void _OnCoinChange(CoinEvent e) {
+    private void _OnCoinChange(CoinEvent e)
+    {
         coins += e.coinValue;
     }
 
-    private void _OnResetInventory(ResetInventoryEvent e) {
+    private void _OnResetInventory(ResetInventoryEvent e) 
+    {
         // Set all values back to zero
         numWeapons = 0;
         currentWeapon = 0;
         coins = 0;
 
         // Remove all weapons
-        for (int i = 0; i < numWeapons; i++) {
+        for (int i = 0; i < numWeapons; i++)
+        {
             weapons[i] = null;
         }
 
@@ -140,24 +153,28 @@ public class Inventory : MonoBehaviour {
         Equip(pistol);
     }
 
-    private void _OnReloadAll(ReloadAllEvent e) {
-        for (int i = 0; i < numWeapons; i++) {
+    private void _OnReloadAll(ReloadAllEvent e)
+    {
+        for (int i = 0; i < numWeapons; i++)
+        {
             weapons[i].GetComponent<Weapon>().ReloadInfinite();
         }
     }
 
-    private void _OnWeaponPurchase(WeaponPurchasedEvent e) {
+    private void _OnWeaponPurchase(WeaponPurchasedEvent e)
+    {
         Equip(e.weapon);
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         EventBus.Unsubscribe(swapEventSubscription);
         EventBus.Unsubscribe(coinEventSubscription);
         EventBus.Unsubscribe(swapSpecificSubscription);
         EventBus.Unsubscribe(resetInventorySubscription);
         EventBus.Unsubscribe(weaponPurchasedSubscription);
         EventBus.Unsubscribe(reloadAllSubscription);
-
+        
         SceneManager.sceneLoaded -= OnSceneLoad;
     }
 }
@@ -165,15 +182,18 @@ public class Inventory : MonoBehaviour {
 public class SwapEvent {
     public int swapDirection;
 
-    public SwapEvent(int _swapDirection) {
+    public SwapEvent(int _swapDirection)
+    {
         swapDirection = _swapDirection;
     }
 }
 
-public class SwapSpecificEvent {
+public class SwapSpecificEvent
+{
     public int newEquipped;
 
-    public SwapSpecificEvent(int _newEquipped) {
+    public SwapSpecificEvent(int _newEquipped)
+    {
         newEquipped = _newEquipped;
     }
 }

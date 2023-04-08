@@ -2,14 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplodeUpgrade : Upgrade {
-    protected override void Start() {
+public class ExplodeUpgrade : Upgrade
+{
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
+    protected override void Start()
+    {
         thisData = typesData.types[(int)PurchaseableType.dashExplode];
         base.Start();
     }
 
-    protected override void Apply() {
-        var newInstance = IsPlayer.instance.gameObject.AddComponent<HasExplodeUpgrade>();
+    protected override void Apply()
+    {
+        HasExplodeUpgrade newInstance = IsPlayer.instance.gameObject.AddComponent<HasExplodeUpgrade>() as HasExplodeUpgrade;
         newInstance.explosiveRadius = thisData.rate1;
 
         base.Apply();

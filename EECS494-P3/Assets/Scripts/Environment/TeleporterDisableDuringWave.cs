@@ -10,7 +10,8 @@ public class TeleporterDisableDuringWave : MonoBehaviour {
     private void Start() {
         tp = GetComponent<IsTeleporter>();
 
-        if (!GameControl.NightEnding) {
+        if(!GameControl.NightEnding)
+        {
             tp.Active = false;
             activated = false;
         }

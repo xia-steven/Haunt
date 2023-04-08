@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wave {
+public class Wave
+{
     public static EnemyWaveData spawnData;
     public static List<int> meleeTable;
     public static List<int> rangedTable;
 
-    private const float timeBetweenSpawns = .6f;
-    private const int maxPedestalEnemies = 1;
+    const float timeBetweenSpawns = .6f;
+    const int maxPedestalEnemies = 1;
 
-    private Dictionary<int, IsWaveMember> members = new();
+    private Dictionary<int, IsWaveMember> members = new Dictionary<int, IsWaveMember>();
 
     private static List<GameObject> potentialMembers;
     private List<Transform> spawnPoints;
@@ -19,23 +20,26 @@ public class Wave {
     public readonly float duration;
     private float startTime;
 
-    private bool spawnPedestals;
-    private bool active;
+    bool spawnPedestals;
+    bool active = false;
 
-    private int numActiveMembers;
-    private int nextId;
+    int numActiveMembers = 0;
+    int nextId = 0;
 
     //for now, difficulty will represent the number of melee enemies to spawn
-    public Wave(int _difficulty, float _duration, List<Transform> _spawnPoints, bool _spawnPedestals = true) {
+    public Wave(int _difficulty, float _duration, List<Transform> _spawnPoints, bool _spawnPedestals = true)
+    {
         difficulty = _difficulty;
         duration = _duration;
         spawnPoints = _spawnPoints;
         spawnPedestals = _spawnPedestals;
 
         //help with overhead
-        if (potentialMembers == null) {
+        if (potentialMembers == null)
+        {
             potentialMembers = new List<GameObject>();
-            foreach (var att in spawnData.enemySpawnData) {
+            foreach (EnemyWaveData.SpawnAttributes att in spawnData.enemySpawnData)
+            {
                 potentialMembers.Add(Resources.Load<GameObject>(att.path));
             }
         }
@@ -44,34 +48,37 @@ public class Wave {
     }
 
 
-    private void Init() {
+    private void Init()
+    {
         Vector3 spawnPos;
         IsWaveMember newMember;
 
         //spawn attack enemies
-        for (var i = 0; i < difficulty; ++i) {
+        for (int i = 0; i < difficulty; ++i)
+        {
             /* GET ENEMY SPAWN POINT */
             spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
 
             /* GET ENEMY TYPE */
             //see if is melee
             // Make sure the day isn't negative for the tutorial
-            var gameDay = (GameControl.Day - 1) >= 0 ? GameControl.Day - 1 : 0;
-            var isMelee = Random.value < spawnData.nightlyPropMelee[gameDay];
+            int gameDay = (GameControl.Day - 1) >= 0 ? GameControl.Day - 1 : 0;
+            bool isMelee = Random.value < spawnData.nightlyPropMelee[gameDay];
 
             //get idx of potentialMembers that new enemy will be
             int spawnIdx;
-            if (isMelee) {
+            if (isMelee)
+            {
                 spawnIdx = meleeTable[Random.Range(0, meleeTable.Count)];
             }
-            else {
+            else
+            {
                 spawnIdx = rangedTable[Random.Range(0, rangedTable.Count)];
             }
 
             /* INSTANTIATE ENEMY */
             //instantiate new enemy and get IsWaveMember component
-            newMember = Object.Instantiate(potentialMembers[spawnIdx], spawnPos, Quaternion.identity)
-                .GetComponent<IsWaveMember>();
+            newMember = Object.Instantiate(potentialMembers[spawnIdx], spawnPos, Quaternion.identity).GetComponent<IsWaveMember>();
 
             /* POST WORK */
             newMember.Init(this, nextId);
@@ -81,22 +88,25 @@ public class Wave {
         }
 
         //spawn pedestal enemies
-        if (spawnPedestals) {
-            for (var i = 0; i < maxPedestalEnemies; ++i) {
+        if (spawnPedestals)
+        {
+            for (int i = 0; i < maxPedestalEnemies; ++i)
+            {
                 spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
-                newMember = Object
-                    .Instantiate(potentialMembers[potentialMembers.Count - 1], spawnPos, Quaternion.identity)
-                    .GetComponent<IsWaveMember>();
+                newMember = Object.Instantiate(potentialMembers[potentialMembers.Count-1], spawnPos, Quaternion.identity).GetComponent<IsWaveMember>();
                 newMember.Init(this, nextId);
                 newMember.gameObject.SetActive(false);
                 numActiveMembers++;
                 members.Add(nextId++, newMember);
             }
         }
+
     }
 
-    public void Spawn() {
-        if (active) {
+    public void Spawn()
+    {
+        if (active)
+        {
             Debug.LogError("Error: Attempted to spawn a wave that is already active");
             return;
         }
@@ -108,11 +118,13 @@ public class Wave {
     }
 
 
-    public bool IsOver() {
+    public bool IsOver()
+    {
         return active && (numActiveMembers <= 0 || Time.time - startTime >= duration);
     }
 
-    public void LoseMember(int id) {
+    public void LoseMember(int id)
+    {
         members.Remove(id);
         numActiveMembers--;
     }
