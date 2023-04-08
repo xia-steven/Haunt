@@ -649,7 +649,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5059311065477073500, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 206
+      value: 206.00002
       objectReference: {fileID: 0}
     - target: {fileID: 5378286916379416224, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: xRoomMax
@@ -1418,6 +1418,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1063970267352803540, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
+      propertyPath: otherScene
+      value: GameScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 1063970267352803540, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
+      propertyPath: selectedRing
+      value: 
+      objectReference: {fileID: 7810300986795678014}
     - target: {fileID: 4073059641059199526, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
       propertyPath: m_LocalPosition.z
       value: 6
@@ -1541,6 +1549,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 7810300987032838726, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
+--- !u!1 &7810300986795678014 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3408903202257156264, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
+  m_PrefabInstance: {fileID: 7810300986795678013}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8909918113377071079
 PrefabInstance:
   m_ObjectHideFlags: 0
