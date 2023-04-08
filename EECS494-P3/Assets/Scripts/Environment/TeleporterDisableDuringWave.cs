@@ -1,30 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(IsTeleporter))]
-public class TeleporterDisableDuringWave : MonoBehaviour {
-    IsTeleporter tp;
-    bool activated;
+namespace Environment {
+    [RequireComponent(typeof(IsTeleporter))]
+    public class TeleporterDisableDuringWave : MonoBehaviour {
+        private IsTeleporter tp;
+        private bool activated;
 
-    private void Start() {
-        tp = GetComponent<IsTeleporter>();
+        private void Start() {
+            tp = GetComponent<IsTeleporter>();
 
-        if (!GameControl.NightEnding) {
-            tp.Active = false;
-            activated = false;
+            switch (Game_Control.GameControl.NightEnding) {
+                case false:
+                    tp.Active = false;
+                    activated = false;
+                    break;
+            }
         }
-    }
 
-    // Update is called once per frame
-    private void Update() {
-        if (!activated && GameControl.NightEnding) {
-            activated = true;
-            tp.Active = true;
-        }
-        else if (!GameControl.NightEnding) {
-            tp.Active = false;
-            activated = false;
+        // Update is called once per frame
+        private void Update() {
+            switch (activated) {
+                case false when Game_Control.GameControl.NightEnding:
+                    activated = true;
+                    tp.Active = true;
+                    break;
+                default: {
+                    switch (Game_Control.GameControl.NightEnding) {
+                        case false:
+                            tp.Active = false;
+                            activated = false;
+                            break;
+                    }
+
+                    break;
+                }
+            }
         }
     }
 }

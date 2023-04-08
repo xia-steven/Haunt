@@ -1,41 +1,43 @@
 using System.Collections;
-using System.Collections.Generic;
+using Events;
 using UnityEngine;
 
 public class ScreenShakeManager : MonoBehaviour {
-    Subscription<ScreenShakeEvent> shakeSub;
-    Subscription<ScreenShakeToggleEvent> shakeToggleSub;
+    private Subscription<ScreenShakeEvent> shakeSub;
+    private Subscription<ScreenShakeToggleEvent> shakeToggleSub;
 
-    bool shaking = false;
+    private bool shaking;
 
     // Start is called before the first frame update
-    void Start() {
+    private void Start() {
         shakeSub = EventBus.Subscribe<ScreenShakeEvent>(_OnScreenShake);
         shakeToggleSub = EventBus.Subscribe<ScreenShakeToggleEvent>(_OnToggleScreenShake);
     }
 
-    void _OnScreenShake(ScreenShakeEvent sse) {
-        transform.localPosition = UnityEngine.Random.onUnitSphere * sse.amplitude;
+    private void _OnScreenShake(ScreenShakeEvent sse) {
+        transform.localPosition = Random.onUnitSphere * sse.amplitude;
     }
 
-    void _OnToggleScreenShake(ScreenShakeToggleEvent sste) {
-        if (shaking) {
-            shaking = false;
-        }
-        else {
-            shaking = true;
-            StartCoroutine(shakeScreen(sste.amplitude, sste.shakeFrequency));
+    private void _OnToggleScreenShake(ScreenShakeToggleEvent sste) {
+        switch (shaking) {
+            case true:
+                shaking = false;
+                break;
+            default:
+                shaking = true;
+                StartCoroutine(shakeScreen(sste.amplitude, sste.shakeFrequency));
+                break;
         }
     }
 
     public float k = 0.1f;
     public float dampening_factor = 0.95f;
-    Vector3 velocity = Vector3.zero;
+    private Vector3 velocity = Vector3.zero;
 
     // Update is called once per frame
-    void Update() {
-        Vector3 displacement = Vector3.zero - transform.localPosition;
-        Vector3 acceleration = k * displacement;
+    private void Update() {
+        var displacement = Vector3.zero - transform.localPosition;
+        var acceleration = k * displacement;
         velocity += acceleration;
         velocity *= dampening_factor;
 
@@ -44,19 +46,15 @@ public class ScreenShakeManager : MonoBehaviour {
         //Debug();
     }
 
-    void Debug() {
-        if (Input.GetKeyDown(KeyCode.T)) {
-            EventBus.Publish(new ScreenShakeEvent());
-        }
+    private void Debug() {
+        if (Input.GetKeyDown(KeyCode.T)) EventBus.Publish(new ScreenShakeEvent());
 
-        if (Input.GetKeyDown(KeyCode.Y)) {
-            EventBus.Publish(new ScreenShakeToggleEvent());
-        }
+        if (Input.GetKeyDown(KeyCode.Y)) EventBus.Publish(new ScreenShakeToggleEvent());
     }
 
-    IEnumerator shakeScreen(float amplitude, float frequency) {
+    private IEnumerator shakeScreen(float amplitude, float frequency) {
         while (shaking) {
-            transform.localPosition = UnityEngine.Random.onUnitSphere * amplitude;
+            transform.localPosition = Random.onUnitSphere * amplitude;
 
             yield return new WaitForSeconds(frequency);
         }

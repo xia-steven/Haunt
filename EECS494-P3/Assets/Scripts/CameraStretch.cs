@@ -1,17 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
 public class CameraStretch : MonoBehaviour {
     public static CameraStretch instance;
 
-    Camera cam;
+    private Camera cam;
     public float height = 1f;
     public float width = 1f;
 
     // Use this for initialization
-    void Awake() {
+    private void Awake() {
         if (instance == null) instance = this;
         else Destroy(this);
 
@@ -19,7 +17,7 @@ public class CameraStretch : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    private void Update() {
         //stretch view//
         cam.ResetProjectionMatrix();
         var m = cam.projectionMatrix;

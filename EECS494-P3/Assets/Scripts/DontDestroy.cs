@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DontDestroy : MonoBehaviour {
-    void Awake() {
+    private void Awake() {
         var objs = GameObject.FindGameObjectsWithTag("Player");
 
-        if (objs.Length > 1) {
-            Destroy(gameObject);
+        switch (objs.Length) {
+            case > 1:
+                Destroy(gameObject);
+                break;
         }
 
         DontDestroyOnLoad(gameObject);

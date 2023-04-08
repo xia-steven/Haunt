@@ -1,68 +1,70 @@
 using System.Collections;
-using System.Collections.Generic;
+using Events;
 using UnityEngine;
 
-public class TutorialRangedEnemyEncounter : MonoBehaviour {
-    [SerializeField] int tutorialMessageID = 1;
+namespace Tutorial {
+    public class TutorialRangedEnemyEncounter : MonoBehaviour {
+        [SerializeField] private int tutorialMessageID = 1;
 
-    bool sent = false;
+        private bool sent;
 
-    bool messageFinished = false;
+        private bool messageFinished;
 
-    Subscription<MessageFinishedEvent> messFinSub;
+        private Subscription<MessageFinishedEvent> messFinSub;
 
-    private void Start() {
-        messFinSub = EventBus.Subscribe<MessageFinishedEvent>(onMessageFinished);
-    }
-
-    private void OnDestroy() {
-        EventBus.Unsubscribe(messFinSub);
-    }
-
-
-    private void OnTriggerEnter(Collider other) {
-        if (!sent) {
-            StartCoroutine(RangedEnemyCoroutine());
-            sent = true;
-        }
-    }
-
-    IEnumerator RangedEnemyCoroutine() {
-        //Disable player movement
-        EventBus.Publish(new DisablePlayerEvent());
-
-        //Lock the camera
-        EventBus.Publish(new TutorialLockCameraEvent(new Vector3(-1, 12, -12)));
-
-        // Wait for bullet to reach the right spot
-        yield return new WaitForSeconds(3.25f);
-
-        // Send the tutorial message
-        EventBus.Publish(new TutorialMessageEvent(tutorialMessageID, GetInstanceID(), true, KeyCode.Space, true));
-
-        // Wait for message to finish
-        while (!messageFinished) {
-            yield return null;
+        private void Start() {
+            messFinSub = EventBus.Subscribe<MessageFinishedEvent>(onMessageFinished);
         }
 
-        // Perform tutorial dodge
-        EventBus.Publish(new TutorialDodgeStartEvent(Vector3.left));
-        yield return new WaitForSecondsRealtime(0.4f);
-        EventBus.Publish(new TutorialDodgeEndEvent());
+        private void OnDestroy() {
+            EventBus.Unsubscribe(messFinSub);
+        }
 
 
-        // Unlock the camera
-        EventBus.Publish(new TutorialUnlockCameraEvent());
+        private void OnTriggerEnter(Collider other) {
+            switch (sent) {
+                case false:
+                    StartCoroutine(RangedEnemyCoroutine());
+                    sent = true;
+                    break;
+            }
+        }
 
-        //Enable player movement
-        EventBus.Publish(new EnablePlayerEvent());
-    }
+        private IEnumerator RangedEnemyCoroutine() {
+            //Disable player movement
+            EventBus.Publish(new DisablePlayerEvent());
+
+            //Lock the camera
+            EventBus.Publish(new TutorialLockCameraEvent(new Vector3(-1, 12, -12)));
+
+            // Wait for bullet to reach the right spot
+            yield return new WaitForSeconds(3.25f);
+
+            // Send the tutorial message
+            EventBus.Publish(new TutorialMessageEvent(tutorialMessageID, GetInstanceID(), true, KeyCode.Space, true));
+
+            // Wait for message to finish
+            while (!messageFinished) yield return null;
+
+            // Perform tutorial dodge
+            EventBus.Publish(new TutorialDodgeStartEvent(Vector3.left));
+            yield return new WaitForSecondsRealtime(0.4f);
+            EventBus.Publish(new TutorialDodgeEndEvent());
 
 
-    void onMessageFinished(MessageFinishedEvent mfe) {
-        if (mfe.senderInstanceID == GetInstanceID()) {
-            Debug.Log("Message finished");
-            messageFinished = true;
+            // Unlock the camera
+            EventBus.Publish(new TutorialUnlockCameraEvent());
+
+            //Enable player movement
+            EventBus.Publish(new EnablePlayerEvent());
+        }
+
+
+        private void onMessageFinished(MessageFinishedEvent mfe) {
+            if (mfe.senderInstanceID == GetInstanceID()) {
+                Debug.Log("Message finished");
+                messageFinished = true;
+            }
         }
     }
 }

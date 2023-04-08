@@ -1,44 +1,41 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using JSON_Parsing;
 
-[System.Serializable]
-public class MessageList : Savable {
-    public List<MessageSet> allMessages;
-    public List<string> initialTutorial;
+namespace ConfigDataTypes {
+    [System.Serializable]
+    public class MessageList : Savable {
+        public List<MessageSet> allMessages;
+        public List<string> initialTutorial;
 
-    public MessageList() {
-        allMessages = new List<MessageSet>();
-        initialTutorial = new List<string>();
-    }
-
-    public override string ToString() {
-        var output = "{";
-
-        foreach (var msg in allMessages) {
-            output += msg + " ";
+        public MessageList() {
+            allMessages = new List<MessageSet>();
+            initialTutorial = new List<string>();
         }
 
-        output += "}";
-        return output;
-    }
-}
+        public override string ToString() {
+            var output = "{";
 
-[System.Serializable]
-public class MessageSet {
-    public List<string> messages;
+            foreach (var msg in allMessages) output += msg + " ";
 
-    public MessageSet() {
-        messages = new List<string>();
+            output += "}";
+            return output;
+        }
     }
 
-    public override string ToString() {
-        var output = "[";
-        foreach (var msg in messages) {
-            output += msg + " ";
+    [System.Serializable]
+    public class MessageSet {
+        public List<string> messages;
+
+        public MessageSet() {
+            messages = new List<string>();
         }
 
-        output += "]";
-        return output;
+        public override string ToString() {
+            var output = "[";
+            foreach (var msg in messages) output += msg + " ";
+
+            output += "]";
+            return output;
+        }
     }
 }

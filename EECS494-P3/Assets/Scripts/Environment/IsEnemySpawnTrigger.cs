@@ -1,17 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class IsEnemySpawnTrigger : MonoBehaviour {
-    [SerializeField] Transform spawnLocation;
-    [SerializeField] GameObject enemyToSpawn;
+namespace Environment {
+    public class IsEnemySpawnTrigger : MonoBehaviour {
+        [SerializeField] private Transform spawnLocation;
+        [SerializeField] private GameObject enemyToSpawn;
 
-    bool spawned;
+        private bool spawned;
 
-    private void OnTriggerEnter(Collider other) {
-        if (!spawned) {
-            GameObject enemy = Instantiate(enemyToSpawn, spawnLocation.position, Quaternion.Euler(60, 0, 0));
-            spawned = true;
+        private void OnTriggerEnter(Collider other) {
+            switch (spawned) {
+                case false: {
+                    Instantiate(enemyToSpawn, spawnLocation.position, Quaternion.Euler(60, 0, 0));
+                    spawned = true;
+                    break;
+                }
+            }
         }
     }
 }

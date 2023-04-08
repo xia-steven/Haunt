@@ -1,49 +1,53 @@
 using System.Collections;
-using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
-public class HasStationaryDamage : MonoBehaviour {
-    public float holdTime;
-    public float dmgMod;
+namespace Hub.Upgrades {
+    public class HasStationaryDamage : MonoBehaviour {
+        public float holdTime;
+        public float dmgMod;
 
-    Vector3 knownPos;
-    float lastUpdate;
+        private Vector3 knownPos;
+        private float lastUpdate;
 
-    bool holding = false;
-    bool dmgIncreased = false;
+        private bool holding;
+        private bool dmgIncreased;
 
-    private void Start() {
-        StartCoroutine(PollForHold());
-    }
-
-    // Update is called once per frame
-    void Update() {
-        if (holding && !dmgIncreased) {
-            PlayerModifiers.damage *= dmgMod;
-            dmgIncreased = true;
+        private void Start() {
+            StartCoroutine(PollForHold());
         }
-        else if (!holding && dmgIncreased) {
-            PlayerModifiers.damage /= dmgMod;
-            dmgIncreased = false;
-        }
-    }
 
-    IEnumerator PollForHold() {
-        lastUpdate = Time.time;
-        knownPos = IsPlayer.instance.transform.position;
-
-        while (true) {
-            // if player has moved, reset count
-            if (knownPos != IsPlayer.instance.transform.position) {
-                lastUpdate = Time.time;
-                knownPos = IsPlayer.instance.transform.position;
-                holding = false;
+        // Update is called once per frame
+        private void Update() {
+            switch (holding) {
+                case true when !dmgIncreased:
+                    PlayerModifiers.damage *= dmgMod;
+                    dmgIncreased = true;
+                    break;
+                case false when dmgIncreased:
+                    PlayerModifiers.damage /= dmgMod;
+                    dmgIncreased = false;
+                    break;
             }
+        }
 
-            // if held for long enough, set holding true
-            if (Time.time - lastUpdate > holdTime) holding = true;
+        private IEnumerator PollForHold() {
+            lastUpdate = Time.time;
+            knownPos = IsPlayer.instance.transform.position;
 
-            yield return new WaitForSeconds(.1f);
+            while (true) {
+                // if player has moved, reset count
+                if (knownPos != IsPlayer.instance.transform.position) {
+                    lastUpdate = Time.time;
+                    knownPos = IsPlayer.instance.transform.position;
+                    holding = false;
+                }
+
+                // if held for long enough, set holding true
+                if (Time.time - lastUpdate > holdTime) holding = true;
+
+                yield return new WaitForSeconds(.1f);
+            }
         }
     }
 }

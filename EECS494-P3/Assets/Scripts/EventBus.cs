@@ -19,81 +19,99 @@ public class EventBus {
     /* DEVELOPER : Change this to "true" and all events will be logged to console automatically */
     public const bool DEBUG_MODE = false;
 
-    static Dictionary<Type, IList> _topics = new Dictionary<Type, IList>();
+    private static readonly Dictionary<Type, IList> _topics = new();
 
     public static void Publish<T>(T published_event) {
         /* Use type T to identify correct subscriber list (correct "topic") */
-        Type t = typeof(T);
+        var t = typeof(T);
 
-        if (DEBUG_MODE)
-            Debug.Log("[Publish] event of type " + t + " with contents (" + published_event.ToString() + ")");
+        switch (DEBUG_MODE) {
+            case true:
+                Debug.Log("[Publish] event of type " + t + " with contents (" + published_event.ToString() + ")");
+                break;
+        }
 
         if (_topics.ContainsKey(t)) {
             IList subscriber_list = new List<Subscription<T>>(_topics[t].Cast<Subscription<T>>());
 
-            /* iterate through the subscribers and pass along the event T */
-            if (DEBUG_MODE)
-                Debug.Log("..." + subscriber_list.Count + " subscriptions being executed for this event.");
+            switch (DEBUG_MODE) {
+                /* iterate through the subscribers and pass along the event T */
+                case true:
+                    Debug.Log("..." + subscriber_list.Count + " subscriptions being executed for this event.");
+                    break;
+            }
 
             /* This is a collection of subscriptions that have lost their target object. */
-            List<Subscription<T>> orphaned_subscriptions = new List<Subscription<T>>();
+            var orphaned_subscriptions = new List<Subscription<T>>();
 
-            foreach (Subscription<T> s in subscriber_list) {
-                if (s.callback.Target == null || s.callback.Target.Equals(null)) {
+            foreach (Subscription<T> s in subscriber_list)
+                if (s.callback.Target == null || s.callback.Target.Equals(null))
                     /* This callback is hanging, as its target object was destroyed */
                     /* Collect this callback and remove it later */
                     orphaned_subscriptions.Add(s);
-                }
-                else {
+                else
                     s.callback(published_event);
-                }
-            }
 
             /* Unsubcribe orphaned subs that have had their target objects destroyed */
-            foreach (Subscription<T> orphan_subscription in orphaned_subscriptions) {
-                EventBus.Unsubscribe<T>(orphan_subscription);
-            }
+            foreach (var orphan_subscription in orphaned_subscriptions) Unsubscribe(orphan_subscription);
         }
         else {
-            if (DEBUG_MODE)
-                Debug.Log("...but no one is subscribed to this event right now.");
+            switch (DEBUG_MODE) {
+                case true:
+                    Debug.Log("...but no one is subscribed to this event right now.");
+                    break;
+            }
         }
     }
 
     public static Subscription<T> Subscribe<T>(Action<T> callback) {
         /* Determine event type so we can find the correct subscriber list */
-        Type t = typeof(T);
-        Subscription<T> new_subscription = new Subscription<T>(callback);
+        var t = typeof(T);
+        var new_subscription = new Subscription<T>(callback);
 
-        /* If a subscriber list doesn't exist for this event type, create one */
-        if (!_topics.ContainsKey(t))
-            _topics[t] = new List<Subscription<T>>();
+        _topics[t] = _topics.ContainsKey(t) switch {
+            /* If a subscriber list doesn't exist for this event type, create one */
+            false => new List<Subscription<T>>(),
+            _ => _topics[t]
+        };
 
         _topics[t].Add(new_subscription);
 
-        if (DEBUG_MODE)
-            Debug.Log("[Subscribe] subscription of function (" + callback.Target.ToString() + "." +
-                      callback.Method.Name + ") to type " + t + ". There are now " + _topics[t].Count +
-                      " subscriptions to this type.");
+        switch (DEBUG_MODE) {
+            case true:
+                Debug.Log("[Subscribe] subscription of function (" + callback.Target.ToString() + "." +
+                          callback.Method.Name + ") to type " + t + ". There are now " + _topics[t].Count +
+                          " subscriptions to this type.");
+                break;
+        }
 
         return new_subscription;
     }
 
     public static void Unsubscribe<T>(Subscription<T> subscription) {
-        Type t = typeof(T);
+        var t = typeof(T);
 
-        if (DEBUG_MODE)
-            Debug.Log("[Unsubscribe] attempting to remove subscription to type " + t);
+        switch (DEBUG_MODE) {
+            case true:
+                Debug.Log("[Unsubscribe] attempting to remove subscription to type " + t);
+                break;
+        }
 
         if (_topics.ContainsKey(t) && _topics[t].Count > 0) {
             _topics[t].Remove(subscription);
 
-            if (DEBUG_MODE)
-                Debug.Log("...there are now " + _topics[t].Count + " subscriptions to this type.");
+            switch (DEBUG_MODE) {
+                case true:
+                    Debug.Log("...there are now " + _topics[t].Count + " subscriptions to this type.");
+                    break;
+            }
         }
         else {
-            if (DEBUG_MODE)
-                Debug.Log("...but this subscription is not currently valid (perhaps you already unsubscribed?)");
+            switch (DEBUG_MODE) {
+                case true:
+                    Debug.Log("...but this subscription is not currently valid (perhaps you already unsubscribed?)");
+                    break;
+            }
         }
     }
 }
@@ -108,6 +126,6 @@ public class Subscription<T> {
     }
 
     ~Subscription() {
-        EventBus.Unsubscribe<T>(this);
+        EventBus.Unsubscribe(this);
     }
 }
