@@ -1,20 +1,17 @@
-using Events;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tutorial {
-    public class InteractTrigger : MonoBehaviour {
-        [SerializeField] private Sprite sprite;
-        [SerializeField] private KeyCode dismissKey;
+public class InteractTrigger : MonoBehaviour {
+    [SerializeField] Sprite sprite;
+    [SerializeField] KeyCode dismissKey;
 
-        private bool triggered;
+    bool triggered = false;
 
-        private void OnTriggerEnter(Collider other) {
-            switch (triggered) {
-                case false:
-                    triggered = true;
-                    EventBus.Publish(new SpritePromptEvent(sprite, dismissKey));
-                    break;
-            }
+    private void OnTriggerEnter(Collider other) {
+        if (!triggered) {
+            triggered = true;
+            EventBus.Publish(new SpritePromptEvent(sprite, dismissKey));
         }
     }
 }

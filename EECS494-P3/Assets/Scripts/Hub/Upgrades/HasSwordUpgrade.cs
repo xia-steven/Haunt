@@ -1,71 +1,68 @@
 using System.Collections;
-using Events;
+using System.Collections.Generic;
 using UnityEngine;
-using Weapons;
 
-namespace Hub.Upgrades {
-    public class HasSwordUpgrade : MonoBehaviour {
-        private GameObject sword;
-        private Subscription<PlayerDodgeEvent> dodgeEvent;
-        private bool isSwinging;
-        private bool switchSwing;
-        public float swingArc;
-        public float swingTime;
+public class HasSwordUpgrade : MonoBehaviour {
+    private GameObject sword;
+    private Subscription<PlayerDodgeEvent> dodgeEvent;
+    private bool isSwinging = false;
+    private bool switchSwing = false;
+    public float swingArc;
+    public float swingTime;
 
-        // Start is called before the first frame update
-        private void Start() {
-            sword = Resources.Load<GameObject>("Prefabs/Weapons/SwingSword");
-            dodgeEvent = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
+    // Start is called before the first frame update
+    void Start() {
+        sword = Resources.Load<GameObject>("Prefabs/Weapons/SwingSword");
+        dodgeEvent = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
+    }
+
+    // Attach shield on dodge start and destroy it on dodge finish
+    private void _OnDodge(PlayerDodgeEvent e) {
+        if (!e.start && !isSwinging) {
+            StartCoroutine(SwingSword(e.direction));
+        }
+    }
+
+    protected void OnDestroy() {
+        EventBus.Unsubscribe(dodgeEvent);
+    }
+
+    private IEnumerator SwingSword(Vector3 direction) {
+        Debug.Log("Sword swing: " + direction);
+
+        isSwinging = true;
+        if (direction.x > 0) {
+            switchSwing = true;
+        }
+        else {
+            switchSwing = false;
         }
 
-        // Attach shield on dodge start and destroy it on dodge finish
-        private void _OnDodge(PlayerDodgeEvent e) {
-            switch (e.start) {
-                case false when !isSwinging:
-                    StartCoroutine(SwingSword(e.direction));
-                    break;
-            }
-        }
+        // Spawn actual swinging sword
+        GameObject swingSword = Instantiate(sword, transform);
 
-        protected void OnDestroy() {
-            EventBus.Unsubscribe(dodgeEvent);
-        }
+        // Shift rotation half a swing to the left so swing is started in correct location
+        Quaternion shift = Quaternion.AngleAxis((-swingArc / 2f) - 90, Vector3.up);
+        direction = shift * direction;
 
-        private IEnumerator SwingSword(Vector3 direction) {
-            Debug.Log("Sword swing: " + direction);
+        // Calculate the rotation for the start of the swinging sword
+        Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+        Debug.Log("Look rotation: " + rotation);
 
-            isSwinging = true;
-            switchSwing = direction.x switch {
-                > 0 => true,
-                _ => false
-            };
-
-            // Spawn actual swinging sword
-            var swingSword = Instantiate(sword, transform);
-
-            // Shift rotation half a swing to the left so swing is started in correct location
-            var shift = Quaternion.AngleAxis((-swingArc / 2f) - 90, Vector3.up);
-            direction = shift * direction;
-
-            // Calculate the rotation for the start of the swinging sword
-            var rotation = Quaternion.LookRotation(direction, Vector3.up);
-            Debug.Log("Look rotation: " + rotation);
-
-            // Set the initial rotation and position of the swinging sword
-            swingSword.transform.rotation = rotation;
-            swingSword.GetComponent<SwingSword>().SetUp(swingArc / swingTime);
-            // Check if sword needs to be moved to other side of player
-            /*
+        // Set the initial rotation and position of the swinging sword
+        swingSword.transform.rotation = rotation;
+        swingSword.GetComponent<SwingSword>().SetUp(swingArc / swingTime);
+        // Check if sword needs to be moved to other side of player
+        /*
         if (switchSwing)
         {
             swingSword.transform.position = new Vector3(swingSword.transform.position.x - 0.5f, swingSword.transform.position.y, swingSword.transform.position.z);
         }
         */
 
-            yield return new WaitForSeconds(swingTime);
+        yield return new WaitForSeconds(swingTime);
 
-            Destroy(swingSword);
-            isSwinging = false;
-        }
+        Destroy(swingSword);
+        isSwinging = false;
     }
 }

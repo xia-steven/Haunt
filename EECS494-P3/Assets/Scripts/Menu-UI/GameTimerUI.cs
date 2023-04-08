@@ -1,50 +1,38 @@
 using System.Collections;
-using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-namespace Menu_UI {
-    public class GameTimerUI : MonoBehaviour {
-        [SerializeField] private TextMeshProUGUI text;
-        [SerializeField] private Color normalColor;
-        [SerializeField] private Color flashColor;
-        [SerializeField] private float flashDuration;
+public class GameTimerUI : MonoBehaviour {
+    [SerializeField] TextMeshProUGUI text;
+    [SerializeField] Color normalColor;
+    [SerializeField] Color flashColor;
+    [SerializeField] float flashDuration;
 
-        private bool flashing;
+    bool flashing = false;
 
-        // Update is called once per frame
-        private void Update() {
-            var remaining = (int)Game_Control.GameControl.NightTimeRemaining;
-            switch (remaining) {
-                case -1 when !flashing: {
-                    switch (Game_Control.GameControl.IsNight) {
-                        case true:
-                            text.text = "Night Ending!\nGet to the teleporter!";
-                            StartCoroutine(Flash());
-                            break;
-                    }
-
-                    break;
-                }
-                default: {
-                    text.text = Game_Control.GameControl.IsNight switch {
-                        true when !flashing => "Sunrise: " + remaining,
-                        _ => text.text
-                    };
-
-                    break;
-                }
+    // Update is called once per frame
+    void Update() {
+        int remaining = (int)GameControl.NightTimeRemaining;
+        if (remaining == -1 && !flashing) {
+            if (GameControl.IsNight) {
+                text.text = "Night Ending!\nGet to the teleporter!";
+                StartCoroutine(Flash());
             }
         }
+        else if (GameControl.IsNight && !flashing) {
+            text.text = "Sunrise: " + remaining;
+        }
+    }
 
-        private IEnumerator Flash() {
-            flashing = true;
-            while (true) {
-                text.color = normalColor;
-                yield return new WaitForSecondsRealtime(flashDuration);
+    IEnumerator Flash() {
+        flashing = true;
+        while (true) {
+            text.color = normalColor;
+            yield return new WaitForSecondsRealtime(flashDuration);
 
-                text.color = flashColor;
-                yield return new WaitForSecondsRealtime(flashDuration);
-            }
+            text.color = flashColor;
+            yield return new WaitForSecondsRealtime(flashDuration);
         }
     }
 }

@@ -1,6 +1,9 @@
-namespace JSON_Parsing {
-    [System.Serializable]
-    public class Savable {
-        public string key;
-    }
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[System.Serializable]
+public class Savable
+{
+    public string key;
 }

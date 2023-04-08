@@ -10,38 +10,39 @@
     --------------------------------------------------
  */
 
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace Enemy.Pathfinding {
-    public class PathNode {
-        private Grid<PathNode> grid;
-        public int x;
-        public int z;
+public class PathNode {
+    private readonly Grid<PathNode> grid;
+    public readonly int x;
+    public readonly int z;
 
-        public int gCost;
-        public int hCost;
-        public int fCost;
+    public int gCost;
+    public int hCost;
+    public int fCost;
 
-        public bool isWalkable;
-        public PathNode cameFromNode;
+    public bool isWalkable;
+    public PathNode cameFromNode;
 
-        public PathNode(Grid<PathNode> grid_, int x_, int z_) {
-            grid = grid_;
-            x = x_;
-            z = z_;
-            isWalkable = true;
-        }
+    public PathNode(Grid<PathNode> grid_, int x_, int z_) {
+        grid = grid_;
+        x = x_;
+        z = z_;
+        isWalkable = true;
+    }
 
-        public void CalculateFCost() {
-            fCost = gCost + hCost;
-        }
+    public void CalculateFCost() {
+        fCost = gCost + hCost;
+    }
 
-        public void SetIsWalkable(bool walkable_) {
-            isWalkable = walkable_;
-            grid.TriggerGridObjectChanged(x, z);
-        }
+    public void SetIsWalkable(bool walkable_) {
+        isWalkable = walkable_;
+        grid.TriggerGridObjectChanged(x, z);
+    }
 
-        public override string ToString() {
-            return x + "," + z;
-        }
+    public override string ToString() {
+        return x + "," + z;
     }
 }

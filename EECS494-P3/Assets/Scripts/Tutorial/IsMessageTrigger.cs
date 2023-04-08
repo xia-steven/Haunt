@@ -1,20 +1,17 @@
-using Events;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tutorial {
-    public class IsMessageTrigger : MonoBehaviour {
-        [SerializeField] private int tutorialMessageID = -1;
+public class IsMessageTrigger : MonoBehaviour {
+    [SerializeField] int tutorialMessageID = -1;
 
-        private bool sent;
+    bool sent = false;
 
 
-        private void OnTriggerEnter(Collider other) {
-            switch (sent) {
-                case false when other.gameObject.layer == LayerMask.NameToLayer("Player"):
-                    EventBus.Publish(new TutorialMessageEvent(tutorialMessageID, GetInstanceID(), false));
-                    sent = true;
-                    break;
-            }
+    private void OnTriggerEnter(Collider other) {
+        if (!sent && other.gameObject.layer == LayerMask.NameToLayer("Player")) {
+            EventBus.Publish(new TutorialMessageEvent(tutorialMessageID, GetInstanceID(), false));
+            sent = true;
         }
     }
 }

@@ -1,7 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class TimeManager {
-    private const float defaultFixedDT = 1f / 60;
+    private static float defaultFixedDT = 1f / 60;
 
     public static void ResetTimeScale() {
         SetTimeScale(1f);
@@ -10,11 +12,8 @@ public static class TimeManager {
     //Expects a value in the range (0, 1]
     public static void SetTimeScale(float scale) {
         Time.timeScale = scale;
-        scale = scale switch {
-            // Prevent division by 0
-            <= 0.01f => 0.01f,
-            _ => scale
-        };
+        // Prevent division by 0
+        if (scale <= 0.01f) scale = 0.01f;
         Time.fixedDeltaTime = defaultFixedDT * (1 / scale);
     }
 }

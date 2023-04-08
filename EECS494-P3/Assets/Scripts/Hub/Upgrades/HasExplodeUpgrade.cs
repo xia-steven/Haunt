@@ -1,32 +1,30 @@
 using System.Collections;
-using Events;
-using Player;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hub.Upgrades {
-    public class HasExplodeUpgrade : MonoBehaviour {
-        [SerializeField] private bool oneShotEnemies;
-        public float explosiveRadius;
-        private const int numBombs = 4;
-        private float bombFrequency;
-        private Subscription<PlayerDodgeEvent> dodgeEvent;
-        private GameObject bomb;
+public class HasExplodeUpgrade : MonoBehaviour {
+    [SerializeField] bool oneShotEnemies = false;
+    public float explosiveRadius;
+    private int numBombs = 4;
+    private float bombFrequency;
+    private Subscription<PlayerDodgeEvent> dodgeEvent;
+    GameObject bomb;
 
-        // Start is called before the first frame update
-        private void Start() {
-            dodgeEvent = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
+    // Start is called before the first frame update
+    void Start() {
+        dodgeEvent = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
 
-            // Set how often bombs are dropped along trail
-            bombFrequency = IsPlayer.instance.gameObject.GetComponent<PlayerController>().dodgeRollDuration / numBombs;
-            Debug.Log("Bomb frequency: " + bombFrequency);
+        // Set how often bombs are dropped along trail
+        bombFrequency = IsPlayer.instance.gameObject.GetComponent<PlayerController>().dodgeRollDuration / numBombs;
+        Debug.Log("Bomb frequency: " + bombFrequency);
 
-            bomb = Resources.Load<GameObject>("Prefabs/Weapons/Bomb");
-        }
+        bomb = Resources.Load<GameObject>("Prefabs/Weapons/Bomb");
+    }
 
-        // Explode on dash finish
-        private void _OnDodge(PlayerDodgeEvent e) {
-            switch (e.start) {
-                /*
+    // Explode on dash finish
+    private void _OnDodge(PlayerDodgeEvent e) {
+        if (e.start) {
+            /*
             // Perform hit
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosiveRadius);
 
@@ -56,39 +54,37 @@ namespace Hub.Upgrades {
             // Destroy(spawnedVisual, explosion_anim.);
             StartCoroutine(ExplosionAnimation());
             */
-                case true:
-                    StartCoroutine(DropBombs());
-                    break;
-            }
+
+            StartCoroutine(DropBombs());
+        }
+    }
+
+    IEnumerator ExplosionAnimation() {
+        // might want to change this visual to be ever-present but just deactivated
+        GameObject visual = Resources.Load<GameObject>("Prefabs/EnemyWeapons/ExplosionRadius");
+        GameObject spawnedVisual = Instantiate(visual, transform.position, Quaternion.identity);
+        Animator animator = spawnedVisual.GetComponentInChildren<Animator>();
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0); // get the current state info
+        while (stateInfo.normalizedTime < 1f) // wait for the animation to finish
+        {
+            stateInfo = animator.GetCurrentAnimatorStateInfo(0); // get the updated state info
+            yield return null;
         }
 
-        private IEnumerator ExplosionAnimation() {
-            // might want to change this visual to be ever-present but just deactivated
-            var visual = Resources.Load<GameObject>("Prefabs/EnemyWeapons/ExplosionRadius");
-            var spawnedVisual = Instantiate(visual, transform.position, Quaternion.identity);
-            var animator = spawnedVisual.GetComponentInChildren<Animator>();
-            var stateInfo = animator.GetCurrentAnimatorStateInfo(0); // get the current state info
-            while (stateInfo.normalizedTime < 1f) // wait for the animation to finish
-            {
-                stateInfo = animator.GetCurrentAnimatorStateInfo(0); // get the updated state info
-                yield return null;
-            }
+        Destroy(spawnedVisual);
+    }
 
-            Destroy(spawnedVisual);
-        }
-
-        private IEnumerator DropBombs() {
-            // Drop last bomb at last location
+    IEnumerator DropBombs() {
+        // Drop last bomb at last location
+        yield return new WaitForSeconds(bombFrequency);
+        // Drop the specified number of bombs at a constant frequency
+        for (int i = 0; i < numBombs; i++) {
+            Instantiate(bomb, transform);
             yield return new WaitForSeconds(bombFrequency);
-            // Drop the specified number of bombs at a constant frequency
-            for (var i = 0; i < numBombs; i++) {
-                Instantiate(bomb, transform);
-                yield return new WaitForSeconds(bombFrequency);
-            }
         }
+    }
 
-        protected void OnDestroy() {
-            EventBus.Unsubscribe(dodgeEvent);
-        }
+    protected void OnDestroy() {
+        EventBus.Unsubscribe(dodgeEvent);
     }
 }

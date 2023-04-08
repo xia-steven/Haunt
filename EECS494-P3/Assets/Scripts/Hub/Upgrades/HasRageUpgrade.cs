@@ -1,56 +1,49 @@
-using Events;
-using Player;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hub.Upgrades {
-    public class HasRageUpgrade : MonoBehaviour {
-        public float duration;
-        public float moveMod;
-        public float dmgMod;
+public class HasRageUpgrade : MonoBehaviour {
+    public float duration;
+    public float moveMod;
+    public float dmgMod;
 
-        private float hitTime;
+    float hitTime;
 
-        private bool active;
-        private bool statsChanged;
+    bool active;
+    bool statsChanged;
 
-        private Subscription<PlayerDamagedEvent> dmgSub;
+    Subscription<PlayerDamagedEvent> dmgSub;
 
-        // Start is called before the first frame update
-        private void Start() {
-            EventBus.Subscribe<PlayerDamagedEvent>(_OnDamage);
-        }
+    // Start is called before the first frame update
+    void Start() {
+        EventBus.Subscribe<PlayerDamagedEvent>(_OnDamage);
+    }
 
-        // Update is called once per frame
-        private void Update() {
-            switch (active) {
-                case true: {
-                    switch (statsChanged) {
-                        case false:
-                            PlayerModifiers.damage *= dmgMod;
-                            PlayerModifiers.moveSpeed *= moveMod;
-                            statsChanged = true;
-                            //TODO: change player visuals here
-                            break;
-                    }
-
-                    if (Time.time - hitTime > duration) active = false;
-                    break;
-                }
+    // Update is called once per frame
+    void Update() {
+        if (active) {
+            if (!statsChanged) {
+                PlayerModifiers.damage *= dmgMod;
+                PlayerModifiers.moveSpeed *= moveMod;
+                statsChanged = true;
+                //TODO: change player visuals here
             }
 
-            switch (active) {
-                case false when statsChanged:
-                    PlayerModifiers.damage /= dmgMod;
-                    PlayerModifiers.moveSpeed /= moveMod;
-                    statsChanged = false;
-                    //TODO: change player visuals here
-                    break;
+            if (Time.time - hitTime > duration) {
+                active = false;
             }
         }
 
-        private void _OnDamage(PlayerDamagedEvent e) {
-            active = true;
-            hitTime = Time.time;
+        if (!active && statsChanged) {
+            PlayerModifiers.damage /= dmgMod;
+            PlayerModifiers.moveSpeed /= moveMod;
+            statsChanged = false;
+            //TODO: change player visuals here
         }
+    }
+
+    void _OnDamage(PlayerDamagedEvent e) {
+        active = true;
+        hitTime = Time.time;
     }
 }

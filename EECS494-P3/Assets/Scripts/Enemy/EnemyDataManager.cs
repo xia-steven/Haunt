@@ -1,35 +1,33 @@
-using ConfigDataTypes;
-using JSON_Parsing;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Enemy {
-    public class EnemyDataManager : MonoBehaviour {
-        private static EnemyDataManager instance;
+public class EnemyDataManager : MonoBehaviour {
+    static EnemyDataManager instance;
 
-        private static EnemyData data;
+    static EnemyData data;
 
-        private const string configName = "EnemyData";
+    string configName = "EnemyData";
 
-        // Enforce singleton in awake
-        private void Awake() {
-            //enforce singleton
-            if (instance == null) instance = this;
-            else Destroy(gameObject);
+    // Enforce singleton in awake
+    void Awake() {
+        //enforce singleton
+        if (instance == null) instance = this;
+        else Destroy(this.gameObject);
 
-            DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
 
-            // Load data
-            data = ConfigManager.GetData<EnemyData>(configName);
-            Debug.Log(data);
+        // Load data
+        data = ConfigManager.GetData<EnemyData>(configName);
+    }
+
+    public static EnemyAttributes GetEnemyAttributes(int enemyID) {
+        if (enemyID < 0 || enemyID >= data.allEnemies.Count) {
+            Debug.LogWarning("Enemy Data Manager: could not find enemy with index/ID " + enemyID +
+                             ".  Returning null.");
+            return null;
         }
-
-        public static EnemyAttributes GetEnemyAttributes(int enemyID) {
-            if (enemyID < 0 || enemyID >= data.allEnemies.Count) {
-                Debug.LogWarning("Enemy Data Manager: could not find enemy with index/ID " + enemyID +
-                                 ".  Returning null.");
-                return null;
-            }
-
+        else {
             return data.allEnemies[enemyID];
         }
     }

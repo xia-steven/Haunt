@@ -1,11 +1,13 @@
-namespace Weapons {
-    public class ShotgunBullet : Bullet {
-        public const float bulletSpeed = 6;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-        protected override void Awake() {
-            base.Awake();
-            damage = -1;
-            bulletLife = 1.5f;
-        }
+public class ShotgunBullet : Bullet {
+    public static float bulletSpeed = 6;
+
+    protected override void Awake() {
+        base.Awake();
+        damage = -1;
+        bulletLife = 1.5f;
     }
 }

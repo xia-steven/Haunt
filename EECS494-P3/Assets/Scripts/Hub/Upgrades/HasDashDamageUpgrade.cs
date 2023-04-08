@@ -1,72 +1,59 @@
 using System.Collections;
-using Events;
-using Player;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hub.Upgrades {
-    public class HasDashDamageUpgrade : MonoBehaviour {
-        public float cooldown;
-        public float dmgMod;
+public class HasDashDamageUpgrade : MonoBehaviour {
+    public float cooldown;
+    public float dmgMod;
 
-        private float dodgeTime;
+    float dodgeTime;
 
-        private bool coolingDown;
-        private bool increased;
+    bool coolingDown = false;
+    bool increased = false;
 
-        private Subscription<PlayerDodgeEvent> dodgeSub;
-        private Subscription<FireEvent> fireSub;
+    Subscription<PlayerDodgeEvent> dodgeSub;
+    Subscription<FireEvent> fireSub;
 
-        // Start is called before the first frame update
-        private void Start() {
-            EventBus.Subscribe<PlayerDodgeEvent>(_OnDash);
-            EventBus.Subscribe<FireEvent>(_OnFire);
-        }
+    // Start is called before the first frame update
+    void Start() {
+        EventBus.Subscribe<PlayerDodgeEvent>(_OnDash);
+        EventBus.Subscribe<FireEvent>(_OnFire);
+    }
 
-        private void _OnDash(PlayerDodgeEvent e) {
-            switch (coolingDown) {
-                case false: {
-                    StartCoroutine(Cooldown());
-                    switch (increased) {
-                        case false:
-                            PlayerModifiers.damage *= dmgMod;
-                            increased = true;
-                            // TODO: add visual of increase here
-                            break;
-                    }
-
-                    break;
-                }
+    void _OnDash(PlayerDodgeEvent e) {
+        if (!coolingDown) {
+            StartCoroutine(Cooldown());
+            if (!increased) {
+                PlayerModifiers.damage *= dmgMod;
+                increased = true;
+                // TODO: add visual of increase here
             }
         }
+    }
 
-        private void _OnFire(FireEvent e) {
-            StartCoroutine(DecreaseAfterTick());
+    void _OnFire(FireEvent e) {
+        StartCoroutine(DecreaseAfterTick());
+    }
+
+    IEnumerator DecreaseAfterTick() {
+        yield return null;
+        if (increased) {
+            PlayerModifiers.damage /= dmgMod;
+            increased = false;
+            // TODO: remove visual of increase here
         }
-
-        private IEnumerator DecreaseAfterTick() {
-            yield return null;
-            switch (increased) {
-                case true:
-                    PlayerModifiers.damage /= dmgMod;
-                    increased = false;
-                    // TODO: remove visual of increase here
-                    break;
-            }
-        }
+    }
 
 
-        private IEnumerator Cooldown() {
-            coolingDown = true;
-            yield return new WaitForSeconds(cooldown);
-            coolingDown = false;
+    IEnumerator Cooldown() {
+        coolingDown = true;
+        yield return new WaitForSeconds(cooldown);
+        coolingDown = false;
 
-            switch (increased) {
-                case true:
-                    PlayerModifiers.damage /= dmgMod;
-                    increased = false;
-                    // TODO: remove visual of increase here
-                    break;
-            }
+        if (increased) {
+            PlayerModifiers.damage /= dmgMod;
+            increased = false;
+            // TODO: remove visual of increase here
         }
     }
 }

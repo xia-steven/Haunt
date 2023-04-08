@@ -1,16 +1,16 @@
-using Player;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace Hub.Upgrades {
-    public class ReloadUpgrade : Upgrade {
-        protected override void Start() {
-            thisData = typesData.types[(int)PurchaseableType.fastReload];
-            base.Start();
-        }
+public class ReloadUpgrade : Upgrade {
+    protected override void Start() {
+        thisData = typesData.types[(int)PurchaseableType.fastReload];
+        base.Start();
+    }
 
-        protected override void Apply() {
-            PlayerModifiers.reloadSpeed /= thisData.rate1;
+    protected override void Apply() {
+        PlayerModifiers.reloadSpeed /= thisData.rate1;
 
-            base.Apply();
-        }
+        base.Apply();
     }
 }

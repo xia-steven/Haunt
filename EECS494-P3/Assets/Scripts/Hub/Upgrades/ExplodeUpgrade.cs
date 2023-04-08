@@ -1,17 +1,17 @@
-using Player;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace Hub.Upgrades {
-    public class ExplodeUpgrade : Upgrade {
-        protected override void Start() {
-            thisData = typesData.types[(int)PurchaseableType.dashExplode];
-            base.Start();
-        }
+public class ExplodeUpgrade : Upgrade {
+    protected override void Start() {
+        thisData = typesData.types[(int)PurchaseableType.dashExplode];
+        base.Start();
+    }
 
-        protected override void Apply() {
-            var newInstance = IsPlayer.instance.gameObject.AddComponent<HasExplodeUpgrade>();
-            newInstance.explosiveRadius = thisData.rate1;
+    protected override void Apply() {
+        var newInstance = IsPlayer.instance.gameObject.AddComponent<HasExplodeUpgrade>();
+        newInstance.explosiveRadius = thisData.rate1;
 
-            base.Apply();
-        }
+        base.Apply();
     }
 }

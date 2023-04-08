@@ -1,9 +1,7 @@
-using ConfigDataTypes;
-using Events;
-using JSON_Parsing;
-using Player;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using Weapons;
+using UnityEngine.SceneManagement;
 
 // Weapon base class
 
@@ -41,7 +39,7 @@ public abstract class Weapon : MonoBehaviour {
     protected float lastTap;
 
     // Determines whether weapon is currently firing or not - used for automatic weapons
-    protected bool firing;
+    protected bool firing = false;
 
     // Direction that gun in facing for overwritten FixedUpdates
     protected Vector3 gunDirection;
@@ -72,7 +70,7 @@ public abstract class Weapon : MonoBehaviour {
 
     protected bool playerEnabled = true;
 
-    protected bool isReloading;
+    protected bool isReloading = false;
 
     // Length of gun barrel for bullet spawning - will be gun specific due to masking / variability of sprites
     [SerializeField] protected float barrelLength = 0.5f;
@@ -86,17 +84,15 @@ public abstract class Weapon : MonoBehaviour {
     protected static WeaponTypesData typesData;
     protected WeaponData thisData;
 
-    private Subscription<FireEvent> fireEventSubscription;
-    private Subscription<ReloadEvent> reloadEventSubscription;
+    protected Subscription<FireEvent> fireEventSubscription;
+    protected Subscription<ReloadEvent> reloadEventSubscription;
     protected Subscription<EnablePlayerEvent> enablePlayerSubscription;
     protected Subscription<DisablePlayerEvent> disablePlayerSubscription;
 
 
     protected virtual void Awake() {
-        typesData = typesData switch {
-            null => ConfigManager.GetData<WeaponTypesData>("WeaponTypes"),
-            _ => typesData
-        };
+        if (typesData == null)
+            typesData = ConfigManager.GetData<WeaponTypesData>("WeaponTypes");
 
         lastBullet = 0;
         lastTap = 0;
@@ -127,17 +123,14 @@ public abstract class Weapon : MonoBehaviour {
 
     protected virtual void _OnFire(FireEvent e) {
         firing = e.state;
-        switch (firing) {
-            case true when currentClipAmount <= 0 && !isReloading:
-                GunReload();
-                break;
+        if (firing && currentClipAmount <= 0 && !isReloading) {
+            GunReload();
         }
 
-        lastBullet = firing switch {
+        if (!firing) {
             // Allows for click spamming but not hold spamming
-            false => 0,
-            _ => lastBullet
-        };
+            lastBullet = 0;
+        }
     }
 
     protected virtual void _OnReload(ReloadEvent e) {
@@ -149,20 +142,20 @@ public abstract class Weapon : MonoBehaviour {
     }
 
     // Fires a projectile of type Bullet in specified direction
-    protected void FireProjectile(GameObject bullet, Vector3 direction, Transform start, float bulletSpeed,
+    public void FireProjectile(GameObject bullet, Vector3 direction, Transform start, float bulletSpeed,
         Shooter shooter) {
         // Set spawn position based on barrel length
-        var barrelOffset = direction * barrelLength;
-        var barrelSpawn = start.position + barrelOffset;
+        Vector3 barrelOffset = direction * barrelLength;
+        Vector3 barrelSpawn = start.position + barrelOffset;
 
         // Spawn bullet at barrel of gun
-        var projectile = Instantiate(bullet, barrelSpawn, Quaternion.identity);
+        GameObject projectile = Instantiate(bullet, barrelSpawn, Quaternion.identity);
 
         // Set shooter to holder of gun (enemy or player)
         projectile.GetComponent<Bullet>().SetShooter(shooter);
 
         // Give bullet its velocity
-        var rb = projectile.GetComponent<Rigidbody>();
+        Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.velocity = direction * bulletSpeed;
     }
 
@@ -170,8 +163,8 @@ public abstract class Weapon : MonoBehaviour {
     // Reloads gun with specified number of bullets
     // Returns number of bullets returned to inventory
     public int Reload(int bulletsLoaded) {
-        var returned = 0;
-        var loaded = currentClipAmount + bulletsLoaded;
+        int returned = 0;
+        int loaded = currentClipAmount + bulletsLoaded;
 
         if (loaded > fullClipAmount) // Reload would exceed clip capacity
         {
@@ -193,59 +186,52 @@ public abstract class Weapon : MonoBehaviour {
     }
 
     public void OnEnable() {
-        switch (shotByPlayer) {
-            case true:
-                EventBus.Publish(new WeaponSwapEvent(this));
-                PlayerModifiers.moveSpeed = speedMultiplier;
-                break;
+        if (shotByPlayer) {
+            EventBus.Publish(new WeaponSwapEvent(this));
+            PlayerModifiers.moveSpeed = speedMultiplier;
         }
 
         firing = false;
     }
 
     protected virtual void FixedUpdate() {
-        switch (shotByPlayer) {
-            case false:
-                return;
-        }
+        if (!shotByPlayer) return;
 
         // Get the screen position of the cursor
-        var screenPos = Input.mousePosition;
-        var direction = Vector3.zero;
+        Vector3 screenPos = Input.mousePosition;
+        Vector3 direction = Vector3.zero;
 
         // Create a ray from the camera through the cursor position
-        if (Camera.main != null) {
-            var ray = Camera.main.ScreenPointToRay(screenPos);
+        Ray ray = Camera.main.ScreenPointToRay(screenPos);
 
-            // Find the point where the ray intersects the plane that contains the player
-            var groundPlane = new Plane(Vector3.up, transform.position);
-            if (groundPlane.Raycast(ray, out var distanceToGround) && playerEnabled) {
-                // Calculate the direction vector from the player to the intersection point
-                var hitPoint = ray.GetPoint(distanceToGround);
-                direction = hitPoint - transform.position;
+        // Find the point where the ray intersects the plane that contains the player
+        Plane groundPlane = new Plane(Vector3.up, transform.position);
+        if (groundPlane.Raycast(ray, out float distanceToGround) && playerEnabled) {
+            // Calculate the direction vector from the player to the intersection point
+            Vector3 hitPoint = ray.GetPoint(distanceToGround);
+            direction = hitPoint - transform.position;
 
-                gunDirection = direction;
+            gunDirection = direction;
 
-                spriteRenderer.flipY = direction.x switch {
-                    // Check if gun sprite needs to be flipped
-                    < 0 => true,
-                    _ => false
-                };
-
-                // Calculate the rotation that points in the direction of the intersection point
-                var rotation = Quaternion.LookRotation(direction, Vector3.up);
-
-                // Set the rotation of the gun object
-                transform.rotation = rotation;
+            // Check if gun sprite needs to be flipped
+            if (direction.x < 0) {
+                spriteRenderer.flipY = true;
             }
+            else {
+                spriteRenderer.flipY = false;
+            }
+
+            // Calculate the rotation that points in the direction of the intersection point
+            Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+
+            // Set the rotation of the gun object
+            transform.rotation = rotation;
         }
 
-        switch (currentClipAmount) {
-            // Fire bullet if ammo in clip, trigger is down, last bullet was not fired recently, last tap was not recent, not reloading
-            case > 0 when firing && (Time.time - lastBullet >= bulletDelay) &&
-                          (Time.time - lastTap >= tapDelay) && !isReloading:
-                WeaponFire(direction);
-                break;
+        // Fire bullet if ammo in clip, trigger is down, last bullet was not fired recently, last tap was not recent, not reloading
+        if (currentClipAmount > 0 && firing && (Time.time - lastBullet >= bulletDelay) &&
+            (Time.time - lastTap >= tapDelay) && !isReloading) {
+            WeaponFire(direction);
         }
     }
 
@@ -254,10 +240,11 @@ public abstract class Weapon : MonoBehaviour {
     }
 
     protected bool CanReload() {
-        return isReloading switch {
-            false when currentClipAmount != fullClipAmount => true,
-            _ => false
-        };
+        if (!isReloading && currentClipAmount != fullClipAmount) {
+            return true;
+        }
+
+        return false;
     }
 
     protected void SetData() {
@@ -276,12 +263,10 @@ public abstract class Weapon : MonoBehaviour {
     }
 
     protected virtual void OnDisable() {
-        switch (isReloading) {
-            case true:
-                StopAllCoroutines();
-                ReloadInfinite();
-                isReloading = false;
-                break;
+        if (isReloading) {
+            StopAllCoroutines();
+            ReloadInfinite();
+            isReloading = false;
         }
     }
 }

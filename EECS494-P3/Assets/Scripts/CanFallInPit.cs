@@ -1,25 +1,23 @@
 using System.Collections;
-using Environment;
-using Events;
-using Player;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CanFallInPit : MonoBehaviour {
-    private const float groundDistance = 0.5f;
-    [SerializeField] private float pitResetDistance = 1.1f;
+    private float groundDistance = 0.5f;
+    private float pitResetDistance = 1.1f;
     [SerializeField] private float duration = 0.2f; // the time it takes for the sprite to shrink
     [SerializeField] private float scale = 0.5f; // the final scale of the sprite in hole
     private bool playerEnabled = true;
-    private bool overPit;
-    private bool isDodging;
-    private bool isFalling;
+    private bool overPit = false;
+    private bool isDodging = false;
+    private bool isFalling = false;
     private Vector3 horizontalOffset;
     private Vector3 originalScale; // the original scale of the sprite
-    private Subscription<OverPitEvent> overPitEventSubscription;
-    private Subscription<DisablePlayerEvent> disablePlayerEventSubscription;
-    private Subscription<EnablePlayerEvent> enablePlayerEventSubscription;
-    private Subscription<PlayerDodgeEvent> playerDodgeEventSubscription;
-    [SerializeField] private SpriteRenderer objectSprite;
+    Subscription<OverPitEvent> overPitEventSubscription;
+    Subscription<DisablePlayerEvent> disablePlayerEventSubscription;
+    Subscription<EnablePlayerEvent> enablePlayerEventSubscription;
+    Subscription<PlayerDodgeEvent> playerDodgeEventSubscription;
+    [SerializeField] SpriteRenderer objectSprite;
 
     private void Awake() {
         overPitEventSubscription = EventBus.Subscribe<OverPitEvent>(_OnOverPit);
@@ -39,17 +37,19 @@ public class CanFallInPit : MonoBehaviour {
     }
 
     private void _OnDodge(PlayerDodgeEvent e) {
-        isDodging = e.start switch {
-            true => true,
-            _ => false
-        };
+        if (e.start) {
+            isDodging = true;
+        }
+        else {
+            isDodging = false;
+        }
     }
 
-    private void _OnDisableMovement(DisablePlayerEvent dpme) {
+    void _OnDisableMovement(DisablePlayerEvent dpme) {
         playerEnabled = false;
     }
 
-    private void _OnEnableMovement(EnablePlayerEvent epme) {
+    void _OnEnableMovement(EnablePlayerEvent epme) {
         playerEnabled = true;
     }
 
@@ -61,56 +61,48 @@ public class CanFallInPit : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        switch (overPit) {
-            case true when !isFalling: {
-                var rightRayLocation = new Vector3(transform.position.x + 3 * (objectSprite.bounds.size.x / 8),
-                    transform.position.y, transform.position.z);
-                var leftRayLocation = new Vector3(transform.position.x - 3 * (objectSprite.bounds.size.x / 8),
-                    transform.position.y, transform.position.z);
-                var topRayLocation = new Vector3(transform.position.x, transform.position.y,
-                    transform.position.z + 3 * (objectSprite.bounds.size.z / 8));
-                var bottomRayLocation = new Vector3(transform.position.x, transform.position.y,
-                    transform.position.z - 3 * (objectSprite.bounds.size.z / 8));
+        if (overPit && !isFalling) {
+            Vector3 rightRayLocation = new Vector3(transform.position.x + 3 * (objectSprite.bounds.size.x / 8),
+                transform.position.y, transform.position.z);
+            Vector3 leftRayLocation = new Vector3(transform.position.x - 3 * (objectSprite.bounds.size.x / 8),
+                transform.position.y, transform.position.z);
+            Vector3 topRayLocation = new Vector3(transform.position.x, transform.position.y,
+                transform.position.z + 3 * (objectSprite.bounds.size.z / 8));
+            Vector3 bottomRayLocation = new Vector3(transform.position.x, transform.position.y,
+                transform.position.z - 3 * (objectSprite.bounds.size.z / 8));
 
-                var rightRay = new Ray(rightRayLocation, Vector3.down);
-                var leftRay = new Ray(leftRayLocation, Vector3.down);
-                var topRay = new Ray(topRayLocation, Vector3.down);
-                var bottomRay = new Ray(bottomRayLocation, Vector3.down);
+            Ray rightRay = new Ray(rightRayLocation, Vector3.down);
+            Ray leftRay = new Ray(leftRayLocation, Vector3.down);
+            Ray topRay = new Ray(topRayLocation, Vector3.down);
+            Ray bottomRay = new Ray(bottomRayLocation, Vector3.down);
 
-                Debug.DrawRay(rightRay.origin, rightRay.direction * groundDistance, Color.red);
-                Debug.DrawRay(leftRay.origin, leftRay.direction * groundDistance, Color.red);
-                Debug.DrawRay(topRay.origin, topRay.direction * groundDistance, Color.red);
-                Debug.DrawRay(bottomRay.origin, bottomRay.direction * groundDistance, Color.red);
+            Debug.DrawRay(rightRay.origin, rightRay.direction * groundDistance, Color.red);
+            Debug.DrawRay(leftRay.origin, leftRay.direction * groundDistance, Color.red);
+            Debug.DrawRay(topRay.origin, topRay.direction * groundDistance, Color.red);
+            Debug.DrawRay(bottomRay.origin, bottomRay.direction * groundDistance, Color.red);
 
-                // Check under object with all four rays - if no ground under all, make player "fall" into pit
-                if (!Physics.Raycast(rightRay, groundDistance) && !Physics.Raycast(leftRay, groundDistance) &&
-                    !Physics.Raycast(topRay, groundDistance) && !Physics.Raycast(bottomRay, groundDistance)) {
-                    if (gameObject.layer == LayerMask.NameToLayer("Player"))
-                        PlayerPit();
-                    else
-                        EnemyPit();
+            // Check under object with all four rays - if no ground under all, make player "fall" into pit
+            if (!Physics.Raycast(rightRay, groundDistance) && !Physics.Raycast(leftRay, groundDistance) &&
+                !Physics.Raycast(topRay, groundDistance) && !Physics.Raycast(bottomRay, groundDistance)) {
+                if (gameObject.layer == LayerMask.NameToLayer("Player")) {
+                    PlayerPit();
                 }
-
-                break;
+                else {
+                    EnemyPit();
+                }
             }
         }
     }
 
     private void PlayerPit() {
-        switch (playerEnabled) {
-            case false:
-                return;
-        }
+        if (!playerEnabled) return;
 
-        switch (isDodging) {
-            case true:
-                return;
-        }
+        if (isDodging) return;
 
         Debug.Log("Player fell into pit");
 
         // Send end dodge routine in case fall happens half way through dodge
-        EventBus.Publish(new TutorialDodgeEndEvent());
+        EventBus.Publish<TutorialDodgeEndEvent>(new TutorialDodgeEndEvent());
 
         // Play pit falling animation
         isFalling = true;
@@ -118,14 +110,14 @@ public class CanFallInPit : MonoBehaviour {
     }
 
     private IEnumerator FallInPit() {
-        var elapsed = 0.0f;
+        float elapsed = 0.0f;
 
         while (elapsed < duration) {
             elapsed += Time.deltaTime;
 
-            var
+            float
                 t = Mathf.Clamp01(elapsed / duration); // calculate the current time as a fraction of the total duration
-            var s = Mathf.Lerp(originalScale.x, scale, t); // calculate the current scale based on the current time
+            float s = Mathf.Lerp(originalScale.x, scale, t); // calculate the current scale based on the current time
 
             transform.localScale = new Vector3(s, s, s); // set the scale of the sprite
 
@@ -137,7 +129,7 @@ public class CanFallInPit : MonoBehaviour {
         // Move player back to location they should be in
         if (gameObject.layer == LayerMask.NameToLayer("Player")) {
             transform.localScale = originalScale;
-            var adjustedPosition = transform.position + (horizontalOffset * pitResetDistance);
+            Vector3 adjustedPosition = transform.position + (horizontalOffset * pitResetDistance);
             transform.position = adjustedPosition;
             GetComponent<PlayerHasHealth>().AlterHealth(-1, DeathCauses.Pit);
         }

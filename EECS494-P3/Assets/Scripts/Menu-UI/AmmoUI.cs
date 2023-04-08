@@ -1,165 +1,170 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-namespace Menu_UI {
-    public class AmmoUI : MonoBehaviour {
-        [SerializeField] private Image gunImg;
-        [SerializeField] private Transform tickHolder;
-        [SerializeField] private GameObject bulletTick;
-        [SerializeField] private GameObject reloadSprite;
+public class AmmoUI : MonoBehaviour {
+    [SerializeField] Image gunImg;
+    [SerializeField] Transform tickHolder;
+    [SerializeField] GameObject bulletTick;
+    [SerializeField] GameObject reloadSprite;
 
-        private Subscription<WeaponSwapEvent> swapSub;
-        private Subscription<ReloadStartedEvent> reloadSub;
+    Subscription<WeaponSwapEvent> swapSub;
+    Subscription<ReloadStartedEvent> reloadSub;
 
-        private List<GameObject> shellInstances = new();
+    List<GameObject> shellInstances = new List<GameObject>();
 
-        private Weapon current;
-        private int clipMax;
-        private int curClip;
-        private float reloadTime;
+    Weapon current;
+    int clipMax;
+    int curClip;
+    float reloadTime;
 
-        private int knownClip;
+    int knownClip;
 
-        private bool reloading;
-        private bool swapped;
+    bool reloading = false;
+    bool swapped = false;
 
-        private void Awake() {
-            swapSub = EventBus.Subscribe<WeaponSwapEvent>(_OnSwap);
-            reloadSub = EventBus.Subscribe<ReloadStartedEvent>(_OnReload);
-            SceneManager.sceneLoaded += OnSceneLoad;
+    void Awake() {
+        swapSub = EventBus.Subscribe<WeaponSwapEvent>(_OnSwap);
+        reloadSub = EventBus.Subscribe<ReloadStartedEvent>(_OnReload);
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
+
+    void OnSceneLoad(Scene s, LoadSceneMode m) {
+        curClip = clipMax;
+        UpdateBulletCounts();
+    }
+
+
+    // Update is called once per frame
+    void Update() {
+        if (reloading || current == null) return;
+
+        clipMax = current.FullClipAmount;
+        curClip = current.CurrentClipAmount;
+
+        if (curClip == 0) {
+            reloadSprite.SetActive(true);
         }
 
-        private void OnSceneLoad(Scene s, LoadSceneMode m) {
-            curClip = clipMax;
-            UpdateBulletCounts();
+        if (curClip < knownClip) {
+            RemoveBullets();
         }
 
+        knownClip = curClip;
+        swapped = false;
+    }
 
-        // Update is called once per frame
-        private void Update() {
-            if (reloading || current == null) return;
+    void _OnSwap(WeaponSwapEvent e) {
+        if (!gameObject.activeInHierarchy) return;
 
-            clipMax = current.FullClipAmount;
-            curClip = current.CurrentClipAmount;
+        swapped = true;
 
-            switch (curClip) {
-                case 0:
-                    reloadSprite.SetActive(true);
-                    break;
-            }
+        current = e.newWeapon;
+        clipMax = current.FullClipAmount;
+        curClip = current.CurrentClipAmount;
+        reloadTime = current.ReloadTime;
 
-            if (curClip < knownClip) RemoveBullets();
+        string weaponType = current.Type;
 
-            knownClip = curClip;
-            swapped = false;
+        if (weaponType == "pistol") {
+            gunImg.sprite = Resources.LoadAll<Sprite>("Textures-Sprites/six_shooter")[1];
+        }
+        else if (weaponType == "rifle") {
+            gunImg.sprite = Resources.LoadAll<Sprite>("Textures-Sprites/minigun")[0];
+        }
+        else if (weaponType == "shotgun") {
+            gunImg.sprite = Resources.LoadAll<Sprite>("Textures-Sprites/shotguns")[1];
+        }
+        else if (weaponType == "sniper") {
+            gunImg.sprite = Resources.LoadAll<Sprite>("Textures-Sprites/sniper")[0];
+        }
+        else if (weaponType == "sword") {
+            gunImg.sprite = Resources.LoadAll<Sprite>("Textures-Sprites/swords")[1];
         }
 
-        private void _OnSwap(WeaponSwapEvent e) {
-            switch (gameObject.activeInHierarchy) {
-                case false:
-                    return;
-            }
+        gunImg.SetNativeSize();
 
-            swapped = true;
+        UpdateBulletCounts();
+        knownClip = curClip;
+    }
 
-            current = e.newWeapon;
-            clipMax = current.FullClipAmount;
-            curClip = current.CurrentClipAmount;
-            reloadTime = current.ReloadTime;
+    void UpdateBulletCounts() {
+        int i = 0;
 
-            var weaponType = current.Type;
-
-            gunImg.sprite = weaponType switch {
-                "pistol" => Resources.LoadAll<Sprite>("Textures-Sprites/six_shooter")[1],
-                "rifle" => Resources.LoadAll<Sprite>("Textures-Sprites/minigun")[0],
-                "shotgun" => Resources.LoadAll<Sprite>("Textures-Sprites/shotguns")[1],
-                "sniper" => Resources.LoadAll<Sprite>("Textures-Sprites/sniper")[0],
-                "sword" => Resources.LoadAll<Sprite>("Textures-Sprites/swords")[1],
-                _ => gunImg.sprite
-            };
-
-            gunImg.SetNativeSize();
-
-            UpdateBulletCounts();
-            knownClip = curClip;
-        }
-
-        private void UpdateBulletCounts() {
-            var i = 0;
-
-            // repurpose any already existing bullet ticks
-            for (; i < clipMax && i < shellInstances.Count; ++i) shellInstances[i].SetActive(i < curClip);
-
-            //if need more ticks
-            if (i < clipMax)
-                //make new ticks
-                for (; i < clipMax; ++i) {
-                    shellInstances.Add(Instantiate(bulletTick, tickHolder).transform.GetChild(1).gameObject);
-                    if (i >= curClip)
-                        shellInstances[i].SetActive(false);
-                }
-            //else if need less ticks
-            else if (i < shellInstances.Count)
-                //remove excess ticks
-                for (var j = shellInstances.Count - 1; j >= i; --j) {
-                    Destroy(shellInstances[j].transform.parent.gameObject);
-                    shellInstances.RemoveAt(j);
-                }
-        }
-
-
-        private void _OnReload(ReloadStartedEvent e) {
-            reloadSprite.SetActive(false);
-            switch (gameObject.activeInHierarchy) {
-                case true:
-                    StartCoroutine(ReloadOverTime());
-                    break;
-            }
-        }
-
-        private IEnumerator ReloadOverTime() {
-            reloading = true;
-            yield return null;
-
-            var toAdd = clipMax - curClip;
-
-            for (var i = 0; i < toAdd; ++i) {
-                if (swapped) break;
-
-
-                AddBullet();
-
-                yield return new WaitForSecondsRealtime(reloadTime / toAdd);
-            }
-
-            reloading = false;
-        }
-
-        // uses knowledge that knownClip is lower than desired amount of ammo, and that it should be the
-        // index of the next bullet image to be enabled
-        private void AddBullet() {
-            if (knownClip == clipMax || knownClip >= shellInstances.Count) return;
-
-            shellInstances[knownClip++].SetActive(true);
-        }
-
-        // uses knowledge that knownClip is higher than desired amount of ammo to enable us
-        // to remove all between the two indices
-        private void RemoveBullets() {
-            if (curClip == clipMax || knownClip <= curClip) return;
-
-            for (var i = curClip; i < knownClip; ++i) {
-                if (i > shellInstances.Count) return;
-
+        // repurpose any already existing bullet ticks
+        for (; i < clipMax && i < shellInstances.Count; ++i) {
+            if (i < curClip)
+                shellInstances[i].SetActive(true);
+            else
                 shellInstances[i].SetActive(false);
-            }
         }
 
-        private void OnDestroy() {
-            SceneManager.sceneLoaded -= OnSceneLoad;
+        //if need more ticks
+        if (i < clipMax) {
+            //make new ticks
+            for (; i < clipMax; ++i) {
+                shellInstances.Add(Instantiate(bulletTick, tickHolder).transform.GetChild(1).gameObject);
+                if (i >= curClip)
+                    shellInstances[i].SetActive(false);
+            }
         }
+        //else if need less ticks
+        else if (i < shellInstances.Count) {
+            //remove excess ticks
+            for (int j = shellInstances.Count - 1; j >= i; --j) {
+                Destroy(shellInstances[j].transform.parent.gameObject);
+                shellInstances.RemoveAt(j);
+            }
+        }
+    }
+
+
+    void _OnReload(ReloadStartedEvent e) {
+        reloadSprite.SetActive(false);
+        if (gameObject.activeInHierarchy) StartCoroutine(ReloadOverTime());
+    }
+
+    IEnumerator ReloadOverTime() {
+        reloading = true;
+        yield return null;
+
+        int toAdd = clipMax - curClip;
+
+        for (int i = 0; i < toAdd; ++i) {
+            if (swapped) break;
+
+
+            AddBullet();
+
+            yield return new WaitForSecondsRealtime(reloadTime / toAdd);
+        }
+
+        reloading = false;
+    }
+
+    // uses knowledge that knownClip is lower than desired amount of ammo, and that it should be the 
+    // index of the next bullet image to be enabled
+    private void AddBullet() {
+        if (knownClip == clipMax || knownClip >= shellInstances.Count) return;
+
+        shellInstances[knownClip++].SetActive(true);
+    }
+
+    // uses knowledge that knownClip is higher than desired amount of ammo to enable us
+    // to remove all between the two indices
+    private void RemoveBullets() {
+        if (curClip == clipMax || knownClip <= curClip) return;
+
+        for (int i = curClip; i < knownClip; ++i) {
+            if (i > shellInstances.Count) return;
+
+            shellInstances[i].SetActive(false);
+        }
+    }
+
+    private void OnDestroy() {
+        SceneManager.sceneLoaded -= OnSceneLoad;
     }
 }

@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 7848006774521122707}
   - component: {fileID: 94799519}
   - component: {fileID: 8323561763438187096}
+  - component: {fileID: 1953417845474465346}
   - component: {fileID: 5840285336406544125}
   - component: {fileID: 6803273385139176964}
   - component: {fileID: 4201825256903250200}
@@ -580,6 +581,18 @@ MonoBehaviour:
   id: 0
   invincibilityTimer: 1
   tutorialDeathMessageID: 6
+--- !u!114 &1953417845474465346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5067998880475344235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc98162e0d20e34c936eb89dccb0eaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5840285336406544125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -616,8 +629,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953bfef7afa23ca468ac12753d8164c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.2
-  scale: 0.5
   objectSprite: {fileID: 198104214444730479}
 --- !u!1 &9151039872097613221
 GameObject:

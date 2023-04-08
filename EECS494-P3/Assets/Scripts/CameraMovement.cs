@@ -1,19 +1,20 @@
-using Events;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour {
-    [SerializeField] private float camMoveSpeed = 0.5f;
-    [SerializeField] private float maxXoffset = 1f;
-    [SerializeField] private float minXoffset = -1f;
-    [SerializeField] private float maxZoffset = 1f;
-    [SerializeField] private float minZoffset = -1f;
-    [SerializeField] private float xRoomMin; // ADJUST IN SCENES
-    [SerializeField] private float xRoomMax; // ADJUST IN SCENES
-    [SerializeField] private float zRoomMin; // ADJUST IN SCENES
-    [SerializeField] private float zRoomMax; // ADJUST IN SCENES
+    [SerializeField] float camMoveSpeed = 0.5f;
+    [SerializeField] float maxXoffset = 1f;
+    [SerializeField] float minXoffset = -1f;
+    [SerializeField] float maxZoffset = 1f;
+    [SerializeField] float minZoffset = -1f;
+    [SerializeField] float xRoomMin = 0f; // ADJUST IN SCENES
+    [SerializeField] float xRoomMax = 0f; // ADJUST IN SCENES
+    [SerializeField] float zRoomMin = 0f; // ADJUST IN SCENES
+    [SerializeField] float zRoomMax = 0f; // ADJUST IN SCENES
 
-    [SerializeField] private Vector3 camOffsetFromPlayer = new(0f, 11.5f, -7.0f);
-    [SerializeField] private float playerOffsetProportion = 0.6f;
+    [SerializeField] Vector3 camOffsetFromPlayer = new Vector3(0f, 11.5f, -7.0f);
+    [SerializeField] float playerOffsetProportion = 0.6f;
 
 
     private Transform player;
@@ -22,16 +23,21 @@ public class CameraMovement : MonoBehaviour {
     private Vector3 playerOffset;
     private Vector3 mousePosition;
 
-    private bool locked;
+    bool locked = false;
 
 
-    public bool IsMoving { get; set; }
+    bool isMoving;
 
-    private Subscription<TutorialLockCameraEvent> lockSub;
-    private Subscription<TutorialUnlockCameraEvent> unlockSub;
+    public bool IsMoving {
+        get { return isMoving; }
+        set { isMoving = value; }
+    }
+
+    Subscription<TutorialLockCameraEvent> lockSub;
+    Subscription<TutorialUnlockCameraEvent> unlockSub;
 
     // Start is called before the first frame update
-    private void Start() {
+    void Start() {
         player = GameObject.Find("Player").transform;
         // Room bounds are set per scene
 
@@ -45,16 +51,15 @@ public class CameraMovement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    private void LateUpdate() {
-        switch (locked) {
-            case true:
-                return;
+    void LateUpdate() {
+        if (locked) {
+            return;
         }
 
-        var mouse = Input.mousePosition;
+        Vector3 mouse = Input.mousePosition;
         mouse.z = 1;
-        if (Camera.main != null) mousePosition = (Camera.main.ScreenToWorldPoint(mouse));
-        var normalVec = (new Vector3(0, -1, 1)).normalized;
+        mousePosition = (Camera.main.ScreenToWorldPoint(mouse));
+        Vector3 normalVec = (new Vector3(0, -1, 1)).normalized;
 
         mousePosition = mousePosition + normalVec * (-mousePosition.y / normalVec.y);
 
@@ -65,23 +70,23 @@ public class CameraMovement : MonoBehaviour {
 
         // Make sure offset doesn't exceed values farther than the player (plus a small offset)
         offset.x = Mathf.Clamp(offset.x, minXoffset + player.position.x, maxXoffset + player.position.x);
-        var newXPos = Mathf.Clamp(offset.x + camOffsetFromPlayer.x, xRoomMin, xRoomMax);
+        float newXPos = Mathf.Clamp(offset.x + camOffsetFromPlayer.x, xRoomMin, xRoomMax);
 
         offset.z = Mathf.Clamp(offset.z, minZoffset + player.position.z, maxZoffset + player.position.z);
-        var newZPos = Mathf.Clamp(offset.z + camOffsetFromPlayer.z, zRoomMin, zRoomMax);
+        float newZPos = Mathf.Clamp(offset.z + camOffsetFromPlayer.z, zRoomMin, zRoomMax);
 
 
-        var newPos = Vector3.Lerp(transform.position, (new Vector3(newXPos, transform.position.y, newZPos)),
+        Vector3 newPos = Vector3.Lerp(transform.position, (new Vector3(newXPos, this.transform.position.y, newZPos)),
             camMoveSpeed * Time.deltaTime);
-        transform.position = newPos;
+        this.transform.position = newPos;
     }
 
-    private void onCameraLock(TutorialLockCameraEvent tlce) {
+    void onCameraLock(TutorialLockCameraEvent tlce) {
         locked = true;
         transform.position = tlce.cameraLockedLocation;
     }
 
-    private void onCameraUnlock(TutorialUnlockCameraEvent tuce) {
+    void onCameraUnlock(TutorialUnlockCameraEvent tuce) {
         locked = false;
     }
 }

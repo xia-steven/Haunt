@@ -1,56 +1,54 @@
 using System.Collections;
-using Events;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Player {
-    [RequireComponent(typeof(PlayerHasHealth))]
-    public class IsPlayer : MonoBehaviour {
-        public static IsPlayer instance;
+[RequireComponent(typeof(PlayerHasHealth))]
+public class IsPlayer : MonoBehaviour {
+    public static IsPlayer instance;
 
-        private PlayerHasHealth health;
-        private DeathCauses lastDamaged;
+    private PlayerHasHealth health;
+    private DeathCauses lastDamaged;
 
-        // Start is called before the first frame update
-        private void Awake() {
-            if (instance == null) instance = this;
-            else if (instance != this) Destroy(gameObject);
+    // Start is called before the first frame update
+    void Awake() {
+        if (instance == null) instance = this;
+        else if (instance != this) Destroy(gameObject);
 
-            health = GetComponent<PlayerHasHealth>();
-            //StartCoroutine(NaturalHealthRegen());
-            // starting to phase this out of the game
+        health = GetComponent<PlayerHasHealth>();
+        //StartCoroutine(NaturalHealthRegen());
+        // starting to phase this out of the game
+    }
+
+    public float GetHealth() {
+        return health.GetHealth();
+    }
+
+    public float GetMaxHealth() {
+        return health.GetMaxHealth();
+    }
+
+    private IEnumerator NaturalHealthRegen() {
+        // Let everything load up
+        yield return new WaitForSeconds(1.0f);
+        while (health.GetHealth() > 0) {
+            health.AlterHealth(1);
+            yield return new WaitForSeconds(5.0f);
         }
+    }
 
-        public float GetHealth() {
-            return health.GetHealth();
-        }
+    public static void SetPosition(Vector3 newPos) {
+        instance.transform.position = newPos;
+    }
 
-        public float GetMaxHealth() {
-            return health.GetMaxHealth();
-        }
+    public void ResetHealth() {
+        health.ResetHealth();
+    }
 
-        private IEnumerator NaturalHealthRegen() {
-            // Let everything load up
-            yield return new WaitForSeconds(1.0f);
-            while (health.GetHealth() > 0) {
-                health.AlterHealth(1);
-                yield return new WaitForSeconds(5.0f);
-            }
-        }
+    public void SetLastDamaged(DeathCauses damager) {
+        lastDamaged = damager;
+    }
 
-        public static void SetPosition(Vector3 newPos) {
-            instance.transform.position = newPos;
-        }
-
-        public void ResetHealth() {
-            health.ResetHealth();
-        }
-
-        public void SetLastDamaged(DeathCauses damager) {
-            lastDamaged = damager;
-        }
-
-        public DeathCauses LastDamaged() {
-            return lastDamaged;
-        }
+    public DeathCauses LastDamaged() {
+        return lastDamaged;
     }
 }
