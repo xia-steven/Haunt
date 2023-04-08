@@ -10,6 +10,7 @@ public class MessageManager : MonoBehaviour
     [SerializeField] float fadeTime = 1.0f;
     [SerializeField] TMP_Text text;
     [SerializeField] Image textBackground;
+    [SerializeField] Image clickIcon;
     [Tooltip("Number of frames to wait in between each character")]
     float textDelay = 0.04f;
 
@@ -65,7 +66,6 @@ public class MessageManager : MonoBehaviour
 
     void SkipMessage(InputAction.CallbackContext context)
     {
-        Debug.Log("woooooo");
         exitEarly = true;
     }
 
@@ -96,8 +96,9 @@ public class MessageManager : MonoBehaviour
         // Display message(s)
         text.text = "";
         text.gameObject.SetActive(true);
+        clickIcon.gameObject.SetActive(true);
         // Loop through each string
-        for(int a = 0; a < message.messages.Count; ++a)
+        for (int a = 0; a < message.messages.Count; ++a)
         {
             text.text = "";
             exitEarly = false;
@@ -153,6 +154,7 @@ public class MessageManager : MonoBehaviour
         initial_time = Time.realtimeSinceStartup;
         progress = (Time.realtimeSinceStartup - initial_time) / fadeTime;
         Color textColor = text.color;
+        Color prevIconColor = clickIcon.color;
 
         while (progress < 1.0f)
         {
@@ -161,11 +163,14 @@ public class MessageManager : MonoBehaviour
             textBackground.color = new Color(backgroundOpaqueColor.r, backgroundOpaqueColor.g,
                     backgroundOpaqueColor.b, backgroundOpaqueColor.a * (1 - progress));
             text.color = new Color(textColor.r, textColor.g, textColor.b, textColor.a * (1 - progress));
+            clickIcon.color = new Color(prevIconColor.r, prevIconColor.g,
+                    prevIconColor.b, prevIconColor.a * (1 - progress));
 
             yield return null;
         }
 
         text.gameObject.SetActive(false);
+        clickIcon.gameObject.SetActive(false);
         textBackground.gameObject.SetActive(false);
 
         // reset text color
