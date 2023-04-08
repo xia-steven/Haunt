@@ -9,6 +9,7 @@ public class AmmoUI : MonoBehaviour
     [SerializeField] Image gunImg;
     [SerializeField] Transform tickHolder;
     [SerializeField] GameObject bulletTick;
+    [SerializeField] GameObject reloadSprite;
 
     Subscription<WeaponSwapEvent> swapSub;
     Subscription<ReloadStartedEvent> reloadSub;
@@ -46,6 +47,11 @@ public class AmmoUI : MonoBehaviour
 
         clipMax = current.FullClipAmount;
         curClip = current.CurrentClipAmount;
+
+        if (curClip == 0)
+        {
+            reloadSprite.SetActive(true);
+        }
 
         if (curClip < knownClip)
         {
@@ -136,6 +142,7 @@ public class AmmoUI : MonoBehaviour
 
     void _OnReload(ReloadStartedEvent e)
     {
+        reloadSprite.SetActive(false);
         if (gameObject.activeInHierarchy) StartCoroutine(ReloadOverTime());
     }
 

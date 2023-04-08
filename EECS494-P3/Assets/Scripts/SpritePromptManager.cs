@@ -11,7 +11,7 @@ public class SpritePromptManager : MonoBehaviour
 
     SpriteRenderer sprite;
 
-    Vector3 offset = new Vector3(-0.75f, 1, 0);
+    Vector3 offset = new Vector3(-0.5f, 1.25f, 0);
 
     void Awake()
     {

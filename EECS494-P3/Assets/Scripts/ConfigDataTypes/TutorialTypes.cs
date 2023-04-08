@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class MessageList : Savable
 {
     public List<MessageSet> allMessages;
+    public List<string> initialTutorial;
 
     public MessageList()
     {
         allMessages = new List<MessageSet>();
+        initialTutorial = new List<string>();
     }
 
     public override string ToString()

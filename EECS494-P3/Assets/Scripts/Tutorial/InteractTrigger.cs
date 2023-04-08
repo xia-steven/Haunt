@@ -13,7 +13,7 @@ public class InteractTrigger : MonoBehaviour
     {
         if(!triggered)
         {
-            //triggered = true;
+            triggered = true;
             EventBus.Publish(new SpritePromptEvent(sprite, dismissKey));
         }
 

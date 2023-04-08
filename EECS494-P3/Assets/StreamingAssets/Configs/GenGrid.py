@@ -1,7 +1,7 @@
 import json
 
 dimension = {"x": 59, "y": 39}
-origin = {"x": -29.5, "y": 0, "z": -19.5}
+origin = {"x": -29.5, "y": 0, "z": -20.5}
 
 map_dict = {"key": "map", "dimension": dimension, "origin": origin, "unwalkableTiles": []}
 
@@ -37,6 +37,8 @@ setUnwalkableXY(22, 35, 8, 2)
 setUnwalkableXY(22, 14, 3, 1)
 setUnwalkableXY(22, 15, 6, 2)
 setUnwalkableXY(23, 17, 2, 7)
+setUnwalkableXY(22, 24, 6, 2)
+setUnwalkableXY(22, 26, 3, 1)
 
 with open('map.json', 'w') as f:
     json.dump(map_dict, f, indent=4)
