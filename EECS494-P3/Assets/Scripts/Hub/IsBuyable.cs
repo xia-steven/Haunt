@@ -99,6 +99,25 @@ public class IsBuyable : MonoBehaviour
                 
     
     }
+    
+    private void OnTriggerStay(Collider other)
+    {
+        if (!selected && other.gameObject.layer == LayerMask.NameToLayer("PlayerPhysical"))
+        {
+            Debug.Log(gameObject.name + " triggered");
+            selected = true;
+            sr.sprite = selectedSprite;
+            if (itemDescription)
+            {
+                Debug.Log(costText.text);
+                itemDescription.SetActive(true);
+                costText.text = cost.ToString();
+            }
+
+        }
+                
+    
+    }
 
     private void OnTriggerExit(Collider other)
     {
