@@ -15,21 +15,23 @@ class GameStartEvent {
 /// The GameLoss event is broadcast when the game is lost.
 /// </summary>
 class GameLossEvent {
-
     public DeathCauses cause = DeathCauses.Pedestal;
+
     public bool finishedDeathAnimation = false;
+
     // Only set if death cause is an enemy
     public Vector3 enemyPos = Vector3.zero;
+
     public override string ToString() {
         return "Game Loss Event Sent";
     }
-    public GameLossEvent(DeathCauses _cause)
-    {
+
+    public GameLossEvent(DeathCauses _cause) {
         cause = _cause;
     }
 }
 
-public enum DeathCauses { 
+public enum DeathCauses {
     Pit,
     Enemy,
     Pedestal
@@ -111,32 +113,28 @@ class WaveBeganEvent {
 /// The sender can specify if the message must remain for a keycode to be sent, 
 /// what color the message should be, as well as the message to send.
 /// </summary>
-public class ToastRequestEvent
-{
+public class ToastRequestEvent {
     public string message;
     public Color color;
     public bool waitForKey;
     public KeyCode keyToWaitFor;
     private Color defaultColor = new Color32(255, 255, 255, 255);
 
-    public ToastRequestEvent(string s, bool wfk = false, KeyCode key = KeyCode.None)
-    {
+    public ToastRequestEvent(string s, bool wfk = false, KeyCode key = KeyCode.None) {
         message = s;
         color = defaultColor;
         waitForKey = wfk;
         keyToWaitFor = key;
     }
 
-    public ToastRequestEvent(Color c, string s, bool wfk = false, KeyCode key = KeyCode.None)
-    {
+    public ToastRequestEvent(Color c, string s, bool wfk = false, KeyCode key = KeyCode.None) {
         message = s;
         color = c;
         waitForKey = wfk;
         keyToWaitFor = key;
     }
 
-    public override string ToString()
-    {
+    public override string ToString() {
         return "Toast message sent with contents: " + message;
     }
 }
@@ -144,17 +142,16 @@ public class ToastRequestEvent
 /// <summary>
 /// The MessageEvent is sent whenever there is a message to display to the player from a NPC.
 /// </summary>
-public class MessageEvent
-{
+public class MessageEvent {
     public List<string> messages;
     public KeyCode keyToWaitFor;
     public int senderInstanceID;
     public bool unpauseBeforeFade;
     public bool pauseTime;
 
-    public MessageEvent(List<string> messages_in, int senderInstanceID_in, bool pauseTime_in, KeyCode keyToWaitFor_in = KeyCode.Mouse0,
-        bool unpauseBeforeFade_in = false)
-    {
+    public MessageEvent(List<string> messages_in, int senderInstanceID_in, bool pauseTime_in,
+        KeyCode keyToWaitFor_in = KeyCode.Mouse0,
+        bool unpauseBeforeFade_in = false) {
         messages = messages_in;
         keyToWaitFor = keyToWaitFor_in;
         senderInstanceID = senderInstanceID_in;
@@ -166,12 +163,10 @@ public class MessageEvent
 /// <summary>
 /// The MessageFinishedEvent is sent whenever there a message finished displaying to the player.
 /// </summary>
-public class MessageFinishedEvent
-{
+public class MessageFinishedEvent {
     public int senderInstanceID;
 
-    public MessageFinishedEvent(int senderInstanceID_in)
-    {
+    public MessageFinishedEvent(int senderInstanceID_in) {
         senderInstanceID = senderInstanceID_in;
     }
 }

@@ -44,13 +44,11 @@ public class IsPlayer : MonoBehaviour {
         health.ResetHealth();
     }
 
-    public void SetLastDamaged(DeathCauses damager)
-    {
+    public void SetLastDamaged(DeathCauses damager) {
         lastDamaged = damager;
     }
 
-    public DeathCauses LastDamaged()
-    {
+    public DeathCauses LastDamaged() {
         return lastDamaged;
     }
 }

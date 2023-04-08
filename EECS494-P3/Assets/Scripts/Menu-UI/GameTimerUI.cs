@@ -14,25 +14,20 @@ public class GameTimerUI : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         int remaining = (int)GameControl.NightTimeRemaining;
-        if (remaining == -1 && !flashing)
-        {
-            if (GameControl.IsNight)
-            {
+        if (remaining == -1 && !flashing) {
+            if (GameControl.IsNight) {
                 text.text = "Night Ending!\nGet to the teleporter!";
                 StartCoroutine(Flash());
             }
         }
-        else if (GameControl.IsNight && !flashing)
-        {
+        else if (GameControl.IsNight && !flashing) {
             text.text = "Sunrise: " + remaining;
         }
     }
 
-    IEnumerator Flash()
-    {
+    IEnumerator Flash() {
         flashing = true;
-        while (true)
-        {
+        while (true) {
             text.color = normalColor;
             yield return new WaitForSecondsRealtime(flashDuration);
 

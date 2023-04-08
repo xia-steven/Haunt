@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialRangedEnemyEncounter : MonoBehaviour
-{
+public class TutorialRangedEnemyEncounter : MonoBehaviour {
     [SerializeField] int tutorialMessageID = 1;
 
     bool sent = false;
@@ -12,28 +11,23 @@ public class TutorialRangedEnemyEncounter : MonoBehaviour
 
     Subscription<MessageFinishedEvent> messFinSub;
 
-    private void Start()
-    {
+    private void Start() {
         messFinSub = EventBus.Subscribe<MessageFinishedEvent>(onMessageFinished);
     }
 
-    private void OnDestroy()
-    {
+    private void OnDestroy() {
         EventBus.Unsubscribe(messFinSub);
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!sent)
-        {
+    private void OnTriggerEnter(Collider other) {
+        if (!sent) {
             StartCoroutine(RangedEnemyCoroutine());
             sent = true;
         }
     }
 
-    IEnumerator RangedEnemyCoroutine()
-    {
+    IEnumerator RangedEnemyCoroutine() {
         //Disable player movement
         EventBus.Publish(new DisablePlayerEvent());
 
@@ -47,8 +41,7 @@ public class TutorialRangedEnemyEncounter : MonoBehaviour
         EventBus.Publish(new TutorialMessageEvent(tutorialMessageID, GetInstanceID(), true, KeyCode.Space, true));
 
         // Wait for message to finish
-        while(!messageFinished)
-        {
+        while (!messageFinished) {
             yield return null;
         }
 
@@ -66,13 +59,10 @@ public class TutorialRangedEnemyEncounter : MonoBehaviour
     }
 
 
-    void onMessageFinished(MessageFinishedEvent mfe)
-    {
-        if(mfe.senderInstanceID == GetInstanceID())
-        {
+    void onMessageFinished(MessageFinishedEvent mfe) {
+        if (mfe.senderInstanceID == GetInstanceID()) {
             Debug.Log("Message finished");
             messageFinished = true;
         }
     }
-
 }

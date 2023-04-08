@@ -43,8 +43,7 @@ public class IsPit : MonoBehaviour {
     }
 
 
-    private void OnTriggerExit(Collider other)
-    {
+    private void OnTriggerExit(Collider other) {
         EventBus.Publish<OverPitEvent>(new OverPitEvent(other.gameObject, horizontalOffset, false));
     }
 
@@ -59,13 +58,12 @@ public class IsPit : MonoBehaviour {
     }
 }
 
-public class OverPitEvent 
-{
+public class OverPitEvent {
     public GameObject entered;
     public Vector3 horizontalOffset;
     public bool over;
-    public OverPitEvent(GameObject _entered, Vector3 _horizontalOffset, bool _over)
-    {
+
+    public OverPitEvent(GameObject _entered, Vector3 _horizontalOffset, bool _over) {
         entered = _entered;
         horizontalOffset = _horizontalOffset;
         over = _over;

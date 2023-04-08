@@ -2,22 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour
-{
+public class Bomb : MonoBehaviour {
     [SerializeField] float explosionTime;
     private float droppedTime;
 
-    private void Awake()
-    {
+    private void Awake() {
         droppedTime = Time.time;
     }
 
-    void Update()
-    {
+    void Update() {
         // Destroy (explode) bomb after time has passed
         float passedTime = Time.time - droppedTime;
-        if (passedTime >= explosionTime)
-        {
+        if (passedTime >= explosionTime) {
             Destroy(gameObject);
         }
     }

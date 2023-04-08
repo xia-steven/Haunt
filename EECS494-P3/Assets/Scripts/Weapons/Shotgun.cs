@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shotgun : Weapon
-{
+public class Shotgun : Weapon {
     protected GameObject wielder;
     protected GameObject shotgunBullet;
 
     [SerializeField] protected GameObject shotgunSprite;
+
     // Bullet spread in degrees
     [SerializeField] protected float spread = 30f;
 
 
-    protected override void Awake()
-    {
+    protected override void Awake() {
         base.Awake();
         thisData = typesData.types[(int)WeaponType.shotgun];
 
@@ -27,35 +26,29 @@ public class Shotgun : Weapon
         shotgunBullet = Resources.Load<GameObject>("Prefabs/Weapons/ShotgunBullet");
     }
 
-    protected override void _OnFire(FireEvent e)
-    {
+    protected override void _OnFire(FireEvent e) {
         if (!gameObject.activeInHierarchy) return;
         // Check if fire event comes from pistol holder
-        if (e.shooter != wielder)
-        {
+        if (e.shooter != wielder) {
             return;
         }
 
         base._OnFire(e);
     }
 
-    protected override void _OnReload(ReloadEvent e)
-    {
+    protected override void _OnReload(ReloadEvent e) {
         if (!gameObject.activeInHierarchy) return;
         // Check if reload event comes from pistol holder
-        if (e.reloader != wielder)
-        {
+        if (e.reloader != wielder) {
             return;
         }
 
-        if (CanReload())
-        {
+        if (CanReload()) {
             StartCoroutine(ReloadDelay());
         }
     }
 
-    private IEnumerator ReloadDelay()
-    {
+    private IEnumerator ReloadDelay() {
         isReloading = true;
         Debug.Log("Reloading");
 
@@ -68,8 +61,7 @@ public class Shotgun : Weapon
         isReloading = false;
     }
 
-    protected override void WeaponFire(Vector3 direction)
-    {
+    protected override void WeaponFire(Vector3 direction) {
         // Fires shotgun bullets in direction shotgun is facing
 
         direction.y = 0;
@@ -106,16 +98,13 @@ public class Shotgun : Weapon
         EventBus.Publish(new ScreenShakeEvent(screenShakeStrength));
     }
 
-    protected override void GunReload()
-    {
-        if (CanReload())
-        {
+    protected override void GunReload() {
+        if (CanReload()) {
             StartCoroutine(ReloadDelay());
         }
     }
 
-    private void OnDestroy()
-    {
+    private void OnDestroy() {
         UnSubscribe();
     }
 }

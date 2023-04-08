@@ -12,7 +12,6 @@ public class DamagesPlayer : MonoBehaviour {
             Debug.Log("OUCH!!");
             //alter before publishing in case a subscriber references the new health
             collision.gameObject.GetComponent<PlayerHasHealth>().AlterHealth(damageAmount, DeathCauses.Enemy);
-
         }
     }
 }
