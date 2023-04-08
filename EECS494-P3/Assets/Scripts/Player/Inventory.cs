@@ -16,6 +16,7 @@ public class Inventory : MonoBehaviour
     private GameObject sniper;
     private GameObject launcher;
     private int coins = 0;
+    private AudioClip weaponSwapSound;
 
     private Subscription<SwapEvent> swapEventSubscription;
     private Subscription<SwapSpecificEvent> swapSpecificSubscription;
@@ -34,6 +35,8 @@ public class Inventory : MonoBehaviour
         resetInventorySubscription = EventBus.Subscribe<ResetInventoryEvent>(_OnResetInventory);
         weaponPurchasedSubscription = EventBus.Subscribe<WeaponPurchasedEvent>(_OnWeaponPurchase);
         reloadAllSubscription = EventBus.Subscribe<ReloadAllEvent>(_OnReloadAll);
+
+        weaponSwapSound = Resources.Load<AudioClip>("Audio/Weapons/weapswitch");
 
         ownedWeapons = new List<string>();
 
@@ -72,6 +75,9 @@ public class Inventory : MonoBehaviour
         if (currentWeapon != numWeapons) weapons[currentWeapon].SetActive(false);
         weapons[numWeapons].SetActive(true);
 
+        // Play swap sound
+        AudioSource.PlayClipAtPoint(weaponSwapSound, transform.position);
+
         currentWeapon = numWeapons;
         numWeapons++;
         // Add weapon name to owned weapons
@@ -80,6 +86,12 @@ public class Inventory : MonoBehaviour
 
     public void _OnSwitchWeapon(SwapEvent e)
     {
+        // Can't swap with only 1 or 0 weapons
+        if (numWeapons <= 1)
+            return;
+
+        // Play swap sound
+        AudioSource.PlayClipAtPoint(weaponSwapSound, transform.position);
         if (e.swapDirection > 0)
         {
             weapons[currentWeapon].SetActive(false);
@@ -103,6 +115,10 @@ public class Inventory : MonoBehaviour
 
     public void _OnSpecificSwap(SwapSpecificEvent e)
     {
+        // Can't swap with only 1 or 0 weapons
+        if (numWeapons <= 1)
+            return;
+
         int newEquipped = e.newEquipped;
         int actualSlot = newEquipped - 1;
 
@@ -115,6 +131,9 @@ public class Inventory : MonoBehaviour
             // "Equip" new weapon based on input
             currentWeapon = actualSlot;
             weapons[currentWeapon].SetActive(true);
+
+            // Play swap sound
+            AudioSource.PlayClipAtPoint(weaponSwapSound, transform.position);
         } else
         {
             Debug.Log("Attempted equip of empty weapon slot.");
