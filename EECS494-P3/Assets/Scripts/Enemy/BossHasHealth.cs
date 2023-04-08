@@ -36,7 +36,7 @@ public class BossHasHealth : HasHealth
     }
 
 
-    public override void AlterHealth(int healthDelta)
+    public override void AlterHealth(float healthDelta)
     {
         base.AlterHealth(healthDelta);
         StartCoroutine(FlashRed());

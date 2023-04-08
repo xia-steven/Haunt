@@ -42,11 +42,11 @@ public class IsExplosive : MonoBehaviour {
             else if (hit.TryGetComponent<HasEnemyHealth>(out enemyHit)) {
                 // Kill the enemy
                 int damageAmount = oneShotEnemies ? -1000 : -1;
-                enemyHit.AlterHealth(damageAmount);
+                enemyHit.AlterHealth(damageAmount * PlayerModifiers.damage);
             }
             else if (hit.TryGetComponent<HasPedestalHealth>(out pedestalHit))
             {
-                pedestalHit.AlterHealth(1);
+                pedestalHit.AlterHealth(1 * PlayerModifiers.damage);
             }
         }
 
@@ -64,7 +64,7 @@ public class IsExplosive : MonoBehaviour {
             spriteScaler.scale = explosiveRadius * 2;
         }
 
-        Destroy(spawnedVisual, 0.15f);
+        Destroy(spawnedVisual, 0.7f);
     }
 
     public void setExplosiveRadius(float newRadius)

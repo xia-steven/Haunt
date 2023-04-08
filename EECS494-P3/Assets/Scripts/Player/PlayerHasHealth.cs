@@ -31,7 +31,7 @@ public class PlayerHasHealth : HasHealth {
         id = Random.Range(0, 1000);
     }
 
-    public override void AlterHealth(int healthDelta)
+    public override void AlterHealth(float healthDelta)
     {
         Debug.Log("ALTERHEALTH: " + healthDelta);
         // healing
@@ -55,7 +55,8 @@ public class PlayerHasHealth : HasHealth {
                 {
                     health += healthDelta;
                 }
-                EventBus.Publish(new PlayerDamagedEvent(healthDelta));
+                // Player will still have int changes
+                EventBus.Publish(new PlayerDamagedEvent((int)healthDelta));
                 StartCoroutine(TriggerInvincibility());
             }
             
@@ -73,7 +74,7 @@ public class PlayerHasHealth : HasHealth {
         EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
     }
 
-    public void AlterHealth(int healthDelta, DeathCauses damager)
+    public void AlterHealth(float healthDelta, DeathCauses damager)
     {
         IsPlayer.instance.SetLastDamaged(damager);
         AlterHealth(healthDelta);
