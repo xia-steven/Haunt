@@ -9,12 +9,12 @@ public class MultiArcherEnemy : ArcherEnemy {
         Bullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/MultiArcherBullet");
     }
 
-    public override int GetEnemyID() {
+    protected override int GetEnemyID() {
         return 4;
     }
 
     // Override attack function
-    public override IEnumerator EnemyAttack() {
+    protected override IEnumerator EnemyAttack() {
         // While attacking
         while (state == EnemyState.Attacking) {
             var targetPosition = IsPlayer.instance.transform.position;

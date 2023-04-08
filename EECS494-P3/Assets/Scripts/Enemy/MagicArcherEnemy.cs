@@ -16,12 +16,12 @@ public class MagicArcherEnemy : EnemyBase {
 
 
     // Override enemy ID to load from config
-    public override int GetEnemyID() {
+    protected override int GetEnemyID() {
         return 8;
     }
 
     // Override attack function
-    public override IEnumerator EnemyAttack() {
+    protected override IEnumerator EnemyAttack() {
         // TODO: Remove or change debug statement
         Debug.Log("Magic Archer Enemy starting attack");
 

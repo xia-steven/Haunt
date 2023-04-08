@@ -15,12 +15,12 @@ public class ArbalestEnemy : EnemyBase {
     }
 
     // Override enemy ID to load from config
-    public override int GetEnemyID() {
+    protected override int GetEnemyID() {
         return 5;
     }
 
     // Override attack function
-    public override IEnumerator EnemyAttack() {
+    protected override IEnumerator EnemyAttack() {
         // TODO: Remove or change debug statement
         Debug.Log("Arbalest Enemy starting attack");
 

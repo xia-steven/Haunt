@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -23,10 +21,10 @@ public class EnemyBase : MonoBehaviour {
     // Pathfinding variables
     protected int currentPathIndex;
     protected List<Vector3> pathVectorList;
-    protected Transform tf_;
+    private Transform tf_;
 
     // Player variables
-    protected PlayerHasHealth playerHealth;
+    private PlayerHasHealth playerHealth;
 
     protected virtual void Start() {
         // Initialize components and transform
@@ -78,8 +76,7 @@ public class EnemyBase : MonoBehaviour {
         }
 
         // Second, check if the enemy can attack the player from their current distance
-        if (state != EnemyState.Attacking &&
-            Vector3.Distance(targetPosition, transform.position) <= attributes.targetDistance) {
+        if (state != EnemyState.Attacking && canAttack(targetPosition)) {
             if (!runningCoroutine) {
                 state = EnemyState.Attacking;
                 runningCoroutine = true;
@@ -99,7 +96,7 @@ public class EnemyBase : MonoBehaviour {
             if (!runningCoroutine) {
                 state = EnemyState.SimpleMovement;
                 runningCoroutine = true;
-                StartCoroutine(MoveStraightTowards(targetPosition));
+                StartCoroutine(MoveStraightToTarget());
             }
             else {
                 // Set idle to wait for previous state to finish
@@ -108,7 +105,11 @@ public class EnemyBase : MonoBehaviour {
         }
     }
 
-    public virtual bool needAStar(RaycastHit hit) {
+    protected virtual bool canAttack(Vector3 targetPosition) {
+        return Vector3.Distance(targetPosition, transform.position) <= attributes.targetDistance;
+    }
+
+    protected virtual bool needAStar(RaycastHit hit) {
         return !hit.transform.gameObject.CompareTag("Player");
     }
 
@@ -117,27 +118,27 @@ public class EnemyBase : MonoBehaviour {
     /// Each unique enemy must override this to get the correct attributes
     /// </summary>
     /// <returns></returns>
-    public virtual int GetEnemyID() {
+    protected virtual int GetEnemyID() {
         // MUST BE OVERRIDDEN TO RETURN CORRECT ENEMY ID
         return 0;
     }
 
     /// <summary>
-    /// This function is used to get the target of this enemy.  Almost always is the player, except 
+    /// This function is used to get the target of this enemy.  Almost always is the player, except
     /// for cleric enemies.
     /// </summary>
     /// <returns>Returns the target position of the enemy</returns>
-    public virtual Vector3 GetTarget() {
+    protected virtual Vector3 GetTarget() {
         return IsPlayer.instance.transform.position;
     }
 
     /// <summary>
-    /// This function is used for the enemy to perform their attack.  
+    /// This function is used for the enemy to perform their attack.
     /// Each unique enemy must override this to perform an attack.
     /// Each overridden function MUST set runningCoroutine to false before exiting
     /// </summary>
     /// <returns></returns>
-    public virtual IEnumerator EnemyAttack() {
+    protected virtual IEnumerator EnemyAttack() {
         // Debug.Log("How did we get here?");
         // Should ALWAYS be overridden
         while (state == EnemyState.Attacking) {
@@ -152,7 +153,7 @@ public class EnemyBase : MonoBehaviour {
     /// variable is used to track when to stop.
     /// </summary>
     /// <returns></returns>
-    public IEnumerator MoveWithAStar(int targetX, int targetZ) {
+    private IEnumerator MoveWithAStar(int targetX, int targetZ) {
         // Start player position updating
         StartCoroutine(updatePathfindingVector(targetX, targetZ));
 
@@ -192,10 +193,10 @@ public class EnemyBase : MonoBehaviour {
     /// The EnemyState variable used to track when to stop.
     /// </summary>
     /// <returns></returns>
-    private IEnumerator MoveStraightTowards(Vector3 target) {
+    private IEnumerator MoveStraightToTarget() {
         while (state == EnemyState.SimpleMovement) {
             // Get direction to move
-            var direction = (target - transform.position).normalized;
+            var direction = (GetTarget() - transform.position).normalized;
             // Remove any y coordinate (shouldn't be any)
             direction.y = 0;
 
@@ -231,7 +232,7 @@ public class EnemyBase : MonoBehaviour {
     }
 
     // Damage the player if they touch the enemy
-    private void OnTriggerEnter(Collider other) {
+    protected void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Player")) {
             playerHealth.AlterHealth(-1, DeathCauses.Enemy);
         }

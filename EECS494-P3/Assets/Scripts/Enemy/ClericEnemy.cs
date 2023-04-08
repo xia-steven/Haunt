@@ -18,20 +18,38 @@ public class ClericEnemy : EnemyBase {
     private Subscription<PedestalDestroyedEvent> switchPedestalSub;
     private Subscription<PedestalRepairedEvent> addPedestalSub;
     private Vector3 currentTargetPedestal;
+    private HasPedestalHealth currAttackingPedestal = null;
 
     private float prevTime;
-    public int pedestalTimeout;
+    private const int pedestalTimeout = 6;
 
-    public override int GetEnemyID() {
+    protected override int GetEnemyID() {
         return 9;
     }
 
-    public override Vector3 GetTarget() {
+    protected override Vector3 GetTarget() {
         return currentTargetPedestal;
     }
 
-    public override bool needAStar(RaycastHit hit) {
+    protected override bool needAStar(RaycastHit hit) {
         return hit.transform.gameObject.layer != LayerMask.NameToLayer("Pedestal");
+    }
+
+    protected override bool canAttack(Vector3 targetPosition) {
+        return currAttackingPedestal is not null;
+    }
+
+    protected new void OnTriggerEnter(Collider other) {
+        base.OnTriggerEnter(other);
+        if (other.gameObject.layer == LayerMask.NameToLayer("Pedestal")) {
+            currAttackingPedestal = other.gameObject.GetComponent<HasPedestalHealth>();
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Pedestal")) {
+            currAttackingPedestal = null;
+        }
     }
 
     private new void Start() {
@@ -41,20 +59,13 @@ public class ClericEnemy : EnemyBase {
         switchPedestalSub = EventBus.Subscribe<PedestalDestroyedEvent>(pedestalDied);
         addPedestalSub = EventBus.Subscribe<PedestalRepairedEvent>(pedestalRepaired);
         currentTargetPedestal = findClosestPedestal();
-        SetTargetPosition(currentTargetPedestal);
     }
 
     // Override attack function
-    public override IEnumerator EnemyAttack() {
+    protected override IEnumerator EnemyAttack() {
         // While attacking
         while (state == EnemyState.Attacking) {
-            var targetPosition = IsPlayer.instance.transform.position;
-
-            var direction = targetPosition - transform.position;
-            direction.y = 0;
-            direction = direction.normalized;
-
-            // TODO: finish me
+            currAttackingPedestal.AlterHealth(-1);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }
@@ -69,7 +80,7 @@ public class ClericEnemy : EnemyBase {
     }
 
     private Vector3 findClosestPedestal() {
-        if (PathfindingController.pedestalInfos.All(ped => !ped.Value.destroyed)) {
+        if (PathfindingController.pedestalInfos.All(static ped => !ped.Value.destroyed)) {
             return Vector3.zero;
         }
 
@@ -90,19 +101,10 @@ public class ClericEnemy : EnemyBase {
         return PathfindingController.pedestalInfos[closest].position;
     }
 
-    private void SetTargetPosition(Vector3 pos) {
-        currentPathIndex = 0;
-        pathVectorList = Pathfinding.Instance.FindPath(transform.position, pos);
-
-        if (pathVectorList != null && pathVectorList.Count > 1) {
-            pathVectorList.RemoveAt(0);
-        }
-    }
-
     private IEnumerator pedestalCoroutine() {
         yield return new WaitForSeconds(pedestalTimeout);
         currentTargetPedestal = findClosestPedestal();
-        SetTargetPosition(currentTargetPedestal);
+        currAttackingPedestal = null;
     }
 
     private void pedestalDied(PedestalDestroyedEvent event_) {
@@ -124,6 +126,6 @@ public class ClericEnemy : EnemyBase {
     private void pedestalRepaired(PedestalRepairedEvent event_) {
         PathfindingController.pedestalInfos[event_.pedestalUUID].destroyed = false;
         currentTargetPedestal = findClosestPedestal();
-        SetTargetPosition(currentTargetPedestal);
+        currAttackingPedestal = null;
     }
 }

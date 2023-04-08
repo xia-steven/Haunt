@@ -5,13 +5,13 @@ using UnityEngine;
 // TODO: Rename file and class to enemy name
 public class EnemyTemplate : EnemyBase {
     // Override enemy ID to load from config
-    public override int GetEnemyID() {
+    protected override int GetEnemyID() {
         // TODO: Change returned value to enemyID (index in config file)
         return 0;
     }
 
     // Override attack function
-    public override IEnumerator EnemyAttack() {
+    protected override IEnumerator EnemyAttack() {
         // TODO: Remove or change debug statement
         Debug.Log("Template Enemy starting attack");
 
