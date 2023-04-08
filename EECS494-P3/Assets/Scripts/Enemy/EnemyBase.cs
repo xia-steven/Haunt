@@ -12,7 +12,7 @@ public class EnemyBase : MonoBehaviour {
     protected Rigidbody rb;
 
     // Used to determine if the enemy is currently running a coroutine
-    protected bool runningCoroutine = false;
+    protected bool runningCoroutine;
     protected EnemyState state = EnemyState.Idle;
 
     // Enemy attributes

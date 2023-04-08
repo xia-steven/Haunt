@@ -21,9 +21,6 @@ public class ArbalestEnemy : EnemyBase {
 
     // Override attack function
     protected override IEnumerator EnemyAttack() {
-        // TODO: Remove or change debug statement
-        Debug.Log("Arbalest Enemy starting attack");
-
         // Slight attack delay
         yield return new WaitForSeconds(0.25f);
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialPedestalAttacker : EnemyBase {
+public class TutorialClericEnemy : EnemyBase {
     public static Dictionary<int, Vector3> pedestalPositions = new Dictionary<int, Vector3>
         { { 1, new Vector3(8, 0, -9) } };
 
