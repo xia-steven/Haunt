@@ -15,7 +15,7 @@ partial class GameControl : MonoBehaviour {
     /// game has been started and before the game has been won or lost.
     /// </summary>
     public static bool GameActive {
-        get { return instance.gameActive; }
+        get => instance.gameActive;
         private set { }
     }
 
@@ -23,7 +23,7 @@ partial class GameControl : MonoBehaviour {
     /// Tracks whether the game is paused or not.
     /// </summary>
     public static bool GamePaused {
-        get { return instance.gamePaused; }
+        get => instance.gamePaused;
         private set { }
     }
 
@@ -31,7 +31,7 @@ partial class GameControl : MonoBehaviour {
     /// Tracks whether it is night or day.
     /// </summary>
     public static bool IsNight {
-        get { return isNight; }
+        get => isNight;
         private set { }
     }
 
@@ -39,7 +39,7 @@ partial class GameControl : MonoBehaviour {
     /// Tracks when the night is ending and the exit teleporter is active
     /// </summary>
     public static bool NightEnding {
-        get { return instance.nightEnding; }
+        get => instance.nightEnding;
         private set { }
     }
 
@@ -47,8 +47,8 @@ partial class GameControl : MonoBehaviour {
     /// Returns the current day. Note that the day increments after each night starts.
     /// </summary>
     public static int Day {
-        get { return day; }
-        set { day = value; }
+        get => day;
+        set => day = value;
     }
 
 
@@ -57,14 +57,14 @@ partial class GameControl : MonoBehaviour {
     /// </summary>
     public static float NightTimeRemaining {
         get {
-            if(day == 0)
-            {
+            if (day == 0) {
                 return 15 - (Time.time - instance.nightStartTime);
             }
-            else if (isNight && !instance.nightEnding)
+
+            if (isNight && !instance.nightEnding)
                 return instance.data.nightLength - (Time.time - instance.nightStartTime);
-            else
-                return -1;
+
+            return -1;
         }
     }
 
@@ -78,9 +78,9 @@ partial class GameControl : MonoBehaviour {
         EventBus.Publish(new GameStartEvent());
     }
 
-    static Subscription<GameStartEvent> startSub;
+    private static Subscription<GameStartEvent> startSub;
 
-    private void _Start(GameStartEvent e) {
+    private static void _Start(GameStartEvent e) {
         instance.gameActive = true;
     }
 
@@ -92,9 +92,9 @@ partial class GameControl : MonoBehaviour {
         EventBus.Publish(new GameLossEvent(IsPlayer.instance.LastDamaged()));
     }
 
-    static Subscription<GameLossEvent> lossSub;
+    private static Subscription<GameLossEvent> lossSub;
 
-    private void _Lose(GameLossEvent e) {
+    private static void _Lose(GameLossEvent e) {
         instance.gameActive = false;
     }
 
@@ -106,9 +106,9 @@ partial class GameControl : MonoBehaviour {
         EventBus.Publish(new GameWinEvent());
     }
 
-    static Subscription<GameWinEvent> winSub;
+    private static Subscription<GameWinEvent> winSub;
 
-    private void _Win(GameWinEvent e) {
+    private static void _Win(GameWinEvent e) {
         instance.gameActive = false;
     }
 
@@ -120,9 +120,9 @@ partial class GameControl : MonoBehaviour {
         EventBus.Publish(new GamePauseEvent());
     }
 
-    static Subscription<GamePauseEvent> pauseSub;
+    private static Subscription<GamePauseEvent> pauseSub;
 
-    private void _Pause(GamePauseEvent e) {
+    private static void _Pause(GamePauseEvent e) {
         instance.gamePaused = true;
     }
 
