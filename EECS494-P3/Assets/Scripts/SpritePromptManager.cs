@@ -1,21 +1,22 @@
 using System.Collections;
-using System.Collections.Generic;
+using Events;
+using Player;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class SpritePromptManager : MonoBehaviour {
-    static SpritePromptManager instance;
+    private static SpritePromptManager instance;
 
-    Subscription<SpritePromptEvent> promptSub;
+    private Subscription<SpritePromptEvent> promptSub;
 
-    SpriteRenderer sprite;
+    private SpriteRenderer sprite;
 
-    Vector3 offset = new Vector3(-0.5f, 1.25f, 0);
+    private readonly Vector3 offset = new(-0.5f, 1.25f, 0);
 
-    void Awake() {
+    private void Awake() {
         //enforce singleton
         if (instance == null) instance = this;
-        else Destroy(this.gameObject);
+        else Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
 
@@ -27,7 +28,7 @@ public class SpritePromptManager : MonoBehaviour {
     }
 
     private void Start() {
-        Transform player = IsPlayer.instance.transform;
+        var player = IsPlayer.instance.transform;
 
         transform.parent = player;
 
@@ -39,26 +40,28 @@ public class SpritePromptManager : MonoBehaviour {
     }
 
 
-    void onSpritePrompt(SpritePromptEvent spe) {
+    private void onSpritePrompt(SpritePromptEvent spe) {
         StartCoroutine(displayPrompt(spe));
     }
 
-    IEnumerator displayPrompt(SpritePromptEvent spe) {
+    private IEnumerator displayPrompt(SpritePromptEvent spe) {
         sprite.sprite = spe.sprite;
 
 
         sprite.enabled = true;
 
-        // Wait for dismiss key (or keys if W)
-        if (spe.dismissKey == KeyCode.W) {
-            while (!Input.GetKeyDown(spe.dismissKey) && !Input.GetKeyDown(KeyCode.A) &&
-                   !Input.GetKeyDown(KeyCode.S) && !Input.GetKeyDown(KeyCode.D) && !spe.cancelPrompt) {
-                yield return null;
+        switch (spe.dismissKey) {
+            // Wait for dismiss key (or keys if W)
+            case KeyCode.W: {
+                while (!Input.GetKeyDown(spe.dismissKey) && !Input.GetKeyDown(KeyCode.A) &&
+                       !Input.GetKeyDown(KeyCode.S) && !Input.GetKeyDown(KeyCode.D) && !spe.cancelPrompt)
+                    yield return null;
+                break;
             }
-        }
-        else {
-            while (!Input.GetKeyDown(spe.dismissKey) && !spe.cancelPrompt) {
-                yield return null;
+            default: {
+                while (!Input.GetKeyDown(spe.dismissKey) && !spe.cancelPrompt)
+                    yield return null;
+                break;
             }
         }
 

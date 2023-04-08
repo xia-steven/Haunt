@@ -1,21 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
+using Events;
+using Player;
 using UnityEngine;
 
-public class SwordUpgrade : Upgrade {
-    protected override void Start() {
-        thisData = typesData.types[(int)PurchaseableType.sword];
-        base.Start();
-    }
+namespace Hub.Upgrades {
+    public class SwordUpgrade : Upgrade {
+        protected override void Start() {
+            thisData = typesData.types[(int)PurchaseableType.sword];
+            base.Start();
+        }
 
-    protected override void Apply() {
-        Debug.Log("Applying SwordUpgrade");
-        var upgrade = IsPlayer.instance.gameObject.AddComponent<HasSwordUpgrade>();
-        upgrade.swingArc = thisData.rate1;
-        upgrade.swingTime = thisData.rate2;
+        protected override void Apply() {
+            Debug.Log("Applying SwordUpgrade");
+            var upgrade = IsPlayer.instance.gameObject.AddComponent<HasSwordUpgrade>();
+            upgrade.swingArc = thisData.rate1;
+            upgrade.swingTime = thisData.rate2;
 
-        EventBus.Publish(new ActivateTeleporterEvent());
+            EventBus.Publish(new ActivateTeleporterEvent());
 
-        base.Apply();
+            base.Apply();
+        }
     }
 }

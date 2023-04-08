@@ -1,15 +1,15 @@
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class EliteArcherEnemy : ArcherEnemy {
-    protected override void Start() {
-        base.Start();
+namespace Enemy {
+    public class EliteArcherEnemy : ArcherEnemy {
+        protected override void Start() {
+            base.Start();
 
-        Bullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/EliteArcherBullet");
-    }
+            Bullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/EliteArcherBullet");
+        }
 
-    public override int GetEnemyID() {
-        return 3;
+        protected override int GetEnemyID() {
+            return 3;
+        }
     }
 }

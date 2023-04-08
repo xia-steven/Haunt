@@ -1,29 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
+using Events;
 using UnityEngine;
 
-public class HasReflectUpgrade : MonoBehaviour {
-    private GameObject dashShield;
-    private GameObject appliedShield;
-    private Subscription<PlayerDodgeEvent> dodgeEvent;
+namespace Hub.Upgrades {
+    public class HasReflectUpgrade : MonoBehaviour {
+        private GameObject dashShield;
+        private GameObject appliedShield;
+        private Subscription<PlayerDodgeEvent> dodgeEvent;
 
-    // Start is called before the first frame update
-    void Start() {
-        dashShield = Resources.Load<GameObject>("Prefabs/DashShield");
-        dodgeEvent = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
-    }
-
-    // Attach shield on dodge start and destroy it on dodge finish
-    private void _OnDodge(PlayerDodgeEvent e) {
-        if (e.start) {
-            appliedShield = Instantiate(dashShield, transform);
+        // Start is called before the first frame update
+        private void Start() {
+            dashShield = Resources.Load<GameObject>("Prefabs/DashShield");
+            dodgeEvent = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
         }
-        else {
-            Destroy(appliedShield);
-        }
-    }
 
-    protected void OnDestroy() {
-        EventBus.Unsubscribe(dodgeEvent);
+        // Attach shield on dodge start and destroy it on dodge finish
+        private void _OnDodge(PlayerDodgeEvent e) {
+            switch (e.start) {
+                case true:
+                    appliedShield = Instantiate(dashShield, transform);
+                    break;
+                default:
+                    Destroy(appliedShield);
+                    break;
+            }
+        }
+
+        protected void OnDestroy() {
+            EventBus.Unsubscribe(dodgeEvent);
+        }
     }
 }

@@ -1,18 +1,20 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using Hub;
+using JSON_Parsing;
 
-public class PurchaseableTypesData : Savable {
-    public List<UpgradeData> types;
-}
+namespace ConfigDataTypes {
+    public class PurchaseableTypesData : Savable {
+        public List<UpgradeData> types;
+    }
 
-[System.Serializable]
-public class UpgradeData {
-    public PurchaseableType type;
-    public int cost;
-    public float rate1;
-    public float rate2;
-    public float duration;
-    public string description;
-    public int maxOwnable = 1;
+    [System.Serializable]
+    public class UpgradeData {
+        public PurchaseableType type;
+        public int cost;
+        public float rate1;
+        public float rate2;
+        public float duration;
+        public string description;
+        public int maxOwnable = 1;
+    }
 }

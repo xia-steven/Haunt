@@ -1,19 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Player;
 
-public class StationaryDamageUpgrade : Upgrade {
-    protected override void Start() {
-        thisData = typesData.types[(int)PurchaseableType.stationaryDamage];
-        base.Start();
-    }
+namespace Hub.Upgrades {
+    public class StationaryDamageUpgrade : Upgrade {
+        protected override void Start() {
+            thisData = typesData.types[(int)PurchaseableType.stationaryDamage];
+            base.Start();
+        }
 
-    protected override void Apply() {
-        var newInstance = IsPlayer.instance.gameObject.AddComponent<HasStationaryDamage>();
-        newInstance.holdTime = thisData.duration;
-        newInstance.dmgMod = thisData.rate1;
+        protected override void Apply() {
+            var newInstance = IsPlayer.instance.gameObject.AddComponent<HasStationaryDamage>();
+            newInstance.holdTime = thisData.duration;
+            newInstance.dmgMod = thisData.rate1;
 
 
-        base.Apply();
+            base.Apply();
+        }
     }
 }

@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Player;
 
-public class Shield : IsBuyable {
-    protected override void Apply() {
-        IsPlayer.instance.GetComponent<PlayerHasHealth>().AddShield();
+namespace Hub {
+    public class Shield : IsBuyable {
+        protected override void Apply() {
+            IsPlayer.instance.GetComponent<PlayerHasHealth>().AddShield();
+        }
     }
 }

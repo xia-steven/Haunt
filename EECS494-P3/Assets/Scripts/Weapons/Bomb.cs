@@ -1,20 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour {
-    [SerializeField] float explosionTime;
-    private float droppedTime;
+namespace Weapons {
+    public class Bomb : MonoBehaviour {
+        [SerializeField] private float explosionTime;
+        private float droppedTime;
 
-    private void Awake() {
-        droppedTime = Time.time;
-    }
+        private void Awake() {
+            droppedTime = Time.time;
+        }
 
-    void Update() {
-        // Destroy (explode) bomb after time has passed
-        float passedTime = Time.time - droppedTime;
-        if (passedTime >= explosionTime) {
-            Destroy(gameObject);
+        private void Update() {
+            // Destroy (explode) bomb after time has passed
+            var passedTime = Time.time - droppedTime;
+            if (passedTime >= explosionTime) Destroy(gameObject);
         }
     }
 }

@@ -1,6 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 public class HealsPlayer : MonoBehaviour {
@@ -16,9 +15,8 @@ public class HealsPlayer : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerPhysical")) {
-            IsPlayer.instance.gameObject.GetComponent<PlayerHasHealth>().AlterHealth(healAmount);
-            Destroy(gameObject);
-        }
+        if (other.gameObject.layer != LayerMask.NameToLayer("PlayerPhysical")) return;
+        IsPlayer.instance.gameObject.GetComponent<PlayerHasHealth>().AlterHealth(healAmount);
+        Destroy(gameObject);
     }
 }

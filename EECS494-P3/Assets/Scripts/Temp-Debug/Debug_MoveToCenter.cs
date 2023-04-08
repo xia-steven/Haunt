@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Debug_MoveToCenter : MonoBehaviour {
@@ -13,7 +11,7 @@ public class Debug_MoveToCenter : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    private void Update() {
         var movement = (Vector3.zero - transform.position).normalized * speed;
         transform.position += movement * Time.deltaTime;
     }

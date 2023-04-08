@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class IsWaveSpawner : MonoBehaviour { }
+namespace Game_Control {
+    public class IsWaveSpawner : MonoBehaviour { }
+}
