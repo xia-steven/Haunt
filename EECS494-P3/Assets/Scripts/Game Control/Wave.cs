@@ -56,7 +56,7 @@ public class Wave {
             /* GET ENEMY TYPE */
             //see if is melee
             // Make sure the day isn't negative for the tutorial
-            var gameDay = (GameControl.Day - 1) >= 0 ? GameControl.Day - 1 : 0;
+            var gameDay = GameControl.Day - 1 >= 0 ? GameControl.Day - 1 : 0;
             var isMelee = Random.value < spawnData.nightlyPropMelee[gameDay];
 
             //get idx of potentialMembers that new enemy will be
@@ -85,8 +85,7 @@ public class Wave {
             for (var i = 0; i < maxPedestalEnemies; ++i) {
                 spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
                 newMember = Object
-                    .Instantiate(potentialMembers[potentialMembers.Count - 1], spawnPos, Quaternion.identity)
-                    .GetComponent<IsWaveMember>();
+                    .Instantiate(potentialMembers[^1], spawnPos, Quaternion.identity).GetComponent<IsWaveMember>();
                 newMember.Init(this, nextId);
                 newMember.gameObject.SetActive(false);
                 numActiveMembers++;
