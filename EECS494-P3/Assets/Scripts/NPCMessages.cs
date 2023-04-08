@@ -15,6 +15,8 @@ public class NPCMessages : MonoBehaviour
 
     bool spoken = false;
 
+    bool sentMessage = false;
+
     Sprite eSprite;
     SpritePromptEvent ePrompt;
 
@@ -33,11 +35,13 @@ public class NPCMessages : MonoBehaviour
         eSprite = (Sprite)sprites[360];
 
         ePrompt = new SpritePromptEvent(eSprite, KeyCode.E);
+        ePrompt.cancelPrompt = true;
     }
 
     private void OnDestroy()
     {
         EventBus.Unsubscribe(interactSubscription);
+        EventBus.Unsubscribe(finishedSub);
     }
 
     private void OnTriggerStay(Collider other)
@@ -47,8 +51,11 @@ public class NPCMessages : MonoBehaviour
             interactSprite.SetActive(true);
         }
         selected = true;
-        ePrompt.cancelPrompt = false;
-        EventBus.Publish(ePrompt);
+        if(ePrompt.cancelPrompt)
+        {
+            ePrompt.cancelPrompt = false;
+            EventBus.Publish(ePrompt);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -63,8 +70,9 @@ public class NPCMessages : MonoBehaviour
 
     private void OnInteract(TryInteractEvent e)
     {
-        if(selected)
+        if(selected && !sentMessage)
         {
+            sentMessage = true;
             spoken = true;
             initialBubble.SetActive(false);
             if(SceneManager.GetActiveScene().name == "TutorialHubWorld")
@@ -82,6 +90,7 @@ public class NPCMessages : MonoBehaviour
 
     private void OnMessageFinished(MessageFinishedEvent mfe)
     {
+        sentMessage = false;
         // Activate teleporter after first message
         if(mfe.senderInstanceID == GetInstanceID() && isGhost && SceneManager.GetActiveScene().name == "TutorialHubWorld")
         {

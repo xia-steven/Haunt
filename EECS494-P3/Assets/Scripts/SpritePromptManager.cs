@@ -12,6 +12,7 @@ public class SpritePromptManager : MonoBehaviour
     SpriteRenderer sprite;
 
     Vector3 offset = new Vector3(-0.5f, 1.25f, 0);
+    float fadeTime = 0.5f;
 
     void Awake()
     {
@@ -57,6 +58,7 @@ public class SpritePromptManager : MonoBehaviour
 
         sprite.enabled = true;
 
+
         // Wait for dismiss key (or keys if W)
         if (spe.dismissKey == KeyCode.W)
         {
@@ -74,9 +76,22 @@ public class SpritePromptManager : MonoBehaviour
             }
         }
 
+        // Fade out sprite
+        Color initialColor = sprite.color;
 
-        
+        float initialTime = Time.time;
+        float progress = (Time.time - initialTime) / fadeTime;
+
+        while(progress < 1.0f)
+        {
+            progress = (Time.time - initialTime) / fadeTime;
+
+            sprite.color = new Color(initialColor.r, initialColor.g, initialColor.b, (1 - progress));
+
+            yield return null;
+        }
 
         sprite.enabled = false;
+        sprite.color = initialColor;
     }
 }
