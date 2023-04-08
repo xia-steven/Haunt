@@ -53,9 +53,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnDodge(InputAction.CallbackContext value) {
-        string sceneName = SceneManager.GetActiveScene().name;
-        if (!playerEnabled || sceneName == "HubWorld" || sceneName == "TutorialHubWorld") return;
-
         if (dodgeRollCooldownTimer > 0) {
             return;
         }
