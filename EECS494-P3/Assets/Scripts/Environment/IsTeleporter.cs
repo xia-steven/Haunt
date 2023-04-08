@@ -3,43 +3,43 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class IsTeleporter : MonoBehaviour {
-    [SerializeField] string otherScene;
+    [SerializeField] private string otherScene;
     [SerializeField] private GameObject selectedRing;
 
-    MeshRenderer visualRenderer;
+    private MeshRenderer visualRenderer;
     private Animator anim;
 
 
-    Sprite eSprite;
-    SpritePromptEvent ePrompt;
+    private Sprite eSprite;
+    private SpritePromptEvent ePrompt;
 
-    bool sentPrompt = false;
+    private bool sentPrompt;
 
-    bool isActive = true;
+    private bool isActive = true;
 
     public bool Active {
-        get { return isActive; }
+        get => isActive;
         set {
-            bool tmp = isActive;
+            var tmp = isActive;
             isActive = value;
             if (isActive && !tmp) Activate();
             else if (tmp) Deactivate();
         }
     }
 
-    bool isUsable = false;
+    private bool isUsable;
 
-    Subscription<TryInteractEvent> interactSub;
+    private Subscription<TryInteractEvent> interactSub;
 
     // Start is called before the first frame update
-    void Awake() {
+    private void Awake() {
         anim = GetComponent<Animator>();
 
         Activate();
 
         interactSub = EventBus.Subscribe<TryInteractEvent>(_Interact);
 
-        UnityEngine.Object[] sprites = Resources.LoadAll("tilemap");
+        var sprites = Resources.LoadAll("tilemap");
         eSprite = (Sprite)sprites[360];
 
         ePrompt = new SpritePromptEvent(eSprite, KeyCode.E);
@@ -50,7 +50,7 @@ public class IsTeleporter : MonoBehaviour {
             selectedRing.SetActive(true);
             isUsable = true;
             ePrompt.cancelPrompt = false;
-            EventBus.Publish<SpritePromptEvent>(ePrompt);
+            EventBus.Publish(ePrompt);
             sentPrompt = true;
         }
     }
@@ -65,7 +65,7 @@ public class IsTeleporter : MonoBehaviour {
     }
 
     private void Activate() {
-        Debug.Log((isActive));
+        Debug.Log(isActive);
         //activate other visuals here
         anim.SetBool("isActive", isActive);
     }
@@ -76,7 +76,7 @@ public class IsTeleporter : MonoBehaviour {
         anim.SetBool("isActive", isActive);
     }
 
-    public void _Interact(TryInteractEvent e) {
+    private void _Interact(TryInteractEvent e) {
         if (isUsable) {
             IsPlayer.SetPosition(new Vector3(0, .25f, 0));
             if (GameControl.Day != 3 || SceneManager.GetActiveScene().name != "HubWorld") {

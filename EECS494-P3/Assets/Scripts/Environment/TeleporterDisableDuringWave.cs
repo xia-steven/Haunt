@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(IsTeleporter))]
 public class TeleporterDisableDuringWave : MonoBehaviour {
     IsTeleporter tp;
-    bool activated = false;
+    bool activated;
 
     private void Start() {
         tp = GetComponent<IsTeleporter>();
@@ -17,7 +17,7 @@ public class TeleporterDisableDuringWave : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    private void Update() {
         if (!activated && GameControl.NightEnding) {
             activated = true;
             tp.Active = true;

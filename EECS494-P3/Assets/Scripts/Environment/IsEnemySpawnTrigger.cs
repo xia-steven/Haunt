@@ -6,7 +6,7 @@ public class IsEnemySpawnTrigger : MonoBehaviour {
     [SerializeField] Transform spawnLocation;
     [SerializeField] GameObject enemyToSpawn;
 
-    bool spawned = false;
+    bool spawned;
 
     private void OnTriggerEnter(Collider other) {
         if (!spawned) {
