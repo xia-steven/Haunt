@@ -69,6 +69,10 @@ public abstract class Weapon : MonoBehaviour {
     // Buffs/nerfs on player speed for specific guns
     [SerializeField] protected float speedMultiplier = 1f;
 
+    // Gun sounds
+    [SerializeField] protected AudioClip firingSound;
+    [SerializeField] protected AudioClip reloadSound;
+
     protected static WeaponTypesData typesData;
     protected WeaponData thisData;
 
@@ -150,6 +154,9 @@ public abstract class Weapon : MonoBehaviour {
         // Give bullet its velocity
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.velocity = direction * bulletSpeed;
+
+        // Play firing sound
+        AudioSource.PlayClipAtPoint(firingSound, transform.position);
     }
 
 

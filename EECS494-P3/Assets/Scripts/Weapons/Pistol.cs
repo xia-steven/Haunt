@@ -54,6 +54,8 @@ public class Pistol : Weapon {
     {
         isReloading = true;
         Debug.Log("Reloading");
+        // Play reload sound
+        AudioSource.PlayClipAtPoint(reloadSound, transform.position);
 
         EventBus.Publish(new ReloadStartedEvent(reloadTime * PlayerModifiers.reloadSpeed));
         yield return new WaitForSeconds(reloadTime * PlayerModifiers.reloadSpeed);

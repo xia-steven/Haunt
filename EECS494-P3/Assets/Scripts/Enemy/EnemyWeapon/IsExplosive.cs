@@ -6,6 +6,7 @@ public class IsExplosive : MonoBehaviour {
     [SerializeField] float explosiveRadius = 2.0f;
     [SerializeField] bool oneShotEnemies = false;
     [SerializeField] bool fromPlayer = false;
+    AudioClip explosionSound;
 
     // Used to prevent spawning objects on quit
     bool quitting = false;
@@ -18,7 +19,9 @@ public class IsExplosive : MonoBehaviour {
 
     void explode() {
         Debug.Log("Exploding");
-
+        // Play explosion sound
+        explosionSound = Resources.Load<AudioClip>("Audio/Weapons/explosion");
+        AudioSource.PlayClipAtPoint(explosionSound, transform.position);
 
         // Perform hit
         Collider[] hitColliders;
