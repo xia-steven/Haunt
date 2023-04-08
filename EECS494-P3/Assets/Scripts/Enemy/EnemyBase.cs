@@ -43,40 +43,23 @@ public class EnemyBase : MonoBehaviour {
     }
 
     protected void FixedUpdate() {
-        // Get player/target position
-        var targetPosition = GetTarget();
-
-        // First, check if the enemy cannot pathfind directly to the player/target
-        var playerDirection = (targetPosition - transform.position).normalized;
-        // Ignore hits on other enemies
-        var layerMask = ~LayerMask.GetMask("Enemy");
-
-        if (state != EnemyState.AStarMovement &&
-            Physics.Raycast(transform.position, playerDirection, out var hit,
-                Vector3.Distance(targetPosition, transform.position), layerMask)) {
-            if (hit.transform.gameObject.CompareTag("Pit") && attributes.isRanged &&
-                Vector3.Distance(targetPosition, transform.position) <= attributes.targetDistance) {
-                // Do nothing - can attack if not already attacking
+        if (state != EnemyState.AStarMovement && needAStar()) {
+            if (!runningCoroutine) {
+                state = EnemyState.AStarMovement;
+                runningCoroutine = true;
+                PathfindingController.FindClosestWalkable(GetTarget(), out var x, out var y);
+                StartCoroutine(MoveWithAStar(x, y));
             }
-            // Confirm that the raycast did not hit the player
-            else if (needAStar(hit)) {
-                if (!runningCoroutine) {
-                    state = EnemyState.AStarMovement;
-                    runningCoroutine = true;
-                    PathfindingController.FindClosestWalkable(targetPosition, out var x, out var y);
-                    StartCoroutine(MoveWithAStar(x, y));
-                }
-                else {
-                    // Set idle to wait for previous state to finish
-                    state = EnemyState.Idle;
-                }
-
-                return;
+            else {
+                // Set idle to wait for previous state to finish
+                state = EnemyState.Idle;
             }
+
+            return;
         }
 
         // Second, check if the enemy can attack the player from their current distance
-        if (state != EnemyState.Attacking && canAttack(targetPosition)) {
+        if (state != EnemyState.Attacking && canAttack(GetTarget())) {
             if (!runningCoroutine) {
                 state = EnemyState.Attacking;
                 runningCoroutine = true;
@@ -92,7 +75,7 @@ public class EnemyBase : MonoBehaviour {
 
         // Finally, pathfind directly to the player
         if (state != EnemyState.SimpleMovement &&
-            Vector3.Distance(targetPosition, transform.position) > attributes.targetDistance) {
+            Vector3.Distance(GetTarget(), transform.position) > attributes.targetDistance) {
             if (!runningCoroutine) {
                 state = EnemyState.SimpleMovement;
                 runningCoroutine = true;
@@ -109,8 +92,28 @@ public class EnemyBase : MonoBehaviour {
         return Vector3.Distance(targetPosition, transform.position) <= attributes.targetDistance;
     }
 
-    protected virtual bool needAStar(RaycastHit hit) {
-        return !hit.transform.gameObject.CompareTag("Player");
+    protected virtual bool needAStar() {
+        // First, check if the enemy cannot pathfind directly to the player/target
+        var playerDirection = (GetTarget() - transform.position).normalized;
+        var originOffset = Quaternion.AngleAxis(90, Vector3.up) * playerDirection;
+        var ray1Origin = transform.position + originOffset;
+        var ray2Origin = transform.position - originOffset;
+        var ray1Dir = (GetTarget() - ray1Origin).normalized;
+        var ray2Dir = (GetTarget() - ray2Origin).normalized;
+        // Ignore hits on other enemies
+        var lm = ~LayerMask.GetMask("Enemy");
+        var ray1 = Physics.Raycast(ray1Origin, ray1Dir, out var hit1, Vector3.Distance(GetTarget(), ray1Origin), lm);
+        var ray2 = Physics.Raycast(ray2Origin, ray2Dir, out var hit2, Vector3.Distance(GetTarget(), ray2Origin), lm);
+
+        if (ray1 && ray2) {
+            if (hit1.transform.gameObject.CompareTag("Pit") && hit2.transform.gameObject.CompareTag("Pit") &&
+                attributes.isRanged &&
+                Vector3.Distance(GetTarget(), transform.position) <= attributes.targetDistance) {
+                return false;
+            }
+        }
+
+        return !hit1.transform.gameObject.CompareTag("Player") || !hit2.transform.gameObject.CompareTag("Player");
     }
 
     /// <summary>
@@ -139,7 +142,6 @@ public class EnemyBase : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     protected virtual IEnumerator EnemyAttack() {
-        // Debug.Log("How did we get here?");
         // Should ALWAYS be overridden
         while (state == EnemyState.Attacking) {
             yield return null;

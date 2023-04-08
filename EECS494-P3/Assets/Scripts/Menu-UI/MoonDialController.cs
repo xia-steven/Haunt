@@ -36,7 +36,7 @@ public class MoonDialController : MonoBehaviour
     {
         float pctComplete = (nightDuration - GameControl.NightTimeRemaining) / nightDuration;
         int dialTime = Mathf.Clamp((int)(pctComplete * (float)moonSprites.Length), 0, moonSprites.Length-1);
-        Debug.Log("remaining: " + GameControl.NightTimeRemaining);
+        // Debug.Log("remaining: " + GameControl.NightTimeRemaining);
         moonUI.sprite = moonSprites[dialTime];
     }
 }

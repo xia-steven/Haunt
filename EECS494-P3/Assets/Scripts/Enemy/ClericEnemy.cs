@@ -18,7 +18,7 @@ public class ClericEnemy : EnemyBase {
     private Subscription<PedestalDestroyedEvent> switchPedestalSub;
     private Subscription<PedestalRepairedEvent> addPedestalSub;
     private Vector3 currentTargetPedestal;
-    private HasPedestalHealth currAttackingPedestal = null;
+    private HasPedestalHealth currAttackingPedestal;
 
     private float prevTime;
     private const int pedestalTimeout = 6;
@@ -31,7 +31,19 @@ public class ClericEnemy : EnemyBase {
         return currentTargetPedestal;
     }
 
-    protected override bool needAStar(RaycastHit hit) {
+    protected override bool needAStar() {
+        // First, check if the enemy cannot pathfind directly to the player/target
+        var playerDirection = (GetTarget() - transform.position).normalized;
+        // Ignore hits on other enemies
+        var layerMask = ~LayerMask.GetMask("Enemy");
+        if (Physics.Raycast(transform.position, playerDirection, out var hit,
+                Vector3.Distance(GetTarget(), transform.position), layerMask)) {
+            if (hit.transform.gameObject.CompareTag("Pit") && attributes.isRanged &&
+                Vector3.Distance(GetTarget(), transform.position) <= attributes.targetDistance) {
+                return false;
+            }
+        }
+
         return hit.transform.gameObject.layer != LayerMask.NameToLayer("Pedestal");
     }
 
