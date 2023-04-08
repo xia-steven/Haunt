@@ -3,27 +3,28 @@
     "allMessages": [
         {
             "messages": [
-                "POST TUTORIAL NIGHT HERE"
+                "Nice work surviving thus far.  As Melquiades stated, he will provide you with weapons and upgrades to continue surviving.",
+                "I will remain here to provide moral support and tips."
             ]
         },
         {
             "messages": [
-                "POST NIGHT 1 HERE"
+                "Great job our there!  I heard that you were able to steal a few coins from the villagers.  Make sure to trade them to Melquiades for weapons!"
             ]
         },
         {
             "messages": [
-                "POST NIGHT 2 HERE"
+                "Keep it up.  I heard that the cleric villagers are tasked with building the pedestals, so try and target those guys first."
             ]
         },
         {
             "messages": [
-                "POST NIGHT 3 HERE"
+                "Looks like you're still alive.  Rumor has it that after the third full night, the villagers send their leader to banish you once and for all.",
+                "Good luck out there, you will need it."
             ]
         }
     ],
     "initialTutorial": [
-        "Message 1",
-        "Message 2"
+        "Oh good, you're awake.  Quickly, head to the surface to protect yourself from the villagers.  They are on their way to banish you by building pedestals."
     ]
 }
