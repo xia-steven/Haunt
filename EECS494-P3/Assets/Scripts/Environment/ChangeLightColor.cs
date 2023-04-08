@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ChangeLightColor : MonoBehaviour {
-    [SerializeField] private Color nightColor;
-    [SerializeField] private Color dayColor;
+    [SerializeField] Color nightColor;
+    [SerializeField] Color dayColor;
 
-    private Light sunlight;
+    Light sunlight;
 
 
-    private bool roundStopped;
+    bool roundStopped = false;
 
     // Set when the night starts
-    private float duration = 1.0f;
-    private float resetDuration = 2.0f;
-    private Gradient colors;
+    float duration = 1.0f;
+    float resetDuration = 2.0f;
+    Gradient colors;
 
-    private Subscription<NightBeginEvent> nightStartsub;
-    private Subscription<NightEndEvent> nightEndsub;
+    Subscription<NightBeginEvent> nightStartsub;
+    Subscription<NightEndEvent> nightEndsub;
 
     // Start is called before the first frame update
-    private void Awake() {
+    void Awake() {
         sunlight = GetComponent<Light>();
 
         nightStartsub = EventBus.Subscribe<NightBeginEvent>(_OnNightBegin);
@@ -29,8 +29,8 @@ public class ChangeLightColor : MonoBehaviour {
         // Initialize gradient
         // Code from: https://stackoverflow.com/questions/38642587/making-a-gradient-and-change-colors-based-on-that-gradient-in-unity3d-c-sharp
         colors = new Gradient();
-        var gck = new GradientColorKey[2];
-        var gak = new GradientAlphaKey[2];
+        GradientColorKey[] gck = new GradientColorKey[2];
+        GradientAlphaKey[] gak = new GradientAlphaKey[2];
         gck[0].color = nightColor;
         gck[0].time = 0F;
         gck[1].color = dayColor;
@@ -42,18 +42,18 @@ public class ChangeLightColor : MonoBehaviour {
         colors.SetKeys(gck, gak);
     }
 
-    private void _OnNightBegin(NightBeginEvent nbe) {
+    void _OnNightBegin(NightBeginEvent nbe) {
         roundStopped = false;
         StartCoroutine(ChangeColor());
     }
 
-    private void _OnNightEnd(NightEndEvent nee) {
+    void _OnNightEnd(NightEndEvent nee) {
         roundStopped = true;
         //StartCoroutine(ResetColor());
     }
 
 
-    private IEnumerator ChangeColor() {
+    IEnumerator ChangeColor() {
         //TODO: Make less horrible
         yield return null;
         if (GameControl.Day == 0) {
@@ -64,8 +64,8 @@ public class ChangeLightColor : MonoBehaviour {
         }
 
 
-        var initial_time = Time.time;
-        var progress = (Time.time - initial_time) / duration;
+        float initial_time = Time.time;
+        float progress = (Time.time - initial_time) / duration;
 
         while (progress < 1.0f && !roundStopped) {
             progress = (Time.time - initial_time) / duration;
@@ -77,9 +77,9 @@ public class ChangeLightColor : MonoBehaviour {
         }
     }
 
-    private IEnumerator ResetColor() {
-        var initial_time = Time.time;
-        var progress = (Time.time - initial_time) / resetDuration;
+    IEnumerator ResetColor() {
+        float initial_time = Time.time;
+        float progress = (Time.time - initial_time) / resetDuration;
 
         while (progress < 1.0f) {
             progress = (Time.time - initial_time) / resetDuration;

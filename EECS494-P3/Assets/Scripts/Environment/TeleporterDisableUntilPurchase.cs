@@ -4,10 +4,10 @@ using UnityEngine;
 
 [RequireComponent(typeof(IsTeleporter))]
 public class TeleporterDisableUntilPurchase : MonoBehaviour {
-    private IsTeleporter tp;
-    private bool activated;
+    IsTeleporter tp;
+    bool activated = false;
 
-    private Subscription<ActivateTeleporterEvent> activateSub;
+    Subscription<ActivateTeleporterEvent> activateSub;
 
     private void Start() {
         tp = GetComponent<IsTeleporter>();

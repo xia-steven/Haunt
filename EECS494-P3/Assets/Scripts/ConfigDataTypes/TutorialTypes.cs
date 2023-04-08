@@ -13,10 +13,9 @@ public class MessageList : Savable {
     }
 
     public override string ToString() {
-        var output = "{";
-
-        foreach (var msg in allMessages) {
-            output += msg + " ";
+        string output = "{";
+        for (int a = 0; a < allMessages.Count; ++a) {
+            output += allMessages[a].ToString() + " ";
         }
 
         output += "}";
@@ -33,9 +32,9 @@ public class MessageSet {
     }
 
     public override string ToString() {
-        var output = "[";
-        foreach (var msg in messages) {
-            output += msg + " ";
+        string output = "[";
+        for (int a = 0; a < messages.Count; ++a) {
+            output += messages[a] + " ";
         }
 
         output += "]";

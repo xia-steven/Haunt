@@ -8,14 +8,14 @@ public class IsPit : MonoBehaviour {
     float zSize;
 
     private void Start() {
-        var col = GetComponent<BoxCollider>();
+        BoxCollider col = GetComponent<BoxCollider>();
         xSize = col.size.x;
         zSize = col.size.z;
     }
 
     private void OnTriggerEnter(Collider other) {
-        var xOffsetMag = Mathf.Abs(other.transform.position.x - transform.position.x);
-        var zOffsetMag = Mathf.Abs(other.transform.position.z - transform.position.z);
+        float xOffsetMag = Mathf.Abs(other.transform.position.x - transform.position.x);
+        float zOffsetMag = Mathf.Abs(other.transform.position.z - transform.position.z);
 
         // Player on the "Left side" of the pit
         if (other.transform.position.x <= transform.position.x && xOffsetMag >= xSize / 2f) {
@@ -39,16 +39,16 @@ public class IsPit : MonoBehaviour {
             horizontalOffset = Vector3.left;
         }
 
-        EventBus.Publish(new OverPitEvent(other.gameObject, horizontalOffset, true));
+        EventBus.Publish<OverPitEvent>(new OverPitEvent(other.gameObject, horizontalOffset, true));
     }
 
 
     private void OnTriggerExit(Collider other) {
-        EventBus.Publish(new OverPitEvent(other.gameObject, horizontalOffset, false));
+        EventBus.Publish<OverPitEvent>(new OverPitEvent(other.gameObject, horizontalOffset, false));
     }
 
     private Vector3 teleportOffset(Transform other) {
-        var offset = Vector3.zero;
+        Vector3 offset = Vector3.zero;
         //offset.y = 1.0f + pitDepth;
         offset += horizontalOffset;
         // Make sure player doesn't spawn in the ground
