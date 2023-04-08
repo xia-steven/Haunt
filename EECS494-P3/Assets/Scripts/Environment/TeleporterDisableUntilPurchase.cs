@@ -18,15 +18,13 @@ public class TeleporterDisableUntilPurchase : MonoBehaviour {
         activateSub = EventBus.Subscribe<ActivateTeleporterEvent>(onTeleporterActivate);
     }
 
-    private void OnDestroy()
-    {
+    private void OnDestroy() {
         EventBus.Unsubscribe(activateSub);
     }
 
     // Update is called once per frame
-    private void onTeleporterActivate(ActivateTeleporterEvent ate)
-    {
+    private void onTeleporterActivate(ActivateTeleporterEvent ate) {
         activated = true;
         tp.Active = true;
-    }   
+    }
 }

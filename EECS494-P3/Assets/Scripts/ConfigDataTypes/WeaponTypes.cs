@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponTypesData : Savable
-{
+public class WeaponTypesData : Savable {
     public List<WeaponData> types;
 }
 
 [System.Serializable]
-public class WeaponData
-{
+public class WeaponData {
     public WeaponType type;
     public string name;
     public int fullClip;

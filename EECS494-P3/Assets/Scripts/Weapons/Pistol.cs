@@ -43,15 +43,13 @@ public class Pistol : Weapon {
             return;
         }
 
-        if (CanReload())
-        {
+        if (CanReload()) {
             StartCoroutine(ReloadDelay());
         }
     }
 
 
-    private IEnumerator ReloadDelay()
-    {
+    private IEnumerator ReloadDelay() {
         isReloading = true;
         Debug.Log("Reloading");
 
@@ -64,8 +62,7 @@ public class Pistol : Weapon {
         isReloading = false;
     }
 
-    protected override void WeaponFire(Vector3 direction)
-    {
+    protected override void WeaponFire(Vector3 direction) {
         direction.y = 0;
         direction = direction.normalized;
 
@@ -85,16 +82,13 @@ public class Pistol : Weapon {
         EventBus.Publish(new ScreenShakeEvent(screenShakeStrength));
     }
 
-    protected override void GunReload()
-    {
-        if (CanReload())
-        {
+    protected override void GunReload() {
+        if (CanReload()) {
             StartCoroutine(ReloadDelay());
         }
     }
 
-    private void OnDestroy()
-    {
+    private void OnDestroy() {
         UnSubscribe();
     }
 }

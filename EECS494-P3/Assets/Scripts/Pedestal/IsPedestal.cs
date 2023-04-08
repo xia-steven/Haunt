@@ -18,8 +18,7 @@ public class IsPedestal : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if(startRepaired)
-        {
+        if (startRepaired) {
             // Manually repair the pedestal
             pedestalHealth.AlterHealth(-500);
             startRepaired = false;
@@ -32,24 +31,22 @@ public class IsPedestal : MonoBehaviour {
         return UUID;
     }
 
-    public void PedestalDied()
-    {
+    public void PedestalDied() {
         Debug.Log("Pedestal destroyed by player :)");
         playerDestroyed = true;
         EventBus.Publish(new PedestalDestroyedEvent(UUID));
     }
 
-    public void PedestalRepaired()
-    {
+    public void PedestalRepaired() {
         Debug.Log("Pedestal restored by enemies :(");
         playerDestroyed = false;
         EventBus.Publish(new PedestalRepairedEvent(UUID));
     }
 
     public bool IsDestroyedByPlayer() {
-        return playerDestroyed; 
+        return playerDestroyed;
     }
-    
+
     void DebugKeys() {
         if (Input.GetKeyDown(KeyCode.K) && UUID == 1) {
             pedestalHealth.AlterHealth(-1);

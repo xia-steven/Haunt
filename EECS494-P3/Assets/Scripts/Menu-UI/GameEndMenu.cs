@@ -31,17 +31,13 @@ public class GameEndMenu : MonoBehaviour {
         gameWinUI.SetActive(true);
     }
 
-    IEnumerator ShowLossMenu(GameLossEvent e)
-    {
-        while(!e.finishedDeathAnimation)
-        {
+    IEnumerator ShowLossMenu(GameLossEvent e) {
+        while (!e.finishedDeathAnimation) {
             yield return null;
         }
 
-        foreach (Transform child in gameOverUI.transform)
-        {
-            if (child.name == "Restart")
-            {
+        foreach (Transform child in gameOverUI.transform) {
+            if (child.name == "Restart") {
                 EventSystem.current.SetSelectedGameObject(child.gameObject);
             }
         }

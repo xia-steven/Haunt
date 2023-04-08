@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.U2D;
 
 [RequireComponent(typeof(CameraMovement))]
-public class CameraDeathMovement : MonoBehaviour
-{
+public class CameraDeathMovement : MonoBehaviour {
     Vector3 center;
     float moveTime = 1.0f;
     float sinkIntoGroundTime = 3.0f;
@@ -18,8 +17,7 @@ public class CameraDeathMovement : MonoBehaviour
 
     Subscription<GameLossEvent> gameLossSub;
 
-    private void Start()
-    {
+    private void Start() {
         center = transform.position;
         moveScript = GetComponent<CameraMovement>();
         pixelCam = Camera.main.GetComponent<PixelPerfectCamera>();
@@ -29,20 +27,16 @@ public class CameraDeathMovement : MonoBehaviour
         gameLossSub = EventBus.Subscribe<GameLossEvent>(OnGameLost);
     }
 
-    private void OnDestroy()
-    {
+    private void OnDestroy() {
         EventBus.Unsubscribe(gameLossSub);
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha0))
-        {
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Alpha0)) {
             EventBus.Publish(new GameLossEvent(IsPlayer.instance.LastDamaged()));
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
+        else if (Input.GetKeyDown(KeyCode.Alpha9)) {
             moveScript.enabled = true;
             pixelCam.refResolutionX = initialXRef;
             pixelCam.refResolutionY = initialYRef;
@@ -50,8 +44,7 @@ public class CameraDeathMovement : MonoBehaviour
     }
 
 
-    IEnumerator MoveCameraToCenter(GameLossEvent gle)
-    {
+    IEnumerator MoveCameraToCenter(GameLossEvent gle) {
         // disable movement script
         moveScript.enabled = false;
 
@@ -67,11 +60,9 @@ public class CameraDeathMovement : MonoBehaviour
 
         Vector3 initial = transform.position;
 
-        if(gle.cause == DeathCauses.Pedestal)
-        {
+        if (gle.cause == DeathCauses.Pedestal) {
             // Move the camera to the center
-            while (progress < 1.0f)
-            {
+            while (progress < 1.0f) {
                 progress = (Time.time - initial_time) / moveTime;
 
                 // Update pixelPerfectCamera
@@ -89,8 +80,7 @@ public class CameraDeathMovement : MonoBehaviour
             Vector3 playerPos = player.transform.position;
 
             // Fade into the ground
-            while(progress < 1.0f)
-            {
+            while (progress < 1.0f) {
                 progress = (Time.time - initial_time) / sinkIntoGroundTime;
 
 
@@ -105,15 +95,14 @@ public class CameraDeathMovement : MonoBehaviour
             progress = (Time.time - initial_time) / fallOntoGroundTime;
 
             SpriteRenderer playerSprite = player.GetComponentInChildren<SpriteRenderer>();
-            
+
             Quaternion spriteRot = playerSprite.transform.rotation;
             float xScale = playerSprite.transform.localScale.x;
             float yScale = playerSprite.transform.localScale.y;
             Vector3 allScale;
 
             // Fall on the ground
-            while (progress < 1.0f)
-            {
+            while (progress < 1.0f) {
                 progress = (Time.time - initial_time) / fallOntoGroundTime;
 
                 allScale = new Vector3(xScale + (yScale - xScale) * progress, yScale + (xScale - yScale) * progress,
@@ -137,12 +126,9 @@ public class CameraDeathMovement : MonoBehaviour
 
         // Note that we finished the death animation
         gle.finishedDeathAnimation = true;
-
     }
 
-    void OnGameLost(GameLossEvent gle)
-    {
+    void OnGameLost(GameLossEvent gle) {
         StartCoroutine(MoveCameraToCenter(gle));
     }
-
 }

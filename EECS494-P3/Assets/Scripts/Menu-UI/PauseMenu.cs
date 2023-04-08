@@ -62,19 +62,16 @@ public class PauseMenu : MonoBehaviour {
     }
 
     // Used for the button callback
-    public void DeactivateMenu()
-    {
+    public void DeactivateMenu() {
         EventBus.Publish(new GamePlayEvent());
     }
 
 
-    public void RestartLevel() 
-    {
+    public void RestartLevel() {
         GameControl.ResetGame("TutorialHubWorld");
     }
 
-    public void QuitGame()
-    {
+    public void QuitGame() {
         Application.Quit();
     }
 
