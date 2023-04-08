@@ -9,7 +9,7 @@ public class EliteArcherEnemy : ArcherEnemy {
         Bullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/EliteArcherBullet");
     }
 
-    public override int GetEnemyID() {
+    protected override int GetEnemyID() {
         return 3;
     }
 }

@@ -7,7 +7,7 @@ public class PeasantPitchforkEnemy : EnemyBase {
     private Color initialCol;
 
     // Override enemy ID to load from config
-    public override int GetEnemyID() {
+    protected override int GetEnemyID() {
         return 1;
     }
 
@@ -18,7 +18,7 @@ public class PeasantPitchforkEnemy : EnemyBase {
     }
 
     // Override attack function
-    public override IEnumerator EnemyAttack() {
+    protected override IEnumerator EnemyAttack() {
         // While attacking
         while (state == EnemyState.Attacking) {
             float t = 0;
