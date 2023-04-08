@@ -6,7 +6,7 @@ namespace Enemy.Weapons {
     [RequireComponent(typeof(Rigidbody))]
     public class ArbalestProjectile : EnemyBasicBullet {
         private Rigidbody rb;
-        private readonly float rotationSpeed = 1.3f;
+        private const float rotationSpeed = 1.3f;
 
         private void Start() {
             rb = GetComponent<Rigidbody>();

@@ -8,7 +8,7 @@ namespace JSON_Parsing {
     /// If you want to save and load data at runtime, use SaveDataManager instead.
     /// </summary>
     public class ConfigManager : MonoBehaviour {
-        private readonly Dictionary<string, string> loadedConfigs = new();
+        private Dictionary<string, string> loadedConfigs = new();
 
         private static ConfigManager instance;
 

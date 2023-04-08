@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Enemy {
     public class TutorialClericEnemy : EnemyBase {
-        public static readonly Dictionary<int, Vector3> pedestalPositions = new() { { 1, new Vector3(8, 0, -9) } };
+        public static Dictionary<int, Vector3> pedestalPositions = new() { { 1, new Vector3(8, 0, -9) } };
 
         private Subscription<PedestalDestroyedEvent> switchPedestalSub;
         private Subscription<PedestalRepairedEvent> addPedestalSub;

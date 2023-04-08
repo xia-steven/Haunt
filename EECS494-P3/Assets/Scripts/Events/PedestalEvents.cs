@@ -4,7 +4,7 @@ namespace Events {
     /// The pedestal's UUID must be specified in the constructor.
     /// </summary>
     internal class PedestalDestroyedEvent {
-        public readonly int pedestalUUID;
+        public int pedestalUUID;
 
         public PedestalDestroyedEvent(int UUID) {
             pedestalUUID = UUID;
@@ -20,7 +20,7 @@ namespace Events {
     /// The pedestal's UUID must be specified in the constructor.
     /// </summary>
     internal class PedestalRepairedEvent {
-        public readonly int pedestalUUID;
+        public int pedestalUUID;
 
         public PedestalRepairedEvent(int UUID) {
             pedestalUUID = UUID;
@@ -37,8 +37,8 @@ namespace Events {
     /// The pedestal's UUID must be specified in the constructor.
     /// </summary>
     internal class PedestalPartialEvent {
-        public readonly int pedestalUUID;
-        public readonly bool turnOn;
+        public int pedestalUUID;
+        public bool turnOn;
 
         public PedestalPartialEvent(int UUID, bool turnOn_in) {
             pedestalUUID = UUID;

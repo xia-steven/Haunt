@@ -9,7 +9,6 @@ public class DashShield : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
         var collided = other.gameObject;
-        MagicArcherMiniBullet miniBullet;
 
         // Reverse bullets that are hit
         var bullet = collided.GetComponent<Bullet>();
@@ -19,7 +18,8 @@ public class DashShield : MonoBehaviour {
             var rb = collided.GetComponent<Rigidbody>();
             rb.velocity = -rb.velocity;
         }
-        else if (collided.TryGetComponent(out miniBullet) && Time.time - miniBullet.GetLastReverse() >= timeBetweenReversal) {
+        else if (collided.TryGetComponent(out MagicArcherMiniBullet miniBullet) &&
+                 Time.time - miniBullet.GetLastReverse() >= timeBetweenReversal) {
             miniBullet.ChangeParentShooter(Shooter.Player);
             var rb = miniBullet.GetParentRB();
             rb.velocity = -rb.velocity;

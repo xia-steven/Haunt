@@ -16,8 +16,8 @@ namespace Menu_UI {
         [SerializeField] private Sprite fullShieldImage;
         [SerializeField] private Sprite brokenShieldImage;
 
-        private readonly List<Image> healthPips = new();
-        private readonly List<Image> shieldPips = new();
+        private List<Image> healthPips = new();
+        private List<Image> shieldPips = new();
         private const int maxShields = 6;
 
         private Subscription<HealthUIUpdate> ui_update_event;
@@ -59,7 +59,7 @@ namespace Menu_UI {
             var fullHearts = e.updated_health / 2;
             var halfHeart = e.updated_health % 2;
             for (var i = 0; i < fullHearts; i++) healthPips[i].sprite = fullHeartImage;
-
+            Debug.Log("pips: " + healthPips);
             healthPips[fullHearts].sprite = halfHeart switch {
                 1 => halfHeartImage,
                 _ => healthPips[fullHearts].sprite

@@ -14,7 +14,7 @@ namespace Menu_UI {
         private Subscription<WeaponSwapEvent> swapSub;
         private Subscription<ReloadStartedEvent> reloadSub;
 
-        private readonly List<GameObject> shellInstances = new();
+        private List<GameObject> shellInstances = new();
 
         private Weapon current;
         private int clipMax;

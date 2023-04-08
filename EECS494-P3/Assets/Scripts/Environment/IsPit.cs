@@ -58,9 +58,9 @@ namespace Environment {
     }
 
     public class OverPitEvent {
-        public readonly GameObject entered;
+        public GameObject entered;
         public Vector3 horizontalOffset;
-        public readonly bool over;
+        public bool over;
 
         public OverPitEvent(GameObject _entered, Vector3 _horizontalOffset, bool _over) {
             entered = _entered;

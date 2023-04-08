@@ -11,16 +11,16 @@ namespace Game_Control {
         private const float timeBetweenSpawns = .6f;
         private const int maxPedestalEnemies = 1;
 
-        private readonly Dictionary<int, IsWaveMember> members = new();
+        private Dictionary<int, IsWaveMember> members = new();
 
         private static List<GameObject> potentialMembers;
-        private readonly List<Transform> spawnPoints;
+        private List<Transform> spawnPoints;
 
-        private readonly int difficulty;
-        private readonly float duration;
+        private int difficulty;
+        private float duration;
         private float startTime;
 
-        private readonly bool spawnPedestals;
+        private bool spawnPedestals;
         private bool active;
 
         private int numActiveMembers;

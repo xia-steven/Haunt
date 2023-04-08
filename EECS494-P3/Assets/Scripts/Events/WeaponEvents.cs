@@ -4,7 +4,7 @@ namespace Events {
     /// The default amplitude of the shake is 0.1 unless specified otherwise by the constructor.
     /// </summary>
     internal class ScreenShakeEvent {
-        public readonly float amplitude;
+        public float amplitude;
 
         public ScreenShakeEvent(float amplitude_in = 0.1f) {
             amplitude = amplitude_in;
@@ -23,8 +23,8 @@ namespace Events {
     /// The default shake frequency is 0.2 seconds unless specified otherwise by the constructor.
     /// </summary>
     internal class ScreenShakeToggleEvent {
-        public readonly float amplitude;
-        public readonly float shakeFrequency;
+        public float amplitude;
+        public float shakeFrequency;
 
         public ScreenShakeToggleEvent(float amplitude_in = 0.1f, float freq_in = 0.2f) {
             amplitude = amplitude_in;

@@ -5,8 +5,8 @@ using Player;
 using UnityEngine;
 
 public class CanFallInPit : MonoBehaviour {
-    private readonly float groundDistance = 0.5f;
-    private readonly float pitResetDistance = 1.1f;
+    private const float groundDistance = 0.5f;
+    [SerializeField] private float pitResetDistance = 1.1f;
     [SerializeField] private float duration = 0.2f; // the time it takes for the sprite to shrink
     [SerializeField] private float scale = 0.5f; // the final scale of the sprite in hole
     private bool playerEnabled = true;

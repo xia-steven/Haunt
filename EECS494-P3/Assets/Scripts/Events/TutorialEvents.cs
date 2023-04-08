@@ -19,11 +19,11 @@ namespace Events {
     /// to display to the player.
     /// </summary>
     public class TutorialMessageEvent {
-        public readonly int messageID;
-        public readonly KeyCode keyToWaitFor;
-        public readonly int senderInstanceID;
-        public readonly bool unpauseBeforeFade;
-        public readonly bool pauseTime;
+        public int messageID;
+        public KeyCode keyToWaitFor;
+        public int senderInstanceID;
+        public bool unpauseBeforeFade;
+        public bool pauseTime;
 
         public TutorialMessageEvent(int messageID_in, int senderInstanceID_in, bool pauseTime_in,
             KeyCode keyToWaitFor_in = KeyCode.Mouse0,
@@ -79,8 +79,8 @@ namespace Events {
     /// keys or interact prompts.
     /// </summary>
     public class SpritePromptEvent {
-        public readonly Sprite sprite;
-        public readonly KeyCode dismissKey;
+        public Sprite sprite;
+        public KeyCode dismissKey;
         public bool cancelPrompt = false;
 
         public SpritePromptEvent(Sprite sprite_in, KeyCode dismissKey_in) {

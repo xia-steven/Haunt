@@ -101,19 +101,19 @@ namespace Enemy {
             }
 
             // Finally, pathfind directly to the player
-            if (state == EnemyState.SimpleMovement ||
-                !(Vector3.Distance(targetPosition, transform.position) > attributes.targetDistance)) return;
-            switch (runningCoroutine) {
-                case false:
-                    state = EnemyState.SimpleMovement;
-                    runningCoroutine = true;
-                    StartCoroutine(MoveStraightTowards(targetPosition));
-                    break;
-                default:
-                    // Set idle to wait for previous state to finish
-                    state = EnemyState.Idle;
-                    break;
-            }
+            if (state != EnemyState.SimpleMovement &&
+                Vector3.Distance(targetPosition, transform.position) > attributes.targetDistance)
+                switch (runningCoroutine) {
+                    case false:
+                        state = EnemyState.SimpleMovement;
+                        runningCoroutine = true;
+                        StartCoroutine(MoveStraightToTarget());
+                        break;
+                    default:
+                        // Set idle to wait for previous state to finish
+                        state = EnemyState.Idle;
+                        break;
+                }
         }
 
         protected virtual bool needAStar(RaycastHit hit) {
@@ -197,10 +197,10 @@ namespace Enemy {
         /// The EnemyState variable used to track when to stop.
         /// </summary>
         /// <returns></returns>
-        private IEnumerator MoveStraightTowards(Vector3 target) {
+        private IEnumerator MoveStraightToTarget() {
             while (state == EnemyState.SimpleMovement) {
                 // Get direction to move
-                var direction = (target - transform.position).normalized;
+                var direction = (GetTarget() - transform.position).normalized;
                 // Remove any y coordinate (shouldn't be any)
                 direction.y = 0;
 

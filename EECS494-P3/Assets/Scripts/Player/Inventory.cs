@@ -7,7 +7,7 @@ namespace Player {
     public class Inventory : MonoBehaviour {
         private int numWeapons;
         private int currentWeapon;
-        private readonly GameObject[] weapons = new GameObject[10];
+        private GameObject[] weapons = new GameObject[10];
         private List<string> ownedWeapons;
         private GameObject pistol;
         private GameObject rifle;
@@ -159,7 +159,7 @@ namespace Player {
     }
 
     public class SwapEvent {
-        public readonly int swapDirection;
+        public int swapDirection;
 
         public SwapEvent(int _swapDirection) {
             swapDirection = _swapDirection;
@@ -167,7 +167,7 @@ namespace Player {
     }
 
     public class SwapSpecificEvent {
-        public readonly int newEquipped;
+        public int newEquipped;
 
         public SwapSpecificEvent(int _newEquipped) {
             newEquipped = _newEquipped;

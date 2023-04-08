@@ -13,9 +13,9 @@
 
 namespace Enemy.Pathfinding {
     public class PathNode {
-        private readonly Grid<PathNode> grid;
-        public readonly int x;
-        public readonly int z;
+        private Grid<PathNode> grid;
+        public int x;
+        public int z;
 
         public int gCost;
         public int hCost;

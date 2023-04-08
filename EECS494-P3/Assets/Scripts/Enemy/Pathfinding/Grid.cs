@@ -22,11 +22,11 @@ namespace Enemy.Pathfinding {
             public int z;
         }
 
-        private readonly int width;
-        private readonly int height;
-        private readonly float cellSize;
-        private readonly Vector3 originPosition;
-        private readonly T[,] gridArray;
+        private int width;
+        private int height;
+        private float cellSize;
+        private Vector3 originPosition;
+        private T[,] gridArray;
 
         public Grid(int width, int height, float cellSize, Vector3 originPosition,
             Func<Grid<T>, int, int, T> createGridObject) {

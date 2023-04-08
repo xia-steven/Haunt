@@ -13,7 +13,7 @@ namespace Enemy {
     [RequireComponent(typeof(BossHasHealth))]
     [RequireComponent(typeof(LineRenderer))]
     public class IsBoss : MonoBehaviour {
-        private readonly string configName = "BossData";
+        private const string configName = "BossData";
         private BossAttributes bossData;
 
         private BossHasHealth health;

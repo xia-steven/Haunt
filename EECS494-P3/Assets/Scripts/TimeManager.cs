@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public static class TimeManager {
-    private static readonly float defaultFixedDT = 1f / 60;
+    private const float defaultFixedDT = 1f / 60;
 
     public static void ResetTimeScale() {
         SetTimeScale(1f);

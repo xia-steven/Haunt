@@ -287,10 +287,10 @@ public abstract class Weapon : MonoBehaviour {
 }
 
 public class FireEvent {
-    public readonly GameObject shooter;
+    public GameObject shooter;
 
     // True for firing false to stop firing
-    public readonly bool state;
+    public bool state;
 
     public FireEvent(GameObject _shooter, bool _state) {
         shooter = _shooter;
@@ -299,7 +299,7 @@ public class FireEvent {
 }
 
 public class ReloadEvent {
-    public readonly GameObject reloader;
+    public GameObject reloader;
 
     public ReloadEvent(GameObject _reloader) {
         reloader = _reloader;
@@ -307,7 +307,7 @@ public class ReloadEvent {
 }
 
 public class ReloadStartedEvent {
-    public readonly float reloadTime;
+    public float reloadTime;
 
     public ReloadStartedEvent(float _reloadTime) {
         reloadTime = _reloadTime;
@@ -315,7 +315,7 @@ public class ReloadStartedEvent {
 }
 
 public class WeaponSwapEvent {
-    public readonly Weapon newWeapon;
+    public Weapon newWeapon;
 
     public WeaponSwapEvent(Weapon _newWeapon) {
         newWeapon = _newWeapon;

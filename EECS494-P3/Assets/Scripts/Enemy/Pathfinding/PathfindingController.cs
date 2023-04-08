@@ -17,8 +17,8 @@ namespace Enemy.Pathfinding {
     }
 
     public class Pair<T, V> {
-        public readonly T first;
-        public readonly V second;
+        public T first;
+        public V second;
 
         public Pair(T first_, V second_) {
             first = first_;

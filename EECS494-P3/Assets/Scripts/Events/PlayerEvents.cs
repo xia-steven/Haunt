@@ -6,7 +6,7 @@ namespace Events {
     /// The default damage amount is 1 unless otherwise specified in the constructor.
     /// </summary>
     internal class PlayerDamagedEvent {
-        private readonly int damageTaken;
+        private int damageTaken;
 
         public PlayerDamagedEvent(int amount = 1) {
             damageTaken = amount;
@@ -22,9 +22,9 @@ namespace Events {
     /// Mostly published by functions in PlayerHasHealth, as that's where the relevant health data resides.
     /// </summary>
     internal class HealthUIUpdate {
-        public readonly int updated_health;
-        public readonly int updated_locked_health;
-        public readonly int updated_shield_health;
+        public int updated_health;
+        public int updated_locked_health;
+        public int updated_shield_health;
 
         public HealthUIUpdate(int health, int locked_health, int shield_health) {
             updated_health = health;
@@ -43,7 +43,7 @@ namespace Events {
     /// reduced. The default reduce amount is 2 unless otherwise specified in the constructor.
     /// </summary>
     internal class ReduceMaxHealthEvent {
-        public readonly int reduceAmount;
+        public int reduceAmount;
 
         public ReduceMaxHealthEvent(int amount = 2) {
             reduceAmount = amount;
@@ -60,7 +60,7 @@ namespace Events {
     /// increased. The default increase amount is 2 unless otherwise specified in the constructor.
     /// </summary>
     internal class IncreaseMaxHealthEvent {
-        public readonly int increaseAmount;
+        public int increaseAmount;
 
         public IncreaseMaxHealthEvent(int amount = 2) {
             increaseAmount = amount;
@@ -95,7 +95,7 @@ namespace Events {
     /// </summary>
     internal class PlayerDodgeEvent {
         // Set to true for starting a dodge and false for ending a dodge
-        public readonly bool start;
+        public bool start;
         public Vector3 direction;
 
         public PlayerDodgeEvent(bool _start, Vector3 _direction) {
@@ -121,7 +121,7 @@ namespace Events {
     /// The CoinCollectedEvent is to be broadcast whenever the player collects a coin.
     /// </summary>
     internal class CoinEvent {
-        public readonly int coinValue;
+        public int coinValue;
 
         public CoinEvent(int value = 1) {
             coinValue = value;
@@ -159,7 +159,7 @@ namespace Events {
     /// Sent from purchasable object to the shopController and/or the other weapon in the shop
     /// </summary>
     public class WeaponPurchasedEvent {
-        public readonly GameObject weapon;
+        public GameObject weapon;
 
         public WeaponPurchasedEvent(GameObject _purchase) {
             weapon = _purchase;

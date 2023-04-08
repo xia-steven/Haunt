@@ -9,7 +9,7 @@ namespace Enemy.Pathfinding {
 
         public static AStar Instance { get; private set; }
 
-        private readonly Grid<PathNode> grid;
+        private Grid<PathNode> grid;
         private HashSet<PathNode> openList;
         private HashSet<PathNode> closedList;
 

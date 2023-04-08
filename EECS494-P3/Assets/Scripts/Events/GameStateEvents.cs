@@ -15,7 +15,7 @@ namespace Events {
     /// The GameLoss event is broadcast when the game is lost.
     /// </summary>
     internal class GameLossEvent {
-        public readonly DeathCauses cause;
+        public DeathCauses cause;
 
         public bool finishedDeathAnimation = false;
 
@@ -70,7 +70,7 @@ namespace Events {
     /// NOTE: Check valid after receiving a NightBegin event or risk processing an invalid event.
     /// </summary>
     internal class NightBeginEvent {
-        public readonly bool valid;
+        public bool valid;
 
         public NightBeginEvent() {
             valid = Game_Control.GameControl.IsNight switch {
@@ -90,7 +90,7 @@ namespace Events {
     /// NOTE: Check valid after receiving a NightEnd event or risk processing an invalid event.
     /// </summary>
     internal class NightEndEvent {
-        public readonly bool valid;
+        public bool valid;
 
         public NightEndEvent() {
             valid = Game_Control.GameControl.IsNight switch {
@@ -120,11 +120,11 @@ namespace Events {
     /// what color the message should be, as well as the message to send.
     /// </summary>
     public class ToastRequestEvent {
-        private readonly string message;
+        private string message;
         public Color color;
         public bool waitForKey;
         public KeyCode keyToWaitFor;
-        private readonly Color defaultColor = new Color32(255, 255, 255, 255);
+        private Color defaultColor = new Color32(255, 255, 255, 255);
 
         public ToastRequestEvent(string s, bool wfk = false, KeyCode key = KeyCode.None) {
             message = s;
@@ -149,11 +149,11 @@ namespace Events {
     /// The MessageEvent is sent whenever there is a message to display to the player from a NPC.
     /// </summary>
     public class MessageEvent {
-        public readonly List<string> messages;
-        public readonly KeyCode keyToWaitFor;
-        public readonly int senderInstanceID;
+        public List<string> messages;
+        public KeyCode keyToWaitFor;
+        public int senderInstanceID;
         public bool unpauseBeforeFade;
-        public readonly bool pauseTime;
+        public bool pauseTime;
 
         public MessageEvent(List<string> messages_in, int senderInstanceID_in, bool pauseTime_in,
             KeyCode keyToWaitFor_in = KeyCode.Mouse0,
@@ -170,7 +170,7 @@ namespace Events {
     /// The MessageFinishedEvent is sent whenever there a message finished displaying to the player.
     /// </summary>
     public class MessageFinishedEvent {
-        public readonly int senderInstanceID;
+        public int senderInstanceID;
 
         public MessageFinishedEvent(int senderInstanceID_in) {
             senderInstanceID = senderInstanceID_in;
