@@ -12,7 +12,9 @@ public class Pistol : Weapon {
 
     protected override void Awake() {
         base.Awake();
+        thisData = typesData.types[(int)WeaponType.pistol];
 
+        SetData();
         currentClipAmount = fullClipAmount;
 
         Subscribe();
@@ -20,13 +22,6 @@ public class Pistol : Weapon {
         spriteRenderer = pistolSprite.GetComponent<SpriteRenderer>();
         wielder = this.transform.parent.gameObject;
         basicBullet = Resources.Load<GameObject>("Prefabs/Weapons/BasicBullet");
-    }
-
-    protected override void Start()
-    {
-        base.Start();
-        thisData = typesData.types[(int)WeaponType.pistol];
-        SetData();
     }
 
     protected override void _OnFire(FireEvent e) {
@@ -39,7 +34,6 @@ public class Pistol : Weapon {
 
         base._OnFire(e);
     }
-
 
     protected override void _OnReload(ReloadEvent e) {
         if (!gameObject.activeInHierarchy) return;

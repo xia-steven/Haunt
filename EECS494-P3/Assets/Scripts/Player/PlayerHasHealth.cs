@@ -87,9 +87,15 @@ public class PlayerHasHealth : HasHealth {
     private bool CheckIsDead()
     {
         Debug.Log("Game control day: " + GameControl.Day);
-        if (health == 0)
+        if (health == 0 && GameControl.Day > 0)
         {
             EventBus.Publish(new GameLossEvent(IsPlayer.instance.LastDamaged()));
+            return true;
+        }
+        else if (health == 0 && GameControl.Day <= 0)
+        {
+            // Tutorial day death
+            EventBus.Publish(new TutorialMessageEvent(tutorialDeathMessageID, GetInstanceID(), true, KeyCode.Mouse0));
             return true;
         }
 

@@ -34,7 +34,7 @@ public class ShopController : MonoBehaviour
         minigunPrefab = Resources.Load<GameObject>("Prefabs/Hub/Minigun");
         sniperPrefab = Resources.Load<GameObject>("Prefabs/Hub/Sniper");
         swordPrefab = Resources.Load<GameObject>("Prefabs/Hub/Sword");
-        launcherPrefab = Resources.Load<GameObject>("Prefabs/Hub/Launcher");
+        swordPrefab = Resources.Load<GameObject>("Prefabs/Hub/Launcher");
         day = GameControl.Day;
         playerInventory = IsPlayer.instance.gameObject.GetComponent<Inventory>();
         InitShop();
