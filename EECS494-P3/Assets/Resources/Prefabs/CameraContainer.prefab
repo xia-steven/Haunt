@@ -1020,10 +1020,10 @@ MonoBehaviour:
   minXoffset: -1
   maxZoffset: 1
   minZoffset: -1
-  xRoomMin: -9
-  xRoomMax: 9
-  zRoomMin: -18
-  zRoomMax: -5
+  xRoomMin: -11
+  xRoomMax: 11
+  zRoomMin: -23
+  zRoomMax: -3
   camOffsetFromPlayer: {x: 0, y: 11.5, z: -11}
   playerOffsetProportion: 0.6
 --- !u!114 &8660659280147345937

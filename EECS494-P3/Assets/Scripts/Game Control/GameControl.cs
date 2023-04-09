@@ -11,7 +11,7 @@ partial class GameControl : MonoBehaviour {
     /*Turn this off if you don't want the night cycle to run*/
     const bool DEBUG_DO_DAYNIGHT = true;
 
-    [SerializeField] GameData data;
+    [SerializeField] protected GameData data;
 
     /*STATE DEPENDENT VARIABLES*/
     private float nightStartTime;
@@ -55,6 +55,7 @@ partial class GameControl : MonoBehaviour {
         nightEndEvent = EventBus.Subscribe<NightEndEvent>(_NightEnd);
 
         data = ConfigManager.GetData<GameData>("GameData");
+        NightLength = data.nightLength;
 
         waveSize = (int)(data.initialWaveSize * Mathf.Pow(data.waveDailyScale, day));
 
@@ -64,7 +65,7 @@ partial class GameControl : MonoBehaviour {
 
     void OnSceneLoaded(Scene s, LoadSceneMode m)
     {
-        if (s.name == "GameScene")
+        if (s.name == "GameScene" || s.name == "TutorialGameScene")
         {
             Debug.Log("GameScene Loaded");
             StartCoroutine(StartOnDelay(StartNight));
@@ -111,16 +112,22 @@ partial class GameControl : MonoBehaviour {
     private IEnumerator NightUpdate() {
         Wave w;
         w = new Wave(waveSize++, data.waveTimeout, spawners);
-        w.Spawn();
+        if(day != 0)
+        {
+            w.Spawn();
+        }
+        else
+        {
+            StartCoroutine(w.SpawnTutorial());
+        }
         nightStartTime = Time.time;
-        float nLength = data.nightLength;
         if(day == 0)
         {
-            // Set tutorial night length to 15 seconds
-            nLength = 15f;
+            // Set tutorial night length to 25% of a standard night seconds
+            nightStartTime -= (data.nightLength * 0.75f);
         }
 
-        while (isNight && Time.time - nightStartTime < nLength) {
+        while (isNight && Time.time - nightStartTime < data.nightLength) {
             if (!gameActive || gamePaused) {
                 yield return new WaitForSeconds(data.updateFrequency);
                 continue;
@@ -128,7 +135,10 @@ partial class GameControl : MonoBehaviour {
 
             if (w.IsOver()) {
                 w = new Wave(waveSize++, data.waveTimeout, spawners);
-                w.Spawn();
+                if (day != 0)
+                {
+                    w.Spawn();
+                }
             }
 
             yield return new WaitForSeconds(data.updateFrequency);
@@ -141,15 +151,18 @@ partial class GameControl : MonoBehaviour {
     {
         Wave w;
         w = new Wave(15, 5, spawners);
-        w.Spawn();
-        while(nightEnding)
+        if (day != 0)
+        {
+            w.Spawn();
+        }
+        while (nightEnding)
         {
             if (!gameActive || gamePaused) {
                 yield return new WaitForSeconds(data.updateFrequency);
                 continue;
             }
 
-            if (w.IsOver())
+            if (w.IsOver() && day != 0)
             {
                 w = new Wave(4, 5, spawners, false);
                 w.Spawn();

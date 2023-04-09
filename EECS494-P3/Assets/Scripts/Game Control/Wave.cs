@@ -23,6 +23,8 @@ public class Wave
     bool spawnPedestals;
     bool active = false;
 
+    bool spawningTutorial = false;
+
     int numActiveMembers = 0;
     int nextId = 0;
 
@@ -52,6 +54,8 @@ public class Wave
     {
         Vector3 spawnPos;
         IsWaveMember newMember;
+
+        if (spawningTutorial) return;
 
         //spawn attack enemies
         for (int i = 0; i < difficulty; ++i)
@@ -113,10 +117,66 @@ public class Wave
 
         IsWaveMediator.instance.Spawn(members.Values, timeBetweenSpawns);
 
+
         active = true;
         startTime = Time.time;
     }
 
+    public IEnumerator SpawnTutorial()
+    {
+        if(spawningTutorial)
+        {
+            // Return early
+            yield break;
+        }
+        spawningTutorial = true;
+
+        GameObject torch = potentialMembers[0];
+        GameObject pitchfork = potentialMembers[1];
+        GameObject archer = potentialMembers[2];
+
+        // Spawn 2 torch enemies and 2 pitchfork
+        Vector3 spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
+        GameObject.Instantiate(torch, spawnPos, Quaternion.identity);
+        spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
+        GameObject.Instantiate(torch, spawnPos, Quaternion.identity);
+
+        spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
+        GameObject.Instantiate(pitchfork, spawnPos, Quaternion.identity);
+        spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
+        GameObject.Instantiate(pitchfork, spawnPos, Quaternion.identity);
+
+        // Wait 10 seconds
+        yield return new WaitForSeconds(10f);
+
+        // Spawn 3 archers
+        for(int a = 0; a < 3; ++a)
+        {
+            spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
+            GameObject.Instantiate(archer, spawnPos, Quaternion.identity);
+        }
+
+        // Wait 10 more seconds
+        yield return new WaitForSeconds(10f);
+
+        // Spawn more enemies while the night is ending
+        while(GameControl.NightEnding)
+        {
+            for (int a = 0; a < 3; ++a)
+            {
+                // Archer, torch, or pitchfork
+                spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
+                GameObject.Instantiate(potentialMembers[Random.Range(0,3)], spawnPos, Quaternion.identity);
+
+                // Cleric
+                spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
+                GameObject.Instantiate(potentialMembers[potentialMembers.Count - 1], spawnPos, Quaternion.identity);
+            }
+
+            yield return new WaitForSeconds(5f);
+        }
+
+    }
 
     public bool IsOver()
     {
