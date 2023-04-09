@@ -131,6 +131,10 @@ public class Sniper : Weapon
 
     protected override void WeaponFire(Vector3 direction)
     {
+        if (!playerEnabled) return;
+
+        if (messageVisible) return;
+
         currentClipAmount--;
 
         // Double check pierce amount (sniper can always pierce one)

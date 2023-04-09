@@ -62,6 +62,7 @@ public abstract class Weapon : MonoBehaviour {
 
     protected bool playerEnabled = true;
     protected bool isReloading = false;
+    public bool messageVisible = false;
     // Length of gun barrel for bullet spawning - will be gun specific due to masking / variability of sprites
     [SerializeField] protected float barrelLength = 0.5f;
     // How much the screen should shake on bullets firing
@@ -80,6 +81,8 @@ public abstract class Weapon : MonoBehaviour {
     protected Subscription<ReloadEvent> reloadEventSubscription;
     protected Subscription<EnablePlayerEvent> enablePlayerSubscription;
     protected Subscription<DisablePlayerEvent> disablePlayerSubscription;
+    protected Subscription<MessageEvent> messageSubscription;
+    protected Subscription<MessageFinishedEvent> messageFinishedSubscription;
 
 
     protected virtual void Awake()
@@ -97,6 +100,8 @@ public abstract class Weapon : MonoBehaviour {
         reloadEventSubscription = EventBus.Subscribe<ReloadEvent>(_OnReload);
         enablePlayerSubscription = EventBus.Subscribe<EnablePlayerEvent>(_OnEnablePlayer);
         disablePlayerSubscription = EventBus.Subscribe<DisablePlayerEvent>(_OnDisablePlayer);
+        messageSubscription = EventBus.Subscribe<MessageEvent>(_OnMessage);
+        messageFinishedSubscription = EventBus.Subscribe<MessageFinishedEvent>(_OnMessageFinished);
     }
 
     protected void UnSubscribe()
@@ -115,6 +120,23 @@ public abstract class Weapon : MonoBehaviour {
     {
         Debug.Log("Player disabled in weapon");
         playerEnabled = false;
+    }
+
+    protected virtual void _OnMessage(MessageEvent e)
+    {
+        Debug.Log("Message showing received by weapon");
+        messageVisible = true;
+    }
+
+    protected virtual void _OnMessageFinished(MessageFinishedEvent e)
+    {
+        Debug.Log("Message finished received by weapon");
+        StartCoroutine(MessageDelay());
+    }
+    protected IEnumerator MessageDelay()
+    {
+        yield return new WaitForSeconds(1.0f);
+        messageVisible = false;
     }
 
     protected virtual void _OnFire(FireEvent e) {
@@ -193,6 +215,7 @@ public abstract class Weapon : MonoBehaviour {
             PlayerModifiers.moveSpeed = speedMultiplier;
         }
         firing = false;
+        messageVisible = false;
     }
 
     protected virtual void FixedUpdate()
@@ -234,7 +257,7 @@ public abstract class Weapon : MonoBehaviour {
         }
 
         // Fire bullet if ammo in clip, trigger is down, last bullet was not fired recently, last tap was not recent, not reloading
-        if (currentClipAmount > 0 && firing && (Time.time - lastBullet >= bulletDelay) && (Time.time - lastTap >= tapDelay) && !isReloading)
+        if (currentClipAmount > 0 && firing && (Time.time - lastBullet >= bulletDelay) && (Time.time - lastTap >= tapDelay) && !isReloading && !messageVisible)
         {
             WeaponFire(direction);
         }
