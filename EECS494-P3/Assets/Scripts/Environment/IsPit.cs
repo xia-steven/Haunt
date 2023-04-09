@@ -19,24 +19,24 @@ public class IsPit : MonoBehaviour {
 
         // Player on the "Left side" of the pit
         if (other.transform.position.x <= transform.position.x && xOffsetMag >= xSize / 2f) {
-            horizontalOffset = Vector3.left;
+            horizontalOffset = Vector3.left * 2f;
         }
         // Player on the "Right side" of the pit
         else if (other.transform.position.x > transform.position.x && xOffsetMag >= xSize / 2f) {
-            horizontalOffset = Vector3.right;
+            horizontalOffset = Vector3.right * 2f;
         }
         // Player is "Behind" the pit
         else if (other.transform.position.z <= transform.position.z && zOffsetMag >= zSize / 2f) {
-            horizontalOffset = Vector3.back;
+            horizontalOffset = Vector3.back * 2f;
         }
         // Player is "In front" of the pit
         else if (other.transform.position.z > transform.position.z && zOffsetMag >= zSize / 2f) {
-            horizontalOffset = Vector3.forward;
+            horizontalOffset = Vector3.forward * 2f;
         }
         // Else not sure where player is, default to left of the pit
         else {
             Debug.LogWarning("Couldn't calculate what direction the player entered the pit area from.");
-            horizontalOffset = Vector3.left;
+            horizontalOffset = Vector3.left * 2f;
         }
 
         EventBus.Publish<OverPitEvent>(new OverPitEvent(other.gameObject, horizontalOffset, true));
