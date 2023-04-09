@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pathfinding {
     private const int MOVE_STRAIGHT_COST = 10;
-    private const int MOVE_DIAGONAL_COST = 14;
+    private const int MOVE_DIAGONAL_COST = 10000;
 
     public static Pathfinding Instance { get; private set; }
 
@@ -31,20 +31,12 @@ public class Pathfinding {
         grid.GetXZ(startWorldPosition, out var startX, out var startZ);
 
         var path = FindPath(startX, startZ, endX, endZ);
-        if (path == null) {
-            return null;
-        }
 
-        var vectorPath = new List<Vector3>();
-        foreach (var pathNode in path) {
-            vectorPath.Add(new Vector3(pathNode.x, 0, pathNode.z) * grid.GetCellSize() +
-                           grid.GetCellSize() * .5f * Vector3.one);
-        }
-
-        return vectorPath;
+        return path?.Select(pathNode => new Vector3(pathNode.x, 0, pathNode.z) * grid.GetCellSize() +
+                                        grid.GetCellSize() * .5f * Vector3.one).ToList();
     }
 
-    private List<PathNode> FindPath(int startX, int startZ, int endX, int endZ) {
+    private IEnumerable<PathNode> FindPath(int startX, int startZ, int endX, int endZ) {
         var startNode = grid.GetGridObject(startX, startZ);
         var endNode = grid.GetGridObject(endX, endZ);
 
@@ -78,11 +70,8 @@ public class Pathfinding {
             openList.Remove(currentNode);
             closedList.Add(currentNode);
 
-            foreach (var neighbourNode in GetNeighbourList(currentNode)) {
-                if (closedList.Contains(neighbourNode)) {
-                    continue;
-                }
-
+            foreach (var neighbourNode in GetNeighbourList(currentNode)
+                         .Where(neighbourNode => !closedList.Contains(neighbourNode))) {
                 if (!neighbourNode.isWalkable) {
                     closedList.Add(neighbourNode);
                     continue;
@@ -95,9 +84,7 @@ public class Pathfinding {
                     neighbourNode.hCost = CalculateDistanceCost(neighbourNode, endNode);
                     neighbourNode.CalculateFCost();
 
-                    if (!openList.Contains(neighbourNode)) {
-                        openList.Add(neighbourNode);
-                    }
+                    openList.Add(neighbourNode);
                 }
             }
         }
@@ -106,7 +93,7 @@ public class Pathfinding {
         return null;
     }
 
-    private List<PathNode> GetNeighbourList(PathNode currentNode) {
+    private IEnumerable<PathNode> GetNeighbourList(PathNode currentNode) {
         var neighbourList = new List<PathNode>();
 
         if (currentNode.x - 1 >= 0) {
@@ -139,7 +126,7 @@ public class Pathfinding {
         return grid.GetGridObject(x, z);
     }
 
-    private static List<PathNode> CalculatePath(PathNode endNode) {
+    private static IEnumerable<PathNode> CalculatePath(PathNode endNode) {
         var path = new List<PathNode> { endNode };
         var currentNode = endNode;
         while (currentNode.cameFromNode != null) {
@@ -161,10 +148,8 @@ public class Pathfinding {
     private static PathNode GetLowestFCostNode(HashSet<PathNode> pathNodeList) {
         var lowestFCostNode = pathNodeList.First();
 
-        foreach (var node in pathNodeList) {
-            if (node.fCost < lowestFCostNode.fCost) {
-                lowestFCostNode = node;
-            }
+        foreach (var node in pathNodeList.Where(node => node.fCost < lowestFCostNode.fCost)) {
+            lowestFCostNode = node;
         }
 
         return lowestFCostNode;

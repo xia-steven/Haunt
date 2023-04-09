@@ -51,6 +51,8 @@ MonoBehaviour:
   barrelLength: 1.15
   screenShakeStrength: 0.05
   speedMultiplier: 1
+  firingSound: {fileID: 8300000, guid: 29fbbea1051db8245bf02f90209a6b8f, type: 3}
+  reloadSound: {fileID: 8300000, guid: c8c8402b1351aab4f80908e634840d13, type: 3}
   bulletSpread: 20
   rifleSprite: {fileID: 8963161378742004249}
 --- !u!1 &1962310841784963166

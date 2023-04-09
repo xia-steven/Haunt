@@ -51,6 +51,8 @@ MonoBehaviour:
   barrelLength: 0.75
   screenShakeStrength: 0.05
   speedMultiplier: 1
+  firingSound: {fileID: 8300000, guid: c62a55a3cb51bec43a56cafe2920e291, type: 3}
+  reloadSound: {fileID: 8300000, guid: c8c8402b1351aab4f80908e634840d13, type: 3}
   bulletSpread: 5
   launcherSprite: {fileID: 3235131618428306483}
 --- !u!1 &1962310841784963166

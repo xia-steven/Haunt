@@ -17,14 +17,14 @@ public class DemolitionEnemy : EnemyBase {
     }
 
     // Override enemy ID to load from config
-    public override int GetEnemyID()
+    protected override int GetEnemyID()
     {
         // TODO: Change returned value to enemyID (index in config file)
         return 6;
     }
 
     // Override attack function
-    public override IEnumerator EnemyAttack()
+    protected override IEnumerator EnemyAttack()
     {
         // TODO: Remove or change debug statement
         Debug.Log("Demolition Enemy starting attack");

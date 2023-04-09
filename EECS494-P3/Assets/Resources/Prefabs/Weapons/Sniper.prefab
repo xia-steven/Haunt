@@ -135,6 +135,8 @@ MonoBehaviour:
   barrelLength: 1.4
   screenShakeStrength: 0.05
   speedMultiplier: 1
+  firingSound: {fileID: 8300000, guid: e8f07320962764f4193536606f44be48, type: 3}
+  reloadSound: {fileID: 8300000, guid: e8cf38810380e454485d6711c0a088a5, type: 3}
   sniperSprite: {fileID: 2517271372512087574}
   laserColor: {r: 0.9245283, g: 0.13519046, b: 0.13519046, a: 0}
   flashColor: {r: 1, g: 1, b: 1, a: 0}

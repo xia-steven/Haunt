@@ -6,7 +6,7 @@ public class PeasantTorchEnemy : EnemyBase {
     private GameObject torchObject;
 
     // Override enemy ID to load from config
-    public override int GetEnemyID() {
+    protected override int GetEnemyID() {
         return 0;
     }
 
@@ -17,7 +17,7 @@ public class PeasantTorchEnemy : EnemyBase {
     }
 
     // Override attack function
-    public override IEnumerator EnemyAttack() {
+    protected override IEnumerator EnemyAttack() {
         Debug.Log("Torch enemy starting attack");
 
         var direction = (IsPlayer.instance.transform.position - transform.position).normalized;

@@ -24,7 +24,7 @@ public class HasPedestalHealth : HasHealth {
     }
 
 
-    public override void AlterHealth(int healthDelta) {
+    public override void AlterHealth(float healthDelta) {
         // NOTE: health delta is treated backwards of standard health components
         // due to the player destroying pedestals and enemies 
         healthDelta = -healthDelta;

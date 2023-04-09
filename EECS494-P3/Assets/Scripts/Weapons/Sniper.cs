@@ -63,7 +63,7 @@ public class Sniper : Weapon
         int layerMask = ~(1 << LayerMask.NameToLayer("Special"));
 
         // Get all hits of raycast
-        hits = Physics.RaycastAll(raycastSpawn, transform.forward, layerMask, 100);
+        hits = Physics.RaycastAll(raycastSpawn, transform.forward, 100, layerMask);
 
         // Set the positions of the LineRenderer to draw a line from the current position to the point of intersection
         if (Physics.Raycast(raycastSpawn, transform.forward, out RaycastHit hit, raycastLength, layerMask))
@@ -116,6 +116,8 @@ public class Sniper : Weapon
         isReloading = true;
         lineRenderer.material.color = reloadColor;
         Debug.Log("Reloading");
+        // Play reload sound
+        AudioSource.PlayClipAtPoint(reloadSound, transform.position);
 
         EventBus.Publish<ReloadStartedEvent>(new ReloadStartedEvent(reloadTime));
         yield return new WaitForSeconds(reloadTime);
@@ -153,14 +155,19 @@ public class Sniper : Weapon
         isFiring = true;
         lineRenderer.material.color = flashColor;
         lineRenderer.endWidth = 0.06f;
+        // Play firing sound
+        AudioSource.PlayClipAtPoint(firingSound, transform.position);
 
         Debug.Log("Beginning of loop");
+        Debug.Log("Length: " + hits.Length);
         for (int i = 0; i < pierce; i++)
         {
             if (i >= hits.Length)
             {
                 break;
             }
+
+            Debug.Log(hits[i].collider.gameObject.name);
 
             // Alter pedestal health if collided is pedestal and shot by player
             HasPedestalHealth pedHealth = hits[i].collider.gameObject.GetComponent<HasPedestalHealth>();

@@ -4,7 +4,7 @@ using UnityEngine;
 
 // Base class for all bullet types
 public abstract class Bullet : MonoBehaviour {
-    protected int damage = -1;
+    protected float damage = -1;
     protected Shooter shooter;
     protected float firedTime;
     protected int pierced = 0;
@@ -51,7 +51,7 @@ public abstract class Bullet : MonoBehaviour {
         // Alter pedestal health if collided is pedestal and shot by player
         HasPedestalHealth pedHealth = collided.GetComponent<HasPedestalHealth>();
         if (pedHealth != null && shooter == Shooter.Player) {
-            pedHealth.AlterHealth(-damage);
+            pedHealth.AlterHealth(-damage * PlayerModifiers.damage);
         }
 
         PlayerHasHealth playerHealth = collided.GetComponent<PlayerHasHealth>();
@@ -64,7 +64,7 @@ public abstract class Bullet : MonoBehaviour {
         HasHealth health = collided.GetComponent<HasHealth>();
         if (health != null && pedHealth == null && playerHealth == null) {
             Debug.Log("Health altered");
-            health.AlterHealth(damage);
+            health.AlterHealth(damage * PlayerModifiers.damage);
             pierced++;
         }
 

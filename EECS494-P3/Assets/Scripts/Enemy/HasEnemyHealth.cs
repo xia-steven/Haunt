@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class HasEnemyHealth : HasHealth {
     private GameObject coinPrefab;
@@ -22,7 +19,7 @@ public class HasEnemyHealth : HasHealth {
         }
     }
 
-    public override void AlterHealth(int healthDelta) {
+    public override void AlterHealth(float healthDelta) {
         base.AlterHealth(healthDelta);
         StartCoroutine(FlashRed());
         if (health <= 0) {
@@ -32,7 +29,7 @@ public class HasEnemyHealth : HasHealth {
                 Instantiate(healthPrefab, transform.position, Quaternion.identity);
             }
             // Only drop collectibles if not the tutorial day
-            else if (roulletteBall >= 40 && roulletteBall < 80 && GameControl.Day != 0) {
+            else if (roulletteBall is >= 40 and < 80 && GameControl.Day != 0) {
                 Instantiate(coinPrefab, transform.position, Quaternion.identity);
             }
 
