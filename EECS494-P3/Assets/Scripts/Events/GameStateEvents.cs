@@ -175,3 +175,16 @@ public class MessageFinishedEvent
         senderInstanceID = senderInstanceID_in;
     }
 }
+
+/// <summary>
+/// The MessageStartedEvent is sent whenever a message begins being printed.
+/// Used for knowing when an NPC starts talking while its message is queued.
+/// </summary>
+public class MessageStartedEvent 
+{
+    public int senderInstanceID;
+    public MessageStartedEvent(int _senderInstanceID)
+    {
+        senderInstanceID = _senderInstanceID;
+    }
+}

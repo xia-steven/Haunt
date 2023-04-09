@@ -81,6 +81,7 @@ MonoBehaviour:
   explosiveRadius: 1
   oneShotEnemies: 0
   fromPlayer: 1
+  damage: 2
 --- !u!114 &2028578865910348470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletLife: 1.5
+  fromBoss: 0
 --- !u!1 &3136857620587580189
 GameObject:
   m_ObjectHideFlags: 0

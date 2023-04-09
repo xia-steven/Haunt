@@ -63,6 +63,7 @@ public abstract class Weapon : MonoBehaviour {
     protected bool playerEnabled = true;
     protected bool isReloading = false;
     public bool messageVisible = false;
+    protected int lastMessageSender;
     // Length of gun barrel for bullet spawning - will be gun specific due to masking / variability of sprites
     [SerializeField] protected float barrelLength = 0.5f;
     // How much the screen should shake on bullets firing
@@ -125,18 +126,20 @@ public abstract class Weapon : MonoBehaviour {
     protected virtual void _OnMessage(MessageEvent e)
     {
         Debug.Log("Message showing received by weapon");
+        lastMessageSender = e.senderInstanceID;
         messageVisible = true;
     }
 
     protected virtual void _OnMessageFinished(MessageFinishedEvent e)
     {
         Debug.Log("Message finished received by weapon");
-        StartCoroutine(MessageDelay());
+        StartCoroutine(MessageDelay(e));
     }
-    protected IEnumerator MessageDelay()
+    protected IEnumerator MessageDelay(MessageFinishedEvent e)
     {
         yield return new WaitForSeconds(1.0f);
-        messageVisible = false;
+        if (e.senderInstanceID == lastMessageSender)
+            messageVisible = false;
     }
 
     protected virtual void _OnFire(FireEvent e) {
