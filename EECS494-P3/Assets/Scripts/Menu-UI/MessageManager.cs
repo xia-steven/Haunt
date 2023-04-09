@@ -72,6 +72,7 @@ public class MessageManager : MonoBehaviour
 
     IEnumerator SendMessage(MessageEvent message)
     {
+        EventBus.Publish<MessageStartedEvent>(new MessageStartedEvent(message.senderInstanceID));
 
         if(message.pauseTime)
         {
