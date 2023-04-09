@@ -34,8 +34,6 @@ public class PlayerController : MonoBehaviour {
     Subscription<TutorialDodgeStartEvent> dodgeStartSub;
     Subscription<TutorialDodgeEndEvent> dodgeEndSub;
 
-    Sprite interactSprite;
-
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
@@ -152,7 +150,6 @@ public class PlayerController : MonoBehaviour {
     private void StartDodge(TutorialDodgeStartEvent tutorDodge = null)
     {
         EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(true, movement));
-        col.enabled = false; // start iframes, turn back on when dodge ends
         isDodging = true;
         //rb.useGravity = false;
         dodgeRollTimer = dodgeRollDuration;
@@ -174,7 +171,6 @@ public class PlayerController : MonoBehaviour {
     private void StopDodge(TutorialDodgeEndEvent tutorDodge = null)
     {
         EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(false, movement));
-        col.enabled = true;
         dodgeRollTimer = 0;
         isDodging = false;
         rb.velocity = Vector3.zero;

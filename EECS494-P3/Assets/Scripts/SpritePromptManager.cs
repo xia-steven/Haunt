@@ -14,6 +14,9 @@ public class SpritePromptManager : MonoBehaviour
     Vector3 offset = new Vector3(-0.5f, 1.25f, 0);
     float fadeTime = 0.5f;
 
+    bool prompting = false;
+    bool cancelEarly = false;
+
     void Awake()
     {
         //enforce singleton
@@ -46,9 +49,16 @@ public class SpritePromptManager : MonoBehaviour
 
     void onSpritePrompt(SpritePromptEvent spe)
     {
-
-
-        StartCoroutine(displayPrompt(spe));
+        if(!prompting)
+        {
+            prompting = true;
+            StartCoroutine(displayPrompt(spe));
+        }
+        else
+        {
+            cancelEarly = true;
+            StartCoroutine(displayPrompt(spe));
+        }
     }
 
     IEnumerator displayPrompt(SpritePromptEvent spe)
@@ -77,12 +87,13 @@ public class SpritePromptManager : MonoBehaviour
         }
 
         // Fade out sprite
-        Color initialColor = sprite.color;
-
         float initialTime = Time.time;
         float progress = (Time.time - initialTime) / fadeTime;
 
-        while(progress < 1.0f)
+
+        Color initialColor = sprite.color;
+
+        while (progress < 1.0f && !cancelEarly)
         {
             progress = (Time.time - initialTime) / fadeTime;
 
@@ -93,5 +104,8 @@ public class SpritePromptManager : MonoBehaviour
 
         sprite.enabled = false;
         sprite.color = initialColor;
+
+        prompting = false;
+        cancelEarly = false;
     }
 }
