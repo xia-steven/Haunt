@@ -6,6 +6,7 @@ public class IsExplosive : MonoBehaviour {
     [SerializeField] float explosiveRadius = 2.0f;
     [SerializeField] bool oneShotEnemies = false;
     [SerializeField] bool fromPlayer = false;
+    [SerializeField] float damage = -1f;
     AudioClip explosionSound;
 
     // Used to prevent spawning objects on quit
@@ -44,7 +45,7 @@ public class IsExplosive : MonoBehaviour {
             }
             else if (hit.TryGetComponent<HasEnemyHealth>(out enemyHit)) {
                 // Kill the enemy
-                int damageAmount = oneShotEnemies ? -1000 : -1;
+                float damageAmount = oneShotEnemies ? -1000 : damage;
                 enemyHit.AlterHealth(damageAmount * PlayerModifiers.damage);
             }
             else if (hit.TryGetComponent<HasPedestalHealth>(out pedestalHit))

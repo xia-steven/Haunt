@@ -22,6 +22,7 @@ public class NPCMessages : MonoBehaviour
 
     Subscription<TryInteractEvent> interactSubscription;
     Subscription<MessageFinishedEvent> finishedSub;
+    Subscription<MessageStartedEvent> startedSub;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,7 @@ public class NPCMessages : MonoBehaviour
         NPCMessageData = ConfigManager.GetData<MessageList>(configName);
         interactSubscription = EventBus.Subscribe<TryInteractEvent>(OnInteract);
         finishedSub = EventBus.Subscribe<MessageFinishedEvent>(OnMessageFinished);
+        startedSub = EventBus.Subscribe<MessageStartedEvent>(OnMessageStarted);
 
         interactSprite.SetActive(false);
         Object [] sprites = Resources.LoadAll("tilemap");
@@ -42,6 +44,7 @@ public class NPCMessages : MonoBehaviour
     {
         EventBus.Unsubscribe(interactSubscription);
         EventBus.Unsubscribe(finishedSub);
+        EventBus.Unsubscribe(startedSub);
     }
 
     private void OnTriggerStay(Collider other)
@@ -91,19 +94,26 @@ public class NPCMessages : MonoBehaviour
                 // Standard dialogue for the night
                 EventBus.Publish(new MessageEvent(NPCMessageData.allMessages[GameControl.Day].messages, GetInstanceID(), false));
             }
+        }
+    }
 
-            // Send talking sounds
-            if (!isGhost)
-            {
-                int clipNum = (int)Random.Range(1, 15);
-                AudioClip clip = Resources.Load<AudioClip>("Audio/mnstr" + clipNum);
-                AudioSource.PlayClipAtPoint(clip, transform.position);
-            } else
-            {
-                int clipNum = (int)Random.Range(1, 8);
-                AudioClip clip = Resources.Load<AudioClip>("Audio/ghost" + clipNum);
-                AudioSource.PlayClipAtPoint(clip, transform.position);
-            }
+    private void OnMessageStarted(MessageStartedEvent mse)
+    {
+        if (mse.senderInstanceID != GetInstanceID())
+            return;
+
+        // Send talking sounds
+        if (!isGhost)
+        {
+            int clipNum = (int)Random.Range(1, 15);
+            AudioClip clip = Resources.Load<AudioClip>("Audio/mnstr" + clipNum);
+            AudioSource.PlayClipAtPoint(clip, transform.position);
+        }
+        else
+        {
+            int clipNum = (int)Random.Range(1, 8);
+            AudioClip clip = Resources.Load<AudioClip>("Audio/ghost" + clipNum);
+            AudioSource.PlayClipAtPoint(clip, transform.position);
         }
     }
 
