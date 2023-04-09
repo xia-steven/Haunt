@@ -25,7 +25,7 @@ public class HasEnemyHealth : HasHealth {
         if (health <= 0) {
             var roulletteBall = Random.Range(0, 100);
             // Only drop collectibles if not the tutorial day
-            if (GameControl.Day != 0 && isCleric && IsPlayer.instance.GetHealth() < IsPlayer.instance.GetMaxHealth()) {
+            if (isCleric && IsPlayer.instance.GetHealth() < IsPlayer.instance.GetMaxHealth()) {
                 Instantiate(healthPrefab, transform.position, Quaternion.identity);
             }
             // Only drop collectibles if not the tutorial day
