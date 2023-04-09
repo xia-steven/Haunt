@@ -2864,10 +2864,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1105308247002199992}
     m_Modifications:
-    - target: {fileID: 3080234691743519177, guid: 1aaab714d6a287944b925abe04caa2cd, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 25.00003
-      objectReference: {fileID: 0}
     - target: {fileID: 6653360638096883780, guid: 1aaab714d6a287944b925abe04caa2cd, type: 3}
       propertyPath: m_Name
       value: MessageManager
