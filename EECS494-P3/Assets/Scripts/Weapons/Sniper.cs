@@ -26,9 +26,7 @@ public class Sniper : Weapon
     protected override void Awake()
     {
         base.Awake();
-        thisData = typesData.types[(int)WeaponType.sniper];
 
-        SetData();
         currentClipAmount = fullClipAmount;
         pierce += PlayerModifiers.maxPierce;
 
@@ -43,6 +41,13 @@ public class Sniper : Weapon
         lineRenderer.startWidth = 0.04f;
         lineRenderer.endWidth = 0.04f;
         lineRenderer.material.color = laserColor;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        thisData = typesData.types[(int)WeaponType.sniper];
+        SetData();
     }
 
     // Need to add extra elements for the sniper fixed update such as the scope line

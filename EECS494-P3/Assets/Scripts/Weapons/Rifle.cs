@@ -13,7 +13,6 @@ public class Rifle : Weapon
     protected override void Awake()
     {
         base.Awake();
-        thisData = typesData.types[(int)WeaponType.rifle];
 
         SetData();
         currentClipAmount = fullClipAmount;
@@ -24,6 +23,14 @@ public class Rifle : Weapon
         wielder = this.transform.parent.gameObject;
         basicBullet = Resources.Load<GameObject>("Prefabs/Weapons/RifleBullet");
     }
+
+    protected override void Start()
+    {
+        base.Start();
+        thisData = typesData.types[(int)WeaponType.rifle];
+        SetData();
+    }
+
     protected override void _OnFire(FireEvent e)
     {
         if (!gameObject.activeInHierarchy) return;

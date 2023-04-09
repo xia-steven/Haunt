@@ -87,12 +87,17 @@ public abstract class Weapon : MonoBehaviour {
 
     protected virtual void Awake()
     {
-        if (typesData == null)
-            typesData = ConfigManager.GetData<WeaponTypesData>("WeaponTypes");
 
         lastBullet = 0;
         lastTap = 0;
         PlayerModifiers.moveSpeed *= speedMultiplier;
+    }
+
+    protected virtual void Start()
+    {
+        // Moved to start to avoid error
+        if (typesData == null)
+            typesData = ConfigManager.GetData<WeaponTypesData>("WeaponTypes");
     }
 
     protected void Subscribe() {

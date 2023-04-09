@@ -14,9 +14,7 @@ public class Launcher : Weapon
     protected override void Awake()
     {
         base.Awake();
-        thisData = typesData.types[(int)WeaponType.launcher];
 
-        SetData();
         currentClipAmount = fullClipAmount;
 
         Subscribe();
@@ -25,6 +23,14 @@ public class Launcher : Weapon
         wielder = this.transform.parent.gameObject;
         launcherShot = Resources.Load<GameObject>("Prefabs/Weapons/LauncherShot");
     }
+
+    protected override void Start()
+    {
+        base.Start();
+        thisData = typesData.types[(int)WeaponType.launcher];
+        SetData();
+    }
+
 
     protected override void _OnFire(FireEvent e)
     {

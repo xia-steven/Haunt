@@ -15,9 +15,7 @@ public class Shotgun : Weapon
     protected override void Awake()
     {
         base.Awake();
-        thisData = typesData.types[(int)WeaponType.shotgun];
 
-        SetData();
         currentClipAmount = fullClipAmount;
 
         Subscribe();
@@ -25,6 +23,13 @@ public class Shotgun : Weapon
         spriteRenderer = shotgunSprite.GetComponent<SpriteRenderer>();
         wielder = this.transform.parent.gameObject;
         shotgunBullet = Resources.Load<GameObject>("Prefabs/Weapons/ShotgunBullet");
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        thisData = typesData.types[(int)WeaponType.shotgun];
+        SetData();
     }
 
     protected override void _OnFire(FireEvent e)
