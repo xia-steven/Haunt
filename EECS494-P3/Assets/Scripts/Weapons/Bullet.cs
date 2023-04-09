@@ -10,6 +10,7 @@ public abstract class Bullet : MonoBehaviour {
     protected int pierced = 0;
 
     [SerializeField] protected float bulletLife = 1.0f;
+    public bool fromBoss = false;
 
     protected virtual void Awake() {
         firedTime = Time.time;
@@ -25,6 +26,12 @@ public abstract class Bullet : MonoBehaviour {
 
     protected void OnTriggerEnter(Collider other) {
         var collided = other.gameObject;
+
+        // Ignore collisions from boss bullets fired inside of objects
+        if(fromBoss && Time.time - firedTime < 0.05)
+        {
+            return;
+        }
 
         // Don't collide with specified items
         if (collided.layer == LayerMask.NameToLayer("Special")) {

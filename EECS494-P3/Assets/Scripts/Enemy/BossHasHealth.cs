@@ -54,15 +54,6 @@ public class BossHasHealth : HasHealth
             healthText.text = health.ToString();
         }
 
-        if(health / maxHealth < 0.33)
-        {
-            boss.enabledLaser = true;
-        }
-        else if (health / maxHealth < 0.66)
-        {
-            boss.enabledGroundPound = true;
-        }
-
         // If we haven't spawned clerics in 20 health
         if(lastClericSpawn - health > 20)
         {

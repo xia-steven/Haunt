@@ -9,7 +9,6 @@ public class DamagesPlayer : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Player")) {
-            Debug.Log("OUCH!!");
             //alter before publishing in case a subscriber references the new health
             collision.gameObject.GetComponent<PlayerHasHealth>().AlterHealth(damageAmount, DeathCauses.Enemy);
 

@@ -1,12 +1,16 @@
 {
     "key": "BossData",
     "name": "MasterCleric",
-    "moveSpeed": 3.0,
+    "moveSpeed": 1.5,
+    "moveToCenterSpeed": 10.0,
     "attackSpeed": 0.5,
     "projectileSpeed": 5.0,
     "projectileLifetime": 5.0,
-    "groundPoundWindup": 1.0,
-    "groundPoundTime": 0.25,
+    "shockwaveWindup": 0.5,
+    "shockwavePound": 0.2,
+    "shockwaveTime": 4.0,
     "laserWindup": 1.0,
+    "laserTime": 4.0,
+    "laserRotateSpeed": 1.5,
     "health": 100.0
 }

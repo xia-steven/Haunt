@@ -21,8 +21,8 @@ TagManager:
   - EnemyWallCollider
   - PlayerPhysical
   - Melee
-  - 
-  - 
+  - Boss
+  - BossWeapons
   - 
   - 
   - 
