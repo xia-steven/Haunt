@@ -69,11 +69,21 @@ public class Inventory : MonoBehaviour
 
     public void Equip(GameObject weapon)
     {
+        bool wasMessage = false;
+
         weapons[numWeapons] = Instantiate(weapon, transform);
+
+        // Weapon was already equipped
+        if (numWeapons > 0)
+            wasMessage = weapons[currentWeapon].GetComponent<Weapon>().messageVisible;
 
         // Unequip current weapon and equip new weapon
         if (currentWeapon != numWeapons) weapons[currentWeapon].SetActive(false);
         weapons[numWeapons].SetActive(true);
+
+        // Set new weapon to appropriate message existance
+        if (wasMessage)
+            weapons[numWeapons].GetComponent<Weapon>().messageVisible = true;
 
         // Play swap sound
         AudioSource.PlayClipAtPoint(weaponSwapSound, transform.position);
@@ -89,6 +99,8 @@ public class Inventory : MonoBehaviour
         // Can't swap with only 1 or 0 weapons
         if (numWeapons <= 1)
             return;
+
+        bool wasMessage = weapons[currentWeapon].GetComponent<Weapon>().messageVisible;
 
         // Play swap sound
         AudioSource.PlayClipAtPoint(weaponSwapSound, transform.position);
@@ -111,6 +123,8 @@ public class Inventory : MonoBehaviour
             }
             weapons[currentWeapon].SetActive(true);
         }
+
+        weapons[currentWeapon].GetComponent<Weapon>().messageVisible = wasMessage;
     }
 
     public void _OnSpecificSwap(SwapSpecificEvent e)
@@ -118,6 +132,8 @@ public class Inventory : MonoBehaviour
         // Can't swap with only 1 or 0 weapons
         if (numWeapons <= 1)
             return;
+
+        bool wasMessage = weapons[currentWeapon].GetComponent<Weapon>().messageVisible;
 
         int newEquipped = e.newEquipped;
         int actualSlot = newEquipped - 1;
@@ -138,6 +154,8 @@ public class Inventory : MonoBehaviour
         {
             Debug.Log("Attempted equip of empty weapon slot.");
         }
+
+        weapons[currentWeapon].GetComponent<Weapon>().messageVisible = wasMessage;
     }
 
     public int GetCoins()
