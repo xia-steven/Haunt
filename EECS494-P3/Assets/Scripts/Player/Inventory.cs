@@ -42,7 +42,7 @@ public class Inventory : MonoBehaviour
 
         // Equip pistol on load
         pistol = Resources.Load<GameObject>("Prefabs/Weapons/Pistol");
-        Equip(pistol);
+        InitialEquip(pistol);
 
         // Equip all weapons (will be removed) TODO
         // rifle = Resources.Load<GameObject>("Prefabs/Weapons/Rifle");
@@ -64,7 +64,9 @@ public class Inventory : MonoBehaviour
 
     void OnSceneLoad(Scene s, LoadSceneMode m)
     {
-        EventBus.Publish(new SwapSpecificEvent(currentWeapon+1));
+        SwapSpecificEvent swapEvent = new SwapSpecificEvent(currentWeapon+1);
+        swapEvent.newScene = true;
+        EventBus.Publish(swapEvent);
     }
 
     public void Equip(GameObject weapon)
@@ -87,6 +89,25 @@ public class Inventory : MonoBehaviour
 
         // Play swap sound
         AudioSource.PlayClipAtPoint(weaponSwapSound, transform.position);
+
+        currentWeapon = numWeapons;
+        numWeapons++;
+        // Add weapon name to owned weapons
+        ownedWeapons.Add(weapon.name);
+    }
+
+    /// <summary>
+    /// Only to be called from within Inventory start/awake
+    /// Different as it will not play equipping sound
+    /// </summary>
+    /// <param name="weapon"></param>
+    private void InitialEquip(GameObject weapon)
+    {
+        weapons[numWeapons] = Instantiate(weapon, transform);
+
+        // Unequip current weapon and equip new weapon
+        if (currentWeapon != numWeapons) weapons[currentWeapon].SetActive(false);
+        weapons[numWeapons].SetActive(true);
 
         currentWeapon = numWeapons;
         numWeapons++;
@@ -131,10 +152,16 @@ public class Inventory : MonoBehaviour
     {
         // Can't swap with only 1 or 0 weapons
         if (numWeapons <= 1)
+        {
+            if (numWeapons == 1 && e.newScene)
+            {
+                weapons[currentWeapon].GetComponent<Weapon>().messageVisible = false;
+            }
             return;
+        }
 
         bool wasMessage = weapons[currentWeapon].GetComponent<Weapon>().messageVisible;
-
+        Debug.Log(wasMessage + " - " + e.newScene);
         int newEquipped = e.newEquipped;
         int actualSlot = newEquipped - 1;
 
@@ -148,14 +175,20 @@ public class Inventory : MonoBehaviour
             currentWeapon = actualSlot;
             weapons[currentWeapon].SetActive(true);
 
-            // Play swap sound
-            AudioSource.PlayClipAtPoint(weaponSwapSound, transform.position);
+            if (e.newScene)
+            {
+                weapons[currentWeapon].GetComponent<Weapon>().messageVisible = false;
+            }
+            else
+            {
+                weapons[currentWeapon].GetComponent<Weapon>().messageVisible = wasMessage;
+                // Play swap sound - placed here so not played on scene load
+                AudioSource.PlayClipAtPoint(weaponSwapSound, transform.position);
+            }
         } else
         {
             Debug.Log("Attempted equip of empty weapon slot.");
         }
-
-        weapons[currentWeapon].GetComponent<Weapon>().messageVisible = wasMessage;
     }
 
     public int GetCoins()
@@ -228,6 +261,7 @@ public class SwapEvent {
 public class SwapSpecificEvent
 {
     public int newEquipped;
+    public bool newScene = false;
 
     public SwapSpecificEvent(int _newEquipped)
     {
