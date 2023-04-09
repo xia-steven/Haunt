@@ -22,7 +22,7 @@ public class SceneTransition : MonoBehaviour {
     }
 
     public void OnFadeComplete() {
-        if (SceneManager.GetActiveScene().name == "Tutorial Hub World") {
+        if (SceneManager.GetActiveScene().name == "TutorialHubWorld") {
             SceneManager.LoadScene("TutorialGameScene");
         }
         else if (GameControl.Day != 3 || SceneManager.GetActiveScene().name != "HubWorld") {
