@@ -176,6 +176,13 @@ public abstract class Weapon : MonoBehaviour {
         // Set shooter to holder of gun (enemy or player)
         projectile.GetComponent<Bullet>().SetShooter(shooter);
 
+
+        // Calculate the rotation of gun barrel
+        Quaternion rotation = Quaternion.LookRotation(direction, Vector3.forward);
+
+        // Set the rotation of the bullet
+        projectile.transform.rotation = rotation;
+
         // Give bullet its velocity
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.velocity = direction * bulletSpeed;
