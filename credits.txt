@@ -34,3 +34,6 @@ Creation date: 23-09-2021
 Speech bubbles:
 https://opengameart.org/content/2d-speech-bubbles
 Author Parriah
+
+Fire animation:
+https://assetstore.unity.com/packages/vfx/particles/fire-explosions/procedural-fire-141496

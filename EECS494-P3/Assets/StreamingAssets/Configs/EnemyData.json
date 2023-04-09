@@ -4,7 +4,7 @@
         {
             "name": "PeasantTorch",
             "moveSpeed": 1.0,
-            "targetDistance": 1.0,
+            "targetDistance": 1.3,
             "health": 3,
             "attackSpeed": 2.0,
             "isRanged": false,
@@ -13,7 +13,7 @@
         {
             "name": "PeasantPitchfork",
             "moveSpeed": 1.0,
-            "targetDistance": 1.5,
+            "targetDistance": 1.8,
             "health": 3,
             "attackSpeed": 2.0,
             "isRanged": false,
@@ -41,7 +41,7 @@
         {
             "name": "MultiArcher",
             "moveSpeed": 1.25,
-            "targetDistance": 2.0,
+            "targetDistance": 2.5,
             "health": 4,
             "attackSpeed": 2.0,
             "isRanged": true,
