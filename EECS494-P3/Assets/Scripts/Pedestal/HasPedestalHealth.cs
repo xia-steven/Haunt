@@ -28,7 +28,6 @@ public class HasPedestalHealth : HasHealth {
         // NOTE: health delta is treated backwards of standard health components
         // due to the player destroying pedestals and enemies 
         healthDelta = -healthDelta;
-        Debug.Log("start"+ health/PedestalMaxHealth);
         if (health == 0 && healthDelta < 0 || health == PedestalMaxHealth && healthDelta > 0 ||
             healthDelta == 0)
         {
