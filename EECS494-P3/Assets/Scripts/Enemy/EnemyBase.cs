@@ -93,27 +93,22 @@ public class EnemyBase : MonoBehaviour {
     }
 
     protected virtual bool needAStar() {
-        // First, check if the enemy cannot pathfind directly to the player/target
-        var playerDirection = (GetTarget() - transform.position).normalized;
-        var originOffset = Quaternion.AngleAxis(90, Vector3.up) * playerDirection;
-        var ray1Origin = transform.position + originOffset;
-        var ray2Origin = transform.position - originOffset;
-        var ray1Dir = (GetTarget() - ray1Origin).normalized;
-        var ray2Dir = (GetTarget() - ray2Origin).normalized;
-        // Ignore hits on other enemies
-        var lm = ~LayerMask.GetMask("Enemy");
-        var ray1 = Physics.Raycast(ray1Origin, ray1Dir, out var hit1, Vector3.Distance(GetTarget(), ray1Origin), lm);
-        var ray2 = Physics.Raycast(ray2Origin, ray2Dir, out var hit2, Vector3.Distance(GetTarget(), ray2Origin), lm);
+        // Get player/target position
+        var targetPosition = GetTarget();
 
-        if (ray1 && ray2) {
-            if (hit1.transform.gameObject.CompareTag("Pit") && hit2.transform.gameObject.CompareTag("Pit") &&
-                attributes.isRanged &&
-                Vector3.Distance(GetTarget(), transform.position) <= attributes.targetDistance) {
-                return false;
-            }
+        // First, check if the enemy cannot pathfind directly to the player/target
+        var playerDirection = (targetPosition - transform.position).normalized;
+        // Ignore hits on other enemies
+        var layerMask = ~LayerMask.GetMask("Enemy");
+
+        if (Physics.Raycast(transform.position, playerDirection, out var hit,
+                Vector3.Distance(targetPosition, transform.position), layerMask) &&
+            hit.transform.gameObject.CompareTag("Pit") && attributes.isRanged &&
+            Vector3.Distance(targetPosition, transform.position) <= attributes.targetDistance) {
+            return false;
         }
 
-        return !hit1.transform.gameObject.CompareTag("Player") || !hit2.transform.gameObject.CompareTag("Player");
+        return !hit.transform.gameObject.CompareTag("Player");
     }
 
     /// <summary>
