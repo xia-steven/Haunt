@@ -199,3 +199,18 @@ public class ReloadAllEvent
         return "Reload All Event sent";
     }
 }
+
+
+/// <summary>
+/// This event is sent when the player needs to be invulnerable,
+/// usually during a teleport
+/// </summary>
+public class ToggleInvincibilityEvent
+{
+    public bool enable;
+
+    public ToggleInvincibilityEvent(bool enable_in)
+    {
+        enable = enable_in;
+    }
+}
