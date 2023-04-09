@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerHasHealth : HasHealth {
     Subscription<PedestalDestroyedEvent> pedDestSub;
     Subscription<PedestalRepairedEvent> pedRepSub;
-    Subscription<MessageFinishedEvent> messFinSub;
+    Subscription<ToggleInvincibilityEvent> invincibleSub;
     Subscription<PlayerDodgeEvent> dodgeSub;
 
     public int id;
@@ -19,14 +19,15 @@ public class PlayerHasHealth : HasHealth {
     private int lockedHealth = 0;
     private int shieldHealth = 0;
     private bool isInvincible = false;
+    private bool isDodgingOrTeleporting = false;
     
 
     // Start is called before the first frame update
     void Start() {
         pedDestSub = EventBus.Subscribe<PedestalDestroyedEvent>(_OnPedestalDied);
         pedRepSub = EventBus.Subscribe<PedestalRepairedEvent>(_OnPedestalRepaired);
-        messFinSub = EventBus.Subscribe<MessageFinishedEvent>(_OnTutorialDeathMessageFinished);
         dodgeSub = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
+        invincibleSub = EventBus.Subscribe<ToggleInvincibilityEvent>(_OnInvincibilityToggle);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         
@@ -49,7 +50,7 @@ public class PlayerHasHealth : HasHealth {
         // damage
         else if (healthDelta < 0)
         {
-            if (!isInvincible)
+            if (!isInvincible && !isDodgingOrTeleporting)
             {
                 if (shieldHealth > 0)
                 {
@@ -96,18 +97,6 @@ public class PlayerHasHealth : HasHealth {
     }
 
 
-
-    void _OnTutorialDeathMessageFinished(MessageFinishedEvent mfe)
-    {
-        if(mfe.senderInstanceID == GetInstanceID())
-        {
-            // Restart tutorial scene
-            health = maxHealth;
-            lockedHealth = 0;
-            SceneManager.LoadScene("TutorialGameScene");
-        }
-    }
-
     void _OnPedestalDied(PedestalDestroyedEvent pde) {
         lockedHealth -= 2;
         Debug.Log("Player received pedestal death, locked: " + lockedHealth);
@@ -135,12 +124,17 @@ public class PlayerHasHealth : HasHealth {
         // Enable and disable invincibility on dodge
         if(pde.start)
         {
-            isInvincible = true;
+            isDodgingOrTeleporting = true;
         }
         else
         {
-            isInvincible = false;
+            isDodgingOrTeleporting = false;
         }
+    }
+
+    void _OnInvincibilityToggle(ToggleInvincibilityEvent tie)
+    {
+        isDodgingOrTeleporting = tie.enable;
     }
 
     public void AddShield()
@@ -158,7 +152,6 @@ public class PlayerHasHealth : HasHealth {
         Color normalColor = sr.color;
         while (duration < invincibilityTimer)
         {
-            //Debug.Log("Inv_timer:" + duration);
             duration += 0.1f;
             normalColor.a = 1 - normalColor.a;
             sr.color = normalColor;
@@ -173,7 +166,6 @@ public class PlayerHasHealth : HasHealth {
     private void OnDestroy() {
         EventBus.Unsubscribe(pedDestSub);
         EventBus.Unsubscribe(pedRepSub);
-        EventBus.Unsubscribe(messFinSub);
         EventBus.Unsubscribe(dodgeSub);
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -183,7 +175,6 @@ public class PlayerHasHealth : HasHealth {
     {
         if (s.name == "TutorialGameScene" || s.name == "TutorialHubWorld")
         {
-            Debug.Log("TutorialGameScene Loaded");
             shieldHealth = 0;
             transform.position = new Vector3(0, 0.5f, 0);
         }
@@ -192,6 +183,11 @@ public class PlayerHasHealth : HasHealth {
             lockedHealth = 0;
             transform.position = new Vector3(0, 0.5f, 0);
         }
+        // Disable invincibility if enabled from the previous scene
+        isInvincible = false;
+        // Remove dodging or teleporting if enabled from the previous scene
+        isDodgingOrTeleporting = false;
+
         StartCoroutine(DelayUIUpdateOnSceneLoad());
     }
 
@@ -205,7 +201,6 @@ public class PlayerHasHealth : HasHealth {
     }
     public void ResetHealth()
     {
-        Debug.Log("HERE!!!");
         lockedHealth = 0;
         health = maxHealth;
         shieldHealth = 0;
