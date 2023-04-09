@@ -47,7 +47,7 @@ public class MusicController : MonoBehaviour
             // Start tutorial music (gameplay music for now)
             Debug.Log("Set clip to GameplayMusic");
             audioSource.clip = Resources.Load<AudioClip>("Audio/Music/GameplayMusic");
-        } else if (s.name == "LAB_BossTesting")
+        } else if (s.name == "BossScene")
         {
             // Start boss music
             Debug.Log("Set clip to BossMusic");
