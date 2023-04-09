@@ -174,8 +174,9 @@ public class MessageManager : MonoBehaviour
         clickIcon.gameObject.SetActive(false);
         textBackground.gameObject.SetActive(false);
 
-        // reset text color
+        // reset text and icon color
         text.color = textColor;
+        clickIcon.color = prevIconColor;
         sendingMessage = false;
     }
 

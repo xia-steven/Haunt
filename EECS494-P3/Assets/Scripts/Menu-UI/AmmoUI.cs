@@ -37,6 +37,7 @@ public class AmmoUI : MonoBehaviour
     {
         curClip = clipMax;
         UpdateBulletCounts();
+        Debug.Log("Here?");
     }
 
 
@@ -66,6 +67,8 @@ public class AmmoUI : MonoBehaviour
     {
         if (!gameObject.activeInHierarchy) return;
 
+        Debug.Log("Swapped Weapon");
+
         swapped = true;
 
         current = e.newWeapon;
@@ -78,7 +81,6 @@ public class AmmoUI : MonoBehaviour
         if (weaponType == "pistol")
         {
             gunImg.sprite = Resources.LoadAll<Sprite>("Textures-Sprites/six_shooter")[1];
-            
         }
         else if (weaponType == "rifle")
         {
@@ -92,9 +94,9 @@ public class AmmoUI : MonoBehaviour
         {
             gunImg.sprite = Resources.LoadAll<Sprite>("Textures-Sprites/sniper")[0];
         }
-        else if (weaponType == "sword")
+        else if (weaponType == "launcher")
         {
-            gunImg.sprite = Resources.LoadAll<Sprite>("Textures-Sprites/swords")[1];
+            gunImg.sprite = Resources.LoadAll<Sprite>("Textures-Sprites/grenade_launcher")[0];
         }
 
         gunImg.SetNativeSize();

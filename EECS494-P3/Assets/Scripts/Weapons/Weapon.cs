@@ -133,7 +133,10 @@ public abstract class Weapon : MonoBehaviour {
     protected virtual void _OnMessageFinished(MessageFinishedEvent e)
     {
         Debug.Log("Message finished received by weapon");
-        StartCoroutine(MessageDelay(e));
+        if(isActiveAndEnabled)
+        {
+            StartCoroutine(MessageDelay(e));
+        }
     }
     protected IEnumerator MessageDelay(MessageFinishedEvent e)
     {
