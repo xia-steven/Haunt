@@ -64,22 +64,26 @@ public class PauseMenu : MonoBehaviour {
     // Used for the button callback
     public void DeactivateMenu()
     {
+        AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/click"), Camera.main.transform.position);
         EventBus.Publish(new GamePlayEvent());
     }
 
 
     public void RestartLevel() 
     {
+        AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/click"), Camera.main.transform.position);
         GameControl.ResetGame("TutorialHubWorld");
     }
 
     public void QuitGame()
     {
+        AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/click"), Camera.main.transform.position);
         Application.Quit();
     }
 
 
     public void LoadMainMenu() {
+        AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/click"), Camera.main.transform.position);
         isPaused = false;
         Time.timeScale = 1;
         AudioListener.pause = false;

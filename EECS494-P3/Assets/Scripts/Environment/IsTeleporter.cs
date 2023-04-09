@@ -79,6 +79,7 @@ public class IsTeleporter : MonoBehaviour {
     public void _Interact(TryInteractEvent e) {
         if (isUsable) {
             IsPlayer.SetPosition(new Vector3(0, .25f, 0));
+            AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/Movement/Teleport"), transform.position);
             SceneTransition.currentScene.FadeToScene();
         }
     }
