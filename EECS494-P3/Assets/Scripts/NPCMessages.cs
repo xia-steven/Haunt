@@ -85,6 +85,19 @@ public class NPCMessages : MonoBehaviour
                 // Standard dialogue for the night
                 EventBus.Publish(new MessageEvent(NPCMessageData.allMessages[GameControl.Day].messages, GetInstanceID(), false));
             }
+
+            // Send talking sounds
+            if (!isGhost)
+            {
+                int clipNum = (int)Random.Range(1, 15);
+                AudioClip clip = Resources.Load<AudioClip>("Audio/mnstr" + clipNum);
+                AudioSource.PlayClipAtPoint(clip, transform.position);
+            } else
+            {
+                int clipNum = (int)Random.Range(1, 8);
+                AudioClip clip = Resources.Load<AudioClip>("Audio/ghost" + clipNum);
+                AudioSource.PlayClipAtPoint(clip, transform.position);
+            }
         }
     }
 

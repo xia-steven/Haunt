@@ -25,6 +25,10 @@ public class PlayerController : MonoBehaviour {
     private bool isDodging = false;
     private bool dodgePressed = false;
     private float dodgeRollTimer = 1f;
+    private float lastSound = 0f;
+    private float walkSoundDelay = 0.4f;
+    private AudioClip walkSound;
+    private AudioClip dodgeSound;
     Subscription<DisablePlayerEvent> disableMoveSub;
     Subscription<EnablePlayerEvent> enableMoveSub;
     Subscription<TutorialDodgeStartEvent> dodgeStartSub;
@@ -42,6 +46,8 @@ public class PlayerController : MonoBehaviour {
         enableMoveSub = EventBus.Subscribe<EnablePlayerEvent>(_OnEnableMovement);
         dodgeStartSub = EventBus.Subscribe<TutorialDodgeStartEvent>(StartDodge);
         dodgeEndSub = EventBus.Subscribe<TutorialDodgeEndEvent>(StopDodge);
+        walkSound = Resources.Load<AudioClip>("Audio/Movement/Walk");
+        dodgeSound = Resources.Load<AudioClip>("Audio/Movement/Dodge");
     }
 
     private void OnDestroy()
@@ -162,6 +168,7 @@ public class PlayerController : MonoBehaviour {
 
         tr.emitting = true;
         animator.SetBool("walking", false);
+        AudioSource.PlayClipAtPoint(dodgeSound, transform.position);
     }
 
     private void StopDodge(TutorialDodgeEndEvent tutorDodge = null)
@@ -252,6 +259,12 @@ public class PlayerController : MonoBehaviour {
         if (!isDodging) {
             //Debug.Log(IsWall(movement));
             rb.MovePosition(rb.position + moveSpeed * PlayerModifiers.moveSpeed * Time.fixedDeltaTime * movement.normalized);
+            // Play move sound if delay has passed and moving
+            if (Time.time - lastSound >= walkSoundDelay && movement != Vector3.zero)
+            {
+                AudioSource.PlayClipAtPoint(walkSound, transform.position);
+                lastSound = Time.time;
+            }
         }
     }
 

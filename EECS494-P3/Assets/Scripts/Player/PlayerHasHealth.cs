@@ -40,6 +40,8 @@ public class PlayerHasHealth : HasHealth {
             health += healthDelta;
             if (health > maxHealth - lockedHealth)
                 health = maxHealth - lockedHealth;
+            // Play heal sound
+            AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/curemagic/Cure2"), transform.position);
 
         }
         // damage
@@ -55,8 +57,10 @@ public class PlayerHasHealth : HasHealth {
                 {
                     health += healthDelta;
                 }
-                // Player will still have int changes
+                // Player will still have int health changes
                 EventBus.Publish(new PlayerDamagedEvent((int)healthDelta));
+                // Play damage sound
+                AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/Movement/Bones"), transform.position);
                 StartCoroutine(TriggerInvincibility());
             }
             

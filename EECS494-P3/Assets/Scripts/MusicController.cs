@@ -6,17 +6,27 @@ using UnityEngine.SceneManagement;
 public class MusicController : MonoBehaviour
 {
     private AudioSource audioSource;
-    private bool musicPlaying = false;
+
+    Subscription<GamePauseEvent> gamePauseSubscription;
+    Subscription<GamePlayEvent> gamePlaySubscription;
 
     private void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         audioSource = GetComponent<AudioSource>();
-        Debug.Log("Audio source: " + audioSource);
+
+        gamePauseSubscription = EventBus.Subscribe<GamePauseEvent>(_OnPause);
+        gamePlaySubscription = EventBus.Subscribe<GamePlayEvent>(_OnPlay);
     }
 
     void OnSceneLoaded(Scene s, LoadSceneMode m)
     {
+        // Get audio source
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+
         if (s.name == "GameScene")
         {
             // Start gameplay music
@@ -60,24 +70,27 @@ public class MusicController : MonoBehaviour
     private void PlayMusic()
     {
         Debug.Log("Playing music");
-        musicPlaying = true;
         audioSource.Play();
     }
 
     private void StopMusic()
     {
-        musicPlaying = false;
+        Debug.Log("Stopping music");
         audioSource.Stop();
     }
 
-    private void Update()
+    private void _OnPause(GamePauseEvent e)
     {
-        if (GameControl.GamePaused && musicPlaying)
-        {
-            StopMusic();
-        } else if (!GameControl.GamePaused && !musicPlaying)
-        {
-            PlayMusic();
-        }
+        StopMusic();
+    }
+
+    private void _OnPlay(GamePlayEvent e)
+    {
+        PlayMusic();
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

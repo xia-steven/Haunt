@@ -70,6 +70,7 @@ public class IsBuyable : MonoBehaviour
         if (selected && playerInventory.GetCoins() >= cost)
         {
             EventBus.Publish(new CoinEvent(-cost));
+            AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/coin"), transform.position);
             Apply();
             Destroy(gameObject);
             
