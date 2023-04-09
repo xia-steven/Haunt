@@ -16,7 +16,7 @@
       "name": "rifle",
       "fullClip": 30,
       "bulletDelay": 0.18,
-      "tapDelay": 0.1,
+      "tapDelay": 0.17,
       "screenShakeStrength": 0.075,
       "speedMultiplier": 0.6,
       "reloadTime": 1.3
