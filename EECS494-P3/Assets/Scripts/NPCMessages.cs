@@ -49,6 +49,9 @@ public class NPCMessages : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        // Only trigger on the player
+        if (other.tag != "Player") return;
+
         if(spoken)
         {
             interactSprite.SetActive(true);
@@ -63,7 +66,10 @@ public class NPCMessages : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(spoken)
+        // Only trigger on the player
+        if (other.tag != "Player") return;
+
+        if (spoken)
         {
             interactSprite.SetActive(false);
         }

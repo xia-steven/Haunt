@@ -8,6 +8,7 @@ public class PlayerHasHealth : HasHealth {
     Subscription<PedestalDestroyedEvent> pedDestSub;
     Subscription<PedestalRepairedEvent> pedRepSub;
     Subscription<MessageFinishedEvent> messFinSub;
+    Subscription<PlayerDodgeEvent> dodgeSub;
 
     public int id;
 
@@ -25,6 +26,7 @@ public class PlayerHasHealth : HasHealth {
         pedDestSub = EventBus.Subscribe<PedestalDestroyedEvent>(_OnPedestalDied);
         pedRepSub = EventBus.Subscribe<PedestalRepairedEvent>(_OnPedestalRepaired);
         messFinSub = EventBus.Subscribe<MessageFinishedEvent>(_OnTutorialDeathMessageFinished);
+        dodgeSub = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         
@@ -70,9 +72,6 @@ public class PlayerHasHealth : HasHealth {
                 health = 0;
                 CheckIsDead();
             }
-
-            // Invincibility if losing damage
-            StartCoroutine(TriggerInvincibility());
         }
 
         EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
@@ -131,6 +130,19 @@ public class PlayerHasHealth : HasHealth {
 
     }
 
+    void _OnDodge(PlayerDodgeEvent pde)
+    {
+        // Enable and disable invincibility on dodge
+        if(pde.start)
+        {
+            isInvincible = true;
+        }
+        else
+        {
+            isInvincible = false;
+        }
+    }
+
     public void AddShield()
     {
         shieldHealth += 2;
@@ -162,6 +174,7 @@ public class PlayerHasHealth : HasHealth {
         EventBus.Unsubscribe(pedDestSub);
         EventBus.Unsubscribe(pedRepSub);
         EventBus.Unsubscribe(messFinSub);
+        EventBus.Unsubscribe(dodgeSub);
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
