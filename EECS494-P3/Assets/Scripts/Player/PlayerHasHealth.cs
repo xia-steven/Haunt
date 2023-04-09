@@ -167,6 +167,7 @@ public class PlayerHasHealth : HasHealth {
         EventBus.Unsubscribe(pedDestSub);
         EventBus.Unsubscribe(pedRepSub);
         EventBus.Unsubscribe(dodgeSub);
+        EventBus.Unsubscribe(invincibleSub);
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
