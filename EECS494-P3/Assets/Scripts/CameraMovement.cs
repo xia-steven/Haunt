@@ -15,7 +15,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] float zRoomMax = 0f; // ADJUST IN SCENES
 
     [SerializeField] Vector3 camOffsetFromPlayer = new Vector3( 0f, 11.5f, -7.0f );
-    [SerializeField] float playerOffsetProportion = 0.6f;
+    [SerializeField] float playerOffsetProportion = 0.8f;
 
 
     private Transform player;

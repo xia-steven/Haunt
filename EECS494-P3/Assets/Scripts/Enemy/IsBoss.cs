@@ -4,7 +4,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(BossHasHealth))]
-[RequireComponent(typeof(LineRenderer))]
 public class IsBoss : MonoBehaviour
 {
     string configName = "BossData";
@@ -13,39 +12,26 @@ public class IsBoss : MonoBehaviour
     BossHasHealth health;
     Rigidbody rb;
 
-    // Corners of path to follow
-    Vector3 leftBottomCorner = new Vector3(-8, 0.5f, -6);
-    Vector3 rightBottomCorner = new Vector3(8, 0.5f, -6);
-    Vector3 leftTopCorner = new Vector3(-8, 0.5f, 5);
-    Vector3 rightTopCorner = new Vector3(8, 0.5f, 5);
-
-    bool setDirection = false;
     Vector3 direction;
 
     // Cleric spawning variables
     [SerializeField] List<Transform> spawners;
     GameObject clericPrefab;
 
-    // Possible projectiles to shoot
-    List<GameObject> projectiles;
+    GameObject basicBulletPrefab;
+    GameObject arbalestBulletPrefab;
 
-    float attackCooldown = 0f;
-
-    // Ground pound variables
-    public bool enabledGroundPound = false;
-    bool groundPounding = false;
+    // Special attack variables
     [SerializeField] GameObject sprite;
-
-    // Laser variables
-    public bool enabledLaser = false;
-    bool prepLaser = false;
-    bool warmupLaser = false;
-    bool lasering = false;
     private LineRenderer lineRenderer;
-    Vector3 startCorner;
+    private SphereCollider lineCollider;
+    Vector3 startRotation;
+
+    bool attacking = false;
+    bool canMoveInFixedUpdate = true;
 
     [SerializeField] Color warmupColor;
-
+    
 
     // Start is called before the first frame update
     void Start() {
@@ -57,67 +43,96 @@ public class IsBoss : MonoBehaviour
         health.setMaxHealth(bossData.health);
         rb = GetComponent<Rigidbody>();
 
-        projectiles = new List<GameObject>();
-
-        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer = GetComponentInChildren<LineRenderer>();
+        lineCollider = GetComponentInChildren<SphereCollider>();
         lineRenderer.enabled = false;
+        lineCollider.enabled = false;
+        startRotation = transform.position - 50f * Vector3.back;
 
         clericPrefab = Resources.Load<GameObject>("Prefabs/Enemy/Cleric");
 
 
-        // Load projectiles
-        // 4/12 basic, 3/12 magic, 2/12 demolition, 1/12 arbalest, 1/12 ground pound, 1/12 laser
-        projectiles.Add(Resources.Load<GameObject>("Prefabs/EnemyWeapons/ArbalestShot"));
-        projectiles.Add(Resources.Load<GameObject>("Prefabs/EnemyWeapons/MagicArcherShot"));
-        projectiles.Add(Resources.Load<GameObject>("Prefabs/EnemyWeapons/MagicArcherShot"));
-        projectiles.Add(Resources.Load<GameObject>("Prefabs/EnemyWeapons/MagicArcherShot"));
-        projectiles.Add(Resources.Load<GameObject>("Prefabs/EnemyWeapons/DemolitionShot"));
-        projectiles.Add(Resources.Load<GameObject>("Prefabs/EnemyWeapons/DemolitionShot"));
-        projectiles.Add(Resources.Load<GameObject>("Prefabs/Weapons/EnemyBasicBullet"));
-        projectiles.Add(Resources.Load<GameObject>("Prefabs/Weapons/EnemyBasicBullet"));
-        projectiles.Add(Resources.Load<GameObject>("Prefabs/Weapons/EnemyBasicBullet"));
-        projectiles.Add(Resources.Load<GameObject>("Prefabs/Weapons/EnemyBasicBullet"));
+        basicBulletPrefab = Resources.Load<GameObject>("Prefabs/Weapons/EnemyBasicBullet");
+        arbalestBulletPrefab = Resources.Load<GameObject>("Prefabs/EnemyWeapons/ArbalestShot");
     }
 
     private void Update()
     {
-        if (attackCooldown <= 0f && !groundPounding && !lasering)
+        if(!attacking)
         {
-            int randIndex = 0;
-            if (prepLaser || warmupLaser || lasering || (!enabledGroundPound && !enabledLaser))
+            attacking = true;
+            int attackIndex = Random.Range(0, 100);
+
+            if(attackIndex < 40)
             {
-                // Avoid double prepping/firing a laser
-                randIndex = Random.Range(0, projectiles.Count);
-            } else if (!enabledLaser)
-            {
-                // Add ground pound to the list
-                randIndex = Random.Range(0, projectiles.Count + 1);
-            } else
-            {
-                // Add laser and ground pound to the list
-                randIndex = Random.Range(0, projectiles.Count + 2);
+                StartCoroutine(basicAttack());
             }
-
-
-            if(randIndex == projectiles.Count)
+            else if (attackIndex < 70)
             {
-                groundPounding = true;
+                StartCoroutine(arbalestAttack());
+            }
+            else if (attackIndex < 90)
+            {
                 StartCoroutine(GroundPound());
-                return;
             }
-            else if (randIndex == projectiles.Count + 1)
+            else if (attackIndex < 100)
             {
-                prepLaser = true;
-                return;
+                StartCoroutine(FireLaser(3));
             }
-
-            Vector3 playerDir = (IsPlayer.instance.transform.position - transform.position).normalized;
-            fireBullet(projectiles[randIndex], playerDir, Shooter.Enemy, bossData.projectileSpeed, bossData.projectileLifetime);
-            attackCooldown = bossData.attackSpeed;
         }
-        attackCooldown -= Time.deltaTime;
+
     }
 
+    private void FixedUpdate()
+    {
+        if (!canMoveInFixedUpdate) return;
+
+
+        // Boss follows the player at a slow speed
+        Vector3 targetPos = IsPlayer.instance.transform.position;
+
+        direction = (targetPos - transform.position).normalized;
+
+
+        rb.velocity = direction * bossData.moveSpeed;
+    }
+
+    IEnumerator basicAttack()
+    {
+        int bulletCount = Random.Range(5, 11);
+
+        for(int a = 0; a < bulletCount; ++a)
+        {
+            // Random offset for each bullet
+            Quaternion randRotation = Quaternion.AngleAxis(Random.Range(-15f, 15f), Vector3.up);
+            Vector3 fireDir = randRotation * direction;
+            fireBullet(basicBulletPrefab, fireDir, Shooter.Enemy, bossData.projectileSpeed, bossData.projectileLifetime);
+            yield return new WaitForSeconds(bossData.attackSpeed / bulletCount);
+        }
+
+
+        yield return new WaitForSeconds(bossData.attackSpeed);
+        attacking = false;
+    }
+
+
+    IEnumerator arbalestAttack()
+    {
+        int bulletCount = Random.Range(3, 7);
+
+        for (int a = 0; a < bulletCount; ++a)
+        {
+            // Random offset for each bullet
+            Quaternion randRotation = Quaternion.AngleAxis(Random.Range(-15f, 15f), Vector3.up);
+            Vector3 fireDir = randRotation * direction;
+            fireBullet(arbalestBulletPrefab, fireDir, Shooter.Enemy, bossData.projectileSpeed, bossData.projectileLifetime);
+            yield return new WaitForSeconds(bossData.attackSpeed / bulletCount);
+        }
+
+
+        yield return new WaitForSeconds(bossData.attackSpeed);
+        attacking = false;
+    }
 
     // Base function to use for firing projectiles
     protected void fireBullet(GameObject bullet, Vector3 direction, Shooter shooter, float projectileSpeed, float lifetime)
@@ -129,104 +144,46 @@ public class IsBoss : MonoBehaviour
         // Set shooter to holder of gun (enemy or player)
         enemyBull.SetShooter(shooter);
         enemyBull.setLifetime(lifetime);
+        // Allow bullets to travel through initial walls
+        enemyBull.fromBoss = true;
 
         // Give bullet its velocity
         projectile.GetComponent<Rigidbody>().velocity = direction * projectileSpeed;
     }
 
-    private void FixedUpdate()
-    {
-        if (groundPounding || warmupLaser) return;
-
-        Vector3 roundedPos = transform.position;
-        roundedPos.x = (int)roundedPos.x;
-        roundedPos.z = (int)roundedPos.z;
-        roundedPos.y = 0.5f;
-
-        bool inCorner = (roundedPos == leftBottomCorner || roundedPos == rightBottomCorner ||
-            roundedPos == rightTopCorner || roundedPos == leftTopCorner);
-
-        // Start a laser if requested
-        if (prepLaser && inCorner)
-        {
-            warmupLaser = true;
-            prepLaser = false;
-            StartCoroutine(startLaser(rb.velocity.normalized));
-            startCorner = transform.position;
-            rb.velocity = Vector3.zero;
-            return;
-        }
-        if(lasering && inCorner && startCorner != transform.position)
-        {
-            lasering = false;
-        }
-
-
-        // Set velocity to follow the path
-        if(roundedPos == leftBottomCorner || onPath(leftBottomCorner, rightBottomCorner, roundedPos))
-        {
-            setDirection = false;
-            rb.velocity = new Vector3(bossData.moveSpeed, 0, 0);
-        }
-        else if (roundedPos == rightBottomCorner || onPath(rightBottomCorner, rightTopCorner, roundedPos))
-        {
-            setDirection = false;
-            rb.velocity = new Vector3(0, 0, bossData.moveSpeed);
-        }
-        else if (roundedPos == rightTopCorner || onPath(rightTopCorner, leftTopCorner, roundedPos))
-        {
-            setDirection = false;
-            rb.velocity = new Vector3(-bossData.moveSpeed, 0, 0);
-        }
-        else if (roundedPos == leftTopCorner || onPath(leftTopCorner, leftBottomCorner, roundedPos))
-        {
-            setDirection = false;
-            rb.velocity = new Vector3(0, 0, -bossData.moveSpeed);
-        }
-        else if (!setDirection)
-        {
-            setDirection = true;
-            direction = (Vector3.zero - transform.position).normalized;
-            rb.velocity = new Vector3(bossData.moveSpeed * direction.x, 0, bossData.moveSpeed * direction.z);
-        } else
-        {
-            rb.velocity = new Vector3(bossData.moveSpeed * direction.x, 0, bossData.moveSpeed * direction.z);
-        }
-    }
-
-    // Code adapted from https://forum.unity.com/threads/how-to-check-a-vector3-position-is-between-two-other-vector3-along-a-line.461474/
-    private bool onPath(Vector3 left, Vector3 right, Vector3 candidate)
-    {
-        return Vector3.Dot((right - left).normalized, (candidate - right).normalized) == -1f &&
-            Vector3.Dot((left - right).normalized, (candidate - left).normalized) == -1f;
-    }
-
     IEnumerator GroundPound()
     {
-        Vector3 targetPos = IsPlayer.instance.transform.position;
+        canMoveInFixedUpdate = false;
 
-        setDirection = true;
+        // Make sure fixedUpdate gets disabled
+        yield return null;
+
+        Vector3 targetPos = new Vector3(0, 0.5f, 0);
+
+        //setDirection = true;
         direction = (targetPos - transform.position).normalized;
 
         // Get to the location
-        while(Vector3.Distance(targetPos, transform.position) > 1f)
+        while(Vector3.Distance(targetPos, transform.position) > 0.25f)
         {
-            rb.velocity = new Vector3(bossData.moveSpeed * direction.x * 2, 0, bossData.moveSpeed * direction.z * 2);
+            rb.velocity = new Vector3(bossData.moveToCenterSpeed * direction.x, 0, bossData.moveToCenterSpeed * direction.z);
 
             yield return new WaitForFixedUpdate();
         }
+
+        rb.position = targetPos;
 
         rb.velocity = Vector3.zero;
 
         // Raise sprite in the air
         float initial_time = Time.time;
-        float progress = (Time.time - initial_time) / bossData.groundPoundWindup;
+        float progress = (Time.time - initial_time) / bossData.shockwaveWindup;
 
         Vector3 initialScale = sprite.transform.localScale;
 
         while (progress < 1.0f)
         {
-            progress = (Time.time - initial_time) / bossData.groundPoundWindup;
+            progress = (Time.time - initial_time) / bossData.shockwaveWindup;
 
             // Scale sprite up
             sprite.transform.localScale = initialScale * (1 + progress * 2.0f);
@@ -237,44 +194,114 @@ public class IsBoss : MonoBehaviour
 
         // Ground pound down
         initial_time = Time.time;
-        progress = (Time.time - initial_time) / bossData.groundPoundTime;
+        progress = (Time.time - initial_time) / bossData.shockwavePound;
 
         while (progress < 1.0f)
         {
-            progress = (Time.time - initial_time) / bossData.groundPoundTime;
+            progress = (Time.time - initial_time) / bossData.shockwavePound;
 
-            // Scale sprite up
+            // Scale sprite down
             sprite.transform.localScale = initialScale * (1 + (1-progress) * 2.0f);
 
 
             yield return null;
         }
 
-        // Spawn ground pound radius
-        sprite.transform.localScale = initialScale;
+        // Spawn shockwave line renderer
+        // Code adapted from https://www.loekvandenouweland.com/content/use-linerenderer-in-unity-to-draw-a-circle.html
+        int segmentCount = 36;
+        lineRenderer.useWorldSpace = true;
+        lineRenderer.positionCount = segmentCount + 1;
+        lineRenderer.enabled = true;
+        // Reset radius before enabling
+        lineCollider.radius = 0.01f;
+        lineCollider.enabled = true;
 
-        GameObject projectile = Instantiate(projectiles[4], transform.position, Quaternion.identity);
-        projectile.GetComponent<IsExplosive>().setExplosiveRadius(3f);
-        Destroy(projectile, 0.01f);
+        float finalRadius = 30.0f;
 
-        // Reverse direction to avoid going out of bounds
-        direction = -direction;
+        int pointCount = segmentCount + 1;
+        Vector3[] points = new Vector3[pointCount];
 
-        groundPounding = false;
+        initial_time = Time.time;
+        progress = (Time.time - initial_time) / bossData.shockwaveTime;
+
+        while(progress < 1.0f)
+        {
+            progress = (Time.time - initial_time) / bossData.shockwaveTime;
+
+            for (int i = 0; i < pointCount; ++i)
+            {
+                float radians = Mathf.Deg2Rad * (i * 360f / segmentCount);
+                points[i] = new Vector3(Mathf.Sin(radians) * finalRadius * (0.01f + progress), 0.5f, Mathf.Cos(radians) * finalRadius * (0.01f + progress));
+            }
+
+            lineRenderer.SetPositions(points);
+            lineCollider.radius = (finalRadius * progress) / 2;
+
+            yield return null;
+        }
+
+        lineRenderer.enabled = false;
+        lineCollider.enabled = false;
+        yield return new WaitForSeconds(bossData.attackSpeed);
+        attacking = false;
+        canMoveInFixedUpdate = true;
     }
 
 
-    IEnumerator startLaser(Vector3 laserDirection)
+    IEnumerator FireLaser(int laserCount)
     {
+        canMoveInFixedUpdate = false;
+
+        // Make sure fixedUpdate gets disabled
+        yield return null;
+
+        Vector3 targetPos = new Vector3(0, 0.5f, 0);
+
+        direction = (targetPos - transform.position).normalized;
+
+        // Get to the location
+        while (Vector3.Distance(targetPos, transform.position) > 0.5f)
+        {
+            rb.velocity = new Vector3(bossData.moveToCenterSpeed * direction.x, 0, bossData.moveToCenterSpeed * direction.z);
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        rb.position = targetPos;
+
+        rb.velocity = Vector3.zero;
+
+
         // Warmup laser
         float initial_time = Time.time;
         float progress = (Time.time - initial_time) / bossData.laserWindup;
 
+        Color initialColor = lineRenderer.material.color;
         lineRenderer.enabled = true;
         lineRenderer.material.color = warmupColor;
-        lineRenderer.SetPositions(new Vector3[] { 
-            new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z)
-            , transform.position - laserDirection * 50 });
+
+        float initialStartWidth = lineRenderer.startWidth;
+        float initialEndWidth = lineRenderer.endWidth;
+
+        Vector3[] laserPoints = new Vector3[laserCount * 2];
+
+        float offsetPerLaser = 360f / (float)laserCount;
+
+        for(int a = 0; a < laserCount * 2; ++a)
+        {
+            if(a % 2 == 0)
+            {
+                laserPoints[a] =  new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z);
+            }
+            else
+            {
+                laserPoints[a] = Quaternion.Euler(0, offsetPerLaser * ((a + 1) / 2), 0) * startRotation;
+            }
+        }
+
+        lineRenderer.positionCount = laserCount * 2;
+        lineRenderer.SetPositions(laserPoints);
 
 
         while (progress < 1.0f)
@@ -283,45 +310,61 @@ public class IsBoss : MonoBehaviour
 
             // Fade in line renderer
             // Set the width of the line
-            lineRenderer.startWidth = progress / 2;
-            lineRenderer.endWidth = progress / 2;
+            lineRenderer.startWidth = initialStartWidth * progress;
+            lineRenderer.endWidth = initialEndWidth * progress;
 
             yield return null;
         }
 
-        // Set laser active
-        lasering = true;
-        warmupLaser = false;
 
-        lineRenderer.material.color = new Color32(83, 178, 14, 219);
+        lineRenderer.material.color = initialColor;
 
-        // Wait to reach the corner again
-        while(lasering)
+        initial_time = Time.time;
+        progress = (Time.time - initial_time) / bossData.laserTime;
+
+        // Rotate with the laser
+        while (progress < 1.0f)
         {
-            lineRenderer.SetPositions(new Vector3[] {
-            new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z)
-            , transform.position - laserDirection * 50 });
+            progress = (Time.time - initial_time) / bossData.laserTime;
 
-            RaycastHit hitObj;
-            // Only raycast for the player
-            int layerMask = LayerMask.GetMask("Player");
+            startRotation = Quaternion.Euler(0, bossData.laserRotateSpeed,0) * startRotation;
 
-            if(Physics.Raycast(transform.position, (transform.position - laserDirection * 50).normalized, out hitObj, 50f, layerMask))
+            // Update lasers
+            for(int b = 0; b < laserCount; ++b)
             {
-                PlayerHasHealth hitPlayer;
-                if(hitObj.collider.TryGetComponent<PlayerHasHealth>(out hitPlayer))
+                laserPoints[(b * 2) + 1] = Quaternion.Euler(0, bossData.laserRotateSpeed, 0) * laserPoints[(b* 2) + 1];
+            }
+
+            lineRenderer.SetPositions(laserPoints);
+
+            for (int b = 0; b < laserCount; ++b)
+            {
+                RaycastHit hitObj;
+                // Only raycast for the player
+                int layerMask = LayerMask.GetMask("Player");
+
+                if (Physics.Raycast(lineRenderer.GetPosition(b * 2), (lineRenderer.GetPosition((b * 2) + 1) - lineRenderer.GetPosition(b * 2)).normalized,
+                    out hitObj, lineRenderer.GetPosition((b * 2) + 1).magnitude, layerMask))
                 {
-                    // Damage player
-                    hitPlayer.AlterHealth(-1, DeathCauses.Enemy);
+                    PlayerHasHealth hitPlayer;
+                    if (hitObj.collider.TryGetComponent<PlayerHasHealth>(out hitPlayer))
+                    {
+                        // Damage player
+                        hitPlayer.AlterHealth(-1, DeathCauses.Enemy);
+                    }
                 }
             }
+
+            
 
             yield return new WaitForFixedUpdate();
         }
 
         lineRenderer.enabled = false;
-        prepLaser = false;
-        warmupLaser = false;
+
+        yield return new WaitForSeconds(bossData.attackSpeed);
+        attacking = false;
+        canMoveInFixedUpdate = true;
     }
 
 
@@ -333,5 +376,17 @@ public class IsBoss : MonoBehaviour
             Vector3 spawnPos = spawners[randomLocIndex].position + new Vector3(0, 0.6f, 0);
             GameObject spawnedEnemy = Instantiate(clericPrefab, spawnPos, Quaternion.identity); 
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // On trigger enter for laser and shockwave
+        PlayerHasHealth playerHealth = other.GetComponent<PlayerHasHealth>();
+        if (playerHealth != null)
+        {
+            Debug.Log("Player damaged from boss");
+            playerHealth.AlterHealth(-1, DeathCauses.Enemy);
+        }
+
     }
 }

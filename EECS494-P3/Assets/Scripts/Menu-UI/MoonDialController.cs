@@ -14,21 +14,21 @@ public class MoonDialController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (SceneManager.GetActiveScene().name != "GameScene")
+        if (SceneManager.GetActiveScene().name != "GameScene" && SceneManager.GetActiveScene().name != "TutorialGameScene")
         {
             gameObject.SetActive(false);
             return;
         };
-        nightDuration = GameControl.NightTimeRemaining;
+        nightDuration = GameControl.NightLength;
         moonUI = GetComponent<Image>();
-        Debug.Log("Duration: " + nightDuration);
         StartCoroutine(FetchNightDuration());
     }
 
     IEnumerator FetchNightDuration()
     {
         yield return new WaitForSeconds(1f);
-        nightDuration = GameControl.NightTimeRemaining;
+        nightDuration = GameControl.NightLength;
+        Debug.Log("Duration: " + nightDuration);
     }
 
     // Update is called once per frame
