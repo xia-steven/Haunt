@@ -12,7 +12,7 @@ public class MessageManager : MonoBehaviour
     [SerializeField] Image textBackground;
     [SerializeField] Image clickIcon;
     [Tooltip("Number of frames to wait in between each character")]
-    float textDelay = 0.04f;
+    float textDelay = 0.033f;
 
     bool sendingMessage = false;
     Color backgroundOpaqueColor;

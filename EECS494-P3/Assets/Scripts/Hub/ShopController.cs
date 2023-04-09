@@ -18,8 +18,9 @@ public class ShopController : MonoBehaviour
     private GameObject minigunPrefab;
     private GameObject sniperPrefab;
     private GameObject swordPrefab;
+    private GameObject launcherPrefab;
 
-    
+
     // pulled from GameControl to determine what's on sale
     private int day; 
     
@@ -33,6 +34,7 @@ public class ShopController : MonoBehaviour
         minigunPrefab = Resources.Load<GameObject>("Prefabs/Hub/Minigun");
         sniperPrefab = Resources.Load<GameObject>("Prefabs/Hub/Sniper");
         swordPrefab = Resources.Load<GameObject>("Prefabs/Hub/Sword");
+        swordPrefab = Resources.Load<GameObject>("Prefabs/Hub/Launcher");
         day = GameControl.Day;
         playerInventory = IsPlayer.instance.gameObject.GetComponent<Inventory>();
         InitShop();
@@ -82,16 +84,16 @@ public class ShopController : MonoBehaviour
     {
         GameObject minigun = Instantiate(minigunPrefab);
         // TODO Replace with bazooka
-        GameObject sword = Instantiate(swordPrefab);
+        GameObject launcher = Instantiate(launcherPrefab);
         minigun.transform.SetParent( weaponTableLeft.transform, false);
-        sword.transform.SetParent( weaponTableRight.transform, false);
+        launcher.transform.SetParent( weaponTableRight.transform, false);
     }
     void DayThreeShop()
     {
         // todo determine which weapons should be available to the player based on what's in their inventory
         List<string> currWeapons = playerInventory.GetCurrentWeapons();
 
-        List<GameObject> possibleWeapons = new List<GameObject>{ shotgunPrefab, sniperPrefab, minigunPrefab, swordPrefab };
+        List<GameObject> possibleWeapons = new List<GameObject>{ shotgunPrefab, sniperPrefab, minigunPrefab, launcherPrefab };
 
         for(int a = 0; a < currWeapons.Count; ++a )
         {
@@ -99,9 +101,9 @@ public class ShopController : MonoBehaviour
             {
                 possibleWeapons.Remove(minigunPrefab);
             }
-            else if (currWeapons[a] == "Sword")
+            else if (currWeapons[a] == "Launcher")
             {
-                possibleWeapons.Remove(swordPrefab);
+                possibleWeapons.Remove(launcherPrefab);
             }
             else if (currWeapons[a] == "Shotgun")
             {
@@ -133,6 +135,8 @@ public class ShopController : MonoBehaviour
             secondWeapon.transform.SetParent(weaponTableRight.transform, false);
         }
 
+        // Not require player to choose gun/weapon on third night
+        EventBus.Publish(new ActivateTeleporterEvent());
     }
 
     void InitRandomUpgrades()
