@@ -81,29 +81,10 @@ public class IsBuyable : MonoBehaviour
     {
         
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerPhysical"))
-        {
-            Debug.Log(gameObject.name + " triggered");
-            selected = true;
-            sr.sprite = selectedSprite;
-            if (itemDescription)
-            {
-                Debug.Log(costText.text);
-                itemDescription.SetActive(true);
-                costText.text = cost.ToString();
-            }
-
-        }
-                
-    
-    }
     
     private void OnTriggerStay(Collider other)
     {
-        if (!selected && other.gameObject.layer == LayerMask.NameToLayer("PlayerPhysical"))
+        if (!selected && other.tag == "Player")
         {
             Debug.Log(gameObject.name + " triggered");
             selected = true;
@@ -122,7 +103,7 @@ public class IsBuyable : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerPhysical"))
+        if (other.tag == "Player")
         {
             selected = false;
             sr.sprite = defaultSprite;

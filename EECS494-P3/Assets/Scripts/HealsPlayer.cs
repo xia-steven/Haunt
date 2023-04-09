@@ -16,7 +16,7 @@ public class HealsPlayer : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("PlayerPhysical")) {
+        if (other.tag == "Player") {
             IsPlayer.instance.gameObject.GetComponent<PlayerHasHealth>().AlterHealth(healAmount);
             Destroy(gameObject);
         }
