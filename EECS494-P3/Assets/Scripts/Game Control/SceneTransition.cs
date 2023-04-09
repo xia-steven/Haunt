@@ -29,7 +29,7 @@ public class SceneTransition : MonoBehaviour {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name == "HubWorld" ? "GameScene" : "HubWorld");
         }
         else if (SceneManager.GetActiveScene().name == "HubWorld") {
-            SceneManager.LoadScene("LAB_BossTesting");
+            SceneManager.LoadScene("BossScene");
         }
     }
 }
