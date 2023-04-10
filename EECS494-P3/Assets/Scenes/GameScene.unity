@@ -251,6 +251,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 492145512768473495, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 374561e0432b241498e023d6bc9817df, type: 2}
     - target: {fileID: 556700441471252995, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -439,6 +443,10 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4753466856121092163, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb37de75343c9344cba0c45a9d3912dc, type: 2}
     - target: {fileID: 5079929749545031554, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -515,6 +523,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 7037373312234640111, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7106741852702696952, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: otherScene
       value: HubWorld
@@ -555,6 +567,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -0.99
       objectReference: {fileID: 0}
+    - target: {fileID: 8638054748176387227, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 75af3898c125c254783e3f52cfa0f29e, type: 2}
     - target: {fileID: 8739438588587760267, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
