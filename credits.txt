@@ -37,3 +37,45 @@ Author Parriah
 
 Fire animation:
 https://assetstore.unity.com/packages/vfx/particles/fire-explosions/procedural-fire-141496
+
+Weapon Sounds:
+https://opengameart.org/content/q009s-weapon-sounds
+
+Reloading Sounds:
+https://opengameart.org/content/handling-guns
+
+RPG Sound Pack:
+https://opengameart.org/content/rpg-sound-pack
+
+Shotgun Sounds:
+https://opengameart.org/content/chaingun-pistol-rifle-shotgun-shots
+
+Shotgun Reload:
+https://opengameart.org/content/shotgun-reload-sound-effects
+
+Minigun Reload:
+https://opengameart.org/content/gun-reload-lock-or-click-sound
+
+Attack Sounds:
+https://opengameart.org/content/5-male-attack-voices
+
+Player Movement:
+https://opengameart.org/content/12-player-movement-sfx
+
+Ghost Sounds:
+https://opengameart.org/content/ghostly-humming
+
+Skeleton Damage:
+https://opengameart.org/content/bones-rattle
+
+Skeleton Death:
+https://opengameart.org/content/fire-evil-spell
+
+Boss Battle Music by Matthew Pablo
+http://www.matthewpablo.com
+
+Gameplay Music:
+https://opengameart.org/content/battle-march-epic-orchestral-music-loop
+
+Shop Music:
+https://opengameart.org/content/town-in-ruins-loop
