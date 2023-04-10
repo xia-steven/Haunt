@@ -42,11 +42,13 @@ public class BossHasHealth : HasHealth
         StartCoroutine(FlashRed());
         if(health <= 0)
         {
-            Destroy(this.gameObject);
+            health = 0;
             // Hide health bar on death
             healthBarImage.gameObject.SetActive(false);
 
-            GameControl.WinGame();
+            StartCoroutine(DeathSequence());
+
+
         }
         else
         {
@@ -64,6 +66,33 @@ public class BossHasHealth : HasHealth
     }
 
 
+
+    IEnumerator DeathSequence()
+    {
+        // Disable player and set invincible
+        EventBus.Publish(new DisablePlayerEvent());
+        EventBus.Publish(new ToggleInvincibilityEvent(true));
+
+
+        float initial_time = Time.time;
+        float progress = (Time.time - initial_time) / 2.0f;
+
+        Color initialColor = normalColor;
+
+        while (progress < 1.0f)
+        {
+            progress = (Time.time - initial_time) / 2.0f;
+
+            sr.color = new Color(initialColor.r, initialColor.g, initialColor.b, initialColor.a * (1 - progress));
+
+
+            yield return null;
+        }
+
+
+        Destroy(this.gameObject);
+        GameControl.WinGame();
+    }
 
     private IEnumerator FlashRed()
     {

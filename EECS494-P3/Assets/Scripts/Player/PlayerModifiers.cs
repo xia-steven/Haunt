@@ -9,6 +9,7 @@ static class PlayerModifiers
     public static float reloadSpeed = 1;
     public static float maxPierce = 1;
     public static float explosiveRadius = 1;
+    public static bool hasMultipleWeapons = false;
 
     public static void resetModifiers()
     {
@@ -17,5 +18,6 @@ static class PlayerModifiers
         reloadSpeed = 1;
         maxPierce = 1;
         explosiveRadius = 1;
+        hasMultipleWeapons = false;
     }
 }
