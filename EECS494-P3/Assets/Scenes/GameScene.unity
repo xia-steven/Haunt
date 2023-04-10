@@ -443,6 +443,10 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4753466856121092163, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb37de75343c9344cba0c45a9d3912dc, type: 2}
     - target: {fileID: 5079929749545031554, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: m_Layer
       value: 9
