@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class CanFallInPit : MonoBehaviour
 {
-    private float groundDistance = 0.5f;
+    private float groundDistance = 1f;
     private float pitResetDistance = 1.1f;
     [SerializeField] private float duration = 0.2f; // the time it takes for the sprite to shrink
     [SerializeField] private float scale = 0.5f; // the final scale of the sprite in hole
+    private int numOver = 0;
     private bool playerEnabled = true;
     private bool overPit = false;
     private bool isDodging = false;
     private bool isFalling = false;
-    private Vector3 horizontalOffset;
+    private Vector3 relocationLocation;
     private Vector3 originalScale; // the original scale of the sprite
     Subscription<OverPitEvent> overPitEventSubscription;
     Subscription<DisablePlayerEvent> disablePlayerEventSubscription;
@@ -35,8 +36,27 @@ public class CanFallInPit : MonoBehaviour
         // Check if event is about this gameObject
         if (e.entered == gameObject)
         {
-            horizontalOffset = e.horizontalOffset;
-            overPit = e.over;
+            Debug.Log("Over pit: " + e.horizontalOffset + " bool: " + e.over);
+            
+            if (e.over)
+            {
+                relocationLocation = e.horizontalOffset;
+                numOver++;
+                overPit = e.over;
+            } else
+            {
+                // Only over one pit so no longer worried about falling
+                if (numOver <= 1)
+                {
+                    overPit = e.over;
+                }
+                numOver--;
+                // Reset to 0 if negative number
+                if (numOver < 0)
+                {
+                    numOver = 0;
+                }
+            }
         }
     }
 
@@ -142,8 +162,9 @@ public class CanFallInPit : MonoBehaviour
         if (gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             transform.localScale = originalScale;
-            Vector3 adjustedPosition = transform.position + (horizontalOffset * pitResetDistance);
-            transform.position = adjustedPosition;
+            //Vector3 adjustedPosition = transform.position + (horizontalOffset * pitResetDistance);
+            //transform.position = adjustedPosition;
+            transform.position = relocationLocation;
             GetComponent<PlayerHasHealth>().AlterHealth(-1, DeathCauses.Pit);
         }
         else
