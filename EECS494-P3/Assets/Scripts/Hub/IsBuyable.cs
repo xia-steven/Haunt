@@ -8,7 +8,8 @@ public class IsBuyable : MonoBehaviour
 {
     
     [SerializeField] private Sprite selectedSprite;
-    protected int cost = 3;
+    // Cost of shield and health
+    protected int cost = 4;
     // access to a sub-object
     protected GameObject itemDescription;
     protected TextMeshPro descriptionText;

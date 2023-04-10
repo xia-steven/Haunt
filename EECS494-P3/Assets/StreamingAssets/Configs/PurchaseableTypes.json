@@ -3,18 +3,18 @@
     "types": [
         {
             "type": 0,
-            "cost": 5,
+            "cost": 10,
             "description": "Dashing through bullets reflects them"
         },
         {
             "type": 1,
-            "cost": 5,
+            "cost": 10,
             "rate1": 1.5,
             "description": "Dashing leaves behind an explosive"
         },
         {
             "type": 2,
-            "cost": 5,
+            "cost": 10,
             "rate1": 1.1,
             "rate2": 1.25,
             "duration": 5,
@@ -22,51 +22,51 @@
         },
         {
             "type": 3,
-            "cost": 5,
+            "cost": 10,
             "rate1": 2,
             "duration": 5,
             "description": "The first shot after dashing deals 2x damage"
         },
         {
             "type": 4,
-            "cost": 5,
+            "cost": 10,
             "rate1": 1,
             "description": "Shots pierce the first enemy",
             "maxOwnable": 2
         },
         {
             "type": 5,
-            "cost": 5,
+            "cost": 10,
             "rate1": 1.2,
             "description": "Increases speed"
         },
         {
             "type": 6,
-            "cost": 5,
+            "cost": 10,
             "rate1": 1.4,
             "duration": 2.5,
             "description": "Deal extra damage while standing still"
         },
         {
             "type": 7,
-            "cost": 5,
+            "cost": 10,
             "rate1": 1.2,
             "description": "Makes reloads faster",
             "maxOwnable": 2
         },
         {
             "type": 8,
-            "cost": 9,
+            "cost": 18,
             "description": "Shotgun.  Perfect for crowds."
         },
         {
             "type": 9,
-            "cost": 9,
+            "cost": 18,
             "description": "Sniper.  Your aim better be good!"
         },
         {
             "type": 10,
-            "cost": 9,
+            "cost": 18,
             "description": "Minigun.  Unlimited powerrrrr."
         },
         {
@@ -78,13 +78,13 @@
         },
         {
             "type": 12,
-            "cost": 5,
+            "cost": 10,
             "rate1": 2,
             "description": "Explosive radius is doubled"
         },
         {
             "type": 13,
-            "cost": 9,
+            "cost": 18,
             "description": "Launcher.  BOOM!!"
         }
     ]
