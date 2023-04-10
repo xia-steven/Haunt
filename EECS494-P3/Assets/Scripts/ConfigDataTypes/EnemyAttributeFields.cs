@@ -62,6 +62,7 @@ public class EnemyWaveData : Savable
     {
         public string path;
         public int weight;
+        public int cost;
         public bool isMelee;
     }
 }

@@ -4,6 +4,6 @@
     "nightLength": 60.0,
     "waveTimeout": 20.0,
     "updateFrequency": 0.5,
-    "waveDailyScale": 2.5,
-    "initialWaveSize": 2
+    "waveDailyScale": 2,
+    "initialWaveSize": 5
 }
