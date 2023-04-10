@@ -60,7 +60,7 @@ public class Sniper : Weapon
         Vector3 raycastSpawn = barrelSpawn;
         raycastSpawn.y = 0.5f;
 
-        int layerMask = ~(1 << LayerMask.NameToLayer("Special"));
+        int layerMask = ~LayerMask.GetMask("Special", "BossShockwave");
 
         // Get all hits of raycast
         hits = Physics.RaycastAll(raycastSpawn, transform.forward, 100, layerMask);

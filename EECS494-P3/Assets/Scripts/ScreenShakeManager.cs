@@ -29,7 +29,7 @@ public class ScreenShakeManager : MonoBehaviour {
     }
 
     public float k = 0.1f;
-    public float dampening_factor = 0.95f;
+    public float dampening_factor = 0.97f;
     Vector3 velocity = Vector3.zero;
 
     // Update is called once per frame

@@ -330,7 +330,7 @@ public class IsBoss : MonoBehaviour
         progress = (Time.time - initial_time) / bossData.laserTime;
 
         // Rotate with the laser
-        while (progress < 1.0f)
+        while (progress < 1.0f && health.GetHealth() > 0)
         {
             progress = (Time.time - initial_time) / bossData.laserTime;
 
