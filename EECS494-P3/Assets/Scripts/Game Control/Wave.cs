@@ -186,21 +186,26 @@ public class Wave
         // Wait 10 more seconds
         yield return new WaitForSeconds(10f);
 
+
+        int spawnCount = 0;
+
         // Spawn more enemies while the night is ending
         while(GameControl.NightEnding)
         {
-            for (int a = 0; a < 3; ++a)
+            for (int a = 0; a < 3 && spawnCount < 25; ++a)
             {
                 // Archer, torch, or pitchfork
                 spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
                 GameObject.Instantiate(potentialMembers[Random.Range(0,3)], spawnPos, Quaternion.identity);
-
-                // Cleric
-                spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
-                GameObject.Instantiate(potentialMembers[potentialMembers.Count - 1], spawnPos, Quaternion.identity);
+                spawnCount++;
             }
 
-            yield return new WaitForSeconds(5f);
+
+            // Cleric
+            spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
+            GameObject.Instantiate(potentialMembers[potentialMembers.Count - 1], spawnPos, Quaternion.identity);
+
+            yield return new WaitForSeconds(10f);
         }
 
     }
