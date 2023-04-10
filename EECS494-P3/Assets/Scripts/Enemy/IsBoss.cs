@@ -77,7 +77,9 @@ public class IsBoss : MonoBehaviour
             }
             else if (attackIndex < 100)
             {
-                StartCoroutine(FireLaser(3));
+                // Fire more lasers as health decreases
+                int laserNum = 1 + (int)((1 - health.GetHealth() / bossData.health) * 4);
+                StartCoroutine(FireLaser(laserNum));
             }
         }
 
@@ -236,7 +238,7 @@ public class IsBoss : MonoBehaviour
             }
 
             lineRenderer.SetPositions(points);
-            lineCollider.radius = (finalRadius * progress) / 2;
+            lineCollider.radius = (finalRadius * progress);
 
             yield return null;
         }
