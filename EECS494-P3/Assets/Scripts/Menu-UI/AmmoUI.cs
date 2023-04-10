@@ -94,7 +94,7 @@ public class AmmoUI : MonoBehaviour
         }
         else if (weaponType == "launcher")
         {
-            gunImg.sprite = Resources.LoadAll<Sprite>("Textures-Sprites/grenade_launcher")[0];
+            gunImg.sprite = Resources.LoadAll<Sprite>("Textures-Sprites/grenade_launchers")[0];
         }
 
         gunImg.SetNativeSize();

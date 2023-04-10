@@ -101,7 +101,7 @@ public class MusicController : MonoBehaviour
     {
         AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/Movement/Death"), transform.position);
         
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2.75f);
 
         audioSource.clip = Resources.Load<AudioClip>("Audio/Music/ShopMusic");
         PlayMusic();
