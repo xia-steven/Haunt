@@ -134,9 +134,6 @@ public class ShopController : MonoBehaviour
             GameObject secondWeapon = Instantiate(possibleWeapons[secondIndex]);
             secondWeapon.transform.SetParent(weaponTableRight.transform, false);
         }
-
-        // Not require player to choose gun/weapon on third night
-        EventBus.Publish(new ActivateTeleporterEvent());
     }
 
     void InitRandomUpgrades()

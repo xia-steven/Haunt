@@ -67,8 +67,6 @@ public class AmmoUI : MonoBehaviour
     {
         if (!gameObject.activeInHierarchy) return;
 
-        Debug.Log("Swapped Weapon");
-
         swapped = true;
 
         current = e.newWeapon;
