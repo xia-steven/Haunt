@@ -133,7 +133,10 @@ public abstract class Weapon : MonoBehaviour {
     protected virtual void _OnMessageFinished(MessageFinishedEvent e)
     {
         Debug.Log("Message finished received by weapon");
-        StartCoroutine(MessageDelay(e));
+        if(isActiveAndEnabled)
+        {
+            StartCoroutine(MessageDelay(e));
+        }
     }
     protected IEnumerator MessageDelay(MessageFinishedEvent e)
     {
@@ -175,6 +178,13 @@ public abstract class Weapon : MonoBehaviour {
 
         // Set shooter to holder of gun (enemy or player)
         projectile.GetComponent<Bullet>().SetShooter(shooter);
+
+
+        // Calculate the rotation of gun barrel
+        Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+
+        // Set the rotation of the bullet
+        projectile.transform.rotation = rotation;
 
         // Give bullet its velocity
         Rigidbody rb = projectile.GetComponent<Rigidbody>();

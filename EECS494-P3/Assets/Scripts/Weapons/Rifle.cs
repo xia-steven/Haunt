@@ -22,7 +22,7 @@ public class Rifle : Weapon
 
         spriteRenderer = rifleSprite.GetComponent<SpriteRenderer>();
         wielder = this.transform.parent.gameObject;
-        basicBullet = Resources.Load<GameObject>("Prefabs/Weapons/RifleBullet");
+        basicBullet = Resources.Load<GameObject>("Prefabs/Weapons/MinigunBullet");
     }
     protected override void _OnFire(FireEvent e)
     {

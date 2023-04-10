@@ -12,8 +12,14 @@ public class TeleporterDisableUntilPurchase : MonoBehaviour {
     private void Start() {
         tp = GetComponent<IsTeleporter>();
 
+ 
         tp.Active = false;
         activated = false;
+
+        if (GameControl.Day == 3)
+        {
+            StartCoroutine(activateOnDelay(5f));
+        }
 
         activateSub = EventBus.Subscribe<ActivateTeleporterEvent>(onTeleporterActivate);
     }
@@ -29,4 +35,13 @@ public class TeleporterDisableUntilPurchase : MonoBehaviour {
         activated = true;
         tp.Active = true;
     }   
+
+
+    private IEnumerator activateOnDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        activated = true;
+        tp.Active = true;
+    }
 }

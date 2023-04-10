@@ -151,13 +151,9 @@ public class Inventory : MonoBehaviour
     public void _OnSpecificSwap(SwapSpecificEvent e)
     {
         // Can't swap with only 1 or 0 weapons
-        if (numWeapons <= 1)
+        if (e.newScene)
         {
-            if (numWeapons == 1 && e.newScene)
-            {
-                weapons[currentWeapon].GetComponent<Weapon>().messageVisible = false;
-            }
-            return;
+            weapons[currentWeapon].GetComponent<Weapon>().messageVisible = false;
         }
 
         bool wasMessage = weapons[currentWeapon].GetComponent<Weapon>().messageVisible;
@@ -183,7 +179,10 @@ public class Inventory : MonoBehaviour
             {
                 weapons[currentWeapon].GetComponent<Weapon>().messageVisible = wasMessage;
                 // Play swap sound - placed here so not played on scene load
-                AudioSource.PlayClipAtPoint(weaponSwapSound, transform.position);
+                if(numWeapons > 1)
+                {
+                    AudioSource.PlayClipAtPoint(weaponSwapSound, transform.position);
+                }
             }
         } else
         {
