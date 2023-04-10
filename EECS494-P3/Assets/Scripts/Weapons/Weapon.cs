@@ -181,7 +181,7 @@ public abstract class Weapon : MonoBehaviour {
 
 
         // Calculate the rotation of gun barrel
-        Quaternion rotation = Quaternion.LookRotation(direction, Vector3.forward);
+        Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
 
         // Set the rotation of the bullet
         projectile.transform.rotation = rotation;
