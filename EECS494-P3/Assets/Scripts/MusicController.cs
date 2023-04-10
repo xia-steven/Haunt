@@ -9,6 +9,7 @@ public class MusicController : MonoBehaviour
 
     Subscription<GamePauseEvent> gamePauseSubscription;
     Subscription<GamePlayEvent> gamePlaySubscription;
+    Subscription<GameLossEvent> gameLossSubscription;
 
     private void Awake()
     {
@@ -17,6 +18,7 @@ public class MusicController : MonoBehaviour
 
         gamePauseSubscription = EventBus.Subscribe<GamePauseEvent>(_OnPause);
         gamePlaySubscription = EventBus.Subscribe<GamePlayEvent>(_OnPlay);
+        gameLossSubscription = EventBus.Subscribe<GameLossEvent>(_OnLoss);
     }
 
     void OnSceneLoaded(Scene s, LoadSceneMode m)
@@ -86,6 +88,22 @@ public class MusicController : MonoBehaviour
 
     private void _OnPlay(GamePlayEvent e)
     {
+        PlayMusic();
+    }
+
+    private void _OnLoss(GameLossEvent e)
+    {
+        StopMusic();
+        StartCoroutine(LossMusic());
+    }
+
+    private IEnumerator LossMusic()
+    {
+        AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/Movement/Death"), transform.position);
+        
+        yield return new WaitForSeconds(2.5f);
+
+        audioSource.clip = Resources.Load<AudioClip>("Audio/Music/ShopMusic");
         PlayMusic();
     }
 

@@ -8,47 +8,56 @@
     "enemySpawnData" : [
         {
             "path" : "Prefabs/Enemy/PeasantTorch",
-            "weight" : 4,
+            "weight" : 1,
+            "cost" : 1,
             "isMelee" : true
         },
         {
             "path" : "Prefabs/Enemy/PeasantPitchfork",
-            "weight" : 4,
+            "weight" : 2,
+            "cost" : 1,
             "isMelee" : true
         },
         {
             "path" : "Prefabs/Enemy/Archer",
             "weight" : 5,
+            "cost" : 2,
             "isMelee" : false
         },
         {
             "path" : "Prefabs/Enemy/EliteArcher",
             "weight" : 3,
+            "cost" : 4,
             "isMelee" : false
         },
         {
             "path" : "Prefabs/Enemy/MultiArcher",
             "weight" : 2,
+            "cost" : 3,
             "isMelee" : false
         },
         {
             "path" : "Prefabs/Enemy/Arbalest",
             "weight" : 2,
+            "cost" : 4,
             "isMelee" : false
         },
         {
             "path" : "Prefabs/Enemy/Demolition",
             "weight" : 2,
+            "cost" : 5,
             "isMelee" : false
         },
         {
             "path" : "Prefabs/Enemy/Thief",
-            "weight" : 2,
+            "weight" : 3,
+            "cost" : 6,
             "isMelee" : true
         },
         {
             "path" : "Prefabs/Enemy/MagicArcher",
             "weight" : 2,
+            "cost" : 5,
             "isMelee" : false
         },
         {

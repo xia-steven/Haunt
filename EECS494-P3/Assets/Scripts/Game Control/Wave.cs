@@ -7,6 +7,9 @@ public class Wave
     public static EnemyWaveData spawnData;
     public static List<int> meleeTable;
     public static List<int> rangedTable;
+    static int curEnemies = 0;
+
+    const int maxEnemies = 30;
 
     const float timeBetweenSpawns = .6f;
     const int maxPedestalEnemies = 1;
@@ -58,8 +61,13 @@ public class Wave
         if (spawningTutorial) return;
 
         //spawn attack enemies
-        for (int i = 0; i < difficulty; ++i)
+        for (int i = 0; i < difficulty;)
         {
+            if (curEnemies >= maxEnemies)
+            {
+                Debug.Log("max enemies reached");
+                break;
+            }
             /* GET ENEMY SPAWN POINT */
             spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
 
@@ -67,18 +75,34 @@ public class Wave
             //see if is melee
             // Make sure the day isn't negative for the tutorial
             int gameDay = (GameControl.Day - 1) >= 0 ? GameControl.Day - 1 : 0;
-            bool isMelee = Random.value < spawnData.nightlyPropMelee[gameDay];
 
-            //get idx of potentialMembers that new enemy will be
-            int spawnIdx;
-            if (isMelee)
+            bool isMelee;
+
+            int spawnWeight = difficulty + 1;
+            int iters = 0;
+            
+            int spawnIdx = 0;
+
+            while (spawnWeight > difficulty - i && iters < 3)
             {
-                spawnIdx = meleeTable[Random.Range(0, meleeTable.Count)];
+                isMelee = Random.value < spawnData.nightlyPropMelee[gameDay];
+
+                //get idx of potentialMembers that new enemy will be
+                if (isMelee)
+                {
+                    spawnIdx = meleeTable[Random.Range(0, meleeTable.Count)];
+                }
+                else
+                {
+                    spawnIdx = rangedTable[Random.Range(0, rangedTable.Count)];
+                }
+
+                spawnWeight = spawnData.enemySpawnData[spawnIdx].cost;
+                ++iters;
             }
-            else
-            {
-                spawnIdx = rangedTable[Random.Range(0, rangedTable.Count)];
-            }
+
+            //default to torch peasant
+            if (iters >= 3) spawnIdx = 0;
 
             /* INSTANTIATE ENEMY */
             //instantiate new enemy and get IsWaveMember component
@@ -89,6 +113,9 @@ public class Wave
             newMember.gameObject.SetActive(false);
             numActiveMembers++;
             members.Add(nextId++, newMember);
+
+            i += spawnWeight;
+            ++curEnemies;
         }
 
         //spawn pedestal enemies
@@ -185,7 +212,16 @@ public class Wave
 
     public void LoseMember(int id)
     {
+        --curEnemies;
         members.Remove(id);
         numActiveMembers--;
+    }
+
+    ~Wave()
+    {
+        for (int i = 0; i < members.Count; ++i)
+        {
+            --curEnemies;
+        }
     }
 }
