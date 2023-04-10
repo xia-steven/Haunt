@@ -58,6 +58,11 @@ public class IsBoss : MonoBehaviour
 
     private void Update()
     {
+        if(health.GetHealth() == 0) {
+            rb.velocity = Vector3.zero;
+            return;
+        }
+
         if(!attacking)
         {
             attacking = true;
@@ -87,7 +92,7 @@ public class IsBoss : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!canMoveInFixedUpdate) return;
+        if (!canMoveInFixedUpdate || health.GetHealth() == 0) return;
 
 
         // Boss follows the player at a slow speed

@@ -191,6 +191,8 @@ partial class GameControl : MonoBehaviour {
 
         PlayerModifiers.resetModifiers();
 
+        EventBus.Publish(new EnablePlayerEvent());
+
         Destroy(IsPlayer.instance.gameObject);
 
         SceneManager.LoadScene(sceneName);
