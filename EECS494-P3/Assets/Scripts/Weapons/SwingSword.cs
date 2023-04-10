@@ -38,7 +38,7 @@ public class SwingSword : MonoBehaviour
         }
 
         // Reverse bullets that are hit
-        if (collided.layer == LayerMask.NameToLayer("PlayerUtility"))
+        if (collided.layer == LayerMask.NameToLayer("PlayerUtility") && collided.GetComponent<Bullet>().GetShooter() != Shooter.Player)
         {
             collided.GetComponent<Rigidbody>().velocity = -collided.GetComponent<Rigidbody>().velocity;
         }

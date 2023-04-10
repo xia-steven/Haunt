@@ -81,7 +81,7 @@ MonoBehaviour:
   explosiveRadius: 1.25
   oneShotEnemies: 0
   fromPlayer: 1
-  damage: 3
+  damage: -2.5
 --- !u!114 &2028578865910348470
 MonoBehaviour:
   m_ObjectHideFlags: 0
