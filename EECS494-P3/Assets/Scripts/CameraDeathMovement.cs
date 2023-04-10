@@ -12,7 +12,7 @@ public class CameraDeathMovement : MonoBehaviour
     float fallOntoGroundTime = 3.0f;
     CameraMovement moveScript;
     PixelPerfectCamera pixelCam;
-    float sizeModifier = 1.5f;
+    float sizeModifier = 1.25f;
     int initialXRef = 0;
     int initialYRef = 0;
 
