@@ -182,6 +182,8 @@ public class PlayerController : MonoBehaviour {
     void _OnDisableMovement(DisablePlayerEvent dpme)
     {
         playerEnabled = false;
+        if (isDodging)
+            StopDodge();
     }
 
     void _OnEnableMovement(EnablePlayerEvent epme)
