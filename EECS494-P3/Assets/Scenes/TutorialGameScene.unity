@@ -472,6 +472,10 @@ PrefabInstance:
       propertyPath: startRepaired
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4779641110350251353, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 93c9fe96af8ffb84e9a56dad0f0805e4, type: 2}
     - target: {fileID: 6510795438297851569, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: m_LocalPosition.y
       value: 2.5
@@ -492,7 +496,8 @@ PrefabInstance:
       propertyPath: otherScene
       value: HubWorld
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4076986035774329248, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
 --- !u!1 &998501369 stripped
 GameObject:
