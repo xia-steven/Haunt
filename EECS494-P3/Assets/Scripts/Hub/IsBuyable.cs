@@ -62,6 +62,7 @@ public class IsBuyable : MonoBehaviour
     protected void Start()
     {
         itemDescription.SetActive(false);
+
     }
 
     private void OnPurchase(TryInteractEvent e)
@@ -95,7 +96,6 @@ public class IsBuyable : MonoBehaviour
                 itemDescription.SetActive(true);
                 costText.text = cost.ToString();
             }
-
         }
                 
     

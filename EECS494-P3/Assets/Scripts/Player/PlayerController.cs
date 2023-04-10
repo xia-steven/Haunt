@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnDodge(InputAction.CallbackContext value) {
-        if (dodgeRollCooldownTimer > 0) {
+        if (dodgeRollCooldownTimer > 0 || !playerEnabled) {
             return;
         }
 
@@ -118,6 +118,9 @@ public class PlayerController : MonoBehaviour {
 
     public void OnSwapWeapon(InputAction.CallbackContext value)
     {
+        // Disable swapping when disabled
+        if (!playerEnabled) return;
+
         if (value.started)
         {
             if (value.ReadValue<float>() > 0)
@@ -141,6 +144,9 @@ public class PlayerController : MonoBehaviour {
 
     public void OnInteract(InputAction.CallbackContext value)
     {
+        // Disable interacting when player is disabled
+        if (!playerEnabled) return;
+
         if (value.started)
         {
             EventBus.Publish(new TryInteractEvent());
@@ -191,18 +197,6 @@ public class PlayerController : MonoBehaviour {
         playerEnabled = true;
     }
 
-    private bool IsWall(Vector3 direction)
-    {
-        int wallLayer = LayerMask.GetMask("Walls");
-        RaycastHit hit;
-        Debug.DrawRay(transform.position, direction, Color.magenta);
-        if (Physics.Raycast(transform.position, direction, out hit, col.bounds.extents.magnitude, wallLayer))
-        {
-            return true;
-        }
-
-        return false;
-    }
     private void Update()
     {
         if (!playerEnabled) return;

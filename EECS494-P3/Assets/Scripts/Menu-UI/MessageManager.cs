@@ -7,7 +7,7 @@ using TMPro;
 
 public class MessageManager : MonoBehaviour
 {
-    [SerializeField] float fadeTime = 1.0f;
+    float fadeTime = 0.5f;
     [SerializeField] TMP_Text text;
     [SerializeField] Image textBackground;
     [SerializeField] Image clickIcon;
