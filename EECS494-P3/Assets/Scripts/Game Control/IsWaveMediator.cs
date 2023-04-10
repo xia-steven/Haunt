@@ -22,7 +22,8 @@ public class IsWaveMediator : MonoBehaviour {
         //else, make table for current night
         else if (SceneManager.GetActiveScene().name == "GameScene")
         {
-            PopulateTables(Mathf.Clamp(GameControl.Day, 1, 3));
+            // Populates before gamecontrol updates day count?
+            PopulateTables(Mathf.Clamp(GameControl.Day + 1, 1, 3));
         }
     }
 
@@ -35,6 +36,7 @@ public class IsWaveMediator : MonoBehaviour {
         //populate tables
         foreach (int idx in Wave.spawnData.nightlyEnemies[night-1].indices)
         {
+
             if (Wave.spawnData.enemySpawnData[idx].isMelee)
             {
                 for(int i = 0; i < Wave.spawnData.enemySpawnData[idx].weight; ++i)
