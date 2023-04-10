@@ -84,7 +84,7 @@ public abstract class Weapon : MonoBehaviour {
     protected Subscription<DisablePlayerEvent> disablePlayerSubscription;
     protected Subscription<MessageEvent> messageSubscription;
     protected Subscription<MessageFinishedEvent> messageFinishedSubscription;
-
+    protected Subscription<GameLossEvent> gameLossSubscription;
 
     protected virtual void Awake()
     {
@@ -103,6 +103,7 @@ public abstract class Weapon : MonoBehaviour {
         disablePlayerSubscription = EventBus.Subscribe<DisablePlayerEvent>(_OnDisablePlayer);
         messageSubscription = EventBus.Subscribe<MessageEvent>(_OnMessage);
         messageFinishedSubscription = EventBus.Subscribe<MessageFinishedEvent>(_OnMessageFinished);
+        gameLossSubscription = EventBus.Subscribe<GameLossEvent>(_OnGameLoss);
     }
 
     protected void UnSubscribe()
@@ -143,6 +144,13 @@ public abstract class Weapon : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
         if (e.senderInstanceID == lastMessageSender)
             messageVisible = false;
+    }
+
+    protected virtual void _OnGameLoss(GameLossEvent e)
+    {
+        // Stop all firing and set all guns inactive
+        firing = false;
+        gameObject.SetActive(false);
     }
 
     protected virtual void _OnFire(FireEvent e) {

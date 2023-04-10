@@ -14,7 +14,7 @@ class GameStartEvent {
 /// <summary>
 /// The GameLoss event is broadcast when the game is lost.
 /// </summary>
-class GameLossEvent {
+public class GameLossEvent {
 
     public DeathCauses cause = DeathCauses.Pedestal;
     public bool finishedDeathAnimation = false;
