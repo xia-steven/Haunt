@@ -78,10 +78,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39bde91afff8a594e9f8f77f3eb8db60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosiveRadius: 1
+  explosiveRadius: 1.25
   oneShotEnemies: 0
   fromPlayer: 1
-  damage: 2
+  damage: 3
 --- !u!114 &2028578865910348470
 MonoBehaviour:
   m_ObjectHideFlags: 0
