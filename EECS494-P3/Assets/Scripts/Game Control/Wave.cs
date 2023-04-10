@@ -9,7 +9,7 @@ public class Wave
     public static List<int> rangedTable;
     static int curEnemies = 0;
 
-    const int maxEnemies = 30;
+    const int maxEnemies = 25;
 
     const float timeBetweenSpawns = .6f;
     const int maxPedestalEnemies = 1;
