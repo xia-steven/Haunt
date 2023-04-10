@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6681211643143295875}
   - component: {fileID: 2693802620464014453}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: SelectedRing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 417054237373664087}
   - component: {fileID: 2337061790273893494}
   - component: {fileID: 6994809127752713890}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Teleporter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
