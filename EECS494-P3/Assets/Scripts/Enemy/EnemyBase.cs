@@ -101,14 +101,16 @@ public class EnemyBase : MonoBehaviour {
         // Ignore hits on other enemies
         var layerMask = ~LayerMask.GetMask("Enemy");
 
-        if (Physics.Raycast(transform.position, playerDirection, out var hit,
-                Vector3.Distance(targetPosition, transform.position), layerMask) &&
+        bool hitRaycast = Physics.Raycast(transform.position, playerDirection, out var hit,
+                Vector3.Distance(targetPosition, transform.position), layerMask);
+
+        if (hitRaycast &&
             hit.transform.gameObject.CompareTag("Pit") && attributes.isRanged &&
             Vector3.Distance(targetPosition, transform.position) <= attributes.targetDistance) {
             return false;
         }
 
-        return !hit.transform.gameObject.CompareTag("Player");
+        return hitRaycast && !hit.transform.gameObject.CompareTag("Player");
     }
 
     /// <summary>

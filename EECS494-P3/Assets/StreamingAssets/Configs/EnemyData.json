@@ -78,10 +78,10 @@
             "windupTime": 0.3,
             "dashSpeed": 10.0,
             "dashTime": 0.25,
-            "minXThiefSpawn": -17,
-            "maxXThiefSpawn": 17,
-            "minZThiefSpawn": -11,
-            "maxZThiefSpawn": 10,
+            "minXThiefSpawn": -26,
+            "maxXThiefSpawn": 26,
+            "minZThiefSpawn": -17,
+            "maxZThiefSpawn": 16,
             "maxThiefSpawnAttempt": 10
         },
         {
