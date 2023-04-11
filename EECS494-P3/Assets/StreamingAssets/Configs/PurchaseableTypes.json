@@ -3,18 +3,18 @@
     "types": [
         {
             "type": 0,
-            "cost": 10,
+            "cost": 8,
             "description": "Dashing through bullets reflects them"
         },
         {
             "type": 1,
-            "cost": 10,
+            "cost": 8,
             "rate1": 1.71,
             "description": "Dashing leaves behind an explosive"
         },
         {
             "type": 2,
-            "cost": 10,
+            "cost": 8,
             "rate1": 1.25,
             "rate2": 1.25,
             "duration": 5,
@@ -22,34 +22,34 @@
         },
         {
             "type": 3,
-            "cost": 10,
+            "cost": 8,
             "rate1": 2,
             "duration": 5,
             "description": "The first shot after dashing deals 2x damage"
         },
         {
             "type": 4,
-            "cost": 10,
+            "cost": 8,
             "rate1": 1,
             "description": "Shots pierce an additional enemy",
             "maxOwnable": 2
         },
         {
             "type": 5,
-            "cost": 10,
+            "cost": 8,
             "rate1": 1.25,
             "description": "Increases movement speed by 25%"
         },
         {
             "type": 6,
-            "cost": 10,
+            "cost": 8,
             "rate1": 1.4,
             "duration": 0.25,
             "description": "Deal 40% more damage while standing still"
         },
         {
             "type": 7,
-            "cost": 10,
+            "cost": 8,
             "rate1": 1.25,
             "description": "reload 25% faster",
             "maxOwnable": 2
@@ -78,7 +78,7 @@
         },
         {
             "type": 12,
-            "cost": 10,
+            "cost": 8,
             "rate1": 2,
             "description": "Double explosive radius"
         },
