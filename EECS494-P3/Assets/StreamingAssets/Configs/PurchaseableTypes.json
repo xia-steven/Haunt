@@ -9,16 +9,16 @@
         {
             "type": 1,
             "cost": 10,
-            "rate1": 1.5,
+            "rate1": 1.71,
             "description": "Dashing leaves behind an explosive"
         },
         {
             "type": 2,
             "cost": 10,
-            "rate1": 1.1,
+            "rate1": 1.25,
             "rate2": 1.25,
             "duration": 5,
-            "description": "Taking damage ups speed/damage temporarily"
+            "description": "Gain 25% speed/damage for 5 seconds after losing health"
         },
         {
             "type": 3,
@@ -31,27 +31,27 @@
             "type": 4,
             "cost": 10,
             "rate1": 1,
-            "description": "Shots pierce the first enemy",
+            "description": "Shots pierce an additional enemy",
             "maxOwnable": 2
         },
         {
             "type": 5,
             "cost": 10,
-            "rate1": 1.2,
-            "description": "Increases speed"
+            "rate1": 1.25,
+            "description": "Increases movement speed by 25%"
         },
         {
             "type": 6,
             "cost": 10,
             "rate1": 1.4,
-            "duration": 2.5,
-            "description": "Deal extra damage while standing still"
+            "duration": 0.25,
+            "description": "Deal 40% more damage while standing still"
         },
         {
             "type": 7,
             "cost": 10,
-            "rate1": 1.2,
-            "description": "Makes reloads faster",
+            "rate1": 1.25,
+            "description": "reload 25% faster",
             "maxOwnable": 2
         },
         {
@@ -80,7 +80,7 @@
             "type": 12,
             "cost": 10,
             "rate1": 2,
-            "description": "Explosive radius is doubled"
+            "description": "Double explosive radius"
         },
         {
             "type": 13,
