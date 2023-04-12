@@ -692,6 +692,18 @@ PrefabInstance:
       propertyPath: spawners.Array.data[3]
       value: 
       objectReference: {fileID: 1698824217}
+    - target: {fileID: 7080845073249181226, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: m_Size.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7080845073249181226, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: m_Size.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7080845073249181226, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
 --- !u!1001 &3310355338811178745
