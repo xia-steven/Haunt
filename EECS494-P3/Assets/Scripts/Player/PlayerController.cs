@@ -234,8 +234,10 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision collision) {
-        // manually reset dodge (cancel it) if we hit a wall;
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall")) {
+        // manually reset dodge (cancel it) if we hit a wall when not perpendicular to the wall;
+        Vector3 normal = collision.contacts[0].normal;
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall") && Vector3.Angle(rb.velocity, -normal) < 85) {
             StopDodge();
         }
     }
