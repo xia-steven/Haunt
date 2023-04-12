@@ -1,4 +1,4 @@
-    using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -48,8 +48,7 @@ public class PlayerController : MonoBehaviour {
         dodgeSound = Resources.Load<AudioClip>("Audio/Movement/Dodge");
     }
 
-    private void OnDestroy()
-    {
+    private void OnDestroy() {
         EventBus.Unsubscribe(disableMoveSub);
         EventBus.Unsubscribe(enableMoveSub);
         EventBus.Unsubscribe(dodgeStartSub);
@@ -61,8 +60,7 @@ public class PlayerController : MonoBehaviour {
             return;
         }
 
-        if (value.started)
-        {
+        if (value.started) {
             dodgePressed = true;
         }
     }
@@ -87,11 +85,11 @@ public class PlayerController : MonoBehaviour {
 
         Debug.DrawRay(rayStart, Vector3.right * horizontalExtent);
         // left/right checks
-        if ((Physics.Raycast(rayStart, Vector3.left, out ray1, horizontalExtent, ignoreMask) && movementX < -.1f) || 
+        if ((Physics.Raycast(rayStart, Vector3.left, out ray1, horizontalExtent, ignoreMask) && movementX < -.1f) ||
             (Physics.Raycast(rayStart, Vector3.right, out ray2, horizontalExtent, ignoreMask) && movementX > .1f))
             movementX = 0;
-        if ((Physics.Raycast(rayStart, Vector3.forward, out ray3, verticalExtent, ignoreMask) && movementZ > .1f) || 
-            (Physics.Raycast(rayStart, Vector3.back, out ray4, verticalExtent, ignoreMask) && movementZ < -.1f)) 
+        if ((Physics.Raycast(rayStart, Vector3.forward, out ray3, verticalExtent, ignoreMask) && movementZ > .1f) ||
+            (Physics.Raycast(rayStart, Vector3.back, out ray4, verticalExtent, ignoreMask) && movementZ < -.1f))
             movementZ = 0;
 
         animator.SetBool("walking", true);
@@ -99,73 +97,60 @@ public class PlayerController : MonoBehaviour {
 
     public void OnFire(InputAction.CallbackContext value) {
         if (!playerEnabled) return;
-        if (value.started)
-        {
+        if (value.started) {
             EventBus.Publish<FireEvent>(new FireEvent(this.gameObject, true));
-        } else if (value.canceled)
-        {
+        }
+        else if (value.canceled) {
             EventBus.Publish<FireEvent>(new FireEvent(this.gameObject, false));
         }
     }
 
     public void OnReload(InputAction.CallbackContext value) {
         if (!playerEnabled) return;
-        if (value.started)
-        {
+        if (value.started) {
             EventBus.Publish<ReloadEvent>(new ReloadEvent(this.gameObject));
         }
     }
 
-    public void OnSwapWeapon(InputAction.CallbackContext value)
-    {
+    public void OnSwapWeapon(InputAction.CallbackContext value) {
         // Disable swapping when disabled
         if (!playerEnabled) return;
 
-        if (value.started)
-        {
-            if (value.ReadValue<float>() > 0)
-            {
+        if (value.started) {
+            if (value.ReadValue<float>() > 0) {
                 EventBus.Publish<SwapEvent>(new SwapEvent(1));
             }
-            else if (value.ReadValue<float>() < 0)
-            {
+            else if (value.ReadValue<float>() < 0) {
                 EventBus.Publish<SwapEvent>(new SwapEvent(-1));
             }
         }
     }
 
-    public void OnSwapSpecificWeapon(InputAction.CallbackContext value)
-    {
-        if (value.started)
-        {
+    public void OnSwapSpecificWeapon(InputAction.CallbackContext value) {
+        if (value.started) {
             EventBus.Publish<SwapSpecificEvent>(new SwapSpecificEvent(int.Parse(value.control.name)));
         }
     }
 
-    public void OnInteract(InputAction.CallbackContext value)
-    {
+    public void OnInteract(InputAction.CallbackContext value) {
         // Disable interacting when player is disabled
         if (!playerEnabled) return;
 
-        if (value.started)
-        {
+        if (value.started) {
             EventBus.Publish(new TryInteractEvent());
         }
     }
 
-    private void StartDodge(TutorialDodgeStartEvent tutorDodge = null)
-    {
+    private void StartDodge(TutorialDodgeStartEvent tutorDodge = null) {
         EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(true, movement));
         isDodging = true;
         //rb.useGravity = false;
         dodgeRollTimer = dodgeRollDuration;
         dodgeRollCooldownTimer = dodgeRollCooldown;
-        if (tutorDodge != null)
-        {
+        if (tutorDodge != null) {
             rb.velocity = tutorDodge.direction * dodgeRollSpeed;
         }
-        else
-        {
+        else {
             rb.velocity = movement.normalized * dodgeRollSpeed;
         }
 
@@ -174,31 +159,27 @@ public class PlayerController : MonoBehaviour {
         AudioSource.PlayClipAtPoint(dodgeSound, transform.position);
     }
 
-    private void StopDodge(TutorialDodgeEndEvent tutorDodge = null)
-    {
+    private void StopDodge(TutorialDodgeEndEvent tutorDodge = null) {
         EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(false, movement));
         dodgeRollTimer = 0;
         isDodging = false;
         rb.velocity = Vector3.zero;
-        
+
         tr.emitting = false;
         animator.SetBool("walking", true);
     }
-    
-    void _OnDisableMovement(DisablePlayerEvent dpme)
-    {
+
+    void _OnDisableMovement(DisablePlayerEvent dpme) {
         playerEnabled = false;
         if (isDodging)
             StopDodge();
     }
 
-    void _OnEnableMovement(EnablePlayerEvent epme)
-    {
+    void _OnEnableMovement(EnablePlayerEvent epme) {
         playerEnabled = true;
     }
 
-    private void Update()
-    {
+    private void Update() {
         if (!playerEnabled) return;
 
 
@@ -206,65 +187,55 @@ public class PlayerController : MonoBehaviour {
             movement.x = movementX;
             movement.y = 0f;
             movement.z = movementZ;
-            if (movement == Vector3.zero)
-            {
+            if (movement == Vector3.zero) {
                 animator.SetBool("walking", false);
             }
         }
 
-        if (dodgePressed)
-        {
+        if (dodgePressed) {
             dodgePressed = false;
 
-            if (movementX != 0 || movementZ != 0)
-            {
+            if (movementX != 0 || movementZ != 0) {
                 StartDodge();
             }
         }
-        
+
         // enter this condtl during a dodge
-        if (dodgeRollTimer > 0f)
-        {
+        if (dodgeRollTimer > 0f) {
             dodgeRollTimer -= Time.deltaTime;
-            if (!playerEnabled)
-            {
+            if (!playerEnabled) {
                 StopDodge();
             }
         }
 
-        if (isDodging && dodgeRollTimer <= 0f)
-        {
+        if (isDodging && dodgeRollTimer <= 0f) {
             StopDodge();
         }
-        
 
-        if (dodgeRollCooldownTimer > 0f)
-        {
+
+        if (dodgeRollCooldownTimer > 0f) {
             dodgeRollCooldownTimer -= Time.deltaTime;
         }
     }
 
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
         if (!playerEnabled) return;
 
         if (!isDodging) {
             //Debug.Log(IsWall(movement));
-            rb.MovePosition(rb.position + moveSpeed * PlayerModifiers.moveSpeed * Time.fixedDeltaTime * movement.normalized);
+            rb.MovePosition(rb.position +
+                            moveSpeed * PlayerModifiers.moveSpeed * Time.fixedDeltaTime * movement.normalized);
             // Play move sound if delay has passed and moving
-            if (Time.time - lastSound >= walkSoundDelay && movement != Vector3.zero)
-            {
+            if (Time.time - lastSound >= walkSoundDelay && movement != Vector3.zero) {
                 AudioSource.PlayClipAtPoint(walkSound, transform.position);
                 lastSound = Time.time;
             }
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
+    private void OnCollisionEnter(Collision collision) {
         // manually reset dodge (cancel it) if we hit a wall;
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))    
-        {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall")) {
             StopDodge();
         }
     }
