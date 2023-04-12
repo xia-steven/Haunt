@@ -19,21 +19,22 @@ public class MultiArcherEnemy : ArcherEnemy {
 
             var direction = targetPosition - transform.position;
             direction.y = 0;
-            var rotation1 = Quaternion.AngleAxis(-90 / Random.Range(2f, 5f), Vector3.up);
-            var rotation2 = Quaternion.AngleAxis(90 / Random.Range(2f, 5f), Vector3.up);
-            var rotationMid = Quaternion.AngleAxis(Random.Range(-10f, 10f), Vector3.up);
+            direction.Normalize();
+            var rotation1 = Quaternion.AngleAxis(-25, Vector3.up);
+            var rotation2 = Quaternion.AngleAxis(-50, Vector3.up);
+            var rotation3 = Quaternion.AngleAxis(25, Vector3.up);
+            var rotation4 = Quaternion.AngleAxis(50, Vector3.up);
 
             var bullet1 = rotation1 * direction;
             var bullet2 = rotation2 * direction;
-            var bulletMid = rotationMid * direction;
+            var bullet3 = rotation3 * direction;
+            var bullet4 = rotation4 * direction;
 
-            bullet1.Normalize();
-            bullet2.Normalize();
-            bulletMid.Normalize();
-
-            fireBullet(Bullet, bulletMid, Shooter.Enemy, attributes.projectileSpeed);
+            fireBullet(Bullet, direction, Shooter.Enemy, attributes.projectileSpeed);
             fireBullet(Bullet, bullet1, Shooter.Enemy, attributes.projectileSpeed);
             fireBullet(Bullet, bullet2, Shooter.Enemy, attributes.projectileSpeed);
+            fireBullet(Bullet, bullet3, Shooter.Enemy, attributes.projectileSpeed);
+            fireBullet(Bullet, bullet4, Shooter.Enemy, attributes.projectileSpeed);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }
