@@ -15,8 +15,6 @@ public class IsPlayer : MonoBehaviour {
         else if (instance != this) Destroy(gameObject);
 
         health = GetComponent<PlayerHasHealth>();
-        //StartCoroutine(NaturalHealthRegen());
-        // starting to phase this out of the game
     }
 
     public float GetHealth() {
@@ -44,13 +42,11 @@ public class IsPlayer : MonoBehaviour {
         health.ResetHealth();
     }
 
-    public void SetLastDamaged(DeathCauses damager)
-    {
+    public void SetLastDamaged(DeathCauses damager) {
         lastDamaged = damager;
     }
 
-    public DeathCauses LastDamaged()
-    {
+    public DeathCauses LastDamaged() {
         return lastDamaged;
     }
 }

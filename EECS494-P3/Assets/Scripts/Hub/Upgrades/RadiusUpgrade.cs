@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class RadiusUpgrade : Upgrade
 {
-    protected override void Awake()
-    {
-        base.Awake();
+    protected override string GetName() {
+        return "ExplodingDash";
     }
 
     protected override void Start()
