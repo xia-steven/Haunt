@@ -14,7 +14,6 @@ public class TutorialClericEnemy : EnemyBase {
 
     private new void Start() {
         base.Start();
-        baseSpeed = 1.5f;
         switchPedestalSub = EventBus.Subscribe<PedestalDestroyedEvent>(pedestalDied);
         addPedestalSub = EventBus.Subscribe<PedestalRepairedEvent>(pedestalRepaired);
         StartCoroutine(WaitAndFindPath());

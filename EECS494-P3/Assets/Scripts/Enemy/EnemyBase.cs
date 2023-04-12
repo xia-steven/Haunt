@@ -6,7 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(HasEnemyHealth))]
 public class EnemyBase : MonoBehaviour {
     // Base enemy variables
-    protected float baseSpeed = 3.0f;
     protected HasEnemyHealth enemyHealth;
 
     protected Rigidbody rb;
@@ -165,7 +164,7 @@ public class EnemyBase : MonoBehaviour {
                 var targetPosition = pathVectorList[currentPathIndex] + PathfindingController.map.origin;
                 if (Vector3.Distance(transform.position, targetPosition) > 0.1f) {
                     var moveDir = (targetPosition - transform.position).normalized;
-                    tf_.position += Time.deltaTime * baseSpeed * attributes.moveSpeed * moveDir;
+                    tf_.position += Time.deltaTime * attributes.moveSpeed * moveDir;
                 }
                 else {
                     if (++currentPathIndex >= pathVectorList.Count) {
@@ -199,7 +198,7 @@ public class EnemyBase : MonoBehaviour {
             // Remove any y coordinate (shouldn't be any)
             direction.y = 0;
 
-            tf_.position += Time.deltaTime * baseSpeed * attributes.moveSpeed * direction;
+            tf_.position += Time.deltaTime * attributes.moveSpeed * direction;
 
             // Only run movement on fixed updates
             yield return new WaitForFixedUpdate();
