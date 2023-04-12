@@ -757,6 +757,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 96724335828632035, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Size.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 96724335828632035, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Center.x
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 797050021694597236, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: m_Name
       value: Level1
@@ -805,9 +813,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1822297043281347560, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Size.z
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 2664183854941460788, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: startRepaired
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2894814111041430560, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Size.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2894814111041430560, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Center.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3893399174923849482, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Size.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3893399174923849482, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Center.x
+      value: -1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214975784450574262, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Size.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4214975784450574262, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Center.x
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4779641110350251353, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: m_Material
@@ -832,6 +868,10 @@ PrefabInstance:
     - target: {fileID: 7106741852702696952, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: otherScene
       value: HubWorld
+      objectReference: {fileID: 0}
+    - target: {fileID: 8947897291978937394, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Size.z
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4076986035774329248, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
