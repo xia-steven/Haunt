@@ -2,22 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StationaryDamageUpgrade : Upgrade
-{
-    protected override void Awake()
-    {
-        base.Awake();
+public class StationaryDamageUpgrade : Upgrade {
+    protected override string GetName() {
+        return "StationaryUpgrade";
     }
 
-    protected override void Start()
-    {
+    protected override void Start() {
         thisData = typesData.types[(int)PurchaseableType.stationaryDamage];
         base.Start();
     }
 
-    protected override void Apply()
-    {
-        HasStationaryDamage newInstance = IsPlayer.instance.gameObject.AddComponent<HasStationaryDamage>() as HasStationaryDamage;
+    protected override void Apply() {
+        HasStationaryDamage newInstance =
+            IsPlayer.instance.gameObject.AddComponent<HasStationaryDamage>() as HasStationaryDamage;
         newInstance.holdTime = thisData.duration;
         newInstance.dmgMod = thisData.rate1;
 

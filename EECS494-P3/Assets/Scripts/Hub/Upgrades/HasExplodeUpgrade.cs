@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HasExplodeUpgrade : MonoBehaviour
-{
+public class HasExplodeUpgrade : MonoBehaviour {
     [SerializeField] bool oneShotEnemies = false;
     public float explosiveRadius;
     private int numBombs = 4;
@@ -12,8 +11,7 @@ public class HasExplodeUpgrade : MonoBehaviour
     GameObject bomb;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         dodgeEvent = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
 
         // Set how often bombs are dropped along trail
@@ -24,10 +22,8 @@ public class HasExplodeUpgrade : MonoBehaviour
     }
 
     // Explode on dash finish
-    private void _OnDodge(PlayerDodgeEvent e)
-    {
-        if (e.start)
-        {
+    private void _OnDodge(PlayerDodgeEvent e) {
+        if (e.start) {
             /*
             // Perform hit
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosiveRadius);
@@ -63,8 +59,7 @@ public class HasExplodeUpgrade : MonoBehaviour
         }
     }
 
-    IEnumerator ExplosionAnimation()
-    {
+    IEnumerator ExplosionAnimation() {
         // might want to change this visual to be ever-present but just deactivated
         GameObject visual = Resources.Load<GameObject>("Prefabs/EnemyWeapons/ExplosionRadius");
         GameObject spawnedVisual = Instantiate(visual, transform.position, Quaternion.identity);
@@ -75,24 +70,21 @@ public class HasExplodeUpgrade : MonoBehaviour
             stateInfo = animator.GetCurrentAnimatorStateInfo(0); // get the updated state info
             yield return null;
         }
+
         Destroy(spawnedVisual);
-        
     }
 
-    IEnumerator DropBombs()
-    {
+    IEnumerator DropBombs() {
         // Drop last bomb at last location
         yield return new WaitForSeconds(bombFrequency);
         // Drop the specified number of bombs at a constant frequency
-        for (int i = 0; i < numBombs; i++)
-        {
+        for (int i = 0; i < numBombs; i++) {
             Instantiate(bomb, transform);
             yield return new WaitForSeconds(bombFrequency);
         }
     }
 
-    protected void OnDestroy()
-    {
+    protected void OnDestroy() {
         EventBus.Unsubscribe(dodgeEvent);
     }
 }

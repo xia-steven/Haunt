@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HasSwordUpgrade : MonoBehaviour
-{
+public class HasSwordUpgrade : MonoBehaviour {
     private GameObject sword;
     private Subscription<PlayerDodgeEvent> dodgeEvent;
     private bool isSwinging = false;
@@ -12,37 +11,30 @@ public class HasSwordUpgrade : MonoBehaviour
     public float swingTime;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         sword = Resources.Load<GameObject>("Prefabs/Weapons/SwingSword");
         dodgeEvent = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
     }
 
     // Attach shield on dodge start and destroy it on dodge finish
-    private void _OnDodge(PlayerDodgeEvent e)
-    {
-        if (!e.start && !isSwinging)
-        {
+    private void _OnDodge(PlayerDodgeEvent e) {
+        if (!e.start && !isSwinging) {
             StartCoroutine(SwingSword(e.direction));
         }
     }
 
-    protected void OnDestroy()
-    {
+    protected void OnDestroy() {
         EventBus.Unsubscribe(dodgeEvent);
     }
 
-    private IEnumerator SwingSword(Vector3 direction)
-    {
+    private IEnumerator SwingSword(Vector3 direction) {
         Debug.Log("Sword swing: " + direction);
 
         isSwinging = true;
-        if (direction.x > 0)
-        {
+        if (direction.x > 0) {
             switchSwing = true;
         }
-        else
-        {
+        else {
             switchSwing = false;
         }
 
