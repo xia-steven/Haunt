@@ -365,6 +365,7 @@ MonoBehaviour:
   dodgeRollDuration: 0.35
   dodgeRollSpeed: 12.5
   dodgeRollCooldown: 0.5
+  rb: {fileID: 5067998880475344224}
 --- !u!65 &7257248000686981297
 BoxCollider:
   m_ObjectHideFlags: 0

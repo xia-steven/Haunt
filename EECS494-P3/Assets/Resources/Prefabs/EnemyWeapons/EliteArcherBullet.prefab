@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6233203428428796143}
   - component: {fileID: 7888831462990383208}
   - component: {fileID: 4492642052755928993}
-  - component: {fileID: 5533702547215520973}
+  - component: {fileID: 2452985956531027755}
   m_Layer: 6
   m_Name: EliteArcherBullet
   m_TagString: Untagged
@@ -65,7 +65,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5533702547215520973
+--- !u!114 &2452985956531027755
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,10 +74,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2294257953777773503}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fbbca0b16bf4930b2e246ce3cd99fdb, type: 3}
+  m_Script: {fileID: 11500000, guid: f22a4fa3326d46cb8a84fde802f51d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletLife: 1.5
+  bulletLife: 1
+  fromBoss: 0
 --- !u!1 &3136857620587580189
 GameObject:
   m_ObjectHideFlags: 0

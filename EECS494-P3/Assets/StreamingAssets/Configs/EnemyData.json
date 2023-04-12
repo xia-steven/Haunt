@@ -41,7 +41,7 @@
         {
             "name": "MultiArcher",
             "moveSpeed": 1.0,
-            "targetDistance": 3.0,
+            "targetDistance": 2.5,
             "health": 5,
             "attackSpeed": 2.0,
             "isRanged": true,
