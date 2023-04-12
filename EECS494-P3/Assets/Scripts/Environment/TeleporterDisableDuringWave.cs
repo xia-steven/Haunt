@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(IsTeleporter))]
 public class TeleporterDisableDuringWave : MonoBehaviour {
@@ -19,11 +20,11 @@ public class TeleporterDisableDuringWave : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (!activated && GameControl.NightEnding) {
+        if (!activated && GameControl.NightEnding && SceneManager.GetActiveScene().name != "TutorialGameScene") {
             activated = true;
             tp.Active = true;
         }
-        else if (!GameControl.NightEnding) {
+        else if (!GameControl.NightEnding && SceneManager.GetActiveScene().name != "TutorialGameScene") {
             tp.Active = false;
             activated = false;
         }

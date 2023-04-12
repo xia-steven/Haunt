@@ -65,14 +65,13 @@ public class IsTeleporter : MonoBehaviour {
     }
 
     private void Activate() {
-        Debug.Log((isActive));
         //activate other visuals here
         anim.SetBool("isActive", isActive);
+        Debug.Log("Activating!");
     }
 
     private void Deactivate() {
         //deactivate other visuals here
-        Debug.Log(isActive);
         anim.SetBool("isActive", isActive);
     }
 
