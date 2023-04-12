@@ -63,11 +63,11 @@ public class SpritePromptManager : MonoBehaviour
 
     IEnumerator displayPrompt(SpritePromptEvent spe)
     {
-         sprite.sprite = spe.sprite;
-
-
+        sprite.sprite = spe.pressedSprite;
         sprite.enabled = true;
 
+        int startTime = (int)(Time.time * 2);
+        bool pressed = true;
 
         // Wait for dismiss key (or keys if W)
         if (spe.dismissKey == KeyCode.W)
@@ -75,6 +75,22 @@ public class SpritePromptManager : MonoBehaviour
             while (!Input.GetKeyDown(spe.dismissKey) && !Input.GetKeyDown(KeyCode.A) &&
                 !Input.GetKeyDown(KeyCode.S) && !Input.GetKeyDown(KeyCode.D) && !spe.cancelPrompt)
             {
+                // If 0.5 seconds have passed, switch sprites
+                if(startTime != (int)(Time.time * 2))
+                {
+                    startTime = (int)(Time.time * 2);
+                    if(pressed)
+                    {
+                        sprite.sprite = spe.initialSprite;
+                    }
+                    else
+                    {
+                        sprite.sprite = spe.pressedSprite;
+                    }
+                    pressed = !pressed;
+                }
+
+
                 yield return null;
             }
         }
@@ -82,6 +98,21 @@ public class SpritePromptManager : MonoBehaviour
         {
             while (!Input.GetKeyDown(spe.dismissKey) && !spe.cancelPrompt)
             {
+                // If 0.5 seconds have passed, switch sprites
+                if (startTime != (int)(Time.time * 2))
+                {
+                    startTime = (int)(Time.time * 2);
+                    if (pressed)
+                    {
+                        sprite.sprite = spe.initialSprite;
+                    }
+                    else
+                    {
+                        sprite.sprite = spe.pressedSprite;
+                    }
+                    pressed = !pressed;
+                }
+
                 yield return null;
             }
         }

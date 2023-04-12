@@ -18,6 +18,7 @@ public class NPCMessages : MonoBehaviour
     bool sentMessage = false;
 
     Sprite eSprite;
+    Sprite ePressedSprite;
     SpritePromptEvent ePrompt;
 
     Subscription<TryInteractEvent> interactSubscription;
@@ -35,8 +36,9 @@ public class NPCMessages : MonoBehaviour
         interactSprite.SetActive(false);
         Object [] sprites = Resources.LoadAll("tilemap");
         eSprite = (Sprite)sprites[360];
+        ePressedSprite = (Sprite)sprites[88];
 
-        ePrompt = new SpritePromptEvent(eSprite, KeyCode.E);
+        ePrompt = new SpritePromptEvent(eSprite, ePressedSprite, KeyCode.E);
         ePrompt.cancelPrompt = true;
     }
 

@@ -94,13 +94,15 @@ public class TutorialDodgeEndEvent
 /// </summary>
 public class SpritePromptEvent
 {
-    public Sprite sprite;
+    public Sprite initialSprite;
+    public Sprite pressedSprite;
     public KeyCode dismissKey;
     public bool cancelPrompt = false;
 
-    public SpritePromptEvent(Sprite sprite_in, KeyCode dismissKey_in)
+    public SpritePromptEvent(Sprite initial_in, Sprite pressed_in, KeyCode dismissKey_in)
     {
-        sprite = sprite_in;
+        initialSprite = initial_in;
+        pressedSprite = pressed_in;
         dismissKey = dismissKey_in;
     }
 }

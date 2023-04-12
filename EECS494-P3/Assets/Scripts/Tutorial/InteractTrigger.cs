@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class InteractTrigger : MonoBehaviour
 {
-    [SerializeField] Sprite sprite;
+    [SerializeField] Sprite initialSprite;
+    [SerializeField] Sprite pressedSprite;
     [SerializeField] KeyCode dismissKey;
 
     bool triggered = false;
@@ -14,7 +15,7 @@ public class InteractTrigger : MonoBehaviour
         if(!triggered)
         {
             triggered = true;
-            EventBus.Publish(new SpritePromptEvent(sprite, dismissKey));
+            EventBus.Publish(new SpritePromptEvent(initialSprite, pressedSprite, dismissKey));
         }
 
 
