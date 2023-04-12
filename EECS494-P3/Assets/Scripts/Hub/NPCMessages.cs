@@ -87,12 +87,12 @@ public class NPCMessages : MonoBehaviour
             if(SceneManager.GetActiveScene().name == "TutorialHubWorld")
             {
                 // Ghost sends initial message
-                EventBus.Publish(new MessageEvent(NPCMessageData.initialTutorial, GetInstanceID(), false));
+                EventBus.Publish(new MessageEvent(NPCMessageData.initialTutorial, GetInstanceID(), false, NPCMessageData.name));
             }
             else
             {
                 // Standard dialogue for the night
-                EventBus.Publish(new MessageEvent(NPCMessageData.allMessages[GameControl.Day].messages, GetInstanceID(), false));
+                EventBus.Publish(new MessageEvent(NPCMessageData.allMessages[GameControl.Day].messages, GetInstanceID(), false, NPCMessageData.name));
             }
         }
     }

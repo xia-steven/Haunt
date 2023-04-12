@@ -12,7 +12,7 @@ public class MagicArcherProjectile : EnemyBasicBullet {
     public float lastReverse;
 
     // Scale of the bullet
-    float scale = 0.23f;
+    float scale = 0.3f;
     int gridWidth = 5;
 
     int gridHeight = 5;

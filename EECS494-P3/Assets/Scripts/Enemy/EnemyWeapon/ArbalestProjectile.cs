@@ -12,11 +12,6 @@ public class ArbalestProjectile : EnemyBasicBullet {
         rb = GetComponent<Rigidbody>();
     }
 
-    private void OnDestroy()
-    {
-        Debug.Log("Arbalest proj destroyed...");
-    }
-
 
     private new void Update() {
         base.Update();
@@ -32,7 +27,5 @@ public class ArbalestProjectile : EnemyBasicBullet {
         float currSpeed = rb.velocity.magnitude;
 
         rb.velocity = currSpeed * newDirection.normalized;
-        Debug.Log("Arbalest proj velocity: " + rb.velocity);
-        Debug.Log("Lifetime: " + bulletLife);
     }
 }

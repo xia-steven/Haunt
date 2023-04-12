@@ -10,6 +10,8 @@ public class MessageManager : MonoBehaviour
     float fadeTime = 0.5f;
     [SerializeField] TMP_Text text;
     [SerializeField] Image textBackground;
+    [SerializeField] TMP_Text namePlate;
+    [SerializeField] Image nameBackground;
     [SerializeField] Image clickIcon;
     [Tooltip("Number of frames to wait in between each character")]
     float textDelay = 0.033f;
@@ -84,11 +86,14 @@ public class MessageManager : MonoBehaviour
         float initial_time = Time.realtimeSinceStartup;
         float progress = (Time.realtimeSinceStartup - initial_time) / fadeTime;
         textBackground.gameObject.SetActive(true);
+        nameBackground.gameObject.SetActive(true);
 
         while (progress < 1.0f)
         {
             progress = (Time.realtimeSinceStartup - initial_time) / fadeTime;
             textBackground.color = new Color(backgroundOpaqueColor.r, backgroundOpaqueColor.g,
+                    backgroundOpaqueColor.b, backgroundOpaqueColor.a * progress);
+            nameBackground.color = new Color(backgroundOpaqueColor.r, backgroundOpaqueColor.g,
                     backgroundOpaqueColor.b, backgroundOpaqueColor.a * progress);
 
             yield return null;
@@ -98,6 +103,8 @@ public class MessageManager : MonoBehaviour
         text.text = "";
         text.gameObject.SetActive(true);
         clickIcon.gameObject.SetActive(true);
+        namePlate.text = message.senderName;
+        namePlate.gameObject.SetActive(true);
         // Loop through each string
         for (int a = 0; a < message.messages.Count; ++a)
         {
@@ -155,6 +162,7 @@ public class MessageManager : MonoBehaviour
         initial_time = Time.realtimeSinceStartup;
         progress = (Time.realtimeSinceStartup - initial_time) / fadeTime;
         Color textColor = text.color;
+        Color nameColor = namePlate.color;
         Color prevIconColor = clickIcon.color;
 
         while (progress < 1.0f)
@@ -163,7 +171,10 @@ public class MessageManager : MonoBehaviour
             // Fade out both the text background and text
             textBackground.color = new Color(backgroundOpaqueColor.r, backgroundOpaqueColor.g,
                     backgroundOpaqueColor.b, backgroundOpaqueColor.a * (1 - progress));
+            nameBackground.color = new Color(backgroundOpaqueColor.r, backgroundOpaqueColor.g,
+                    backgroundOpaqueColor.b, backgroundOpaqueColor.a * (1 - progress));
             text.color = new Color(textColor.r, textColor.g, textColor.b, textColor.a * (1 - progress));
+            namePlate.color = new Color(nameColor.r, nameColor.g, nameColor.b, nameColor.a * (1 - progress));
             clickIcon.color = new Color(prevIconColor.r, prevIconColor.g,
                     prevIconColor.b, prevIconColor.a * (1 - progress));
 
@@ -171,11 +182,14 @@ public class MessageManager : MonoBehaviour
         }
 
         text.gameObject.SetActive(false);
+        namePlate.gameObject.SetActive(false);
+        nameBackground.gameObject.SetActive(false);
         clickIcon.gameObject.SetActive(false);
         textBackground.gameObject.SetActive(false);
 
         // reset text and icon color
         text.color = textColor;
+        namePlate.color = nameColor;
         clickIcon.color = prevIconColor;
         sendingMessage = false;
     }

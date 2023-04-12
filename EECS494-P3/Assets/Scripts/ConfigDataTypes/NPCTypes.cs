@@ -7,6 +7,7 @@ public class MessageList : Savable
 {
     public List<MessageSet> allMessages;
     public List<string> initialTutorial;
+    public string name;
 
     public MessageList()
     {
