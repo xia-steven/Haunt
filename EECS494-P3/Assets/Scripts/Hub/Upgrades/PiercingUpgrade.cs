@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class PiercingUpgrade : Upgrade
 {
-    protected override void Awake()
-    {
-        base.Awake();
+    protected override string GetName() {
+        return "BulletPierce";
     }
 
     protected override void Start()
