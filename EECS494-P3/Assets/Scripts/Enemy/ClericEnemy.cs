@@ -67,7 +67,6 @@ public class ClericEnemy : EnemyBase {
     private new void Start() {
         base.Start();
         enemyHealth.setClericStatus(true);
-        baseSpeed = attributes.moveSpeed;
         switchPedestalSub = EventBus.Subscribe<PedestalDestroyedEvent>(pedestalDied);
         addPedestalSub = EventBus.Subscribe<PedestalRepairedEvent>(pedestalRepaired);
         currentTargetPedestal = findClosestPedestal();

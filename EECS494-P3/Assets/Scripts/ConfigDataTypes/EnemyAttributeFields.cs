@@ -39,6 +39,7 @@ public class EnemyAttributes {
     public float swingTime;
     public float projectileSpeed;
     public float projetileLifetime;
+    public float arbalestRotationSpeed;
 
 
     public override string ToString() {

@@ -2,30 +2,36 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ArbalestEnemy : EnemyBase {
+public class ArbalestEnemy : EnemyBase
+{
     GameObject arbalestBullet;
 
-    protected override void Start() {
+    protected override void Start()
+    {
         base.Start();
 
         arbalestBullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/ArbalestShot");
 
         ArbalestProjectile proj = arbalestBullet.GetComponent<ArbalestProjectile>();
         proj.setLifetime(attributes.projetileLifetime);
+        proj.rotationSpeed = attributes.arbalestRotationSpeed;
     }
 
     // Override enemy ID to load from config
-    protected override int GetEnemyID() {
+    protected override int GetEnemyID()
+    {
         return 5;
     }
 
     // Override attack function
-    protected override IEnumerator EnemyAttack() {
+    protected override IEnumerator EnemyAttack()
+    {
         // Slight attack delay
         yield return new WaitForSeconds(0.25f);
 
         // While attacking
-        while (state == EnemyState.Attacking) {
+        while (state == EnemyState.Attacking)
+        {
             Vector3 targetPosition = IsPlayer.instance.transform.position;
 
             Vector3 direction = targetPosition - transform.position;
