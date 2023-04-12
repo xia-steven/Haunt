@@ -8,13 +8,15 @@ using UnityEngine;
 /// </summary>
 class PedestalDestroyedEvent {
     public int pedestalUUID;
+    public Vector3 pedestalLocation;
 
-    public PedestalDestroyedEvent(int UUID) {
+    public PedestalDestroyedEvent(int UUID, Vector3 location) {
         pedestalUUID = UUID;
+        pedestalLocation = location;
     }
 
     public override string ToString() {
-        return "Pedestal Destroyed Event Sent: Pedestal " + pedestalUUID + " died.";
+        return "Pedestal Destroyed Event Sent: Pedestal " + pedestalUUID + " died at location " + pedestalLocation + ".";
     }
 }
 
@@ -24,13 +26,15 @@ class PedestalDestroyedEvent {
 /// </summary>
 class PedestalRepairedEvent {
     public int pedestalUUID;
+    public Vector3 pedestalLocation;
 
-    public PedestalRepairedEvent(int UUID) {
+    public PedestalRepairedEvent(int UUID, Vector3 location) {
         pedestalUUID = UUID;
+        pedestalLocation = location;
     }
 
     public override string ToString() {
-        return "Pedestal Repaired Event Sent: Pedestal " + pedestalUUID + " repaired.";
+        return "Pedestal Repaired Event Sent: Pedestal " + pedestalUUID + " repaired at location " + pedestalLocation + ".";
     }
 }
 

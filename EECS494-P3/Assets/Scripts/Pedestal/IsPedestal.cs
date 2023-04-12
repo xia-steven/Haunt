@@ -36,14 +36,14 @@ public class IsPedestal : MonoBehaviour {
     {
         Debug.Log("Pedestal destroyed by player :)");
         playerDestroyed = true;
-        EventBus.Publish(new PedestalDestroyedEvent(UUID));
+        EventBus.Publish(new PedestalDestroyedEvent(UUID, transform.position));
     }
 
     public void PedestalRepaired()
     {
         Debug.Log("Pedestal restored by enemies :(");
         playerDestroyed = false;
-        EventBus.Publish(new PedestalRepairedEvent(UUID));
+        EventBus.Publish(new PedestalRepairedEvent(UUID, transform.position));
     }
 
     public bool IsDestroyedByPlayer() {
