@@ -114,7 +114,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedSprite: {fileID: -652237440, guid: d0120b67eb61ef140800757a4eab709a, type: 3}
-  cost: 5
 --- !u!1 &4063285443910694578
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +205,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4063285443127321515}
     m_Modifications:
+    - target: {fileID: 1264504887747236665, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.685
+      objectReference: {fileID: 0}
     - target: {fileID: 1607440702941767638, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
       propertyPath: m_Name
       value: ItemDescription
@@ -220,7 +223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3686770338568083116, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 3686770338568083116, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -253,6 +256,22 @@ PrefabInstance:
     - target: {fileID: 3686770338568083116, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796125559223818313, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.70199996
+      objectReference: {fileID: 0}
+    - target: {fileID: 5940769324649842782, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
+      propertyPath: m_text
+      value: For 5s after losing health, +25% movement speed and attack power
+      objectReference: {fileID: 0}
+    - target: {fileID: 5940769324649842782, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
+      propertyPath: m_margin.x
+      value: 1.1687814
+      objectReference: {fileID: 0}
+    - target: {fileID: 5940769324649842782, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
+      propertyPath: m_margin.z
+      value: 1.1505494
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
