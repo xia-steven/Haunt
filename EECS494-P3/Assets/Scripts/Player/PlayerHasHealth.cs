@@ -20,6 +20,7 @@ public class PlayerHasHealth : HasHealth {
     private int shieldHealth = 0;
     private bool isInvincible = false;
     private bool isDodgingOrTeleporting = false;
+    private bool immuneFromCutscene = false;
     
 
     // Start is called before the first frame update
@@ -36,7 +37,8 @@ public class PlayerHasHealth : HasHealth {
 
     public override void AlterHealth(float healthDelta)
     {
-        Debug.Log("ALTERHEALTH: " + healthDelta);
+
+        //Debug.Log("ALTERHEALTH: " + healthDelta);
         // healing
         if (healthDelta > 0)
         {
@@ -50,7 +52,7 @@ public class PlayerHasHealth : HasHealth {
         // damage
         else if (healthDelta < 0)
         {
-            if (!isInvincible && !isDodgingOrTeleporting)
+            if (!isInvincible && !isDodgingOrTeleporting && !immuneFromCutscene)
             {
                 if (shieldHealth > 0)
                 {
@@ -134,7 +136,7 @@ public class PlayerHasHealth : HasHealth {
 
     void _OnInvincibilityToggle(ToggleInvincibilityEvent tie)
     {
-        isDodgingOrTeleporting = tie.enable;
+        immuneFromCutscene = tie.enable;
     }
 
     public void AddShield()
@@ -188,6 +190,8 @@ public class PlayerHasHealth : HasHealth {
         isInvincible = false;
         // Remove dodging or teleporting if enabled from the previous scene
         isDodgingOrTeleporting = false;
+        // Remove cutscene invincibility if enabled from the previous scene
+        immuneFromCutscene = false;
 
         StartCoroutine(DelayUIUpdateOnSceneLoad());
     }

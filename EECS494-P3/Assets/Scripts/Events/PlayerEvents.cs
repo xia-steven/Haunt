@@ -136,6 +136,7 @@ class CoinEvent
 /// </summary>
 public class DisablePlayerEvent
 {
+    public bool keepAnimatorEnabled = false;
     public override string ToString()
     {
         return "Disable Player Event sent";
