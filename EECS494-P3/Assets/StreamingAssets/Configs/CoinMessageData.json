@@ -1,0 +1,35 @@
+{
+    "key": "CoinMessageData",
+    "possibleMessages": [
+        {
+            "messages": [
+                "I found this coin lying around and figured I could give it to you."
+            ]
+        },
+        {
+            "messages": [
+                "Here, take this."
+            ]
+        },
+        {
+            "messages": [
+                "I saw a villager on my way here and was able to grab this coin from them."
+            ]
+        },
+        {
+            "messages": [
+                "I've always loved what Takiyasha does.  Take this coin as a token of my support."
+            ]
+        },
+        {
+            "messages": [
+                "You look like you could use this."
+            ]
+        },
+        {
+            "messages": [
+                "A coin for your troubles."
+            ]
+        }
+    ]
+}
