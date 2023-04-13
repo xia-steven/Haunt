@@ -9,13 +9,19 @@ public class SpritePromptManager : MonoBehaviour
 
     Subscription<SpritePromptEvent> promptSub;
 
-    SpriteRenderer sprite;
+    SpriteRenderer spriteRend;
 
     Vector3 offset = new Vector3(-0.5f, 1.25f, 0);
     float fadeTime = 0.5f;
 
     bool prompting = false;
-    bool cancelEarly = false;
+    Coroutine currCoroutine;
+
+    Color initialColor;
+
+    Stack<SpritePromptEvent> requestBacklog;
+
+    SpritePromptEvent currRequest;
 
     void Awake()
     {
@@ -27,9 +33,11 @@ public class SpritePromptManager : MonoBehaviour
 
         promptSub = EventBus.Subscribe<SpritePromptEvent>(onSpritePrompt);
 
-        sprite = GetComponent<SpriteRenderer>();
+        spriteRend = GetComponent<SpriteRenderer>();
 
-        sprite.enabled = false;
+        spriteRend.enabled = false;
+
+        requestBacklog = new Stack<SpritePromptEvent>();
     }
 
     private void Start()
@@ -39,11 +47,28 @@ public class SpritePromptManager : MonoBehaviour
         transform.parent = player;
 
         transform.localPosition = offset;
+
+
+        initialColor = spriteRend.color;
     }
 
     private void OnDestroy()
     {
         EventBus.Unsubscribe(promptSub);
+    }
+
+    private void Update()
+    {
+        if(!prompting && requestBacklog.Count > 0)
+        {
+            // Send request if one in the backlog
+            currRequest = requestBacklog.Pop();
+            if(!currRequest.cancelPrompt)
+            {
+                prompting = true;
+                currCoroutine = StartCoroutine(displayPrompt(currRequest));
+            }
+        }
     }
 
 
@@ -52,19 +77,27 @@ public class SpritePromptManager : MonoBehaviour
         if(!prompting)
         {
             prompting = true;
-            StartCoroutine(displayPrompt(spe));
+            currRequest = spe;
+            currCoroutine = StartCoroutine(displayPrompt(spe));
         }
         else
         {
-            cancelEarly = true;
-            StartCoroutine(displayPrompt(spe));
+            // Add current request to waiting list
+            requestBacklog.Push(currRequest);
+            StopCoroutine(currCoroutine);
+            prompting = true;
+            currRequest = spe;
+            currCoroutine = StartCoroutine(displayPrompt(spe));
         }
     }
 
     IEnumerator displayPrompt(SpritePromptEvent spe)
     {
-        sprite.sprite = spe.pressedSprite;
-        sprite.enabled = true;
+        spriteRend.sprite = spe.pressedSprite;
+        spriteRend.enabled = true;
+
+        // Reset color
+        spriteRend.color = initialColor;
 
         int startTime = (int)(Time.time * 2);
         bool pressed = true;
@@ -81,11 +114,11 @@ public class SpritePromptManager : MonoBehaviour
                     startTime = (int)(Time.time * 2);
                     if(pressed)
                     {
-                        sprite.sprite = spe.initialSprite;
+                        spriteRend.sprite = spe.initialSprite;
                     }
                     else
                     {
-                        sprite.sprite = spe.pressedSprite;
+                        spriteRend.sprite = spe.pressedSprite;
                     }
                     pressed = !pressed;
                 }
@@ -104,11 +137,11 @@ public class SpritePromptManager : MonoBehaviour
                     startTime = (int)(Time.time * 2);
                     if (pressed)
                     {
-                        sprite.sprite = spe.initialSprite;
+                        spriteRend.sprite = spe.initialSprite;
                     }
                     else
                     {
-                        sprite.sprite = spe.pressedSprite;
+                        spriteRend.sprite = spe.pressedSprite;
                     }
                     pressed = !pressed;
                 }
@@ -121,22 +154,18 @@ public class SpritePromptManager : MonoBehaviour
         float initialTime = Time.time;
         float progress = (Time.time - initialTime) / fadeTime;
 
-
-        Color initialColor = sprite.color;
-
-        while (progress < 1.0f && !cancelEarly)
+        while (progress < 1.0f)
         {
             progress = (Time.time - initialTime) / fadeTime;
 
-            sprite.color = new Color(initialColor.r, initialColor.g, initialColor.b, (1 - progress));
+            spriteRend.color = new Color(initialColor.r, initialColor.g, initialColor.b, (1 - progress));
 
             yield return null;
         }
 
-        sprite.enabled = false;
-        sprite.color = initialColor;
+        spriteRend.enabled = false;
+        spriteRend.color = initialColor;
 
         prompting = false;
-        cancelEarly = false;
     }
 }
