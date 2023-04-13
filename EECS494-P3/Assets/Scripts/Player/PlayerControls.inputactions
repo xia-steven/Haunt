@@ -325,6 +325,17 @@
                 },
                 {
                     "name": "",
+                    "id": "191c418a-5161-4340-8511-abf8196d557f",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SwapWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "59e5175c-09dc-4234-a574-828defba7931",
                     "path": "<Keyboard>/e",
                     "interactions": "",
