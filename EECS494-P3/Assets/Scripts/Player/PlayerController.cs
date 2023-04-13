@@ -194,7 +194,10 @@ public class PlayerController : MonoBehaviour {
         movementZ = 0f;
         if (isDodging)
             StopDodge();
-        animator.SetBool("walking", false);
+        if(!dpme.keepAnimatorEnabled)
+        {
+            animator.SetBool("walking", false);
+        }
     }
 
     void _OnEnableMovement(EnablePlayerEvent epme) {
