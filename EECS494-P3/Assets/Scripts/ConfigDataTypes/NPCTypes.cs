@@ -48,3 +48,9 @@ public class MessageSet
         return output;
     }
 }
+
+[System.Serializable]
+public class CoinMessageList : Savable
+{
+    public List<MessageSet> possibleMessages;
+}

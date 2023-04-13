@@ -380,6 +380,10 @@ PrefabInstance:
       propertyPath: configName
       value: SkeletonMessageData
       objectReference: {fileID: 0}
+    - target: {fileID: 50802311806852394, guid: c2902ec622468a547b0e5767094d52a7, type: 3}
+      propertyPath: givesRandomCoins
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 50802311806852395, guid: c2902ec622468a547b0e5767094d52a7, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1059,6 +1063,10 @@ PrefabInstance:
     - target: {fileID: 50802311806852394, guid: c2902ec622468a547b0e5767094d52a7, type: 3}
       propertyPath: configName
       value: ZombieMessageData
+      objectReference: {fileID: 0}
+    - target: {fileID: 50802311806852394, guid: c2902ec622468a547b0e5767094d52a7, type: 3}
+      propertyPath: givesRandomCoins
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 50802311806852395, guid: c2902ec622468a547b0e5767094d52a7, type: 3}
       propertyPath: m_Sprite

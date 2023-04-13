@@ -1,26 +1,25 @@
 {
-    "key": "GhostMessageData",
+    "key": "ZombieMessageData",
     "name": "Survivor",
     "allMessages": [
         {
             "messages": [
-                "Oh hi.  I heard there was a new skeleton in town and I had come see what the commotion is about.  Takiyasha is quite popular."
+                "<ZOMBIE NIGHT 0 HERE>"
             ]
         },
         {
             "messages": [
-                "Great job our there!  I heard that you were able to steal a few coins from the villagers.  Make sure to trade them to Melquiades for weapons!"
+                "<ZOMBIE NIGHT 1 HERE>"
             ]
         },
         {
             "messages": [
-                "Keep it up.  I heard that the cleric villagers are tasked with building the pedestals, so try and target those guys first."
+                "<ZOMBIE NIGHT 2 HERE>"
             ]
         },
         {
             "messages": [
-                "Looks like you're still alive.  Rumor has it that after the third full night, the villagers send their leader to banish you once and for all.",
-                "Good luck out there, you will need it."
+                "<ZOMBIE NIGHT 3 HERE>"
             ]
         }
     ]
