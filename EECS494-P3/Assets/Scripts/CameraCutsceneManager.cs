@@ -226,7 +226,7 @@ public class CameraCutsceneManager : MonoBehaviour
                 yield return null;
             }
 
-            yield return new WaitForSecondsRealtime(1.0f);
+            yield return new WaitForSecondsRealtime(1.5f);
 
             // Fade out highlight
             initial_time = Time.realtimeSinceStartup;
@@ -241,7 +241,7 @@ public class CameraCutsceneManager : MonoBehaviour
                 yield return null;
             }
 
-            yield return new WaitForSecondsRealtime(1.0f);
+            yield return new WaitForSecondsRealtime(0.5f);
 
             pedestalFilter.gameObject.SetActive(false);
         }

@@ -11,6 +11,7 @@ public class IsTeleporter : MonoBehaviour {
 
 
     Sprite eSprite;
+    Sprite ePressedSprite;
     SpritePromptEvent ePrompt;
 
     bool sentPrompt = false;
@@ -41,8 +42,9 @@ public class IsTeleporter : MonoBehaviour {
 
         UnityEngine.Object[] sprites = Resources.LoadAll("tilemap");
         eSprite = (Sprite)sprites[360];
+        ePressedSprite = (Sprite)sprites[88];
 
-        ePrompt = new SpritePromptEvent(eSprite, KeyCode.E);
+        ePrompt = new SpritePromptEvent(eSprite, ePressedSprite, KeyCode.E);
     }
 
     private void OnTriggerStay(Collider other) {

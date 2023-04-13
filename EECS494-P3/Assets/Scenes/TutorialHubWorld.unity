@@ -733,7 +733,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23cd3c2eddd61142989bb1047100182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 4d0defc669378ca4a9b5d0cb1d37de19, type: 3}
+  initialSprite: {fileID: 21300000, guid: 4d0defc669378ca4a9b5d0cb1d37de19, type: 3}
+  pressedSprite: {fileID: 21300000, guid: 1b0876b41ab5d144c9a4b18297001c34, type: 3}
   dismissKey: 119
 --- !u!65 &1337666193
 BoxCollider:
