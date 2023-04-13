@@ -48,6 +48,10 @@ public abstract class Weapon : MonoBehaviour {
     // Time between tap firing
     [SerializeField] protected float tapDelay = 0.2f;
 
+    // Reload prompt variables
+    Sprite rSprite;
+    Sprite rPressedSprite;
+    SpritePromptEvent rPrompt;
 
     public float ReloadTime {
         get { return reloadTime; }
@@ -94,6 +98,13 @@ public abstract class Weapon : MonoBehaviour {
         lastBullet = 0;
         lastTap = 0;
         PlayerModifiers.moveSpeed *= speedMultiplier;
+
+        Object[] sprites = Resources.LoadAll("tilemap");
+        rSprite = (Sprite)sprites[361];
+        rPressedSprite = (Sprite)sprites[89];
+
+        rPrompt = new SpritePromptEvent(rSprite, rPressedSprite, KeyCode.R);
+        rPrompt.cancelPrompt = true;
     }
 
     protected void Subscribe() {
@@ -209,6 +220,9 @@ public abstract class Weapon : MonoBehaviour {
         int returned = 0;
         int loaded = currentClipAmount + bulletsLoaded;
 
+        // Cancel reload prompt
+        rPrompt.cancelPrompt = true;
+
         if (loaded > fullClipAmount) // Reload would exceed clip capacity
         {
             returned = loaded - fullClipAmount; // Set excess bullets to be returned to inventory
@@ -226,6 +240,9 @@ public abstract class Weapon : MonoBehaviour {
     // Used for base pistol and god mode
     public void ReloadInfinite() {
         currentClipAmount = fullClipAmount;
+
+        // Cancel reload prompt
+        rPrompt.cancelPrompt = true;
     }
 
     public void OnEnable()
@@ -237,6 +254,12 @@ public abstract class Weapon : MonoBehaviour {
         }
         firing = false;
         messageVisible = false;
+
+        if(currentClipAmount == 0)
+        {
+            rPrompt.cancelPrompt = false;
+            EventBus.Publish(rPrompt);
+        }
     }
 
     protected virtual void FixedUpdate()
@@ -281,6 +304,11 @@ public abstract class Weapon : MonoBehaviour {
         if (currentClipAmount > 0 && firing && (Time.time - lastBullet >= bulletDelay) && (Time.time - lastTap >= tapDelay) && !isReloading && !messageVisible)
         {
             WeaponFire(direction);
+            if (currentClipAmount == 0)
+            {
+                rPrompt.cancelPrompt = false;
+                EventBus.Publish(rPrompt);
+            }
         }
     }
 
@@ -324,6 +352,8 @@ public abstract class Weapon : MonoBehaviour {
             ReloadInfinite();
             isReloading = false;
         }
+
+        rPrompt.cancelPrompt = true;
     }
 }
 
