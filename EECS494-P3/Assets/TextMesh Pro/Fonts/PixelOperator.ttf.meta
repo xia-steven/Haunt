@@ -1,18 +1,19 @@
 fileFormatVersion: 2
-guid: 632b1743cac85f64abd36a079b4b97bf
+guid: 46b1b3cccb311614dab5429e7db6c530
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
-  fontSize: 16
-  forceTextureCase: -2
+  fontSize: 64
+  forceTextureCase: -1
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - rainyhearts
-  fallbackFontReferences: []
+  - Pixel Operator
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d85340acc34f5a444952cd811b8f0c8a, type: 3}
   customCharacters: 
-  fontRenderingMode: 0
+  fontRenderingMode: 2
   ascentCalculationMode: 1
   useLegacyBoundsCalculation: 0
   shouldRoundAdvanceValue: 1
