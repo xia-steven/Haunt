@@ -255,7 +255,7 @@ public abstract class Weapon : MonoBehaviour {
         firing = false;
         messageVisible = false;
 
-        if(currentClipAmount == 0)
+        if (currentClipAmount == 0 && thisData.name != "sniper")
         {
             rPrompt.cancelPrompt = false;
             EventBus.Publish(rPrompt);
@@ -304,7 +304,7 @@ public abstract class Weapon : MonoBehaviour {
         if (currentClipAmount > 0 && firing && (Time.time - lastBullet >= bulletDelay) && (Time.time - lastTap >= tapDelay) && !isReloading && !messageVisible)
         {
             WeaponFire(direction);
-            if (currentClipAmount == 0)
+            if (currentClipAmount == 0 && thisData.name != "sniper")
             {
                 rPrompt.cancelPrompt = false;
                 EventBus.Publish(rPrompt);
