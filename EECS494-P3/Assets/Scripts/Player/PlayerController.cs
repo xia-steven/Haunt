@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void Start() {
@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour {
         dodgeSound = Resources.Load<AudioClip>("Audio/Movement/Dodge");
     }
 
+    /*
     void OnSceneLoaded(Scene s, LoadSceneMode m)
     {
         Debug.Log("Attempting to change player control scheme");
@@ -64,6 +65,7 @@ public class PlayerController : MonoBehaviour {
             GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
         }
     }
+    */
 
     private void OnDestroy() {
         EventBus.Unsubscribe(disableMoveSub);
