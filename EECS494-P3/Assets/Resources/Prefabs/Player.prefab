@@ -365,7 +365,6 @@ MonoBehaviour:
   dodgeRollDuration: 0.35
   dodgeRollSpeed: 12.5
   dodgeRollCooldown: 0.5
-  rb: {fileID: 5067998880475344224}
 --- !u!65 &7257248000686981297
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -572,8 +571,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953bfef7afa23ca468ac12753d8164c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.2
-  scale: 0.5
+  duration: 0.4
+  scale: 0.4
   objectSprite: {fileID: 198104214444730479}
 --- !u!1 &6216790783800187338
 GameObject:

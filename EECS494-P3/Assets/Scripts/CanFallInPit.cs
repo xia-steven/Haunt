@@ -6,8 +6,8 @@ public class CanFallInPit : MonoBehaviour
 {
     private float groundDistance = 1f;
     private float pitResetDistance = 1.1f;
-    [SerializeField] private float duration = 0.2f; // the time it takes for the sprite to shrink
-    [SerializeField] private float scale = 0.5f; // the final scale of the sprite in hole
+    [SerializeField] private float duration = 0.4f; // the time it takes for the sprite to shrink
+    [SerializeField] private float scale = 0.4f; // the final scale of the sprite in hole
     private int numOver = 0;
     private bool playerEnabled = true;
     private bool overPit = false;
@@ -134,6 +134,8 @@ public class CanFallInPit : MonoBehaviour
 
         // Send end dodge routine in case fall happens half way through dodge
         EventBus.Publish<TutorialDodgeEndEvent>(new TutorialDodgeEndEvent());
+        // Stop player
+        EventBus.Publish<DisablePlayerEvent>(new DisablePlayerEvent());
 
         // Play pit falling animation
         isFalling = true;
@@ -166,6 +168,8 @@ public class CanFallInPit : MonoBehaviour
             //transform.position = adjustedPosition;
             transform.position = relocationLocation;
             GetComponent<PlayerHasHealth>().AlterHealth(-1, DeathCauses.Pit);
+            // Unfreeze player
+            EventBus.Publish<EnablePlayerEvent>(new EnablePlayerEvent());
         }
         else
         {
