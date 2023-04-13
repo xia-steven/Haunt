@@ -158,6 +158,8 @@ public class EnablePlayerEvent
 /// </summary>
 public class TryInteractEvent
 {
+    public string button;
+
     public override string ToString()
     {
         return "Interact Attempt Event sent";

@@ -328,6 +328,87 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 85416b19-430e-41cd-8dc8-6cb670396ae2
     m_ActionName: Player/SwapSpecificWeapon[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5067998880475344228}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: eae7e8ed-7560-42f6-9f42-38fab24b525d
+    m_ActionName: Hub/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow,/Shaul
+      Eizikovich vJoy - Virtual Joystick/stick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5067998880475344228}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnReload
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3c739bc6-08fd-4a8f-84a8-cf22b5f3a0b1
+    m_ActionName: Hub/Reload[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5067998880475344228}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnSwapWeapon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8947366e-fbdd-4456-95ab-b390f62bd1b5
+    m_ActionName: Hub/SwapWeapon[/Mouse/scroll/y,/Keyboard/tab,/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5067998880475344228}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f9514310-5aae-42e3-ad89-2757d18b5e06
+    m_ActionName: Hub/Interact[/Keyboard/e,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5067998880475344228}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnSwapSpecificWeapon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 18a39738-6f3b-491d-b61b-54a90d4ea566
+    m_ActionName: Hub/SwapSpecificWeapon[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4,/Keyboard/5]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -365,7 +446,6 @@ MonoBehaviour:
   dodgeRollDuration: 0.35
   dodgeRollSpeed: 12.5
   dodgeRollCooldown: 0.5
-  rb: {fileID: 5067998880475344224}
 --- !u!65 &7257248000686981297
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -572,8 +652,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953bfef7afa23ca468ac12753d8164c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.2
-  scale: 0.5
+  duration: 0.4
+  scale: 0.4
   objectSprite: {fileID: 198104214444730479}
 --- !u!1 &6216790783800187338
 GameObject:
