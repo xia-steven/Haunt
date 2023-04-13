@@ -617,18 +617,6 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3226477732891980713, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3226477732891980713, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3226477732891980713, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3226477732891980713, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8
       objectReference: {fileID: 0}
@@ -672,10 +660,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: FinalBoss
       objectReference: {fileID: 0}
-    - target: {fileID: 3226477733417184675, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5276552873523448444, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
       propertyPath: spawners.Array.data[0]
       value: 
@@ -692,18 +676,6 @@ PrefabInstance:
       propertyPath: spawners.Array.data[3]
       value: 
       objectReference: {fileID: 1698824217}
-    - target: {fileID: 7080845073249181226, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
-      propertyPath: m_Size.x
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7080845073249181226, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
-      propertyPath: m_Size.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7080845073249181226, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
-      propertyPath: m_Center.z
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
 --- !u!1001 &3310355338811178745

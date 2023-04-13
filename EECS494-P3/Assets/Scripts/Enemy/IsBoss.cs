@@ -47,13 +47,16 @@ public class IsBoss : MonoBehaviour
         lineCollider = GetComponentInChildren<SphereCollider>();
         lineRenderer.enabled = false;
         lineCollider.enabled = false;
-        startRotation = transform.position - 50f * Vector3.back;
+        startRotation = transform.forward;
 
         clericPrefab = Resources.Load<GameObject>("Prefabs/Enemy/Cleric");
 
 
         basicBulletPrefab = Resources.Load<GameObject>("Prefabs/Weapons/EnemyBasicBullet");
         arbalestBulletPrefab = Resources.Load<GameObject>("Prefabs/EnemyWeapons/ArbalestShot");
+
+        ArbalestProjectile arbalestProj = arbalestBulletPrefab.GetComponent<ArbalestProjectile>();
+        arbalestProj.rotationSpeed = 30f;
     }
 
     private void Update()
@@ -186,14 +189,14 @@ public class IsBoss : MonoBehaviour
         float initial_time = Time.time;
         float progress = (Time.time - initial_time) / bossData.shockwaveWindup;
 
-        Vector3 initialScale = sprite.transform.localScale;
+        Vector3 initialPos = transform.position;
 
         while (progress < 1.0f)
         {
             progress = (Time.time - initial_time) / bossData.shockwaveWindup;
 
-            // Scale sprite up
-            sprite.transform.localScale = initialScale * (1 + progress * 2.0f);
+            // Move transform up
+            transform.position = initialPos + new Vector3(0, 3.0f * progress, 0);
 
 
             yield return null;
@@ -207,8 +210,8 @@ public class IsBoss : MonoBehaviour
         {
             progress = (Time.time - initial_time) / bossData.shockwavePound;
 
-            // Scale sprite down
-            sprite.transform.localScale = initialScale * (1 + (1-progress) * 2.0f);
+            // Move transform down
+            transform.position = initialPos + new Vector3(0, 3.0f * (1 - progress), 0);
 
 
             yield return null;
@@ -295,6 +298,8 @@ public class IsBoss : MonoBehaviour
 
         float offsetPerLaser = 360f / (float)laserCount;
 
+        int wallMask = LayerMask.GetMask("Wall");
+
         for(int a = 0; a < laserCount * 2; ++a)
         {
             if(a % 2 == 0)
@@ -303,7 +308,14 @@ public class IsBoss : MonoBehaviour
             }
             else
             {
-                laserPoints[a] = Quaternion.Euler(0, offsetPerLaser * ((a + 1) / 2), 0) * startRotation;
+                float magnitude = 50f;
+                // If we hit a wall, reduce distance
+                if(Physics.Raycast(transform.position, Quaternion.Euler(0, offsetPerLaser * ((a + 1) / 2), 0) * startRotation, 
+                    out RaycastHit hit, magnitude, wallMask))
+                {
+                    magnitude = Vector3.Distance(hit.point, transform.position);
+                }
+                laserPoints[a] = Quaternion.Euler(0, offsetPerLaser * ((a + 1) / 2), 0) * startRotation * magnitude;
             }
         }
 
@@ -339,7 +351,14 @@ public class IsBoss : MonoBehaviour
             // Update lasers
             for(int b = 0; b < laserCount; ++b)
             {
-                laserPoints[(b * 2) + 1] = Quaternion.Euler(0, bossData.laserRotateSpeed, 0) * laserPoints[(b* 2) + 1];
+                float magnitude = 50f;
+                // If we hit a wall, reduce distance
+                if (Physics.Raycast(transform.position, Quaternion.Euler(0, bossData.laserRotateSpeed, 0) * laserPoints[(b * 2) + 1].normalized,
+                    out RaycastHit hit, magnitude, wallMask))
+                {
+                    magnitude = Vector3.Distance(hit.point, transform.position);
+                }
+                laserPoints[(b * 2) + 1] = Quaternion.Euler(0, bossData.laserRotateSpeed, 0) * laserPoints[(b* 2) + 1].normalized * magnitude;
             }
 
             lineRenderer.SetPositions(laserPoints);
