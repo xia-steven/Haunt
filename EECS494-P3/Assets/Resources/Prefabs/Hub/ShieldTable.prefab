@@ -308,6 +308,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemDescription
       objectReference: {fileID: 0}
+    - target: {fileID: 1855426108055673304, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -2255366520617000379, guid: 1f40c35d2197313428f40de583c63102, type: 2}
+    - target: {fileID: 2712902159734686957, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 1f40c35d2197313428f40de583c63102, type: 2}
+    - target: {fileID: 2712902159734686957, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2255366520617000379, guid: 1f40c35d2197313428f40de583c63102, type: 2}
     - target: {fileID: 3686770338568083116, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -318,7 +330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3686770338568083116, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 3686770338568083116, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -343,6 +355,10 @@ PrefabInstance:
     - target: {fileID: 3686770338568083116, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5940769324649842782, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
+      propertyPath: m_text
+      value: Grants temporary extra heart
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
