@@ -78,7 +78,9 @@ public class IsTeleporter : MonoBehaviour {
     }
 
     public void _Interact(TryInteractEvent e) {
-        if (isUsable && IsPlayer.instance.GetHealth() > 0) {
+        // Don't allow teleport with click
+        Debug.Log(e.button);
+        if (isUsable && IsPlayer.instance.GetHealth() > 0 && e.button == "e") {
             IsPlayer.SetPosition(new Vector3(0, .5f, 0));
             AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/Movement/Teleport"), transform.position);
             // Set player invincible

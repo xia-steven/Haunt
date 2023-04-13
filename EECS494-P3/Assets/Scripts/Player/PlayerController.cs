@@ -34,6 +34,10 @@ public class PlayerController : MonoBehaviour {
     Subscription<TutorialDodgeStartEvent> dodgeStartSub;
     Subscription<TutorialDodgeEndEvent> dodgeEndSub;
 
+    private void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
@@ -46,6 +50,19 @@ public class PlayerController : MonoBehaviour {
         dodgeEndSub = EventBus.Subscribe<TutorialDodgeEndEvent>(StopDodge);
         walkSound = Resources.Load<AudioClip>("Audio/Movement/Walk");
         dodgeSound = Resources.Load<AudioClip>("Audio/Movement/Dodge");
+    }
+
+    void OnSceneLoaded(Scene s, LoadSceneMode m)
+    {
+        Debug.Log("Attempting to change player control scheme");
+        if (s.name == "HubWorld" || s.name == "TutorialHubWorld")
+        {
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("Hub");
+        }
+        else
+        {
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
+        }
     }
 
     private void OnDestroy() {
@@ -137,7 +154,9 @@ public class PlayerController : MonoBehaviour {
         if (!playerEnabled) return;
 
         if (value.started) {
-            EventBus.Publish(new TryInteractEvent());
+            TryInteractEvent e = new TryInteractEvent();
+            e.button = value.control.name;
+            EventBus.Publish(e);
         }
     }
 
