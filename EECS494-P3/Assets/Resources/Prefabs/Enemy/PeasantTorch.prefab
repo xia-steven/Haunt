@@ -334,6 +334,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Torch
       objectReference: {fileID: 0}
+    - target: {fileID: 1196269830199447662, guid: d750880024fd99ecd8cc8d0a3d5134cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2060169520582446232, guid: d750880024fd99ecd8cc8d0a3d5134cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3248463758531242105, guid: d750880024fd99ecd8cc8d0a3d5134cc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3840976961263027775, guid: d750880024fd99ecd8cc8d0a3d5134cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4860614164579348313, guid: d750880024fd99ecd8cc8d0a3d5134cc, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -378,6 +394,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8598217856977532994, guid: d750880024fd99ecd8cc8d0a3d5134cc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3d92cbbe3a640bc4a948cddb154caddd, type: 3}
+    - target: {fileID: 8598217856977532994, guid: d750880024fd99ecd8cc8d0a3d5134cc, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8598217856977532994, guid: d750880024fd99ecd8cc8d0a3d5134cc, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8598217856977532994, guid: d750880024fd99ecd8cc8d0a3d5134cc, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d750880024fd99ecd8cc8d0a3d5134cc, type: 3}
 --- !u!4 &1920702639775318881 stripped
@@ -385,3 +417,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4860614164579348313, guid: d750880024fd99ecd8cc8d0a3d5134cc, type: 3}
   m_PrefabInstance: {fileID: 6472774425095531576}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8611395238748714300 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3337792205872306436, guid: d750880024fd99ecd8cc8d0a3d5134cc, type: 3}
+  m_PrefabInstance: {fileID: 6472774425095531576}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2403528298134674076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8611395238748714300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e07952aa48a7fc4478591f800a034e80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scale: 1
