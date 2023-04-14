@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour {
     private Collider col;
     private TrailRenderer tr;
     private Animator animator;
+    private PlayerInput pi;
     private Vector3 movement;
     private float movementX;
     private float movementZ;
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Awake()
     {
-        //SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void Start() {
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour {
         col = GetComponent<Collider>();
         tr = GetComponent<TrailRenderer>();
         animator = GetComponent<Animator>();
+        pi = GetComponent<PlayerInput>();
         disableMoveSub = EventBus.Subscribe<DisablePlayerEvent>(_OnDisableMovement);
         enableMoveSub = EventBus.Subscribe<EnablePlayerEvent>(_OnEnableMovement);
         dodgeStartSub = EventBus.Subscribe<TutorialDodgeStartEvent>(StartDodge);
@@ -52,26 +54,42 @@ public class PlayerController : MonoBehaviour {
         dodgeSound = Resources.Load<AudioClip>("Audio/Movement/Dodge");
     }
 
-    /*
+    
     void OnSceneLoaded(Scene s, LoadSceneMode m)
     {
         Debug.Log("Attempting to change player control scheme");
         if (s.name == "HubWorld" || s.name == "TutorialHubWorld")
         {
-            GetComponent<PlayerInput>().SwitchCurrentActionMap("Hub");
+            Debug.Log("Player control scheme set to Hub");
+            StartCoroutine(LoadControls("Hub"));
         }
         else
         {
-            GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
+            Debug.Log("Player control scheme set to Gameplay");
+            StartCoroutine(LoadControls("Player"));
         }
     }
-    */
+
+    // Allows for delay before attempting controls switch
+    private IEnumerator LoadControls(string controls)
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        if (pi == null)
+        {
+            pi = GetComponent<PlayerInput>();
+        }
+
+        pi.SwitchCurrentActionMap(controls);
+    }
+    
 
     private void OnDestroy() {
         EventBus.Unsubscribe(disableMoveSub);
         EventBus.Unsubscribe(enableMoveSub);
         EventBus.Unsubscribe(dodgeStartSub);
         EventBus.Unsubscribe(dodgeEndSub);
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void OnDodge(InputAction.CallbackContext value) {
