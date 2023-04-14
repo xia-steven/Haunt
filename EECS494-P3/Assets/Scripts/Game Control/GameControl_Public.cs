@@ -65,8 +65,8 @@ partial class GameControl : MonoBehaviour {
     }
 
     public static bool IsTutorial {
-        get { return IsTutorial; }
-        set { IsTutorial = false; }
+        get { return isTutorial; }
+        set { isTutorial = false; }
     }
 
     // Set in start of game control

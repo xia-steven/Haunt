@@ -23,7 +23,7 @@ partial class GameControl : MonoBehaviour {
     private static bool isNight = false;
     private bool nightEnding = false;
     private bool started = false;
-    private bool isTutorial = true;
+    private static bool isTutorial = true;
 
     private int waveSize;
 

@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour {
     private Vector3 movement;
     private float movementX;
     private float movementZ;
-    private float dodgeRollCooldownTimer = 0f;
+    private float dodgeRollCooldownTimer = .2f;
     private bool playerEnabled = true;
     private bool isDodging = false;
     private bool dodgePressed = false;

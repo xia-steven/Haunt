@@ -85,7 +85,8 @@ public class IsTeleporter : MonoBehaviour {
             AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/Movement/Teleport"), transform.position);
 
             //set tutorial finished
-            GameControl.IsTutorial = false;
+            if (SceneManager.GetActiveScene().name == "TutorialGameScene")
+                GameControl.IsTutorial = false;
 
             // Set player invincible
             // Disabled on scene load in playerhashealth
