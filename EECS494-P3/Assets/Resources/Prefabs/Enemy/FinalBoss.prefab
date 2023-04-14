@@ -186,6 +186,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   healthBar: {fileID: 0}
+  winTrigger: {fileID: 0}
+  Pedestals: []
 --- !u!65 &7080845073249181226
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -372,7 +374,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 85892377a5e9c1d42b80d06fa1c2030b, type: 2}
+  - {fileID: 2100000, guid: ea36fa77955ea3f4cb5d5310a5975c8d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
