@@ -189,6 +189,8 @@ partial class GameControl : MonoBehaviour {
         Time.timeScale = 1;
         AudioListener.pause = false;
 
+        Wave.Reset();
+
         PlayerModifiers.resetModifiers();
 
         EventBus.Publish(new EnablePlayerEvent());
@@ -197,4 +199,6 @@ partial class GameControl : MonoBehaviour {
 
         SceneManager.LoadScene(sceneName);
     }
+
+
 }

@@ -8,6 +8,8 @@ public class Wave
     public static List<int> meleeTable;
     public static List<int> rangedTable;
     static int curEnemies = 0;
+    
+    private static List<GameObject> potentialMembers;
 
     const int maxEnemies = 25;
 
@@ -16,7 +18,6 @@ public class Wave
 
     private Dictionary<int, IsWaveMember> members = new Dictionary<int, IsWaveMember>();
 
-    private static List<GameObject> potentialMembers;
     private List<Transform> spawnPoints;
 
     public readonly int difficulty;
@@ -228,5 +229,11 @@ public class Wave
         {
             --curEnemies;
         }
+    }
+
+    public static void Reset()
+    {
+        curEnemies = 0;
+        potentialMembers = null;
     }
 }
