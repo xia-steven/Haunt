@@ -64,6 +64,11 @@ partial class GameControl : MonoBehaviour {
         }
     }
 
+    public static bool IsTutorial {
+        get { return IsTutorial; }
+        set { IsTutorial = false; }
+    }
+
     // Set in start of game control
     public static float NightLength;
 
@@ -185,6 +190,7 @@ partial class GameControl : MonoBehaviour {
         instance.gamePaused = false;
         isNight = false;
         instance.nightEnding = false;
+        IsTutorial = true;
 
         Time.timeScale = 1;
         AudioListener.pause = false;

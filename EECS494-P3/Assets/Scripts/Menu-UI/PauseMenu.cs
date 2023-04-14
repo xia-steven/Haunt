@@ -73,7 +73,10 @@ public class PauseMenu : MonoBehaviour {
     {
         AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/click"), Camera.main.transform.position);
 
-        GameControl.ResetGame("HubWorld");
+        if (GameControl.IsTutorial)
+            GameControl.ResetGame("TutorialHubWorld");
+        else
+            GameControl.ResetGame("HubWorld");
     }
 
     public void QuitGame()

@@ -83,6 +83,10 @@ public class IsTeleporter : MonoBehaviour {
         if (isUsable && IsPlayer.instance.GetHealth() > 0 && e.button == "e") {
             IsPlayer.SetPosition(new Vector3(0, .5f, 0));
             AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/Movement/Teleport"), transform.position);
+
+            //set tutorial finished
+            GameControl.IsTutorial = false;
+
             // Set player invincible
             // Disabled on scene load in playerhashealth
             EventBus.Publish(new ToggleInvincibilityEvent(true));
