@@ -100,8 +100,8 @@ public class EnemyBase : MonoBehaviour {
         // Ignore hits on other enemies
         var layerMask = ~LayerMask.GetMask("Enemy");
 
-        bool hitRaycast = Physics.Raycast(transform.position, playerDirection, out var hit,
-                Vector3.Distance(targetPosition, transform.position), layerMask);
+        var hitRaycast = Physics.Raycast(transform.position, playerDirection, out var hit,
+            Vector3.Distance(targetPosition, transform.position), layerMask);
 
         if (hitRaycast &&
             hit.transform.gameObject.CompareTag("Pit") && attributes.isRanged &&
