@@ -117,9 +117,9 @@ public class MusicController : MonoBehaviour
 
     private IEnumerator WinMusic()
     {
-        yield return new WaitForSeconds(2.75f);
+        yield return null;
 
-        audioSource.clip = Resources.Load<AudioClip>("Audio/Music/ShopMusic");
+        audioSource.clip = Resources.Load<AudioClip>("Audio/Music/WinMusic");
         PlayMusic();
     }
 
