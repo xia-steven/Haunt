@@ -15,13 +15,4 @@ public class Upgrade : IsBuyable {
 
         base.Start();
     }
-
-    protected virtual string GetName() {
-        return "";
-    }
-
-    protected override void Apply() {
-        base.Apply();
-        ShopController.upgradePool.Remove(GetName());
-    }
 }

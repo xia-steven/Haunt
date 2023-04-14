@@ -2,20 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RadiusUpgrade : Upgrade
-{
-    protected override string GetName() {
-        return "ExplodingDash";
-    }
-
-    protected override void Start()
-    {
+public class RadiusUpgrade : Upgrade {
+    protected override void Start() {
         thisData = typesData.types[(int)PurchaseableType.radius];
         base.Start();
     }
 
-    protected override void Apply()
-    {
+    protected override void Apply() {
         PlayerModifiers.explosiveRadius = thisData.rate1;
 
         base.Apply();

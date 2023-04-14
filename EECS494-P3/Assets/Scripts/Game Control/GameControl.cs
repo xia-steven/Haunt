@@ -7,16 +7,17 @@ using UnityEngine.SceneManagement;
  * This file contains code which controls much of the game state.
  * For all public attributes, see GameControl_Public.cs.
  */
-partial class GameControl : MonoBehaviour {
+internal partial class GameControl : MonoBehaviour {
     /*Turn this off if you don't want the night cycle to run*/
-    const bool DEBUG_DO_DAYNIGHT = true;
+    private const bool DEBUG_DO_DAYNIGHT = true;
 
     [SerializeField] protected GameData data;
 
     /*STATE DEPENDENT VARIABLES*/
     private float nightStartTime;
 
-    private static int day = 0; //set to 1 less than the first day - does not increment during tutorial (tutorial is day 0)
+    private static int
+        day = 0; //set to 1 less than the first day - does not increment during tutorial (tutorial is day 0)
 
     private bool gameActive = false;
     private bool gamePaused = false;
@@ -30,14 +31,13 @@ partial class GameControl : MonoBehaviour {
     /*END STATE DEPENDENT VARIABLES*/
 
     //singleton
-    static GameControl instance;
+    private static GameControl instance;
 
     /*Editor objects held by singleton instance*/
-    [SerializeField] List<Transform> spawners;
+    [SerializeField] private List<Transform> spawners;
     /*End editor objects held by singleton*/
 
-    private void Awake()
-    {
+    private void Awake() {
         if (instance == null) instance = this;
         else Destroy(gameObject);
 
@@ -45,8 +45,7 @@ partial class GameControl : MonoBehaviour {
     }
 
     // Start is called before the first frame update
-    void Start() {
-
+    private void Start() {
         startSub = EventBus.Subscribe<GameStartEvent>(_Start);
         lossSub = EventBus.Subscribe<GameLossEvent>(_Lose);
         winSub = EventBus.Subscribe<GameWinEvent>(_Win);
@@ -64,44 +63,38 @@ partial class GameControl : MonoBehaviour {
         started = true;
     }
 
-    void OnSceneLoaded(Scene s, LoadSceneMode m)
-    {
-        if (s.name == "GameScene" || s.name == "TutorialGameScene")
-        {
+    private void OnSceneLoaded(Scene s, LoadSceneMode m) {
+        if (s.name is "GameScene" or "TutorialGameScene") {
             Debug.Log("GameScene Loaded");
             StartCoroutine(StartOnDelay(StartNight));
         }
-        else
-        {
+        else {
             StartCoroutine(StartOnDelay(DayUpdate));
         }
+
         TimeManager.ResetTimeScale();
-        EventBus.Publish<ReloadAllEvent>(new ReloadAllEvent());
+        EventBus.Publish(new ReloadAllEvent());
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         isNight = false;
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    delegate IEnumerator delayedEnum();
-    delegate void delayedVoid();
+    private delegate IEnumerator delayedEnum();
 
-    private IEnumerator StartOnDelay(delayedEnum f)
-    {
-        while(!started)
-        {
+    private delegate void delayedVoid();
+
+    private IEnumerator StartOnDelay(delayedEnum f) {
+        while (!started) {
             yield return null;
         }
 
         StartCoroutine(f());
     }
 
-    private IEnumerator StartOnDelay(delayedVoid f)
-    {
-        while (!started)
-        {
+    private IEnumerator StartOnDelay(delayedVoid f) {
+        while (!started) {
             yield return null;
         }
 
@@ -111,19 +104,16 @@ partial class GameControl : MonoBehaviour {
 
     //NightUpdate runs during the night
     private IEnumerator NightUpdate() {
-        Wave w;
-        w = new Wave(waveSize++, data.waveTimeout, spawners);
-        if(day != 0)
-        {
+        var w = new Wave(waveSize++, data.waveTimeout, spawners);
+        if (day != 0) {
             w.Spawn();
         }
-        else
-        {
+        else {
             StartCoroutine(w.SpawnTutorial());
         }
+
         nightStartTime = Time.time;
-        if(day == 0)
-        {
+        if (day == 0) {
             // Set tutorial night length to 25% of a standard night seconds
             nightStartTime -= (data.nightLength * 0.75f);
         }
@@ -136,8 +126,7 @@ partial class GameControl : MonoBehaviour {
 
             if (w.IsOver()) {
                 w = new Wave(waveSize++, data.waveTimeout, spawners);
-                if (day != 0)
-                {
+                if (day != 0) {
                     w.Spawn();
                 }
             }
@@ -147,24 +136,20 @@ partial class GameControl : MonoBehaviour {
 
         if (isNight) EndNight();
     }
-    
-    private IEnumerator NightEndingUpdate()
-    {
-        Wave w;
-        w = new Wave(15, 5, spawners);
-        if (day != 0)
-        {
+
+    private IEnumerator NightEndingUpdate() {
+        var w = new Wave(15, 5, spawners);
+        if (day != 0) {
             w.Spawn();
         }
-        while (nightEnding)
-        {
+
+        while (nightEnding) {
             if (!gameActive || gamePaused) {
                 yield return new WaitForSeconds(data.updateFrequency);
                 continue;
             }
 
-            if (w.IsOver() && day != 0)
-            {
+            if (w.IsOver() && day != 0) {
                 w = new Wave(4, 5, spawners, false);
                 w.Spawn();
             }
@@ -177,11 +162,9 @@ partial class GameControl : MonoBehaviour {
     private IEnumerator DayUpdate() {
         yield return null;
         //if (day == data.maxDays) WinGame();
-        
-        while (!isNight)
-        {
-            if(!gameActive || gamePaused)
-            {
+
+        while (!isNight) {
+            if (!gameActive || gamePaused) {
                 yield return new WaitForSeconds(data.updateFrequency);
                 continue;
             }
@@ -193,8 +176,7 @@ partial class GameControl : MonoBehaviour {
     }
 }
 
-public class GameData : Savable
-{
+public class GameData : Savable {
     public int maxDays;
     public float nightLength; // seconds
     public float waveTimeout; // seconds
