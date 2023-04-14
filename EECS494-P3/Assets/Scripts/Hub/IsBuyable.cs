@@ -83,7 +83,7 @@ public class IsBuyable : MonoBehaviour {
                 {
                     costText.text = "Free <s><alpha=#77>" + thisData.cost + "</s>";
                 }
-                else if (thisData.cost == 0)
+                else if (cost == 0 && thisData.cost == 0)
                 {
                     costText.text = "Free";
                 } else 
