@@ -209,6 +209,7 @@ public class PlayerController : MonoBehaviour {
     private void Update() {
         if (!playerEnabled) return;
 
+        animator.SetFloat("walkingSpeed", PlayerModifiers.moveSpeed);
 
         if (!isDodging) {
             movement.x = movementX;

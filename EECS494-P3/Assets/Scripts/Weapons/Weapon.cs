@@ -188,6 +188,9 @@ public abstract class Weapon : MonoBehaviour {
 
     // Fires a projectile of type Bullet in specified direction
     public void FireProjectile(GameObject bullet, Vector3 direction, Transform start, float bulletSpeed, Shooter shooter) {
+        // Play firing sound
+        AudioSource.PlayClipAtPoint(firingSound, transform.position);
+
         // Set spawn position based on barrel length
         Vector3 barrelOffset = direction * barrelLength;
         Vector3 barrelSpawn = start.position + barrelOffset;
@@ -208,9 +211,6 @@ public abstract class Weapon : MonoBehaviour {
         // Give bullet its velocity
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.velocity = direction * bulletSpeed;
-
-        // Play firing sound
-        AudioSource.PlayClipAtPoint(firingSound, transform.position);
     }
 
 
