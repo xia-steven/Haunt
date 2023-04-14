@@ -444,7 +444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3.5
-  dodgeRollDuration: 0.35
+  dodgeRollDuration: 0.25
   dodgeRollSpeed: 12.5
   dodgeRollCooldown: 0.5
 --- !u!65 &7257248000686981297
