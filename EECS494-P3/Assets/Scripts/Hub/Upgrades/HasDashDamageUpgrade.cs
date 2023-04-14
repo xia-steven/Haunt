@@ -10,12 +10,17 @@ public class HasDashDamageUpgrade : MonoBehaviour {
 
     bool coolingDown = false;
     bool increased = false;
+    private Animator anim;
 
     Subscription<PlayerDodgeEvent> dodgeSub;
     Subscription<FireEvent> fireSub;
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
+
+        anim = GetComponentInChildren<Animator>();
+        
         EventBus.Subscribe<PlayerDodgeEvent>(_OnDash);
         EventBus.Subscribe<FireEvent>(_OnFire);
     }
@@ -26,7 +31,9 @@ public class HasDashDamageUpgrade : MonoBehaviour {
             if (!increased) {
                 PlayerModifiers.damage *= dmgMod;
                 increased = true;
+                
                 // TODO: add visual of increase here
+                anim.SetFloat("damage", PlayerModifiers.damage);
             }
         }
     }
@@ -41,6 +48,7 @@ public class HasDashDamageUpgrade : MonoBehaviour {
             PlayerModifiers.damage /= dmgMod;
             increased = false;
             // TODO: remove visual of increase here
+            anim.SetFloat("damage", PlayerModifiers.damage);
         }
     }
 
@@ -54,6 +62,7 @@ public class HasDashDamageUpgrade : MonoBehaviour {
             PlayerModifiers.damage /= dmgMod;
             increased = false;
             // TODO: remove visual of increase here
+            anim.SetFloat("damage", PlayerModifiers.damage);
         }
     }
 }
