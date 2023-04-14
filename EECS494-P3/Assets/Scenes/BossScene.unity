@@ -732,6 +732,22 @@ PrefabInstance:
       propertyPath: winTrigger
       value: 
       objectReference: {fileID: 1911985030}
+    - target: {fileID: 1702138906439512309, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: Pedestals.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702138906439512309, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: Pedestals.Array.data[0]
+      value: 
+      objectReference: {fileID: 1486081774}
+    - target: {fileID: 1702138906439512309, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: Pedestals.Array.data[1]
+      value: 
+      objectReference: {fileID: 1741431024}
+    - target: {fileID: 1702138906439512309, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: Pedestals.Array.data[2]
+      value: 
+      objectReference: {fileID: 763773868}
     - target: {fileID: 3226477732891980713, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
       propertyPath: m_RootOrder
       value: 6
