@@ -31,6 +31,8 @@ public class MusicController : MonoBehaviour
             audioSource = GetComponent<AudioSource>();
         }
 
+        audioSource.volume = 0.124f;
+
         if (s.name == "GameScene")
         {
             // Start gameplay music
@@ -107,10 +109,9 @@ public class MusicController : MonoBehaviour
     private IEnumerator LossMusic()
     {
         AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/Movement/Death"), transform.position);
-        
-        yield return new WaitForSeconds(2.75f);
-
-        audioSource.clip = Resources.Load<AudioClip>("Audio/Music/ShopMusic");
+        yield return null;
+        audioSource.volume = 0.24f;
+        audioSource.clip = Resources.Load<AudioClip>("Audio/Music/DeathMusic");
         PlayMusic();
     }
 
