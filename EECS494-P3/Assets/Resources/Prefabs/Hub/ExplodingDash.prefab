@@ -198,8 +198,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedSprite: {fileID: -1038429635, guid: d0120b67eb61ef140800757a4eab709a, type: 3}
-  cost: 5
-  itemDescription: {fileID: 0}
 --- !u!1001 &5056488012138058127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -221,7 +219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3686770338568083116, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 3686770338568083116, guid: 44fb961f86e4cd94fb2c5722a7cab06a, type: 3}
       propertyPath: m_LocalPosition.z

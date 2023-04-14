@@ -11,8 +11,11 @@ public class HasStationaryDamage : MonoBehaviour {
 
     bool holding = false;
     bool dmgIncreased = false;
+    private Animator anim;
 
-    private void Start() {
+    private void Start()
+    {
+        anim = GetComponentInChildren<Animator>();
         StartCoroutine(PollForHold());
     }
 
@@ -21,10 +24,12 @@ public class HasStationaryDamage : MonoBehaviour {
         if (holding && !dmgIncreased) {
             PlayerModifiers.damage *= dmgMod;
             dmgIncreased = true;
+            anim.SetFloat("damage", PlayerModifiers.damage);
         }
         else if (!holding && dmgIncreased) {
             PlayerModifiers.damage /= dmgMod;
             dmgIncreased = false;
+            anim.SetFloat("damage", PlayerModifiers.damage);
         }
     }
 

@@ -9,6 +9,7 @@ public class BossHasHealth : HasHealth
     private SpriteRenderer sr;
     private Color normalColor;
     [SerializeField] GameObject healthBar;
+    [SerializeField] GameObject winTrigger;
     Image healthBarImage;
     TMP_Text healthText;
     IsBoss boss;
@@ -75,13 +76,13 @@ public class BossHasHealth : HasHealth
 
 
         float initial_time = Time.time;
-        float progress = (Time.time - initial_time) / 2.0f;
+        float progress = (Time.time - initial_time) / 1.0f;
 
         Color initialColor = normalColor;
 
         while (progress < 1.0f)
         {
-            progress = (Time.time - initial_time) / 2.0f;
+            progress = (Time.time - initial_time) / 1.0f;
 
             sr.color = new Color(initialColor.r, initialColor.g, initialColor.b, initialColor.a * (1 - progress));
 
@@ -91,7 +92,21 @@ public class BossHasHealth : HasHealth
 
 
         Destroy(this.gameObject);
-        GameControl.WinGame();
+
+        for(int a = 0; a < IsBoss.spawnedClerics.Count; ++a)
+        {
+            // Destroy any non killed clerics
+            if(IsBoss.spawnedClerics[a] != null)
+            {
+                Destroy(IsBoss.spawnedClerics[a]);
+            }
+        }
+
+        // Reenable player (leave invincible)
+        EventBus.Publish(new EnablePlayerEvent());
+
+        // Enable the win trigger
+        winTrigger.SetActive(true);
     }
 
     private IEnumerator FlashRed()
