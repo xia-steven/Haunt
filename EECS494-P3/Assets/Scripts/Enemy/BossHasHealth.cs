@@ -10,6 +10,7 @@ public class BossHasHealth : HasHealth
     private Color normalColor;
     [SerializeField] GameObject healthBar;
     [SerializeField] GameObject winTrigger;
+    [SerializeField] List<GameObject> Pedestals;
     Image healthBarImage;
     TMP_Text healthText;
     IsBoss boss;
@@ -101,6 +102,16 @@ public class BossHasHealth : HasHealth
                 Destroy(IsBoss.spawnedClerics[a]);
             }
         }
+
+        // Destroy any repaired pedestals
+        for(int b = 0; b < Pedestals.Count; ++b)
+        {
+            // Get health component
+            HasPedestalHealth health = Pedestals[b].GetComponent<HasPedestalHealth>();
+            // Destroy pedestal
+            health.AlterHealth(100);
+        }
+
 
         // Reenable player (leave invincible)
         EventBus.Publish(new EnablePlayerEvent());
