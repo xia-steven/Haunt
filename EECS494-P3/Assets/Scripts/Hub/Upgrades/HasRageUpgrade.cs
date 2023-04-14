@@ -11,11 +11,15 @@ public class HasRageUpgrade : MonoBehaviour {
 
     bool active;
     bool statsChanged;
+    private Animator anim;
 
     Subscription<PlayerDamagedEvent> dmgSub;
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
+        anim = GetComponentInChildren<Animator>();
+        
         EventBus.Subscribe<PlayerDamagedEvent>(_OnDamage);
     }
 
@@ -27,6 +31,7 @@ public class HasRageUpgrade : MonoBehaviour {
                 PlayerModifiers.moveSpeed *= moveMod;
                 statsChanged = true;
                 //TODO: change player visuals here
+                anim.SetFloat("damage", PlayerModifiers.damage);
             }
 
             if (Time.time - hitTime > duration) {
@@ -39,6 +44,7 @@ public class HasRageUpgrade : MonoBehaviour {
             PlayerModifiers.moveSpeed /= moveMod;
             statsChanged = false;
             //TODO: change player visuals here
+            anim.SetFloat("damage", PlayerModifiers.damage);
         }
     }
 
