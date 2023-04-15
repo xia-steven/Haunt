@@ -39,8 +39,11 @@ public class IsPit : MonoBehaviour {
             horizontalOffset = Vector3.left * (xSize / 2f) + Vector3.left;
         }
 
-        Vector3 relocationPosition = horizontalOffset + transform.position;
+        BoxCollider col = GetComponent<BoxCollider>();
+        Vector3 relocationPosition = horizontalOffset + transform.position + col.center;
         relocationPosition = new Vector3(relocationPosition.x, 0.5f, relocationPosition.z);
+
+        Debug.Log("Relocation position: " + relocationPosition);
 
         EventBus.Publish<OverPitEvent>(new OverPitEvent(other.gameObject, relocationPosition, true));
     }
