@@ -16,24 +16,15 @@ using System;
 using UnityEngine;
 
 public class EventBus {
-    /* DEVELOPER : Change this to "true" and all events will be logged to console automatically */
-    public const bool DEBUG_MODE = false;
-
-    static Dictionary<Type, IList> _topics = new Dictionary<Type, IList>();
+    static Dictionary<Type, IList> _topics = new();
 
     public static void Publish<T>(T published_event) {
         /* Use type T to identify correct subscriber list (correct "topic") */
         Type t = typeof(T);
 
-        if (DEBUG_MODE)
-            Debug.Log("[Publish] event of type " + t + " with contents (" + published_event.ToString() + ")");
 
-        if (_topics.ContainsKey(t)) {
-            IList subscriber_list = new List<Subscription<T>>(_topics[t].Cast<Subscription<T>>());
-
-            /* iterate through the subscribers and pass along the event T */
-            if (DEBUG_MODE)
-                Debug.Log("..." + subscriber_list.Count + " subscriptions being executed for this event.");
+        if (_topics.TryGetValue(t, out var topic)) {
+            IList subscriber_list = new List<Subscription<T>>(topic.Cast<Subscription<T>>());
 
             /* This is a collection of subscriptions that have lost their target object. */
             List<Subscription<T>> orphaned_subscriptions = new List<Subscription<T>>();
@@ -51,12 +42,8 @@ public class EventBus {
 
             /* Unsubcribe orphaned subs that have had their target objects destroyed */
             foreach (Subscription<T> orphan_subscription in orphaned_subscriptions) {
-                EventBus.Unsubscribe<T>(orphan_subscription);
+                Unsubscribe(orphan_subscription);
             }
-        }
-        else {
-            if (DEBUG_MODE)
-                Debug.Log("...but no one is subscribed to this event right now.");
         }
     }
 
@@ -71,29 +58,14 @@ public class EventBus {
 
         _topics[t].Add(new_subscription);
 
-        if (DEBUG_MODE)
-            Debug.Log("[Subscribe] subscription of function (" + callback.Target.ToString() + "." +
-                      callback.Method.Name + ") to type " + t + ". There are now " + _topics[t].Count +
-                      " subscriptions to this type.");
-
         return new_subscription;
     }
 
     public static void Unsubscribe<T>(Subscription<T> subscription) {
         Type t = typeof(T);
 
-        if (DEBUG_MODE)
-            Debug.Log("[Unsubscribe] attempting to remove subscription to type " + t);
-
         if (_topics.ContainsKey(t) && _topics[t].Count > 0) {
             _topics[t].Remove(subscription);
-
-            if (DEBUG_MODE)
-                Debug.Log("...there are now " + _topics[t].Count + " subscriptions to this type.");
-        }
-        else {
-            if (DEBUG_MODE)
-                Debug.Log("...but this subscription is not currently valid (perhaps you already unsubscribed?)");
         }
     }
 }
@@ -101,13 +73,13 @@ public class EventBus {
 /* A "handle" type that is returned when the EventBus.Subscribe() function is used.
  * Use this handle to unsubscribe if you wish via EventBus.Unsubscribe */
 public class Subscription<T> {
-    public Action<T> callback { get; private set; }
+    public Action<T> callback { get; }
 
     public Subscription(Action<T> _callback) {
         callback = _callback;
     }
 
     ~Subscription() {
-        EventBus.Unsubscribe<T>(this);
+        EventBus.Unsubscribe(this);
     }
 }

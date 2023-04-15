@@ -47,6 +47,7 @@ public class IsBuyable : MonoBehaviour {
                     }
 
                     if (itemDescription.transform.GetChild(j).name == "Cost") {
+                        
                         costText = itemDescription.transform.GetChild(j).gameObject.GetComponent<TextMeshPro>();
                     }
                 }
@@ -78,7 +79,17 @@ public class IsBuyable : MonoBehaviour {
             if (itemDescription) {
                 Debug.Log(costText.text);
                 itemDescription.SetActive(true);
-                costText.text = cost.ToString();
+                if(cost == 0 && thisData.cost != 0)
+                {
+                    costText.text = "Free <s><alpha=#77>" + thisData.cost + "</s>";
+                }
+                else if (cost == 0 && thisData.cost == 0)
+                {
+                    costText.text = "Free";
+                } else 
+                {
+                    costText.text = cost.ToString();
+                }
             }
         }
     }

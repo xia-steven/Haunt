@@ -9,19 +9,24 @@ using UnityEngine.UI;
 public class CameraCutsceneManager : MonoBehaviour
 {
     [SerializeField] Image pedestalFilter;
+    [SerializeField] List<GameObject> pedestals;
     float filterFadeTime = 1.0f;
 
     Vector3 center;
     float moveTime = 1.0f;
     float sinkIntoGroundTime = 3.0f;
+    float pedestalBrightenTime = 2.0f;
+    float pedestalBrightenAmount = 30.0f;
     float fallOntoGroundTime = 3.0f;
     CameraMovement moveScript;
     PixelPerfectCamera pixelCam;
-    float deathZoomSizeModifier = 1.25f;
+    float deathZoomSizeModifier = 0.75f;
     float teleporterZoomSizeModifier = -0.75f;
     float pedestalZoomSizeModifier = -0.75f;
     int initialXRef = 0;
     int initialYRef = 0;
+
+    List<Light> pedestalLights;
 
     Subscription<GameLossEvent> gameLossSub;
     Subscription<NightEndEvent> nightEndSub;
@@ -48,6 +53,14 @@ public class CameraCutsceneManager : MonoBehaviour
         gameLossSub = EventBus.Subscribe<GameLossEvent>(OnGameLost);
         nightEndSub = EventBus.Subscribe<NightEndEvent>(OnNightEnd);
         pedRepairSub = EventBus.Subscribe<PedestalRepairedEvent>(OnPedestalRepair);
+
+        pedestalLights = new List<Light>();
+
+        // Get pedestal lights
+        for(int a = 0; a < pedestals.Count; ++a)
+        {
+            pedestalLights.Add(pedestals[a].GetComponentInChildren<Light>());
+        }
     }
 
     private void OnDestroy()
@@ -114,6 +127,23 @@ public class CameraCutsceneManager : MonoBehaviour
                 yield return null;
             }
 
+            // Brighten pedestals
+
+            initial_time = Time.realtimeSinceStartup;
+            progress = (Time.realtimeSinceStartup - initial_time) / pedestalBrightenTime;
+
+            while (progress < 1.0f)
+            {
+                progress = (Time.realtimeSinceStartup - initial_time) / pedestalBrightenTime;
+
+                for(int a = 0; a < pedestalLights.Count; ++a )
+                {
+                    pedestalLights[a].intensity = 5f + progress * pedestalBrightenAmount;
+                }
+
+                yield return null;
+            }
+
             initial_time = Time.realtimeSinceStartup;
             progress = (Time.realtimeSinceStartup - initial_time) / sinkIntoGroundTime;
 
@@ -156,16 +186,6 @@ public class CameraCutsceneManager : MonoBehaviour
                 yield return null;
             }
         }
-        //else
-        //{
-        // Died to pit???
-        //}
-
-
-        // Enable the player?
-        //EventBus.Publish(new EnablePlayerEvent());
-        //TimeManager.ResetTimeScale();
-
         // Note that we finished the death animation
         gle.finishedDeathAnimation = true;
 

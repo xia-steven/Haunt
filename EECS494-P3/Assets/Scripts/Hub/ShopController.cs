@@ -66,27 +66,20 @@ public class ShopController : MonoBehaviour {
     }
 
     private void DayZeroShop() {
-        var sword = Instantiate(swordPrefab);
-        sword.transform.SetParent(weaponTableRight.transform, false);
+        var sword = Instantiate(swordPrefab, weaponTableRight.transform, false);
     }
 
     private void DayOneShop() {
-        var shotgun = Instantiate(shotgunPrefab);
-        var sniper = Instantiate(sniperPrefab);
-        shotgun.transform.SetParent(weaponTableLeft.transform, false);
-        sniper.transform.SetParent(weaponTableRight.transform, false);
+        var shotgun = Instantiate(shotgunPrefab, weaponTableLeft.transform, false);
+        var sniper = Instantiate(sniperPrefab, weaponTableRight.transform, false);
     }
 
     private void DayTwoShop() {
-        var minigun = Instantiate(minigunPrefab);
-        // TODO Replace with bazooka
-        var launcher = Instantiate(launcherPrefab);
-        minigun.transform.SetParent(weaponTableLeft.transform, false);
-        launcher.transform.SetParent(weaponTableRight.transform, false);
+        var minigun = Instantiate(minigunPrefab, weaponTableLeft.transform, false);
+        var launcher = Instantiate(launcherPrefab, weaponTableRight.transform, false);
     }
 
     private void DayThreeShop() {
-        // todo determine which weapons should be available to the player based on what's in their inventory
         var currWeapons = playerInventory.GetCurrentWeapons();
 
         var possibleWeapons = new List<GameObject>
@@ -112,8 +105,7 @@ public class ShopController : MonoBehaviour {
         var firstIndex = Random.Range(0, possibleWeapons.Count);
 
         if (possibleWeapons.Count > 0) {
-            var firstWeapon = Instantiate(possibleWeapons[firstIndex]);
-            firstWeapon.transform.SetParent(weaponTableLeft.transform, false);
+            var firstWeapon = Instantiate(possibleWeapons[firstIndex], weaponTableLeft.transform, false);
         }
 
         if (possibleWeapons.Count > 1) {
@@ -123,12 +115,15 @@ public class ShopController : MonoBehaviour {
                 secondIndex = Random.Range(0, possibleWeapons.Count);
             }
 
-            var secondWeapon = Instantiate(possibleWeapons[secondIndex]);
-            secondWeapon.transform.SetParent(weaponTableRight.transform, false);
+            var secondWeapon = Instantiate(possibleWeapons[secondIndex], weaponTableRight.transform, false);
         }
     }
 
     private void InitRandomUpgrades() {
+        if (upgradePool.Count == 0) {
+            return;
+        }
+
         // don't offer same upgrade
         var range = upgradePool.Count;
         var iter1 = Random.Range(0, range);
@@ -137,7 +132,11 @@ public class ShopController : MonoBehaviour {
             iter2 = Random.Range(0, range);
         }
 
-        var upgrade1 = Instantiate(Resources.Load<GameObject>("Prefabs/Hub/" + upgradePool[iter1]), topUpgradeTable.transform, false);
-        var upgrade2 = Instantiate(Resources.Load<GameObject>("Prefabs/Hub/" + upgradePool[iter2]), sideUpgradeTable.transform, false);
+        var upgrade1 = Instantiate(Resources.Load<GameObject>("Prefabs/Hub/" + upgradePool[iter1]),
+            topUpgradeTable.transform, false);
+        var upgrade2 = Instantiate(Resources.Load<GameObject>("Prefabs/Hub/" + upgradePool[iter2]),
+            sideUpgradeTable.transform, false);
+        upgradePool.Remove(upgradePool[iter1]);
+        upgradePool.Remove(upgradePool[iter2]);
     }
 }

@@ -4,13 +4,13 @@
         {
             "type": 0,
             "cost": 8,
-            "description": "Dashing through bullets reflects them"
+            "description": "Dash reflects enemy bullets"
         },
         {
             "type": 1,
             "cost": 8,
             "rate1": 1.71,
-            "description": "Dashing leaves behind an explosive"
+            "description": "Dash drops explosive cluster"
         },
         {
             "type": 2,
@@ -18,14 +18,14 @@
             "rate1": 1.25,
             "rate2": 1.25,
             "duration": 5,
-            "description": "Gain 25% speed/damage for 5 seconds after losing health"
+            "description": "Losing health grants 5s of +25% move speed and attack power"
         },
         {
             "type": 3,
             "cost": 8,
             "rate1": 2,
             "duration": 5,
-            "description": "The first shot after dashing deals 2x damage"
+            "description": "First attack after dash deals double damage"
         },
         {
             "type": 4,
@@ -38,43 +38,43 @@
             "type": 5,
             "cost": 8,
             "rate1": 1.25,
-            "description": "Increases movement speed by 25%"
+            "description": "+25% movement speed"
         },
         {
             "type": 6,
             "cost": 8,
             "rate1": 1.4,
             "duration": 0.25,
-            "description": "Deal 40% more damage while standing still"
+            "description": "+40% attack power while stationary"
         },
         {
             "type": 7,
             "cost": 8,
             "rate1": 1.25,
-            "description": "reload 25% faster",
+            "description": "+25% reload speed",
             "maxOwnable": 2
         },
         {
             "type": 8,
             "cost": 18,
-            "description": "Shotgun.  Perfect for crowds."
+            "description": "Shotgun. Perfect for crowds."
         },
         {
             "type": 9,
             "cost": 18,
-            "description": "Sniper.  Your aim better be good!"
+            "description": "Sniper. Your aim better be good!"
         },
         {
             "type": 10,
             "cost": 18,
-            "description": "Minigun.  Unlimited powerrrrr."
+            "description": "Minigun. Unlimited powerrrrr."
         },
         {
             "type": 11,
             "cost": 0,
             "rate1": 90,
             "rate2": 0.2,
-            "description": "Sword.  Adds a slash to dashing."
+            "description": "Sword. Adds a slash to dashing."
         },
         {
             "type": 12,
@@ -85,7 +85,7 @@
         {
             "type": 13,
             "cost": 18,
-            "description": "Launcher.  BOOM!!"
+            "description": "Launcher. BOOM!!"
         }
     ]
 }

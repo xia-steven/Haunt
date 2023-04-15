@@ -24,6 +24,11 @@ public abstract class Bullet : MonoBehaviour {
         return shooter;
     }
 
+    public void SetLifetime(float newLifetime)
+    {
+        bulletLife = newLifetime;
+    }
+
     protected void OnTriggerEnter(Collider other) {
         var collided = other.gameObject;
 

@@ -100,8 +100,8 @@ public class EnemyBase : MonoBehaviour {
         // Ignore hits on other enemies
         var layerMask = ~LayerMask.GetMask("Enemy");
 
-        bool hitRaycast = Physics.Raycast(transform.position, playerDirection, out var hit,
-                Vector3.Distance(targetPosition, transform.position), layerMask);
+        var hitRaycast = Physics.Raycast(transform.position, playerDirection, out var hit,
+            Vector3.Distance(targetPosition, transform.position), layerMask);
 
         if (hitRaycast &&
             hit.transform.gameObject.CompareTag("Pit") && attributes.isRanged &&
@@ -218,12 +218,15 @@ public class EnemyBase : MonoBehaviour {
     }
 
     // Base function to use for firing projectiles
-    protected void fireBullet(GameObject bullet, Vector3 direction, Shooter shooter, float projectileSpeed) {
+    protected void fireBullet(GameObject bullet, Vector3 direction, Shooter shooter, float projectileSpeed, float projectileLifetime) {
         // Spawn bullet at barrel of gun
         var projectile = Instantiate(bullet, transform.position, Quaternion.identity);
 
         // Set shooter to holder of gun (enemy or player)
-        projectile.GetComponent<Bullet>().SetShooter(shooter);
+        Bullet bull = projectile.GetComponent<Bullet>();
+
+        bull.SetShooter(shooter);
+        bull.SetLifetime(projectileLifetime);
 
         // Give bullet its velocity
         projectile.GetComponent<Rigidbody>().velocity = direction * projectileSpeed;

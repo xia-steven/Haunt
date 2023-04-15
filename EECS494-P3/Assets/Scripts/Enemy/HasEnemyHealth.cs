@@ -23,13 +23,12 @@ public class HasEnemyHealth : HasHealth {
         base.AlterHealth(healthDelta);
         StartCoroutine(FlashRed());
         if (health <= 0) {
-            var roulletteBall = Random.Range(0, 100);
             // Only drop collectibles if not the tutorial day
             if (isCleric && IsPlayer.instance.GetHealth() < IsPlayer.instance.GetMaxHealth()) {
                 Instantiate(healthPrefab, transform.position, Quaternion.identity);
             }
             // Only drop collectibles if not the tutorial day
-            else if (roulletteBall is >= 40 and < 80 && GameControl.Day != 0) {
+            else if (Random.Range(0, 100) is >= 40 and < 80 && GameControl.Day != 0 && !isCleric) {
                 Instantiate(coinPrefab, transform.position, Quaternion.identity);
             }
 

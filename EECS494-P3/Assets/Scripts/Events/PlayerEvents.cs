@@ -136,6 +136,7 @@ class CoinEvent
 /// </summary>
 public class DisablePlayerEvent
 {
+    public bool keepAnimatorEnabled = false;
     public override string ToString()
     {
         return "Disable Player Event sent";
@@ -158,6 +159,8 @@ public class EnablePlayerEvent
 /// </summary>
 public class TryInteractEvent
 {
+    public string button;
+
     public override string ToString()
     {
         return "Interact Attempt Event sent";

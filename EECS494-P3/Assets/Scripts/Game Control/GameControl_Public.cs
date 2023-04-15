@@ -64,6 +64,11 @@ partial class GameControl : MonoBehaviour {
         }
     }
 
+    public static bool IsTutorial {
+        get { return isTutorial; }
+        set { isTutorial = false; }
+    }
+
     // Set in start of game control
     public static float NightLength;
 
@@ -180,14 +185,21 @@ partial class GameControl : MonoBehaviour {
     public static void ResetGame(string sceneName) {
         // Day 0 is the tutorial night
         day = 0;
+        ShopController.upgradePool = new List<string> {
+            "DashDamageUpgrade", "BulletPierce", "DeflectDodge", "ExplodingDash", "RageUpgrade", "ReloadUpgrade",
+            "SpeedUpgrade", "StationaryUpgrade"
+        };
 
         instance.gameActive = false;
         instance.gamePaused = false;
         isNight = false;
         instance.nightEnding = false;
+        IsTutorial = true;
 
         Time.timeScale = 1;
         AudioListener.pause = false;
+
+        Wave.Reset();
 
         PlayerModifiers.resetModifiers();
 

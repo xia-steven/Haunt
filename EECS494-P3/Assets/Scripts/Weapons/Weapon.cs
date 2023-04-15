@@ -48,6 +48,10 @@ public abstract class Weapon : MonoBehaviour {
     // Time between tap firing
     [SerializeField] protected float tapDelay = 0.2f;
 
+    // Reload prompt variables
+    Sprite rSprite;
+    Sprite rPressedSprite;
+    SpritePromptEvent rPrompt;
 
     public float ReloadTime {
         get { return reloadTime; }
@@ -94,6 +98,13 @@ public abstract class Weapon : MonoBehaviour {
         lastBullet = 0;
         lastTap = 0;
         PlayerModifiers.moveSpeed *= speedMultiplier;
+
+        Object[] sprites = Resources.LoadAll("tilemap");
+        rSprite = (Sprite)sprites[361];
+        rPressedSprite = (Sprite)sprites[89];
+
+        rPrompt = new SpritePromptEvent(rSprite, rPressedSprite, KeyCode.R);
+        rPrompt.cancelPrompt = true;
     }
 
     protected void Subscribe() {
@@ -177,6 +188,9 @@ public abstract class Weapon : MonoBehaviour {
 
     // Fires a projectile of type Bullet in specified direction
     public void FireProjectile(GameObject bullet, Vector3 direction, Transform start, float bulletSpeed, Shooter shooter) {
+        // Play firing sound
+        AudioSource.PlayClipAtPoint(firingSound, transform.position);
+
         // Set spawn position based on barrel length
         Vector3 barrelOffset = direction * barrelLength;
         Vector3 barrelSpawn = start.position + barrelOffset;
@@ -197,9 +211,6 @@ public abstract class Weapon : MonoBehaviour {
         // Give bullet its velocity
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         rb.velocity = direction * bulletSpeed;
-
-        // Play firing sound
-        AudioSource.PlayClipAtPoint(firingSound, transform.position);
     }
 
 
@@ -208,6 +219,9 @@ public abstract class Weapon : MonoBehaviour {
     public int Reload(int bulletsLoaded) {
         int returned = 0;
         int loaded = currentClipAmount + bulletsLoaded;
+
+        // Cancel reload prompt
+        rPrompt.cancelPrompt = true;
 
         if (loaded > fullClipAmount) // Reload would exceed clip capacity
         {
@@ -226,6 +240,9 @@ public abstract class Weapon : MonoBehaviour {
     // Used for base pistol and god mode
     public void ReloadInfinite() {
         currentClipAmount = fullClipAmount;
+
+        // Cancel reload prompt
+        rPrompt.cancelPrompt = true;
     }
 
     public void OnEnable()
@@ -237,6 +254,12 @@ public abstract class Weapon : MonoBehaviour {
         }
         firing = false;
         messageVisible = false;
+
+        if (currentClipAmount == 0 && thisData.name != "sniper")
+        {
+            rPrompt.cancelPrompt = false;
+            EventBus.Publish(rPrompt);
+        }
     }
 
     protected virtual void FixedUpdate()
@@ -281,6 +304,11 @@ public abstract class Weapon : MonoBehaviour {
         if (currentClipAmount > 0 && firing && (Time.time - lastBullet >= bulletDelay) && (Time.time - lastTap >= tapDelay) && !isReloading && !messageVisible)
         {
             WeaponFire(direction);
+            if (currentClipAmount == 0 && thisData.name != "sniper")
+            {
+                rPrompt.cancelPrompt = false;
+                EventBus.Publish(rPrompt);
+            }
         }
     }
 
@@ -324,6 +352,8 @@ public abstract class Weapon : MonoBehaviour {
             ReloadInfinite();
             isReloading = false;
         }
+
+        rPrompt.cancelPrompt = true;
     }
 }
 

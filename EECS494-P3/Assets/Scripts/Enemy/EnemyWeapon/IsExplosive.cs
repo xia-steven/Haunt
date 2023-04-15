@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class IsExplosive : MonoBehaviour {
@@ -28,7 +26,6 @@ public class IsExplosive : MonoBehaviour {
         Collider[] hitColliders;
         if (fromPlayer)
         {
-            Debug.Log("Radius = " + explosiveRadius * PlayerModifiers.explosiveRadius);
             hitColliders = Physics.OverlapSphere(transform.position, explosiveRadius * PlayerModifiers.explosiveRadius);
         } else
         {
@@ -62,10 +59,10 @@ public class IsExplosive : MonoBehaviour {
 
         if (fromPlayer)
         {
-            spriteScaler.scale = explosiveRadius * 2 * PlayerModifiers.explosiveRadius;
+            spriteScaler.scale = explosiveRadius * 1.75f * PlayerModifiers.explosiveRadius;
         } else
         {
-            spriteScaler.scale = explosiveRadius * 2;
+            spriteScaler.scale = explosiveRadius * 1.75f;
         }
 
         Destroy(spawnedVisual, 0.7f);

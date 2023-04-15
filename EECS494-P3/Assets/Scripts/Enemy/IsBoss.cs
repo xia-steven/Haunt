@@ -6,6 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(BossHasHealth))]
 public class IsBoss : MonoBehaviour
 {
+    public static List<GameObject> spawnedClerics;
+
+
     string configName = "BossData";
     BossAttributes bossData;
 
@@ -51,6 +54,10 @@ public class IsBoss : MonoBehaviour
 
         clericPrefab = Resources.Load<GameObject>("Prefabs/Enemy/Cleric");
 
+        if(spawnedClerics == null)
+        {
+            spawnedClerics = new List<GameObject>();
+        }
 
         basicBulletPrefab = Resources.Load<GameObject>("Prefabs/Weapons/EnemyBasicBullet");
         arbalestBulletPrefab = Resources.Load<GameObject>("Prefabs/EnemyWeapons/ArbalestShot");
@@ -173,12 +180,20 @@ public class IsBoss : MonoBehaviour
         //setDirection = true;
         direction = (targetPos - transform.position).normalized;
 
-        // Get to the location
-        while(Vector3.Distance(targetPos, transform.position) > 0.25f)
-        {
-            rb.velocity = new Vector3(bossData.moveToCenterSpeed * direction.x, 0, bossData.moveToCenterSpeed * direction.z);
+        float moveTime = Vector3.Distance(targetPos, transform.position) / bossData.moveToCenterSpeed;
+        Vector3 initialPosition = transform.position;
 
-            yield return new WaitForFixedUpdate();
+        float initial_time = Time.time;
+        float progress = (Time.time - initial_time) / moveTime;
+
+        // Get to the location
+        while (progress < 1.0f)
+        {
+            progress = (Time.time - initial_time) / moveTime;
+
+            transform.position = Vector3.Lerp(initialPosition, targetPos, progress);
+
+            yield return null;
         }
 
         rb.position = targetPos;
@@ -186,8 +201,8 @@ public class IsBoss : MonoBehaviour
         rb.velocity = Vector3.zero;
 
         // Raise sprite in the air
-        float initial_time = Time.time;
-        float progress = (Time.time - initial_time) / bossData.shockwaveWindup;
+        initial_time = Time.time;
+        progress = (Time.time - initial_time) / bossData.shockwaveWindup;
 
         Vector3 initialPos = transform.position;
 
@@ -270,12 +285,20 @@ public class IsBoss : MonoBehaviour
 
         direction = (targetPos - transform.position).normalized;
 
-        // Get to the location
-        while (Vector3.Distance(targetPos, transform.position) > 0.5f)
-        {
-            rb.velocity = new Vector3(bossData.moveToCenterSpeed * direction.x, 0, bossData.moveToCenterSpeed * direction.z);
+        float moveTime = Vector3.Distance(targetPos, transform.position) / bossData.moveToCenterSpeed;
+        Vector3 initialPosition = transform.position;
 
-            yield return new WaitForFixedUpdate();
+        float initial_time = Time.time;
+        float progress = (Time.time - initial_time) / moveTime;
+
+        // Get to the location
+        while (progress < 1.0f)
+        {
+            progress = (Time.time - initial_time) / moveTime;
+
+            transform.position = Vector3.Lerp(initialPosition, targetPos, progress);
+
+            yield return null;
         }
 
         rb.position = targetPos;
@@ -284,8 +307,8 @@ public class IsBoss : MonoBehaviour
 
 
         // Warmup laser
-        float initial_time = Time.time;
-        float progress = (Time.time - initial_time) / bossData.laserWindup;
+        initial_time = Time.time;
+        progress = (Time.time - initial_time) / bossData.laserWindup;
 
         Color initialColor = lineRenderer.material.color;
         lineRenderer.enabled = true;
@@ -400,7 +423,8 @@ public class IsBoss : MonoBehaviour
         {
             int randomLocIndex = Random.Range(0, spawners.Count);
             Vector3 spawnPos = spawners[randomLocIndex].position + new Vector3(0, 0.6f, 0);
-            GameObject spawnedEnemy = Instantiate(clericPrefab, spawnPos, Quaternion.identity); 
+            GameObject spawnedEnemy = Instantiate(clericPrefab, spawnPos, Quaternion.identity);
+            spawnedClerics.Add(spawnedEnemy);
         }
     }
 

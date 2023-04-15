@@ -17,10 +17,11 @@ public class PlayerController : MonoBehaviour {
     private Collider col;
     private TrailRenderer tr;
     private Animator animator;
+    private PlayerInput pi;
     private Vector3 movement;
     private float movementX;
     private float movementZ;
-    private float dodgeRollCooldownTimer = 0f;
+    private float dodgeRollCooldownTimer = .2f;
     private bool playerEnabled = true;
     private bool isDodging = false;
     private bool dodgePressed = false;
@@ -34,12 +35,17 @@ public class PlayerController : MonoBehaviour {
     Subscription<TutorialDodgeStartEvent> dodgeStartSub;
     Subscription<TutorialDodgeEndEvent> dodgeEndSub;
 
+    private void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
         tr = GetComponent<TrailRenderer>();
         animator = GetComponent<Animator>();
+        pi = GetComponent<PlayerInput>();
         disableMoveSub = EventBus.Subscribe<DisablePlayerEvent>(_OnDisableMovement);
         enableMoveSub = EventBus.Subscribe<EnablePlayerEvent>(_OnEnableMovement);
         dodgeStartSub = EventBus.Subscribe<TutorialDodgeStartEvent>(StartDodge);
@@ -48,11 +54,42 @@ public class PlayerController : MonoBehaviour {
         dodgeSound = Resources.Load<AudioClip>("Audio/Movement/Dodge");
     }
 
+    
+    void OnSceneLoaded(Scene s, LoadSceneMode m)
+    {
+        Debug.Log("Attempting to change player control scheme");
+        if (s.name == "HubWorld" || s.name == "TutorialHubWorld")
+        {
+            Debug.Log("Player control scheme set to Hub");
+            StartCoroutine(LoadControls("Hub"));
+        }
+        else
+        {
+            Debug.Log("Player control scheme set to Gameplay");
+            StartCoroutine(LoadControls("Player"));
+        }
+    }
+
+    // Allows for delay before attempting controls switch
+    private IEnumerator LoadControls(string controls)
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        if (pi == null)
+        {
+            pi = GetComponent<PlayerInput>();
+        }
+
+        pi.SwitchCurrentActionMap(controls);
+    }
+    
+
     private void OnDestroy() {
         EventBus.Unsubscribe(disableMoveSub);
         EventBus.Unsubscribe(enableMoveSub);
         EventBus.Unsubscribe(dodgeStartSub);
         EventBus.Unsubscribe(dodgeEndSub);
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void OnDodge(InputAction.CallbackContext value) {
@@ -137,7 +174,9 @@ public class PlayerController : MonoBehaviour {
         if (!playerEnabled) return;
 
         if (value.started) {
-            EventBus.Publish(new TryInteractEvent());
+            TryInteractEvent e = new TryInteractEvent();
+            e.button = value.control.name;
+            EventBus.Publish(e);
         }
     }
 
@@ -175,6 +214,10 @@ public class PlayerController : MonoBehaviour {
         movementZ = 0f;
         if (isDodging)
             StopDodge();
+        if(!dpme.keepAnimatorEnabled)
+        {
+            animator.SetBool("walking", false);
+        }
     }
 
     void _OnEnableMovement(EnablePlayerEvent epme) {
@@ -184,6 +227,7 @@ public class PlayerController : MonoBehaviour {
     private void Update() {
         if (!playerEnabled) return;
 
+        animator.SetFloat("walkingSpeed", PlayerModifiers.moveSpeed);
 
         if (!isDodging) {
             movement.x = movementX;

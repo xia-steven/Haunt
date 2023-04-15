@@ -1,8 +1,9 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PeasantPitchforkEnemy : EnemyBase {
+    [SerializeField] private GameObject pitchfork;
+    
     private SpriteRenderer sprite;
     private Color initialCol;
 
@@ -20,16 +21,36 @@ public class PeasantPitchforkEnemy : EnemyBase {
     // Override attack function
     protected override IEnumerator EnemyAttack() {
         // While attacking
-        while (state == EnemyState.Attacking) {
+        while (state == EnemyState.Attacking)
+        {
+            pitchfork.SetActive(true);
             float t = 0;
+            var direction = (IsPlayer.instance.transform.position - transform.position).normalized;
+            direction.y = 0;
+            if (direction.x < 0f )
+            {
+                pitchfork.GetComponent<SpriteRenderer>().flipY = true;
+            }
+            else
+            {
+                pitchfork.GetComponent<SpriteRenderer>().flipY = false;
+            }
             for (var i = 0; i < 50; ++i) {
                 t += 0.02f;
                 sprite.color = Color.Lerp(initialCol, Color.red, t);
                 yield return new WaitForSeconds(0.02f);
             }
 
-            var direction = (IsPlayer.instance.transform.position - transform.position).normalized;
+            direction = (IsPlayer.instance.transform.position - transform.position).normalized;
             direction.y = 0;
+            if (direction.x < 0f )
+            {
+                pitchfork.GetComponent<SpriteRenderer>().flipY = true;
+            }
+            else
+            {
+                pitchfork.GetComponent<SpriteRenderer>().flipY = false;
+            }
             rb.velocity = attributes.dashSpeed * (attributes.targetDistance / attributes.dashTime ) * direction;
             yield return new WaitForSeconds(attributes.dashTime);
             rb.velocity = Vector3.zero;
@@ -39,6 +60,7 @@ public class PeasantPitchforkEnemy : EnemyBase {
         }
 
         // Let update know that we're done
+        pitchfork.SetActive(false);
         runningCoroutine = false;
     }
 }
