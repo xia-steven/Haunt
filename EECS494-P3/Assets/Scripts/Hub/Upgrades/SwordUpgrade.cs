@@ -13,6 +13,7 @@ public class SwordUpgrade : Upgrade {
         upgrade.swingArc = thisData.rate1;
         upgrade.swingTime = thisData.rate2;
 
+        EventBus.Publish(new EquipSwordEvent());
         EventBus.Publish(new ActivateTeleporterEvent());
 
         base.Apply();
