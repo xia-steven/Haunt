@@ -6,7 +6,9 @@ using UnityEngine;
 public class Sniper : Weapon
 {
     protected GameObject wielder;
-    private GameObject lastHit;
+    private Vector3 lastHit;
+    private Vector3 barrelSpawn;
+    private GameObject sniperTrail;
 
     // The length of the raycast
     private float raycastLength = 100f;
@@ -38,6 +40,7 @@ public class Sniper : Weapon
         wielder = this.transform.parent.gameObject;
 
         lineRenderer = gameObject.GetComponent<LineRenderer>();
+        sniperTrail = Resources.Load<GameObject>("Prefabs/Weapons/SniperTrail");
 
         // Set the width and color of the line
         lineRenderer.startWidth = 0.04f;
@@ -55,7 +58,7 @@ public class Sniper : Weapon
 
         // Set spawn position based on barrel length
         Vector3 barrelOffset = gunDirection * barrelLength;
-        Vector3 barrelSpawn = transform.position + barrelOffset;
+        barrelSpawn = transform.position + barrelOffset;
 
         Vector3 raycastSpawn = barrelSpawn;
         raycastSpawn.y = 0.5f;
@@ -74,7 +77,6 @@ public class Sniper : Weapon
 
             // Sort hit array (now that we know objects were hit)
             Array.Sort(hits, (x, y) => Vector3.Distance(raycastSpawn, x.point).CompareTo(Vector3.Distance(raycastSpawn, y.point)));
-            lastHit = hit.collider.gameObject;
         }
         else
         {
@@ -173,6 +175,7 @@ public class Sniper : Weapon
             }
 
             Debug.Log(hits[i].collider.gameObject.name);
+            lastHit = hits[i].point;
 
             // Alter pedestal health if collided is pedestal and shot by player
             HasPedestalHealth pedHealth = hits[i].collider.gameObject.GetComponent<HasPedestalHealth>();
@@ -198,6 +201,10 @@ public class Sniper : Weapon
             }
         }
         Debug.Log("Got to end of loop");
+
+        // Spawn bullet trail
+        GameObject trail = Instantiate(sniperTrail, transform);
+        trail.GetComponent<SniperTrail>().SetTrail(lastHit, barrelSpawn);
 
         yield return new WaitForSeconds(0.1f);
 
