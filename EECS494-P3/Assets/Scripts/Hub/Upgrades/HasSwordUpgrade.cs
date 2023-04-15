@@ -68,6 +68,8 @@ public class HasSwordUpgrade : MonoBehaviour {
         swingSword.transform.rotation = rotation;
         swingSword.GetComponent<SwingSword>().SetUp(swingArc / swingTime);
 
+        AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Audio/Weapons/sword"), transform.position);
+
         yield return new WaitForSeconds(swingTime);
 
         // Change sword visual
