@@ -12,5 +12,5 @@
     "laserWindup": 1.0,
     "laserTime": 4.0,
     "laserRotateSpeed": 1.25,
-    "health": 5.0
+    "health": 100.0
 }
