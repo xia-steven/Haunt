@@ -196,6 +196,8 @@ partial class GameControl : MonoBehaviour {
         instance.nightEnding = false;
         IsTutorial = true;
 
+        NPCMessages.givenInitialCoins = false;
+
         Time.timeScale = 1;
         AudioListener.pause = false;
 

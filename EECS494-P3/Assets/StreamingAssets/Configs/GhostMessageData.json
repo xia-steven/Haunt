@@ -27,5 +27,8 @@
     ],
     "initialTutorial": [
         "Oh good, you're awake.  Quickly, head to the surface to protect yourself from the villagers.  They are on their way to banish you by building pedestals."
+    ],
+    "initialCoinGift": [
+        "That looked tough. Here's a few coins to buy a health restore from Melquiades. Make sure you go talk to him before going back out tonight."
     ]
 }

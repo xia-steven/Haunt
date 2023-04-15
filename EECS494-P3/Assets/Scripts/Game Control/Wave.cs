@@ -241,6 +241,7 @@ public class Wave
 
     public static void Reset()
     {
+        tutorialWave = 0;
         curEnemies = 0;
         potentialMembers = null;
     }

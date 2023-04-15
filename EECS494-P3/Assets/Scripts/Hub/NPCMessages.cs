@@ -21,6 +21,8 @@ public class NPCMessages : MonoBehaviour
 
     bool triedGivingCoins = false;
 
+    public static bool givenInitialCoins = false;
+
     Sprite eSprite;
     Sprite ePressedSprite;
     SpritePromptEvent ePrompt;
@@ -97,8 +99,7 @@ public class NPCMessages : MonoBehaviour
     {
         if(selected && !sentMessage)
         {
-            sentMessage = true;
-            spoken = true;
+            
             initialBubble.SetActive(false);
             if(SceneManager.GetActiveScene().name == "TutorialHubWorld")
             {
@@ -114,7 +115,9 @@ public class NPCMessages : MonoBehaviour
                 {
                     EventBus.Publish(new MessageEvent(coinMessages.possibleMessages[Random.Range(0, coinMessages.possibleMessages.Count)].messages,
                         GetInstanceID(), false, NPCMessageData.name));
-                    GameObject coin = Instantiate(coinPrefab, transform.position + new Vector3(0, 0, -1), Quaternion.identity);
+
+                    //GameObject coin = Instantiate(coinPrefab, transform.position + new Vector3(0, 0, -1), Quaternion.identity);
+                    EventBus.Publish(new CoinEvent(1));
                 }
                 else
                 {
@@ -124,9 +127,21 @@ public class NPCMessages : MonoBehaviour
             }
             else
             {
-                // Standard dialogue for the night
-                EventBus.Publish(new MessageEvent(NPCMessageData.allMessages[GameControl.Day].messages, GetInstanceID(), false, NPCMessageData.name));
+                if (!givenInitialCoins && isGhost)
+                {
+                    EventBus.Publish(new MessageEvent(NPCMessageData.initialCoinGift, GetInstanceID(), false, NPCMessageData.name));
+                    EventBus.Publish(new CoinEvent(3));
+                }
+                else
+                {
+                    // Standard dialogue for the night
+                    EventBus.Publish(new MessageEvent(NPCMessageData.allMessages[GameControl.Day].messages, GetInstanceID(), false, NPCMessageData.name));
+                }
+
             }
+
+            sentMessage = true;
+            spoken = true;
         }
     }
 
