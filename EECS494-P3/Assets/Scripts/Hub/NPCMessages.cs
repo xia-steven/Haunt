@@ -8,14 +8,18 @@ public class NPCMessages : MonoBehaviour
     [SerializeField] string configName = "REPLACE ME";
 
     MessageList NPCMessageData;
+    static CoinMessageList coinMessages;
     [SerializeField] GameObject interactSprite;
     [SerializeField] GameObject initialBubble;
     [SerializeField] bool isGhost = false;
+    [SerializeField] bool givesRandomCoins = false;
     bool selected = false;
 
     bool spoken = false;
 
     bool sentMessage = false;
+
+    bool triedGivingCoins = false;
 
     Sprite eSprite;
     Sprite ePressedSprite;
@@ -25,9 +29,19 @@ public class NPCMessages : MonoBehaviour
     Subscription<MessageFinishedEvent> finishedSub;
     Subscription<MessageStartedEvent> startedSub;
 
+    GameObject coinPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
+        if(coinMessages == null)
+        {
+            coinMessages = ConfigManager.GetData<CoinMessageList>("CoinMessageData");
+        }
+
+        coinPrefab = Resources.Load<GameObject>("Prefabs/Coin");
+
+
         NPCMessageData = ConfigManager.GetData<MessageList>(configName);
         interactSubscription = EventBus.Subscribe<TryInteractEvent>(OnInteract);
         finishedSub = EventBus.Subscribe<MessageFinishedEvent>(OnMessageFinished);
@@ -90,6 +104,23 @@ public class NPCMessages : MonoBehaviour
             {
                 // Ghost sends initial message
                 EventBus.Publish(new MessageEvent(NPCMessageData.initialTutorial, GetInstanceID(), false, NPCMessageData.name));
+            }
+            else if (givesRandomCoins && !triedGivingCoins )
+            {
+                triedGivingCoins = true;
+                int chance = Random.Range(0, 2);
+                // 50% change to give a coin
+                if(chance == 0)
+                {
+                    EventBus.Publish(new MessageEvent(coinMessages.possibleMessages[Random.Range(0, coinMessages.possibleMessages.Count)].messages,
+                        GetInstanceID(), false, NPCMessageData.name));
+                    GameObject coin = Instantiate(coinPrefab, transform.position + new Vector3(0, 0, -1), Quaternion.identity);
+                }
+                else
+                {
+                    // Standard dialogue for the night (failed giving coins)
+                    EventBus.Publish(new MessageEvent(NPCMessageData.allMessages[GameControl.Day].messages, GetInstanceID(), false, NPCMessageData.name));
+                }
             }
             else
             {

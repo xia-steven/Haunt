@@ -1,26 +1,25 @@
 {
-    "key": "GhostMessageData",
-    "name": "Survivor",
+    "key": "ZombieMessageData",
+    "name": "Crestfallen",
     "allMessages": [
         {
             "messages": [
-                "Hi there.  I'm Survivor.  "
+                "Thank you for noticing me.  So you're back from the dead, right?  Takiyasha is powerful, but it's all for naught."
             ]
         },
         {
             "messages": [
-                "Great job our there!  I heard that you were able to steal a few coins from the villagers.  Make sure to trade them to Melquiades for weapons!"
+                "Ever wondered why I'm down here?  I love the sweet smell of the flowers Melquiades collects."
             ]
         },
         {
             "messages": [
-                "Keep it up.  I heard that the cleric villagers are tasked with building the pedestals, so try and target those guys first."
+                "Oh hi again.  Ever noticed those bald guys who light the ritual flame?  It seems they drop extra life on death."
             ]
         },
         {
             "messages": [
-                "Looks like you're still alive.  Rumor has it that after the third full night, the villagers send their leader to banish you once and for all.",
-                "Good luck out there, you will need it."
+                "You've made it far, but there's no salvation here.  You would have done better to just rot away."
             ]
         }
     ]

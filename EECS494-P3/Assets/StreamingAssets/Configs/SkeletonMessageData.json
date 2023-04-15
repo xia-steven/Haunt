@@ -1,0 +1,26 @@
+{
+    "key": "SkeletonMessageData",
+    "name": "Humerus",
+    "allMessages": [
+        {
+            "messages": [
+                "Oh hi.  I heard there was a new skeleton in town and I had come see what the commotion is about.  Takiyasha is quite popular."
+            ]
+        },
+        {
+            "messages": [
+                "Takiyasha's magic is quite powerful and grants us skeletons invincibility while dashing.  You should try it sometime!"
+            ]
+        },
+        {
+            "messages": [
+                "Nice job making it farther than I did.  I was shot down by a magic archer and Takiyasha brought my remaining life essence here."
+            ]
+        },
+        {
+            "messages": [
+                "Good luck my ossified amigo.  Worst case, you'll join me in ethereal form."
+            ]
+        }
+    ]
+}
