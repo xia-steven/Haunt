@@ -38,11 +38,11 @@ public class EliteArcherEnemy : ArcherEnemy {
             direction2.y = 0;
             direction3.y = 0;
 
-            fireBullet(Bullet, direction1.normalized, Shooter.Enemy, attributes.projectileSpeed);
+            fireBullet(Bullet, direction1.normalized, Shooter.Enemy, attributes.projectileSpeed, attributes.projectileLifetime);
             yield return new WaitForSeconds(0.1f);
-            fireBullet(Bullet, direction2.normalized, Shooter.Enemy, attributes.projectileSpeed);
+            fireBullet(Bullet, direction2.normalized, Shooter.Enemy, attributes.projectileSpeed, attributes.projectileLifetime);
             yield return new WaitForSeconds(0.1f);
-            fireBullet(Bullet, direction3.normalized, Shooter.Enemy, attributes.projectileSpeed);
+            fireBullet(Bullet, direction3.normalized, Shooter.Enemy, attributes.projectileSpeed, attributes.projectileLifetime);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }

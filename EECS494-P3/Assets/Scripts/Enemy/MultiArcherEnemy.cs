@@ -30,11 +30,11 @@ public class MultiArcherEnemy : ArcherEnemy {
             var bullet3 = rotation3 * direction;
             var bullet4 = rotation4 * direction;
 
-            fireBullet(Bullet, direction, Shooter.Enemy, attributes.projectileSpeed);
-            fireBullet(Bullet, bullet1, Shooter.Enemy, attributes.projectileSpeed);
-            fireBullet(Bullet, bullet2, Shooter.Enemy, attributes.projectileSpeed);
-            fireBullet(Bullet, bullet3, Shooter.Enemy, attributes.projectileSpeed);
-            fireBullet(Bullet, bullet4, Shooter.Enemy, attributes.projectileSpeed);
+            fireBullet(Bullet, direction, Shooter.Enemy, attributes.projectileSpeed, attributes.projectileLifetime);
+            fireBullet(Bullet, bullet1, Shooter.Enemy, attributes.projectileSpeed, attributes.projectileLifetime);
+            fireBullet(Bullet, bullet2, Shooter.Enemy, attributes.projectileSpeed, attributes.projectileLifetime);
+            fireBullet(Bullet, bullet3, Shooter.Enemy, attributes.projectileSpeed, attributes.projectileLifetime);
+            fireBullet(Bullet, bullet4, Shooter.Enemy, attributes.projectileSpeed, attributes.projectileLifetime);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }

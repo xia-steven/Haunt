@@ -8,9 +8,6 @@ public class MagicArcherEnemy : EnemyBase {
         base.Start();
 
         magicArcherBullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/MagicArcherShot");
-
-        var proj = magicArcherBullet.GetComponent<MagicArcherProjectile>();
-        proj.setLifetime(attributes.projetileLifetime);
     }
 
 
@@ -36,7 +33,7 @@ public class MagicArcherEnemy : EnemyBase {
             direction = direction.normalized;
 
 
-            fireBullet(magicArcherBullet, direction, Shooter.Enemy, attributes.projectileSpeed);
+            fireBullet(magicArcherBullet, direction, Shooter.Enemy, attributes.projectileSpeed, attributes.projectileLifetime);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }

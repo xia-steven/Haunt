@@ -27,6 +27,7 @@
             "health": 3,
             "attackSpeed": 2.0,
             "isRanged": true,
+            "projectileLifetime": 300.0,
             "projectileSpeed": 4.0
         },
         {
@@ -36,6 +37,7 @@
             "health": 6,
             "attackSpeed": 1.5,
             "isRanged": true,
+            "projectileLifetime": 300.0,
             "projectileSpeed": 6.0
         },
         {
@@ -45,6 +47,7 @@
             "health": 5,
             "attackSpeed": 2.0,
             "isRanged": true,
+            "projectileLifetime": 300.0,
             "projectileSpeed": 3.0
         },
         {
@@ -93,7 +96,7 @@
             "attackSpeed": 3.0,
             "isRanged": true,
             "projectileSpeed": 4.0,
-            "projectileLifetime": 4.0
+            "projectileLifetime": 300.0
         },
         {
             "name": "Cleric",
