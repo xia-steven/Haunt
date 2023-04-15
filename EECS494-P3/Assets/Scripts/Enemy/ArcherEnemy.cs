@@ -27,7 +27,7 @@ public class ArcherEnemy : EnemyBase {
             direction = direction.normalized;
 
 
-            fireBullet(Bullet, direction, Shooter.Enemy, attributes.projectileSpeed);
+            fireBullet(Bullet, direction, Shooter.Enemy, attributes.projectileSpeed, attributes.projectileLifetime);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }

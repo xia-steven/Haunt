@@ -12,7 +12,6 @@ public class ArbalestEnemy : EnemyBase
         arbalestBullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/ArbalestShot");
 
         ArbalestProjectile proj = arbalestBullet.GetComponent<ArbalestProjectile>();
-        proj.setLifetime(attributes.projetileLifetime);
         proj.rotationSpeed = attributes.arbalestRotationSpeed;
     }
 
@@ -38,7 +37,7 @@ public class ArbalestEnemy : EnemyBase
             direction = direction.normalized;
 
 
-            fireBullet(arbalestBullet, direction, Shooter.Enemy, attributes.projectileSpeed);
+            fireBullet(arbalestBullet, direction, Shooter.Enemy, attributes.projectileSpeed, attributes.projectileLifetime);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }

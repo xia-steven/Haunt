@@ -38,7 +38,7 @@ public class EnemyAttributes {
     public float dashTime;
     public float swingTime;
     public float projectileSpeed;
-    public float projetileLifetime;
+    public float projectileLifetime;
     public float arbalestRotationSpeed;
 
 

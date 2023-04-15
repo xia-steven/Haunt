@@ -10,9 +10,6 @@ public class DemolitionEnemy : EnemyBase {
         base.Start();
 
         demolitionBullet = Resources.Load<GameObject>("Prefabs/EnemyWeapons/DemolitionShot");
-
-        DemolitionProjectile proj = demolitionBullet.GetComponent<DemolitionProjectile>();
-        proj.setLifetime(attributes.projetileLifetime);
     }
 
     // Override enemy ID to load from config
@@ -40,7 +37,7 @@ public class DemolitionEnemy : EnemyBase {
             direction = direction.normalized;
 
 
-            fireBullet(demolitionBullet, direction, Shooter.Enemy, attributes.projectileSpeed);
+            fireBullet(demolitionBullet, direction, Shooter.Enemy, attributes.projectileSpeed, attributes.projectileLifetime);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }

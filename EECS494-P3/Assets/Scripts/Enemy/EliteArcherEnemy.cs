@@ -32,7 +32,7 @@ public class EliteArcherEnemy : ArcherEnemy {
             var direction = targetPosition - transform.position;
             direction.y = 0;
 
-            fireBullet(Bullet, direction.normalized, Shooter.Enemy, attributes.projectileSpeed);
+            fireBullet(Bullet, direction.normalized, Shooter.Enemy, attributes.projectileSpeed, attributes.projectileLifetime);
 
             yield return new WaitForSeconds(attributes.attackSpeed);
         }
