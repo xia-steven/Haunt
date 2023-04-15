@@ -17,6 +17,7 @@ public class CameraCutsceneManager : MonoBehaviour
     float sinkIntoGroundTime = 3.0f;
     float pedestalBrightenTime = 2.0f;
     float pedestalBrightenAmount = 30.0f;
+    float expandHoleTime = 2.0f;
     float fallOntoGroundTime = 3.0f;
     CameraMovement moveScript;
     PixelPerfectCamera pixelCam;
@@ -143,6 +144,26 @@ public class CameraCutsceneManager : MonoBehaviour
 
                 yield return null;
             }
+
+            // Expand dark hole under player (shadow)
+
+            initial_time = Time.realtimeSinceStartup;
+            progress = (Time.realtimeSinceStartup - initial_time) / expandHoleTime;
+
+            GameObject playerShadow = IsPlayer.instance.transform.GetChild(1).gameObject;
+            playerShadow.transform.parent = null;
+
+            while (progress < 1.0f)
+            {
+                progress = (Time.realtimeSinceStartup - initial_time) / expandHoleTime;
+
+
+                playerShadow.transform.localScale = new Vector3(1.0f + progress * 5.0f, 1.0f + progress * 5.0f, 1.0f + progress * 5.0f);
+
+                yield return null;
+            }
+
+
 
             initial_time = Time.realtimeSinceStartup;
             progress = (Time.realtimeSinceStartup - initial_time) / sinkIntoGroundTime;
