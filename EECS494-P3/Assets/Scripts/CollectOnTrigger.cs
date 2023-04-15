@@ -11,7 +11,7 @@ public class CollectOnTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             AudioSource.PlayClipAtPoint(coin_collected_sound, transform.position);
             EventBus.Publish(new CoinEvent(value));
