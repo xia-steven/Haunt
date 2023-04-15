@@ -180,6 +180,16 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public void OnSword(InputAction.CallbackContext value)
+    {
+        if (!playerEnabled) return;
+
+        if (value.started)
+        {
+            EventBus.Publish(new SwingSwordEvent());
+        }
+    }
+
     private void StartDodge(TutorialDodgeStartEvent tutorDodge = null) {
         EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(true, movement));
         isDodging = true;

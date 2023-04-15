@@ -217,3 +217,25 @@ public class ToggleInvincibilityEvent
         enable = enable_in;
     }
 }
+
+/// <summary>
+/// This event is sent when the player equips the sword
+/// </summary>
+public class EquipSwordEvent
+{
+    public override string ToString()
+    {
+        return "Equip Sword Event sent";
+    }
+}
+
+/// <summary>
+/// This event is sent when the player swings their sword
+/// </summary>
+public class SwingSwordEvent
+{
+    public override string ToString()
+    {
+        return "Swing Sword Event sent";
+    }
+}

@@ -89,6 +89,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sword"",
+                    ""type"": ""Button"",
+                    ""id"": ""0b453920-5f6c-42d0-bd5e-c5aec9bb2c85"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -421,6 +430,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""SwapSpecificWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef038385-9a1b-41b1-aab3-afa8182beb1d"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Sword"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -477,6 +497,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Dodge"",
                     ""type"": ""Button"",
                     ""id"": ""b3a71fce-f66a-4609-b20b-0ec39cb68405"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sword"",
+                    ""type"": ""Button"",
+                    ""id"": ""170d079f-fff4-486e-bd31-6ceba03e6dab"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -767,6 +796,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""90780b28-d49c-4226-bb9c-3b6d3308d697"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Sword"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1392,6 +1432,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_SwapWeapon = m_Player.FindAction("SwapWeapon", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_SwapSpecificWeapon = m_Player.FindAction("SwapSpecificWeapon", throwIfNotFound: true);
+        m_Player_Sword = m_Player.FindAction("Sword", throwIfNotFound: true);
         // Hub
         m_Hub = asset.FindActionMap("Hub", throwIfNotFound: true);
         m_Hub_Move = m_Hub.FindAction("Move", throwIfNotFound: true);
@@ -1400,6 +1441,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Hub_Interact = m_Hub.FindAction("Interact", throwIfNotFound: true);
         m_Hub_SwapSpecificWeapon = m_Hub.FindAction("SwapSpecificWeapon", throwIfNotFound: true);
         m_Hub_Dodge = m_Hub.FindAction("Dodge", throwIfNotFound: true);
+        m_Hub_Sword = m_Hub.FindAction("Sword", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1481,6 +1523,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SwapWeapon;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_SwapSpecificWeapon;
+    private readonly InputAction m_Player_Sword;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -1492,6 +1535,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SwapWeapon => m_Wrapper.m_Player_SwapWeapon;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @SwapSpecificWeapon => m_Wrapper.m_Player_SwapSpecificWeapon;
+        public InputAction @Sword => m_Wrapper.m_Player_Sword;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1522,6 +1566,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SwapSpecificWeapon.started += instance.OnSwapSpecificWeapon;
             @SwapSpecificWeapon.performed += instance.OnSwapSpecificWeapon;
             @SwapSpecificWeapon.canceled += instance.OnSwapSpecificWeapon;
+            @Sword.started += instance.OnSword;
+            @Sword.performed += instance.OnSword;
+            @Sword.canceled += instance.OnSword;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1547,6 +1594,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SwapSpecificWeapon.started -= instance.OnSwapSpecificWeapon;
             @SwapSpecificWeapon.performed -= instance.OnSwapSpecificWeapon;
             @SwapSpecificWeapon.canceled -= instance.OnSwapSpecificWeapon;
+            @Sword.started -= instance.OnSword;
+            @Sword.performed -= instance.OnSword;
+            @Sword.canceled -= instance.OnSword;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1574,6 +1624,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Hub_Interact;
     private readonly InputAction m_Hub_SwapSpecificWeapon;
     private readonly InputAction m_Hub_Dodge;
+    private readonly InputAction m_Hub_Sword;
     public struct HubActions
     {
         private @PlayerControls m_Wrapper;
@@ -1584,6 +1635,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Hub_Interact;
         public InputAction @SwapSpecificWeapon => m_Wrapper.m_Hub_SwapSpecificWeapon;
         public InputAction @Dodge => m_Wrapper.m_Hub_Dodge;
+        public InputAction @Sword => m_Wrapper.m_Hub_Sword;
         public InputActionMap Get() { return m_Wrapper.m_Hub; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1611,6 +1663,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Dodge.started += instance.OnDodge;
             @Dodge.performed += instance.OnDodge;
             @Dodge.canceled += instance.OnDodge;
+            @Sword.started += instance.OnSword;
+            @Sword.performed += instance.OnSword;
+            @Sword.canceled += instance.OnSword;
         }
 
         private void UnregisterCallbacks(IHubActions instance)
@@ -1633,6 +1688,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Dodge.started -= instance.OnDodge;
             @Dodge.performed -= instance.OnDodge;
             @Dodge.canceled -= instance.OnDodge;
+            @Sword.started -= instance.OnSword;
+            @Sword.performed -= instance.OnSword;
+            @Sword.canceled -= instance.OnSword;
         }
 
         public void RemoveCallbacks(IHubActions instance)
@@ -1830,6 +1888,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSwapWeapon(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnSwapSpecificWeapon(InputAction.CallbackContext context);
+        void OnSword(InputAction.CallbackContext context);
     }
     public interface IHubActions
     {
@@ -1839,6 +1898,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnSwapSpecificWeapon(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
+        void OnSword(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
