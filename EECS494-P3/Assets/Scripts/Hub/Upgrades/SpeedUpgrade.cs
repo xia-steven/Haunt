@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpeedUpgrade : Upgrade {
-    protected override string GetName() {
-        return "SpeedUpgrade";
-    }
-
     protected override void Start() {
         thisData = typesData.types[(int)PurchaseableType.speed];
         base.Start();

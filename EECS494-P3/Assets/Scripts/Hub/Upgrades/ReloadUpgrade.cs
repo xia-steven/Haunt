@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ReloadUpgrade : Upgrade {
-    protected override string GetName() {
-        return "ReloadUpgrade";
-    }
-
     protected override void Start() {
         thisData = typesData.types[(int)PurchaseableType.fastReload];
         base.Start();

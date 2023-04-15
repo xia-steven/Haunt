@@ -185,6 +185,10 @@ partial class GameControl : MonoBehaviour {
     public static void ResetGame(string sceneName) {
         // Day 0 is the tutorial night
         day = 0;
+        ShopController.upgradePool = new List<string> {
+            "DashDamageUpgrade", "BulletPierce", "DeflectDodge", "ExplodingDash", "RageUpgrade", "ReloadUpgrade",
+            "SpeedUpgrade", "StationaryUpgrade"
+        };
 
         instance.gameActive = false;
         instance.gamePaused = false;
@@ -205,6 +209,4 @@ partial class GameControl : MonoBehaviour {
 
         SceneManager.LoadScene(sceneName);
     }
-
-
 }

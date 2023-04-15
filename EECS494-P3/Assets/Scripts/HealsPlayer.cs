@@ -7,16 +7,15 @@ public class HealsPlayer : MonoBehaviour {
     [SerializeField] private int healAmount = 1;
 
     private void Start() {
-        StartCoroutine(WaitAndDestroy());
+        Invoke(nameof(Destroy), 8);
     }
 
-    private IEnumerator WaitAndDestroy() {
-        yield return new WaitForSeconds(5);
+    private void Destroy() {
         Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player") {
+        if (other.CompareTag("Player")) {
             IsPlayer.instance.gameObject.GetComponent<PlayerHasHealth>().AlterHealth(healAmount);
             Destroy(gameObject);
         }
