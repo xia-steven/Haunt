@@ -29,6 +29,8 @@ public class NPCMessages : MonoBehaviour
     Subscription<MessageFinishedEvent> finishedSub;
     Subscription<MessageStartedEvent> startedSub;
 
+    GameObject coinPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +38,8 @@ public class NPCMessages : MonoBehaviour
         {
             coinMessages = ConfigManager.GetData<CoinMessageList>("CoinMessageData");
         }
+
+        coinPrefab = Resources.Load<GameObject>("Prefabs/Coin");
 
 
         NPCMessageData = ConfigManager.GetData<MessageList>(configName);
@@ -110,7 +114,7 @@ public class NPCMessages : MonoBehaviour
                 {
                     EventBus.Publish(new MessageEvent(coinMessages.possibleMessages[Random.Range(0, coinMessages.possibleMessages.Count)].messages,
                         GetInstanceID(), false, NPCMessageData.name));
-                    EventBus.Publish(new CoinEvent());
+                    GameObject coin = Instantiate(coinPrefab, transform.position + new Vector3(0, 0, -1), Quaternion.identity);
                 }
                 else
                 {

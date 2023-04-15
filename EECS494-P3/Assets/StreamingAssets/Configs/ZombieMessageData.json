@@ -1,25 +1,25 @@
 {
     "key": "ZombieMessageData",
-    "name": "Survivor",
+    "name": "Crestfallen",
     "allMessages": [
         {
             "messages": [
-                "<ZOMBIE NIGHT 0 HERE>"
+                "Thank you for noticing me.  So you're back from the dead, right?  Takiyasha is powerful, but it's all for naught."
             ]
         },
         {
             "messages": [
-                "<ZOMBIE NIGHT 1 HERE>"
+                "Ever wondered why I'm down here?  I love the sweet smell of the flowers Melquiades collects."
             ]
         },
         {
             "messages": [
-                "<ZOMBIE NIGHT 2 HERE>"
+                "Oh hi again.  Ever noticed those bald guys who light the ritual flame?  It seems they drop extra life on death."
             ]
         },
         {
             "messages": [
-                "<ZOMBIE NIGHT 3 HERE>"
+                "You've made it far, but there's no salvation here.  You would have done better to just rot away."
             ]
         }
     ]

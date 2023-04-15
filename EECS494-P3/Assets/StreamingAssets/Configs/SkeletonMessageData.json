@@ -1,6 +1,6 @@
 {
     "key": "SkeletonMessageData",
-    "name": "Skelebro",
+    "name": "Humerus",
     "allMessages": [
         {
             "messages": [
@@ -9,17 +9,17 @@
         },
         {
             "messages": [
-                "<SKELETON NIGHT 1 HERE>"
+                "Takiyasha's magic is quite powerful and grants us skeletons invincibility while dashing.  You should try it sometime!"
             ]
         },
         {
             "messages": [
-                "<SKELETON NIGHT 2 HERE>"
+                "Nice job making it farther than I did.  I was shot down by a magic archer and Takiyasha brought my remaining life essence here."
             ]
         },
         {
             "messages": [
-                "<SKELETON NIGHT 3 HERE>"
+                "Good luck my ossified amigo.  Worst case, you'll join me in ethereal form."
             ]
         }
     ]
