@@ -800,6 +800,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4072610467114503705, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072610467114503705, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: m_Parameters.textureMode
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5276552873523448444, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
       propertyPath: spawners.Array.data[0]
       value: 
