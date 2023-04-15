@@ -1412,6 +1412,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8660659280147345937, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: pedestals.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8660659280147345937, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: pedestals.Array.data[0]
+      value: 
+      objectReference: {fileID: 998501369}
+    - target: {fileID: 8660659280147345937, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: pedestals.Array.data[1]
+      value: 
+      objectReference: {fileID: 1091004349}
+    - target: {fileID: 8660659280147345937, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: pedestals.Array.data[2]
+      value: 
+      objectReference: {fileID: 1581399560}
     - target: {fileID: 8674698338506272342, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -106.04425
