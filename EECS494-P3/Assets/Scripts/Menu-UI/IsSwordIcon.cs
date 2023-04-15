@@ -20,6 +20,7 @@ public class IsSwordIcon : MonoBehaviour
 
     private void _OnEquip(EquipSwordEvent e)
     {
+        Debug.Log("Equip sword detected by sword icon");
         equipped = true;
         sword.enabled = true;
     }

@@ -82,7 +82,6 @@ public class PlayerController : MonoBehaviour {
 
         pi.SwitchCurrentActionMap(controls);
     }
-    
 
     private void OnDestroy() {
         EventBus.Unsubscribe(disableMoveSub);

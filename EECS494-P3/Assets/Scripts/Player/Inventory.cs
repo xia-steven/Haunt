@@ -17,6 +17,7 @@ public class Inventory : MonoBehaviour
     private GameObject launcher;
     private int coins = 0;
     private AudioClip weaponSwapSound;
+    private bool swordEquipped = false;
 
     private Subscription<SwapEvent> swapEventSubscription;
     private Subscription<SwapSpecificEvent> swapSpecificSubscription;
@@ -24,6 +25,7 @@ public class Inventory : MonoBehaviour
     private Subscription<ResetInventoryEvent> resetInventorySubscription;
     private Subscription<WeaponPurchasedEvent> weaponPurchasedSubscription;
     private Subscription<ReloadAllEvent> reloadAllSubscription;
+    Subscription<EquipSwordEvent> equipSwordSub;
 
     private void Awake()
     {
@@ -35,6 +37,7 @@ public class Inventory : MonoBehaviour
         resetInventorySubscription = EventBus.Subscribe<ResetInventoryEvent>(_OnResetInventory);
         weaponPurchasedSubscription = EventBus.Subscribe<WeaponPurchasedEvent>(_OnWeaponPurchase);
         reloadAllSubscription = EventBus.Subscribe<ReloadAllEvent>(_OnReloadAll);
+        equipSwordSub = EventBus.Subscribe<EquipSwordEvent>(_OnEquipSword);
 
         weaponSwapSound = Resources.Load<AudioClip>("Audio/Weapons/weapswitch");
 
@@ -67,6 +70,15 @@ public class Inventory : MonoBehaviour
         SwapSpecificEvent swapEvent = new SwapSpecificEvent(currentWeapon+1);
         swapEvent.newScene = true;
         EventBus.Publish(swapEvent);
+        Debug.Log("Sword equipped: " + swordEquipped);
+        if (swordEquipped)
+            StartCoroutine(EquipSword());
+    }
+
+    private IEnumerator EquipSword()
+    {
+        yield return new WaitForSeconds(0.1f);
+        EventBus.Publish(new EquipSwordEvent());
     }
 
     public void Equip(GameObject weapon)
@@ -190,6 +202,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void _OnEquipSword(EquipSwordEvent e)
+    {
+        swordEquipped = true;
+    }
+
     public int GetCoins()
     {
         return coins;
@@ -243,6 +260,7 @@ public class Inventory : MonoBehaviour
         EventBus.Unsubscribe(resetInventorySubscription);
         EventBus.Unsubscribe(weaponPurchasedSubscription);
         EventBus.Unsubscribe(reloadAllSubscription);
+        EventBus.Unsubscribe(equipSwordSub);
         
         SceneManager.sceneLoaded -= OnSceneLoad;
     }
