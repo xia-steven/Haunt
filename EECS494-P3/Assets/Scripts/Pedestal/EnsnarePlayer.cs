@@ -63,11 +63,14 @@ public class EnsnarePlayer : MonoBehaviour
 
     IEnumerator GrowTowardPlayer()
     {
-        float t = 0f;
-        while (t < 1f)
+        // Run in unscaled time
+        float initial_time = Time.realtimeSinceStartup;
+        float progress = (Time.realtimeSinceStartup - initial_time) / 1.0f;
+
+        while (progress < 1f)
         {
-            t += Time.deltaTime;
-            rend.SetPositions(new Vector3[] {transform.position, Vector3.Lerp(transform.position, playerShadow.position, t) });
+            progress = (Time.realtimeSinceStartup - initial_time) / 1.0f;
+            rend.SetPositions(new Vector3[] {transform.position, Vector3.Lerp(transform.position, playerShadow.position, progress) });
             yield return null;
         }
         flameLit = true;
