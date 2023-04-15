@@ -11,6 +11,8 @@ public class Wave
     
     private static List<GameObject> potentialMembers;
 
+    private static int tutorialWave = 0;
+
     const int maxEnemies = 25;
 
     const float timeBetweenSpawns = .6f;
@@ -51,6 +53,25 @@ public class Wave
         }
 
         Init();
+    }
+
+    public Wave(bool isTutorial, int _difficulty, float _duration, List<Transform> _spawnPoints)
+    {
+        difficulty = _difficulty;
+        duration = _duration;
+        spawnPoints = _spawnPoints;
+
+        //help with overhead
+        if (potentialMembers == null)
+        {
+            potentialMembers = new List<GameObject>();
+            foreach (EnemyWaveData.SpawnAttributes att in spawnData.enemySpawnData)
+            {
+                potentialMembers.Add(Resources.Load<GameObject>(att.path));
+            }
+        }
+
+        InitTutorial();
     }
 
 
@@ -150,65 +171,52 @@ public class Wave
         startTime = Time.time;
     }
 
-    public IEnumerator SpawnTutorial()
+    public void InitTutorial()
     {
-        if(spawningTutorial)
+        Vector3 spawnPos;
+        IsWaveMember newMember;
+
+        GameObject spawnMember;
+        int spawnAmt = 0;
+
+
+        if (tutorialWave == 0)
         {
-            // Return early
-            yield break;
+            spawnMember = potentialMembers[^1];
+            spawnAmt = 1;
         }
-        spawningTutorial = true;
+        else if (tutorialWave == 1)
+        {
+            spawnMember = potentialMembers[0];
+            spawnAmt = 4;
+        }
+        else if (tutorialWave == 2)
+        {
+            spawnMember = potentialMembers[1];
+            spawnAmt = 5;
+        }
+        else if (tutorialWave == 3)
+        {
+            spawnMember = potentialMembers[2];
+            spawnAmt = 4;
+        }
+        else
+        {
+            Init();
+            return;
+        }
 
-        GameObject torch = potentialMembers[0];
-        GameObject pitchfork = potentialMembers[1];
-        GameObject archer = potentialMembers[2];
-
-        // Spawn 2 torch enemies and 2 pitchfork
-        Vector3 spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
-        GameObject.Instantiate(torch, spawnPos, Quaternion.identity);
-        spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
-        GameObject.Instantiate(torch, spawnPos, Quaternion.identity);
-
-        spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
-        GameObject.Instantiate(pitchfork, spawnPos, Quaternion.identity);
-        spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
-        GameObject.Instantiate(pitchfork, spawnPos, Quaternion.identity);
-
-        // Wait 10 seconds
-        yield return new WaitForSeconds(10f);
-
-        // Spawn 3 archers
-        for(int a = 0; a < 3; ++a)
+        for (int i = 0; i < spawnAmt; ++i)
         {
             spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
-            GameObject.Instantiate(archer, spawnPos, Quaternion.identity);
+            newMember = Object.Instantiate(spawnMember, spawnPos, Quaternion.identity).GetComponent<IsWaveMember>();
+            newMember.Init(this, nextId);
+            newMember.gameObject.SetActive(false);
+            numActiveMembers++;
+            members.Add(nextId++, newMember);
         }
 
-        // Wait 10 more seconds
-        yield return new WaitForSeconds(10f);
-
-
-        int spawnCount = 0;
-
-        // Spawn more enemies while the night is ending
-        while(GameControl.NightEnding)
-        {
-            for (int a = 0; a < 3 && spawnCount < 25; ++a)
-            {
-                // Archer, torch, or pitchfork
-                spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
-                GameObject.Instantiate(potentialMembers[Random.Range(0,3)], spawnPos, Quaternion.identity);
-                spawnCount++;
-            }
-
-
-            // Cleric
-            spawnPos = spawnPoints[Random.Range(0, spawnPoints.Count)].position + new Vector3(0, 0.6f, 0);
-            GameObject.Instantiate(potentialMembers[potentialMembers.Count - 1], spawnPos, Quaternion.identity);
-
-            yield return new WaitForSeconds(10f);
-        }
-
+        ++tutorialWave;
     }
 
     public bool IsOver()

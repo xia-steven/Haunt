@@ -104,19 +104,21 @@ internal partial class GameControl : MonoBehaviour {
 
     //NightUpdate runs during the night
     private IEnumerator NightUpdate() {
-        var w = new Wave(waveSize++, data.waveTimeout, spawners);
-        if (day != 0) {
-            w.Spawn();
-        }
-        else {
-            StartCoroutine(w.SpawnTutorial());
-        }
 
         nightStartTime = Time.time;
-        if (day == 0) {
-            // Set tutorial night length to 25% of a standard night seconds
-            nightStartTime -= (data.nightLength * 0.75f);
+
+        Wave w;
+        if (day != 0) {
+            w = new Wave(waveSize++, data.waveTimeout, spawners);
         }
+        else {
+            w = new Wave(true, waveSize++, 10, spawners);
+
+            //hacky way to set night length to 40s
+            nightStartTime -= (data.nightLength - 40f);
+        }
+
+        w.Spawn();
 
         while (isNight && Time.time - nightStartTime < data.nightLength) {
             if (!gameActive || gamePaused) {
@@ -125,10 +127,11 @@ internal partial class GameControl : MonoBehaviour {
             }
 
             if (w.IsOver()) {
-                w = new Wave(waveSize++, data.waveTimeout, spawners);
-                if (day != 0) {
-                    w.Spawn();
-                }
+                if (day == 0)
+                    w = new Wave(true, waveSize++, 10, spawners);
+                else
+                    w = new Wave(waveSize++, data.waveTimeout, spawners);
+                w.Spawn();
             }
 
             yield return new WaitForSeconds(data.updateFrequency);
