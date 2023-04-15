@@ -132,6 +132,7 @@ public abstract class Weapon : MonoBehaviour {
     protected virtual void _OnDisablePlayer(DisablePlayerEvent e)
     {
         Debug.Log("Player disabled in weapon");
+        firing = false;
         playerEnabled = false;
     }
 
