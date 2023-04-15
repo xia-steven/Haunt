@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,9 @@ public class TeleporterIndicator : MonoBehaviour {
     private float xModifier = 1f;
     private float yModifier = 1f;
 
-    private Subscription<PedestalPartialEvent> nightEndSub;
+    private Subscription<NightEndEvent> nightEndSub;
+    private Subscription<NightBeginEvent> nightBeginSub;
+    private bool isNight;
 
     // Start is called before the first frame update
     private void Start() {
@@ -31,17 +34,30 @@ public class TeleporterIndicator : MonoBehaviour {
         xModifier = canvasSize.x / Screen.width;
         yModifier = canvasSize.y / Screen.height * Mathf.Sqrt(2);
 
-        nightEndSub = EventBus.Subscribe<PedestalPartialEvent>(_onPedestalPartial);
+        nightEndSub = EventBus.Subscribe<NightEndEvent>(TurnOn);
+        nightBeginSub = EventBus.Subscribe<NightBeginEvent>(TurnOff);
     }
 
     private void OnDestroy() {
         EventBus.Unsubscribe(nightEndSub);
     }
 
-    private void _onPedestalPartial(PedestalPartialEvent phe) {
-        indicatorArrow.SetActive(phe.turnOn);
+    private void TurnOn(NightEndEvent e) {
+        if (e.valid)
+            isNight = false;
     }
 
+    private void TurnOff(NightBeginEvent e) {
+        if (e.valid)
+            isNight = true;
+    }
+
+    private void Update() {
+        if (!isNight && Vector3.Distance(Teleporter.transform.position, IsPlayer.instance.transform.position) > 6.5f)
+            indicatorArrow.SetActive(true);
+        else
+            indicatorArrow.SetActive(false);
+    }
 
     // Update is called once per frame
     private void LateUpdate() {
