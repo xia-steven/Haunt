@@ -178,7 +178,7 @@ public class Sniper : Weapon
             HasPedestalHealth pedHealth = hits[i].collider.gameObject.GetComponent<HasPedestalHealth>();
             if (pedHealth != null)
             {
-                pedHealth.AlterHealth(-damage);
+                pedHealth.AlterHealth(-damage * PlayerModifiers.damage);
                 // Pedestals count as "buildings" so don't pierce
                 break;
             }
@@ -188,7 +188,7 @@ public class Sniper : Weapon
             if (health != null && pedHealth == null)
             {
                 Debug.Log("Health altered");
-                health.AlterHealth(damage);
+                health.AlterHealth(damage * PlayerModifiers.damage);
             }
 
             // Hit non-pedestal and non-enemy (most likely wall) so don't allow pierce
