@@ -82,7 +82,6 @@ public class PlayerController : MonoBehaviour {
 
         pi.SwitchCurrentActionMap(controls);
     }
-    
 
     private void OnDestroy() {
         EventBus.Unsubscribe(disableMoveSub);
@@ -177,6 +176,16 @@ public class PlayerController : MonoBehaviour {
             TryInteractEvent e = new TryInteractEvent();
             e.button = value.control.name;
             EventBus.Publish(e);
+        }
+    }
+
+    public void OnSword(InputAction.CallbackContext value)
+    {
+        if (!playerEnabled) return;
+
+        if (value.started)
+        {
+            EventBus.Publish(new SwingSwordEvent());
         }
     }
 

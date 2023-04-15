@@ -4,38 +4,52 @@ using UnityEngine;
 
 public class HasSwordUpgrade : MonoBehaviour {
     private GameObject sword;
-    private Subscription<PlayerDodgeEvent> dodgeEvent;
+    private Subscription<SwingSwordEvent> swordEvent;
     private bool isSwinging = false;
-    private bool switchSwing = false;
     public float swingArc;
     public float swingTime;
+    private float swingDelay = 1f;
+    private float lastSwing;
 
     // Start is called before the first frame update
     void Start() {
         sword = Resources.Load<GameObject>("Prefabs/Weapons/SwingSword");
-        dodgeEvent = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
+        swordEvent = EventBus.Subscribe<SwingSwordEvent>(_OnSword);
+        lastSwing = Time.time;
     }
 
-    // Attach shield on dodge start and destroy it on dodge finish
-    private void _OnDodge(PlayerDodgeEvent e) {
-        if (!e.start && !isSwinging) {
-            StartCoroutine(SwingSword(e.direction));
+    // Swing sword when event is called
+    private void _OnSword(SwingSwordEvent e) {
+        if (!isSwinging && (Time.time - lastSwing) >= swingDelay) {
+            StartCoroutine(SwingSword());
         }
     }
 
     protected void OnDestroy() {
-        EventBus.Unsubscribe(dodgeEvent);
+        EventBus.Unsubscribe(swordEvent);
     }
 
-    private IEnumerator SwingSword(Vector3 direction) {
-        Debug.Log("Sword swing: " + direction);
-
+    private IEnumerator SwingSword() {
         isSwinging = true;
-        if (direction.x > 0) {
-            switchSwing = true;
-        }
-        else {
-            switchSwing = false;
+        lastSwing = Time.time;
+
+        // Change sword visual
+        EventBus.Publish(new SwordVisualEvent(true, swingDelay));
+
+        // Get the screen position of the cursor
+        Vector3 screenPos = Input.mousePosition;
+        Vector3 direction = Vector3.zero;
+
+        // Create a ray from the camera through the cursor position
+        Ray ray = Camera.main.ScreenPointToRay(screenPos);
+
+        // Find the point where the ray intersects the plane that contains the player
+        Plane groundPlane = new Plane(Vector3.up, transform.position);
+        if (groundPlane.Raycast(ray, out float distanceToGround))
+        {
+            // Calculate the direction vector from the player to the intersection point
+            Vector3 hitPoint = ray.GetPoint(distanceToGround);
+            direction = hitPoint - transform.position;
         }
 
         // Spawn actual swinging sword
@@ -47,22 +61,28 @@ public class HasSwordUpgrade : MonoBehaviour {
 
         // Calculate the rotation for the start of the swinging sword
         Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
-        Debug.Log("Look rotation: " + rotation);
 
         // Set the initial rotation and position of the swinging sword
         swingSword.transform.rotation = rotation;
         swingSword.GetComponent<SwingSword>().SetUp(swingArc / swingTime);
-        // Check if sword needs to be moved to other side of player
-        /*
-        if (switchSwing)
-        {
-            swingSword.transform.position = new Vector3(swingSword.transform.position.x - 0.5f, swingSword.transform.position.y, swingSword.transform.position.z);
-        }
-        */
 
         yield return new WaitForSeconds(swingTime);
 
+        // Change sword visual
+        EventBus.Publish(new SwordVisualEvent(false, swingDelay));
+
         Destroy(swingSword);
         isSwinging = false;
+    }
+}
+
+public class SwordVisualEvent 
+{
+    public bool started;
+    public float delay;
+    public SwordVisualEvent(bool _started, float _delay)
+    {
+        started = _started;
+        delay = _delay;
     }
 }
