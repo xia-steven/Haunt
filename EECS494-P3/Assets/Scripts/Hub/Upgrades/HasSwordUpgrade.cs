@@ -27,6 +27,8 @@ public class HasSwordUpgrade : MonoBehaviour {
 
     protected void OnDestroy() {
         EventBus.Unsubscribe(swordEvent);
+        StopAllCoroutines();
+        isSwinging = false;
     }
 
     private IEnumerator SwingSword() {
