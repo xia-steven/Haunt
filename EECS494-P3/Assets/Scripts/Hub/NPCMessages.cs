@@ -131,6 +131,7 @@ public class NPCMessages : MonoBehaviour
                 {
                     EventBus.Publish(new MessageEvent(NPCMessageData.initialCoinGift, GetInstanceID(), false, NPCMessageData.name));
                     EventBus.Publish(new CoinEvent(3));
+                    givenInitialCoins = true;
                 }
                 else
                 {
