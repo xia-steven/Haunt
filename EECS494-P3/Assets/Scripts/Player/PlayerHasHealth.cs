@@ -8,9 +8,9 @@ public class PlayerHasHealth : HasHealth {
     private Subscription<ToggleInvincibilityEvent> invincibleSub;
     private Subscription<PlayerDodgeEvent> dodgeSub;
     private Subscription<NightEndEvent> nightEndSub;
+    private Subscription<EnablePlayerEvent> playerEnabled;
+    private Subscription<DisablePlayerEvent> playerDisabled;
     public GameObject lowHealthVignette;
-
-    public int id;
 
     [SerializeField] private float invincibilityTimer = 1f;
     [SerializeField] private int tutorialDeathMessageID = 6;
@@ -22,6 +22,7 @@ public class PlayerHasHealth : HasHealth {
     private bool isDodgingOrTeleporting;
     private bool immuneFromCutscene;
 
+    private bool isEnabled = true;
 
     // Start is called before the first frame update
     private void Start() {
@@ -30,10 +31,10 @@ public class PlayerHasHealth : HasHealth {
         dodgeSub = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
         invincibleSub = EventBus.Subscribe<ToggleInvincibilityEvent>(_OnInvincibilityToggle);
         nightEndSub = EventBus.Subscribe<NightEndEvent>(NightEnd);
+        playerEnabled = EventBus.Subscribe<EnablePlayerEvent>(_OnPlayerEnable);
+        playerDisabled = EventBus.Subscribe<DisablePlayerEvent>(_OnPlayerDisable);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
-
-        id = Random.Range(0, 1000);
     }
 
     public override void AlterHealth(float healthDelta) {
@@ -90,6 +91,16 @@ public class PlayerHasHealth : HasHealth {
         return false;
     }
 
+    private void _OnPlayerDisable(DisablePlayerEvent dpe)
+    {
+        isEnabled = false;
+    }
+
+    private void _OnPlayerEnable(EnablePlayerEvent epe)
+    {
+        isEnabled = true;
+    }
+
 
     private void _OnPedestalDied(PedestalDestroyedEvent pde) {
         lockedHealth -= 2;
@@ -136,11 +147,11 @@ public class PlayerHasHealth : HasHealth {
         float duration = 0;
         SpriteRenderer sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         Color normalColor = sr.color;
-        while (duration < invincibilityTimer) {
+        while (duration < invincibilityTimer && isEnabled) {
             duration += 0.1f;
             normalColor.a = 1 - normalColor.a;
             sr.color = normalColor;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSecondsRealtime(0.1f);
         }
 
         normalColor.a = 1;
@@ -153,6 +164,8 @@ public class PlayerHasHealth : HasHealth {
         EventBus.Unsubscribe(pedRepSub);
         EventBus.Unsubscribe(dodgeSub);
         EventBus.Unsubscribe(invincibleSub);
+        EventBus.Unsubscribe(playerEnabled);
+        EventBus.Unsubscribe(playerDisabled);
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
