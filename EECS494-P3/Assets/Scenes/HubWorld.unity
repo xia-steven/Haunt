@@ -730,8 +730,8 @@ PrefabInstance:
       value: CameraContainer
       objectReference: {fileID: 0}
     - target: {fileID: 3827722670410134165, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -121.29956
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4020811663584726036, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_AnchorMax.y
