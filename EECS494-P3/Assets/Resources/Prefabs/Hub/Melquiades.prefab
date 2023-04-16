@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 4686557592162535090}
   - component: {fileID: 4998661702936903479}
   - component: {fileID: 961906241480330372}
+  - component: {fileID: 5537857543648110012}
   m_Layer: 6
   m_Name: Melquiades
   m_TagString: Untagged
@@ -314,6 +315,28 @@ MonoBehaviour:
   interactSprite: {fileID: 1059701814}
   initialBubble: {fileID: 6389529172779613980}
   isGhost: 0
+  givesRandomCoins: 0
+--- !u!95 &5537857543648110012
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4686557592162535091}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bd25fab9791e0f941b1bdca6e5bfc6bf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6389529172779613980
 GameObject:
   m_ObjectHideFlags: 0
