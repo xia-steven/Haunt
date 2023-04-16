@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07952aa48a7fc4478591f800a034e80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 1
+  scale: 3
 --- !u!1 &3226477732891980714
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,11 +114,11 @@ GameObject:
   - component: {fileID: 8078121917910637294}
   m_Layer: 15
   m_Name: FinalBoss
-  m_TagString: Untagged
+  m_TagString: FinalBoss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3226477732891980713
 Transform:
   m_ObjectHideFlags: 0
@@ -187,7 +187,10 @@ MonoBehaviour:
   maxHealth: 3
   healthBar: {fileID: 0}
   winTrigger: {fileID: 0}
-  Pedestals: []
+  Pedestals:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!65 &7080845073249181226
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -213,7 +216,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: cd79577d0cf9d5e478ad691dba9eb5cc, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -448,11 +451,11 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 3
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
-  m_Loop: 0
+  m_Loop: 1
 --- !u!135 &807433133
 SphereCollider:
   m_ObjectHideFlags: 0

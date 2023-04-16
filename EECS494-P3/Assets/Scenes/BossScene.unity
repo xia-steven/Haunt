@@ -416,6 +416,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91a6a8b91b9669c4e9268aa29a2ff33b, type: 3}
+--- !u!1 &1011042743 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3226477732891980714, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+  m_PrefabInstance: {fileID: 3226477732344603055}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1136073738
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,6 +677,65 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8435124677107252628, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
   m_PrefabInstance: {fileID: 296974422}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1816884593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1816884596}
+  - component: {fileID: 1816884595}
+  - component: {fileID: 1816884594}
+  m_Layer: 0
+  m_Name: BossSpawnTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1816884594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816884593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b41b0d65e093e8e48aac2cc1b4276d64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  finalBoss: {fileID: 1011042743}
+--- !u!65 &1816884595
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816884593}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 2, z: 3}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1816884596
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816884593}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1853058783
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,13 +895,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 177445368}
     - target: {fileID: 1702138906439512309, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702138906439512309, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
       propertyPath: winTrigger
       value: 
       objectReference: {fileID: 1911985030}
-    - target: {fileID: 1702138906439512309, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
-      propertyPath: Pedestals.Array.size
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 1702138906439512309, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
       propertyPath: Pedestals.Array.data[0]
       value: 
@@ -864,7 +928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3226477732891980713, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 3226477732891980713, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
       propertyPath: m_LocalRotation.w
@@ -900,15 +964,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3226477732891980714, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4072610467114503705, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
-      propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4072610467114503705, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
-      propertyPath: m_Parameters.textureMode
-      value: 3
+    - target: {fileID: 5276552873523448444, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5276552873523448444, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
       propertyPath: spawners.Array.data[0]
