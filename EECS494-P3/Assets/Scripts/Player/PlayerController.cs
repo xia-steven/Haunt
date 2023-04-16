@@ -192,7 +192,6 @@ public class PlayerController : MonoBehaviour {
     private void StartDodge(TutorialDodgeStartEvent tutorDodge = null) {
         EventBus.Publish<PlayerDodgeEvent>(new PlayerDodgeEvent(true, movement));
         isDodging = true;
-        //rb.useGravity = false;
         dodgeRollTimer = dodgeRollDuration;
         dodgeRollCooldownTimer = dodgeRollCooldown;
         if (tutorDodge != null) {
@@ -289,6 +288,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision collision) {
+
         // manually reset dodge (cancel it) if we hit a wall when not perpendicular to the wall;
         Vector3 normal = collision.contacts[0].normal;
 

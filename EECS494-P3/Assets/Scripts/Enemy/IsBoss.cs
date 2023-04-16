@@ -37,7 +37,7 @@ public class IsBoss : MonoBehaviour
     
 
     // Start is called before the first frame update
-    void Start() {
+    void Awake() {
         // Load config
         bossData = ConfigManager.GetData<BossAttributes>(configName);
 
@@ -88,7 +88,7 @@ public class IsBoss : MonoBehaviour
             }
             else if (attackIndex < 90)
             {
-                StartCoroutine(GroundPound());
+                StartCoroutine(GroundPound(new Vector3(0, 0.5f, 0)));
             }
             else if (attackIndex < 100)
             {
@@ -168,14 +168,15 @@ public class IsBoss : MonoBehaviour
         projectile.GetComponent<Rigidbody>().velocity = direction * projectileSpeed;
     }
 
-    IEnumerator GroundPound()
+    public IEnumerator GroundPound(Vector3 targetPos, bool cutscene = false)
     {
-        canMoveInFixedUpdate = false;
+        if(!cutscene)
+        {
+            canMoveInFixedUpdate = false;
+        }
 
         // Make sure fixedUpdate gets disabled
         yield return null;
-
-        Vector3 targetPos = new Vector3(0, 0.5f, 0);
 
         //setDirection = true;
         direction = (targetPos - transform.position).normalized;
@@ -186,29 +187,58 @@ public class IsBoss : MonoBehaviour
         float initial_time = Time.time;
         float progress = (Time.time - initial_time) / moveTime;
 
+        if(cutscene)
+        {
+            initial_time = Time.realtimeSinceStartup;
+            progress = (Time.realtimeSinceStartup - initial_time) / moveTime;
+        }
+
         // Get to the location
         while (progress < 1.0f)
         {
-            progress = (Time.time - initial_time) / moveTime;
+            if (cutscene)
+            {
+                progress = (Time.realtimeSinceStartup - initial_time) / moveTime;
+            }
+            else
+            {
+                progress = (Time.time - initial_time) / moveTime;
+            }
 
             transform.position = Vector3.Lerp(initialPosition, targetPos, progress);
 
             yield return null;
         }
 
-        rb.position = targetPos;
+        if(!cutscene)
+        {
+            rb.position = targetPos; 
+            rb.velocity = Vector3.zero;
+        }
 
-        rb.velocity = Vector3.zero;
 
         // Raise sprite in the air
         initial_time = Time.time;
         progress = (Time.time - initial_time) / bossData.shockwaveWindup;
 
+        if (cutscene)
+        {
+            initial_time = Time.realtimeSinceStartup;
+            progress = (Time.realtimeSinceStartup - initial_time) / bossData.shockwaveWindup;
+        }
+
         Vector3 initialPos = transform.position;
 
         while (progress < 1.0f)
         {
-            progress = (Time.time - initial_time) / bossData.shockwaveWindup;
+            if (cutscene)
+            {
+                progress = (Time.realtimeSinceStartup - initial_time) / bossData.shockwaveWindup;
+            }
+            else
+            {
+                progress = (Time.time - initial_time) / bossData.shockwaveWindup;
+            }
 
             // Move transform up
             transform.position = initialPos + new Vector3(0, 3.0f * progress, 0);
@@ -221,9 +251,22 @@ public class IsBoss : MonoBehaviour
         initial_time = Time.time;
         progress = (Time.time - initial_time) / bossData.shockwavePound;
 
+        if (cutscene)
+        {
+            initial_time = Time.realtimeSinceStartup;
+            progress = (Time.realtimeSinceStartup - initial_time) / bossData.shockwavePound;
+        }
+
         while (progress < 1.0f)
         {
-            progress = (Time.time - initial_time) / bossData.shockwavePound;
+            if (cutscene)
+            {
+                progress = (Time.realtimeSinceStartup - initial_time) / bossData.shockwavePound;
+            }
+            else
+            {
+                progress = (Time.time - initial_time) / bossData.shockwavePound;
+            }
 
             // Move transform down
             transform.position = initialPos + new Vector3(0, 3.0f * (1 - progress), 0);
@@ -235,7 +278,7 @@ public class IsBoss : MonoBehaviour
         // Spawn shockwave line renderer
         // Code adapted from https://www.loekvandenouweland.com/content/use-linerenderer-in-unity-to-draw-a-circle.html
         int segmentCount = 36;
-        lineRenderer.useWorldSpace = true;
+        lineRenderer.useWorldSpace = false;
         lineRenderer.positionCount = segmentCount + 1;
         lineRenderer.enabled = true;
         // Reset radius before enabling
@@ -250,9 +293,22 @@ public class IsBoss : MonoBehaviour
         initial_time = Time.time;
         progress = (Time.time - initial_time) / bossData.shockwaveTime;
 
-        while(progress < 1.0f)
+        if (cutscene)
         {
-            progress = (Time.time - initial_time) / bossData.shockwaveTime;
+            initial_time = Time.realtimeSinceStartup;
+            progress = (Time.realtimeSinceStartup - initial_time) / bossData.shockwaveTime;
+        }
+
+        while (progress < 1.0f)
+        {
+            if (cutscene)
+            {
+                progress = (Time.realtimeSinceStartup - initial_time) / bossData.shockwaveTime;
+            }
+            else
+            {
+                progress = (Time.time - initial_time) / bossData.shockwaveTime;
+            }
 
             for (int i = 0; i < pointCount; ++i)
             {
@@ -268,9 +324,12 @@ public class IsBoss : MonoBehaviour
 
         lineRenderer.enabled = false;
         lineCollider.enabled = false;
-        yield return new WaitForSeconds(bossData.attackSpeed);
-        attacking = false;
-        canMoveInFixedUpdate = true;
+        if(!cutscene)
+        {
+            yield return new WaitForSeconds(bossData.attackSpeed);
+            attacking = false;
+            canMoveInFixedUpdate = true;
+        }
     }
 
 
@@ -321,7 +380,7 @@ public class IsBoss : MonoBehaviour
 
         float offsetPerLaser = 360f / (float)laserCount;
 
-        int wallMask = LayerMask.GetMask("Wall");
+        //int wallMask = LayerMask.GetMask("Wall");
 
         for(int a = 0; a < laserCount * 2; ++a)
         {
@@ -333,11 +392,11 @@ public class IsBoss : MonoBehaviour
             {
                 float magnitude = 50f;
                 // If we hit a wall, reduce distance
-                if(Physics.Raycast(transform.position, Quaternion.Euler(0, offsetPerLaser * ((a + 1) / 2), 0) * startRotation, 
-                    out RaycastHit hit, magnitude, wallMask))
-                {
-                    magnitude = Vector3.Distance(hit.point, transform.position);
-                }
+                //if(Physics.Raycast(transform.position, Quaternion.Euler(0, offsetPerLaser * ((a + 1) / 2), 0) * startRotation, 
+                //    out RaycastHit hit, magnitude, wallMask))
+                //{
+                //    magnitude = Vector3.Distance(hit.point, transform.position);
+                //}
                 laserPoints[a] = Quaternion.Euler(0, offsetPerLaser * ((a + 1) / 2), 0) * startRotation * magnitude;
             }
         }
@@ -376,11 +435,11 @@ public class IsBoss : MonoBehaviour
             {
                 float magnitude = 50f;
                 // If we hit a wall, reduce distance
-                if (Physics.Raycast(transform.position, Quaternion.Euler(0, bossData.laserRotateSpeed, 0) * laserPoints[(b * 2) + 1].normalized,
-                    out RaycastHit hit, magnitude, wallMask))
-                {
-                    magnitude = Vector3.Distance(hit.point, transform.position);
-                }
+                //if (Physics.Raycast(transform.position, Quaternion.Euler(0, bossData.laserRotateSpeed, 0) * laserPoints[(b * 2) + 1].normalized,
+                //    out RaycastHit hit, magnitude, wallMask))
+                //{
+                //    magnitude = Vector3.Distance(hit.point, transform.position);
+                //d}
                 laserPoints[(b * 2) + 1] = Quaternion.Euler(0, bossData.laserRotateSpeed, 0) * laserPoints[(b* 2) + 1].normalized * magnitude;
             }
 
@@ -393,7 +452,7 @@ public class IsBoss : MonoBehaviour
                 int layerMask = LayerMask.GetMask("Player");
 
                 if (Physics.Raycast(lineRenderer.GetPosition(b * 2), (lineRenderer.GetPosition((b * 2) + 1) - lineRenderer.GetPosition(b * 2)).normalized,
-                    out hitObj, lineRenderer.GetPosition((b * 2) + 1).magnitude, layerMask))
+                    out hitObj, Vector3.Distance(lineRenderer.GetPosition((b * 2) + 1), lineRenderer.GetPosition(b * 2)) + 1f, layerMask))
                 {
                     PlayerHasHealth hitPlayer;
                     if (hitObj.collider.TryGetComponent<PlayerHasHealth>(out hitPlayer))

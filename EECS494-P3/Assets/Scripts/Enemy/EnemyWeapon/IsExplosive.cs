@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
 
 public class IsExplosive : MonoBehaviour {
     [SerializeField] float explosiveRadius = 2.0f;
@@ -67,6 +69,32 @@ public class IsExplosive : MonoBehaviour {
 
         Destroy(spawnedVisual, 0.7f);
     }
+
+    public IEnumerator cutsceneExplosion()
+    {
+        explosionSound = Resources.Load<AudioClip>("Audio/Weapons/explosion");
+        AudioSource.PlayClipAtPoint(explosionSound, transform.position);
+
+        // Show visual
+        GameObject visual = Resources.Load<GameObject>("Prefabs/EnemyWeapons/ExplosionRadius");
+        GameObject spawnedVisual = Instantiate(visual, transform.position, Quaternion.identity);
+
+        IsSprite spriteScaler = spawnedVisual.GetComponentInChildren<IsSprite>();
+
+        if (fromPlayer)
+        {
+            spriteScaler.scale = explosiveRadius * 1.75f * PlayerModifiers.explosiveRadius;
+        }
+        else
+        {
+            spriteScaler.scale = explosiveRadius * 1.75f;
+        }
+
+        yield return new WaitForSecondsRealtime(0.7f);
+
+        Destroy(spawnedVisual);
+    }
+
 
     public void setExplosiveRadius(float newRadius)
     {

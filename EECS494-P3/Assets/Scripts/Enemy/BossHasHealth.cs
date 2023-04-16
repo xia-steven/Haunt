@@ -18,7 +18,7 @@ public class BossHasHealth : HasHealth
     float lastClericSpawn = 0;
     int clericCount = 1;
 
-    private void Start()
+    private void Awake()
     {
         foreach (Transform child in transform)
         {
@@ -132,7 +132,7 @@ public class BossHasHealth : HasHealth
         maxHealth = health_in;
         health = maxHealth;
         lastClericSpawn = health;
-        healthText.text = health.ToString();
+        //healthText.text = health.ToString();
     }
 
 }
