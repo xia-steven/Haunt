@@ -10,7 +10,6 @@ public class PlayerHasHealth : HasHealth {
     private Subscription<NightEndEvent> nightEndSub;
     private Subscription<EnablePlayerEvent> playerEnabled;
     private Subscription<DisablePlayerEvent> playerDisabled;
-    public GameObject lowHealthVignette;
 
     [SerializeField] private float invincibilityTimer = 1f;
     [SerializeField] private int tutorialDeathMessageID = 6;
@@ -71,8 +70,6 @@ public class PlayerHasHealth : HasHealth {
             }
         }
 
-        lowHealthVignette.SetActive(health < 2f);
-
         EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
     }
 
@@ -91,13 +88,11 @@ public class PlayerHasHealth : HasHealth {
         return false;
     }
 
-    private void _OnPlayerDisable(DisablePlayerEvent dpe)
-    {
+    private void _OnPlayerDisable(DisablePlayerEvent dpe) {
         isEnabled = false;
     }
 
-    private void _OnPlayerEnable(EnablePlayerEvent epe)
-    {
+    private void _OnPlayerEnable(EnablePlayerEvent epe) {
         isEnabled = true;
     }
 
@@ -125,12 +120,7 @@ public class PlayerHasHealth : HasHealth {
 
     private void _OnDodge(PlayerDodgeEvent pde) {
         // Enable and disable invincibility on dodge
-        if (pde.start) {
-            isDodgingOrTeleporting = true;
-        }
-        else {
-            isDodgingOrTeleporting = false;
-        }
+        isDodgingOrTeleporting = pde.start;
     }
 
     private void _OnInvincibilityToggle(ToggleInvincibilityEvent tie) {
