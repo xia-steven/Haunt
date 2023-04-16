@@ -29,4 +29,10 @@ public class SniperTrail : MonoBehaviour
         }
         Destroy(gameObject);
     }
+
+    // Make sure trail gets destroyed if swapping weapons
+    private void OnDisable()
+    {
+        Destroy(gameObject);
+    }
 }
