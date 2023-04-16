@@ -75,10 +75,6 @@ public class ClericEnemy : EnemyBase {
         // While attacking
         while (state == EnemyState.Attacking) {
             currAttackingPedestal.AlterHealth(-1);
-            if (currAttackingPedestal is null) {
-                break;
-            }
-
             yield return new WaitForSeconds(attributes.attackSpeed);
         }
 
@@ -137,7 +133,9 @@ public class ClericEnemy : EnemyBase {
 
     private void pedestalRepaired(PedestalRepairedEvent event_) {
         PathfindingController.pedestalInfos[event_.pedestalUUID].destroyed = false;
-        currentTargetPedestal = findClosestPedestal();
-        currAttackingPedestal = null;
+        if (currentTargetPedestal == PathfindingController.pedestalInfos[event_.pedestalUUID].position) {
+            currentTargetPedestal = findClosestPedestal();
+            currAttackingPedestal = null;
+        }
     }
 }
