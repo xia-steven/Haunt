@@ -11,6 +11,8 @@ public class SpawnBossTrigger : MonoBehaviour
     Vector3 explosionLocation;
     GameObject explosion;
     [SerializeField] GameObject finalBoss;
+    [SerializeField] GameObject churchObject;
+    [SerializeField] Material doorlessChurch;
     Vector3 bossSpawnLocation;
     Vector3 cameraGroundPoundLocation;
     float moveWithPoundTime = 0.75f;
@@ -73,8 +75,8 @@ public class SpawnBossTrigger : MonoBehaviour
         GameObject churchExplosion = Instantiate(explosion, explosionLocation, Quaternion.identity);
         StartCoroutine(churchExplosion.GetComponent<IsExplosive>().cutsceneExplosion());
 
-        // Swap church sprite out (TODO)
-
+        // Swap church sprite out 
+        churchObject.GetComponent<Renderer>().material = doorlessChurch;
 
 
         // Walk boss in
