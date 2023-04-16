@@ -712,6 +712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 6
+  lowHealthVignette: {fileID: 1535404260023369025, guid: 82ce7f440f14d5444bc20d2b470ec65c, type: 3}
   id: 0
   invincibilityTimer: 1
   tutorialDeathMessageID: 6

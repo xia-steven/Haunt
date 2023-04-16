@@ -8,6 +8,7 @@ public class PlayerHasHealth : HasHealth {
     private Subscription<ToggleInvincibilityEvent> invincibleSub;
     private Subscription<PlayerDodgeEvent> dodgeSub;
     private Subscription<NightEndEvent> nightEndSub;
+    public GameObject lowHealthVignette;
 
     public int id;
 
@@ -68,6 +69,8 @@ public class PlayerHasHealth : HasHealth {
                 CheckIsDead();
             }
         }
+
+        lowHealthVignette.SetActive(health < 2f);
 
         EventBus.Publish(new HealthUIUpdate((int)health, lockedHealth, shieldHealth));
     }
