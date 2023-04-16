@@ -387,13 +387,43 @@ PrefabInstance:
     - target: {fileID: 50802311806852395, guid: c2902ec622468a547b0e5767094d52a7, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 53e8389296f54a84da5864cb10cccaa5, type: 3}
+      objectReference: {fileID: -1663776964, guid: 5eb856a5be8c85d44bd3014fb6674d0a, type: 3}
     - target: {fileID: 50802311806852397, guid: c2902ec622468a547b0e5767094d52a7, type: 3}
       propertyPath: m_Name
       value: SkeletonNPC
       objectReference: {fileID: 0}
+    - target: {fileID: 7064502665608817434, guid: c2902ec622468a547b0e5767094d52a7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2902ec622468a547b0e5767094d52a7, type: 3}
+--- !u!1 &1115293542 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 50802311806852397, guid: c2902ec622468a547b0e5767094d52a7, type: 3}
+  m_PrefabInstance: {fileID: 1999106072}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1115293547
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115293542}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0927d76d99098984d960ef70d66f6a83, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1127992634
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -790,6 +820,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CameraContainer
       objectReference: {fileID: 0}
+    - target: {fileID: 3827722670410134165, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -121.29956
+      objectReference: {fileID: 0}
     - target: {fileID: 4020811663584726036, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1092,7 +1126,7 @@ PrefabInstance:
     - target: {fileID: 50802311806852395, guid: c2902ec622468a547b0e5767094d52a7, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -1183963703, guid: 4805710504a79f446b43d9573b167a76, type: 3}
+      objectReference: {fileID: 530386179, guid: e5365ddd86121a94a8327b59a93e1410, type: 3}
     - target: {fileID: 50802311806852397, guid: c2902ec622468a547b0e5767094d52a7, type: 3}
       propertyPath: m_Name
       value: ZombieNPC
@@ -1231,6 +1265,32 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!1 &50802311051959965 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 50802311806852397, guid: c2902ec622468a547b0e5767094d52a7, type: 3}
+  m_PrefabInstance: {fileID: 1023493040}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &50802311051959966
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50802311051959965}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7f7e3df81264b764e82d081a461bf24f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &878985750582854808
 PrefabInstance:
   m_ObjectHideFlags: 0
