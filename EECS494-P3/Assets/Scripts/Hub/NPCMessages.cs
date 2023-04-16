@@ -108,22 +108,25 @@ public class NPCMessages : MonoBehaviour
             }
             else if (givesRandomCoins && !triedGivingCoins )
             {
+                List<string> messagesToSend = new List<string>();
                 triedGivingCoins = true;
                 int chance = Random.Range(0, 2);
                 // 50% change to give a coin
                 if(chance == 0)
                 {
-                    EventBus.Publish(new MessageEvent(coinMessages.possibleMessages[Random.Range(0, coinMessages.possibleMessages.Count)].messages,
-                        GetInstanceID(), false, NPCMessageData.name));
+                    messagesToSend.Add(coinMessages.possibleMessages[Random.Range(0, coinMessages.possibleMessages.Count)].messages[0]);
 
                     //GameObject coin = Instantiate(coinPrefab, transform.position + new Vector3(0, 0, -1), Quaternion.identity);
                     EventBus.Publish(new CoinEvent(1));
                 }
-                else
+
+                for(int c = 0; c < NPCMessageData.allMessages[GameControl.Day].messages.Count; ++c)
                 {
-                    // Standard dialogue for the night (failed giving coins)
-                    EventBus.Publish(new MessageEvent(NPCMessageData.allMessages[GameControl.Day].messages, GetInstanceID(), false, NPCMessageData.name));
+                    messagesToSend.Add(NPCMessageData.allMessages[GameControl.Day].messages[c]);
                 }
+
+                // Standard dialogue for the night (failed giving coins)
+                EventBus.Publish(new MessageEvent(messagesToSend, GetInstanceID(), false, NPCMessageData.name));
             }
             else
             {
