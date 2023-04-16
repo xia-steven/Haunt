@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VacuumPickup : MonoBehaviour
 {
-    private float vacuumDistance = 4f;
+    private float vacuumDistance = 2.5f;
     private float speed = 1.5f;
 
     private void FixedUpdate()
