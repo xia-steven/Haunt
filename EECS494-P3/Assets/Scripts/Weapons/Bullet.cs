@@ -29,7 +29,7 @@ public abstract class Bullet : MonoBehaviour {
         bulletLife = newLifetime;
     }
 
-    protected void OnTriggerEnter(Collider other) {
+    protected virtual void OnTriggerEnter(Collider other) {
         var collided = other.gameObject;
 
         // Ignore collisions from boss bullets fired inside of objects

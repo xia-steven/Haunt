@@ -6,7 +6,7 @@ public class Rifle : Weapon
 {
     protected GameObject wielder;
     protected GameObject basicBullet;
-    [SerializeField] protected float bulletSpread = 20f;
+    [SerializeField] protected float bulletSpread = 15f;
 
     [SerializeField] protected GameObject rifleSprite;
 

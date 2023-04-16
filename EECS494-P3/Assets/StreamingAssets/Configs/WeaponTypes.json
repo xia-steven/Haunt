@@ -18,18 +18,18 @@
       "bulletDelay": 0.18,
       "tapDelay": 0.17,
       "screenShakeStrength": 0.075,
-      "speedMultiplier": 0.6,
+      "speedMultiplier": 0.75,
       "reloadTime": 1.3
     },
     {
       "type": 2,
       "name": "shotgun",
       "fullClip": 5,
-      "bulletDelay": 1,
-      "tapDelay": 0.8,
+      "bulletDelay": 0.8,
+      "tapDelay": 0.75,
       "screenShakeStrength": 0.1,
       "speedMultiplier": 1,
-      "reloadTime": 1.75
+      "reloadTime": 1.65
     },
     {
       "type": 3,
