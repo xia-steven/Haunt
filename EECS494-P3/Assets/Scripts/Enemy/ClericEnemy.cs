@@ -40,9 +40,10 @@ public class ClericEnemy : EnemyBase {
                 Vector3.Distance(GetTarget(), transform.position) <= attributes.targetDistance) {
                 return false;
             }
+            return hit.transform.gameObject.layer != LayerMask.NameToLayer("Pedestal");
         }
 
-        return hit.transform.gameObject.layer != LayerMask.NameToLayer("Pedestal");
+        return true;
     }
 
     protected override bool canAttack(Vector3 targetPosition) {
