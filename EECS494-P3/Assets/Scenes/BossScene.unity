@@ -417,13 +417,18 @@ PrefabInstance:
     - target: {fileID: 8323561763438187096, guid: 91a6a8b91b9669c4e9268aa29a2ff33b, type: 3}
       propertyPath: lowHealthVignette
       value: 
-      objectReference: {fileID: 1034273434}
+      objectReference: {fileID: 1095324615}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91a6a8b91b9669c4e9268aa29a2ff33b, type: 3}
 --- !u!1 &1011042743 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3226477732891980714, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
   m_PrefabInstance: {fileID: 3226477732344603055}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1095324615 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1535404260023369025, guid: 82ce7f440f14d5444bc20d2b470ec65c, type: 3}
+  m_PrefabInstance: {fileID: 1646880743}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1136073738
 GameObject:
