@@ -79,3 +79,7 @@ https://opengameart.org/content/battle-march-epic-orchestral-music-loop
 
 Shop Music:
 https://opengameart.org/content/town-in-ruins-loop
+
+Sprites:
+https://opengameart.org/content/lpc-zombie
+https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
