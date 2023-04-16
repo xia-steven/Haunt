@@ -19,6 +19,7 @@ public class LauncherBullet : Bullet
         rb = GetComponent<Rigidbody>();
         sr = bulletSprite.GetComponent<SpriteRenderer>();
         defaultColor = sr.color;
+        damage = -4;
     }
 
     public void setLifetime(float lifetime)
@@ -58,5 +59,48 @@ public class LauncherBullet : Bullet
                 red = true;
             }
         }
+    }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        var collided = other.gameObject;
+
+        // Don't collide with specified items
+        if (collided.layer == LayerMask.NameToLayer("Special"))
+        {
+            return;
+        }
+
+        // Make sure player can't shoot themselves
+        if (collided.layer == LayerMask.NameToLayer("Player"))
+        {
+            return;
+        }
+
+        // Alter pedestal health if collided is pedestal and shot by player
+        HasPedestalHealth pedHealth = collided.GetComponent<HasPedestalHealth>();
+        if (pedHealth != null)
+        {
+            pedHealth.AlterHealth(-damage * PlayerModifiers.damage);
+        }
+
+        // Alter health if collided has health
+        HasHealth health = collided.GetComponent<HasHealth>();
+        if (health != null && pedHealth == null)
+        {
+            Debug.Log("Health altered");
+            health.AlterHealth(damage * PlayerModifiers.damage);
+            pierced++;
+        }
+
+        // Don't destroy upon melee collision
+        /*
+        if (collided.layer == LayerMask.NameToLayer("Melee"))
+        {
+            return;
+        }
+        */
+
+        Destroy(gameObject);
     }
 }

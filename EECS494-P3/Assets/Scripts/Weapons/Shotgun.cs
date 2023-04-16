@@ -77,26 +77,35 @@ public class Shotgun : Weapon
         direction.y = 0;
         Vector3 straight = direction.normalized;
 
-        Quaternion rotation1 = Quaternion.AngleAxis(-spread / 2f, Vector3.up);
-        Quaternion rotation2 = Quaternion.AngleAxis(-spread / 4f, Vector3.up);
-        Quaternion rotation3 = Quaternion.AngleAxis(spread / 4f, Vector3.up);
-        Quaternion rotation4 = Quaternion.AngleAxis(spread / 2f, Vector3.up);
+        Quaternion rotation1 = Quaternion.AngleAxis((-spread * 2) / 6f, Vector3.up);
+        Quaternion rotation2 = Quaternion.AngleAxis(-spread / 6f, Vector3.up);
+        Quaternion rotation5 = Quaternion.AngleAxis(-spread / 2f, Vector3.up);
+
+        Quaternion rotation3 = Quaternion.AngleAxis(spread / 6f, Vector3.up);
+        Quaternion rotation4 = Quaternion.AngleAxis((spread * 2) / 6f, Vector3.up);
+        Quaternion rotation6 = Quaternion.AngleAxis(spread / 2f, Vector3.up);
 
         Vector3 bullet1 = rotation1 * direction;
         Vector3 bullet2 = rotation2 * direction;
         Vector3 bullet3 = rotation3 * direction;
         Vector3 bullet4 = rotation4 * direction;
+        Vector3 bullet5 = rotation5 * direction;
+        Vector3 bullet6 = rotation6 * direction;
 
         bullet1.Normalize();
         bullet2.Normalize();
         bullet3.Normalize();
         bullet4.Normalize();
+        bullet5.Normalize();
+        bullet6.Normalize();
 
         FireProjectile(shotgunBullet, straight, transform, ShotgunBullet.bulletSpeed, Shooter.Player);
         FireProjectile(shotgunBullet, bullet1, transform, ShotgunBullet.bulletSpeed, Shooter.Player);
         FireProjectile(shotgunBullet, bullet2, transform, ShotgunBullet.bulletSpeed, Shooter.Player);
         FireProjectile(shotgunBullet, bullet3, transform, ShotgunBullet.bulletSpeed, Shooter.Player);
         FireProjectile(shotgunBullet, bullet4, transform, ShotgunBullet.bulletSpeed, Shooter.Player);
+        FireProjectile(shotgunBullet, bullet5, transform, ShotgunBullet.bulletSpeed, Shooter.Player);
+        FireProjectile(shotgunBullet, bullet6, transform, ShotgunBullet.bulletSpeed, Shooter.Player);
 
         // Give the player unlimited ammo for now
         currentClipAmount--;
