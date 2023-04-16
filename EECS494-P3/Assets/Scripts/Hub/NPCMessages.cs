@@ -130,7 +130,7 @@ public class NPCMessages : MonoBehaviour
                 if (!givenInitialCoins && isGhost)
                 {
                     EventBus.Publish(new MessageEvent(NPCMessageData.initialCoinGift, GetInstanceID(), false, NPCMessageData.name));
-                    EventBus.Publish(new CoinEvent(3));
+                    EventBus.Publish(new CoinEvent(4));
                     givenInitialCoins = true;
                 }
                 else
