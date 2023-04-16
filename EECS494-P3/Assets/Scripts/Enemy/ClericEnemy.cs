@@ -40,6 +40,7 @@ public class ClericEnemy : EnemyBase {
                 Vector3.Distance(GetTarget(), transform.position) <= attributes.targetDistance) {
                 return false;
             }
+
             return hit.transform.gameObject.layer != LayerMask.NameToLayer("Pedestal");
         }
 
@@ -112,8 +113,9 @@ public class ClericEnemy : EnemyBase {
 
     private IEnumerator pedestalCoroutine() {
         yield return new WaitForSeconds(pedestalTimeout);
-        currentTargetPedestal = findClosestPedestal();
-        currAttackingPedestal = null;
+        if (currAttackingPedestal is null) {
+            currentTargetPedestal = findClosestPedestal();
+        }
     }
 
     private void pedestalDied(PedestalDestroyedEvent event_) {
