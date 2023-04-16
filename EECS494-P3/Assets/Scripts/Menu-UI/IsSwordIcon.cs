@@ -7,10 +7,12 @@ public class IsSwordIcon : MonoBehaviour
 {
     [SerializeField] private Image sword;
     [SerializeField] private Color disabledColor;
+    [SerializeField] private Image rightClickSprite;
     private bool equipped;
 
     private Subscription<SwordVisualEvent> swingEvent;
     private Subscription<EquipSwordEvent> equipEvent;
+
 
     void Start()
     {
@@ -23,6 +25,7 @@ public class IsSwordIcon : MonoBehaviour
         Debug.Log("Equip sword detected by sword icon");
         equipped = true;
         sword.enabled = true;
+        rightClickSprite.enabled = true;
     }
 
     private void _OnSwing(SwordVisualEvent e)
@@ -40,12 +43,14 @@ public class IsSwordIcon : MonoBehaviour
     private void DisableSword()
     {
         sword.color = disabledColor;
+        rightClickSprite.color = disabledColor;
     }
 
     private IEnumerator EnableSword(float delay)
     {
         yield return new WaitForSeconds(delay);
         sword.color = Color.white;
+        rightClickSprite.color = Color.white;
     }
 
     private void OnDestroy()
