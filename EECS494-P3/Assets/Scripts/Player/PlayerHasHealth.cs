@@ -194,6 +194,7 @@ public class PlayerHasHealth : HasHealth {
         immuneFromCutscene = false;
 
         StartCoroutine(DelayUIUpdateOnSceneLoad());
+        EventBus.Publish(new EnablePlayerEvent());
     }
 
     // waits for the new scene's UI to load before sending the update

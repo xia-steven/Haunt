@@ -88,6 +88,8 @@ public class IsTeleporter : MonoBehaviour {
             if (SceneManager.GetActiveScene().name == "TutorialGameScene")
                 GameControl.IsTutorial = false;
 
+            // Disable player
+            EventBus.Publish(new DisablePlayerEvent());
             // Set player invincible
             // Disabled on scene load in playerhashealth
             EventBus.Publish(new ToggleInvincibilityEvent(true));
