@@ -18,6 +18,9 @@ public class HasRageUpgrade : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
+        hitTime = 0;
+        active = false;
+        statsChanged = false;
         anim = GetComponentInChildren<Animator>();
         
         EventBus.Subscribe<PlayerDamagedEvent>(_OnDamage);
@@ -51,5 +54,21 @@ public class HasRageUpgrade : MonoBehaviour {
     void _OnDamage(PlayerDamagedEvent e) {
         active = true;
         hitTime = Time.time;
+    }
+
+    private void OnDestroy()
+    {
+        if (active)
+        {
+            active = false;
+
+            // Reset damage mod on scene switch
+            PlayerModifiers.damage /= dmgMod;
+            PlayerModifiers.moveSpeed /= moveMod;
+            statsChanged = false;
+            //TODO: change player visuals here
+            anim.SetFloat("damage", PlayerModifiers.damage);
+        }
+        hitTime = 0;
     }
 }

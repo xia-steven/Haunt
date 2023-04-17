@@ -104,6 +104,8 @@ public class PlayerController : MonoBehaviour {
     public void OnMove(InputAction.CallbackContext value) {
         if (!playerEnabled) return;
 
+        Debug.Log("Move speed: " + moveSpeed * PlayerModifiers.moveSpeed);
+
         movementX = value.ReadValue<Vector2>().x;
         movementZ = value.ReadValue<Vector2>().y;
 
