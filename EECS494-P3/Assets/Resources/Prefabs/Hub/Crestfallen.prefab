@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 8988828693096921024}
   - component: {fileID: 8988828693096921027}
   - component: {fileID: 8938168051673111961}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crestfallen
   m_TagString: Untagged
   m_Icon: {fileID: 0}

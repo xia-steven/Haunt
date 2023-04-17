@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 4671627079308938240}
   - component: {fileID: 4671627079308938243}
   - component: {fileID: 4671627079308938244}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Humerus
   m_TagString: Untagged
   m_Icon: {fileID: 0}

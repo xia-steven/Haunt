@@ -25,7 +25,7 @@
             "cost": 8,
             "rate1": 2,
             "duration": 5,
-            "description": "First attack after dash deals double damage"
+            "description": "First attack after dash deals double damage (5s cooldown)"
         },
         {
             "type": 4,
@@ -74,7 +74,7 @@
             "cost": 0,
             "rate1": 90,
             "rate2": 0.2,
-            "description": "Sword. Adds a slash to dashing."
+            "description": "Sword. Short melee attack."
         },
         {
             "type": 12,
