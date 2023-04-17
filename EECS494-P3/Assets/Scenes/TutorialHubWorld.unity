@@ -1806,18 +1806,18 @@ PrefabInstance:
     - target: {fileID: 5714318758573137281, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e906db88f5d51ca4287d378b905674f6, type: 2}
+      objectReference: {fileID: 2100000, guid: 151cbe62058eefd48a32f3fc3c70b9af, type: 2}
     - target: {fileID: 5714318758591085271, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a3747a415dc7b324883123e00ee37a72, type: 2}
+      objectReference: {fileID: 2100000, guid: 151cbe62058eefd48a32f3fc3c70b9af, type: 2}
     - target: {fileID: 6252603027945196265, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6252603027958721983, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7188006699666829089, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
       propertyPath: m_Enabled
@@ -1877,7 +1877,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8968864600050065231, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7810300987032838726, guid: 5f60ac086b1144b40825557ed0ccb5a8, type: 3}
