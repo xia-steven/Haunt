@@ -186,8 +186,8 @@ public class CameraCutsceneManager : MonoBehaviour
             initial_time = Time.realtimeSinceStartup;
             progress = (Time.realtimeSinceStartup - initial_time) / fallOntoGroundTime;
 
-            SpriteRenderer playerSprite = player.GetComponentInChildren<SpriteRenderer>();
-            
+            GameObject playerSprite = IsPlayer.instance.transform.GetChild(0).gameObject;
+
             Quaternion spriteRot = playerSprite.transform.rotation;
             float xScale = playerSprite.transform.localScale.x;
             float yScale = playerSprite.transform.localScale.y;

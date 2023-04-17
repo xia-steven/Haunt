@@ -16,6 +16,6 @@ public class LowHealthVignette : MonoBehaviour {
     }
 
     private void HandleUpdate(HealthUIUpdate e) {
-        img.enabled = e.updated_health < 2;
+        img.enabled = e.updated_health < 2 && e.updated_health > 0;
     }
 }
