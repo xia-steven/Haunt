@@ -77,6 +77,10 @@ public class ClericEnemy : EnemyBase {
         // While attacking
         while (state == EnemyState.Attacking) {
             currAttackingPedestal.AlterHealth(-1);
+            if (currAttackingPedestal is null) {
+                break;
+            }
+
             yield return new WaitForSeconds(attributes.attackSpeed);
         }
 
