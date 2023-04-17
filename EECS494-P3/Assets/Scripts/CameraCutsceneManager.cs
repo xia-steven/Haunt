@@ -35,6 +35,8 @@ public class CameraCutsceneManager : MonoBehaviour
 
     IsTeleporter teleporter;
 
+    Sprite abyssSprite;
+
     bool lostPedestalYet = false;
 
     private void Start()
@@ -57,8 +59,10 @@ public class CameraCutsceneManager : MonoBehaviour
 
         pedestalLights = new List<Light>();
 
+        abyssSprite = Resources.Load<Sprite>("Textures-Sprites/abyss_shadow");
+
         // Get pedestal lights
-        for(int a = 0; a < pedestals.Count; ++a)
+        for (int a = 0; a < pedestals.Count; ++a)
         {
             pedestalLights.Add(pedestals[a].GetComponentInChildren<Light>());
         }
@@ -152,6 +156,8 @@ public class CameraCutsceneManager : MonoBehaviour
 
             GameObject playerShadow = IsPlayer.instance.transform.GetChild(1).gameObject;
             playerShadow.transform.parent = this.transform;
+            SpriteRenderer playerSpriteRenderer = playerShadow.GetComponent<SpriteRenderer>();
+            playerSpriteRenderer.sprite = abyssSprite;
             
 
             while (progress < 1.0f)
@@ -159,11 +165,12 @@ public class CameraCutsceneManager : MonoBehaviour
                 progress = (Time.realtimeSinceStartup - initial_time) / expandHoleTime;
 
 
-                playerShadow.transform.localScale = new Vector3(1.0f + progress * 5.0f, 1.0f + progress * 5.0f, 1.0f + progress * 5.0f);
+                playerShadow.transform.localScale = new Vector3(1.0f + progress * 10.0f, 1.0f + progress * 10.0f, 1.0f + progress * 10.0f);
 
                 yield return null;
             }
 
+            playerSpriteRenderer.sortingOrder = 1000;
 
 
             initial_time = Time.realtimeSinceStartup;
