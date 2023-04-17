@@ -1,7 +1,7 @@
 {
     "key": "BossData",
     "name": "MasterCleric",
-    "moveSpeed": 1.5,
+    "moveSpeed": 2.5,
     "moveToCenterSpeed": 10.0,
     "attackSpeed": 1.0,
     "projectileSpeed": 5.0,
