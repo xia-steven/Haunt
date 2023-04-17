@@ -138,6 +138,6 @@ public class ShopController : MonoBehaviour {
         Instantiate(Resources.Load<GameObject>("Prefabs/Hub/" + str1), topUpgradeTable.transform, false);
         Instantiate(Resources.Load<GameObject>("Prefabs/Hub/" + str2), sideUpgradeTable.transform, false);
         upgradePool.Remove(str1);
-        upgradePool.Remove(str1);
+        upgradePool.Remove(str2);
     }
 }
