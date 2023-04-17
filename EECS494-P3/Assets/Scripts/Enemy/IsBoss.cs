@@ -72,7 +72,10 @@ public class IsBoss : MonoBehaviour
         // Load enemies into list to spawn
         possibleEnemies = new List<GameObject>();
 
-        possibleEnemies.Add(Resources.Load<GameObject>(""));
+        possibleEnemies.Add(Resources.Load<GameObject>("Prefabs/Enemy/Demolition"));
+        possibleEnemies.Add(Resources.Load<GameObject>("Prefabs/Enemy/Thief"));
+        possibleEnemies.Add(Resources.Load<GameObject>("Prefabs/Enemy/Arbalest"));
+        possibleEnemies.Add(Resources.Load<GameObject>("Prefabs/Enemy/EliteArcher"));
     }
 
     private void Update()
@@ -87,23 +90,28 @@ public class IsBoss : MonoBehaviour
             attacking = true;
             int attackIndex = Random.Range(0, 100);
 
-            if(attackIndex < 40)
+            if(attackIndex < 35)
             {
                 StartCoroutine(basicAttack());
             }
-            else if (attackIndex < 70)
+            else if (attackIndex < 60)
             {
                 StartCoroutine(arbalestAttack());
             }
-            else if (attackIndex < 90)
+            else if (attackIndex < 75)
             {
                 StartCoroutine(GroundPound(new Vector3(0, 0.5f, 0)));
             }
-            else if (attackIndex < 100)
+            else if (attackIndex < 85)
             {
                 // Fire more lasers as health decreases
                 int laserNum = 1 + (int)((1 - health.GetHealth() / bossData.health) * 4);
                 StartCoroutine(FireLaser(laserNum));
+            }
+            else if (attackIndex < 100)
+            {
+                // Spawn random enemies
+                StartCoroutine(spawnRandomEnemies());
             }
         }
 
@@ -163,7 +171,11 @@ public class IsBoss : MonoBehaviour
     IEnumerator spawnRandomEnemies()
     {
 
-
+        for(int a = 0; a < 3; ++a)
+        {
+            Transform location = spawners[Random.Range(0, spawners.Count)];
+            Instantiate(possibleEnemies[Random.Range(0, possibleEnemies.Count)], location.position, Quaternion.identity);
+        }
         yield return new WaitForSeconds(bossData.attackSpeed);
         attacking = false;
     }
