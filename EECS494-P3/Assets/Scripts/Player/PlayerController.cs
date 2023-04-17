@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour {
         float horizontalExtent = col.bounds.extents.x + extraRayDist;
         float verticalExtent = col.bounds.extents.z + extraRayDist;
 
-        int ignoreMask = ~LayerMask.GetMask("Special", "Tutorial", "PlayerUtility");
+        int ignoreMask = ~LayerMask.GetMask("Special", "Tutorial", "PlayerUtility", "Enemy");
 
         RaycastHit ray1;
         RaycastHit ray2;
