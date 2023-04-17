@@ -17,8 +17,10 @@ public class IsBoss : MonoBehaviour
 
     Vector3 direction;
 
-    // Cleric spawning variables
     [SerializeField] List<Transform> spawners;
+
+    // Cleric spawning variables
+    [SerializeField] List<Transform> clericSpawners;
     GameObject clericPrefab;
 
     GameObject basicBulletPrefab;
@@ -34,6 +36,8 @@ public class IsBoss : MonoBehaviour
     bool canMoveInFixedUpdate = true;
 
     [SerializeField] Color warmupColor;
+
+    List<GameObject> possibleEnemies;
     
 
     // Start is called before the first frame update
@@ -64,6 +68,11 @@ public class IsBoss : MonoBehaviour
 
         ArbalestProjectile arbalestProj = arbalestBulletPrefab.GetComponent<ArbalestProjectile>();
         arbalestProj.rotationSpeed = 30f;
+
+        // Load enemies into list to spawn
+        possibleEnemies = new List<GameObject>();
+
+        possibleEnemies.Add(Resources.Load<GameObject>(""));
     }
 
     private void Update()
@@ -145,6 +154,14 @@ public class IsBoss : MonoBehaviour
             fireBullet(arbalestBulletPrefab, fireDir, Shooter.Enemy, bossData.projectileSpeed, bossData.projectileLifetime);
             yield return new WaitForSeconds(bossData.attackSpeed / bulletCount);
         }
+
+
+        yield return new WaitForSeconds(bossData.attackSpeed);
+        attacking = false;
+    }
+
+    IEnumerator spawnRandomEnemies()
+    {
 
 
         yield return new WaitForSeconds(bossData.attackSpeed);
@@ -277,7 +294,7 @@ public class IsBoss : MonoBehaviour
 
         // Spawn shockwave line renderer
         // Code adapted from https://www.loekvandenouweland.com/content/use-linerenderer-in-unity-to-draw-a-circle.html
-        int segmentCount = 36;
+        int segmentCount = 100;
         lineRenderer.useWorldSpace = false;
         lineRenderer.positionCount = segmentCount + 1;
         lineRenderer.enabled = true;
@@ -386,7 +403,7 @@ public class IsBoss : MonoBehaviour
         {
             if(a % 2 == 0)
             {
-                laserPoints[a] =  new Vector3(transform.position.x, transform.position.y - 0.1f, transform.position.z);
+                laserPoints[a] =  new Vector3(transform.position.x, transform.position.y, transform.position.z);
             }
             else
             {
@@ -480,8 +497,8 @@ public class IsBoss : MonoBehaviour
     {
         for(int a = 0; a < spawnCount; ++a)
         {
-            int randomLocIndex = Random.Range(0, spawners.Count);
-            Vector3 spawnPos = spawners[randomLocIndex].position + new Vector3(0, 0.6f, 0);
+            int randomLocIndex = Random.Range(0, clericSpawners.Count);
+            Vector3 spawnPos = clericSpawners[randomLocIndex].position + new Vector3(0, 0.6f, 0);
             GameObject spawnedEnemy = Instantiate(clericPrefab, spawnPos, Quaternion.identity);
             spawnedClerics.Add(spawnedEnemy);
         }
