@@ -47,6 +47,12 @@ public class IsTeleporter : MonoBehaviour {
         ePrompt = new SpritePromptEvent(eSprite, ePressedSprite, KeyCode.E);
     }
 
+    private void OnDestroy()
+    {
+        EventBus.Unsubscribe(interactSub);
+        ePrompt.cancelPrompt = true;
+    }
+
     private void OnTriggerStay(Collider other) {
         if (!isUsable && isActive && other.CompareTag("Player") && !sentPrompt) {
             selectedRing.SetActive(true);

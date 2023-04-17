@@ -63,6 +63,7 @@ public class SpritePromptManager : MonoBehaviour
         {
             // Send request if one in the backlog
             currRequest = requestBacklog.Pop();
+
             if(!currRequest.cancelPrompt)
             {
                 prompting = true;
