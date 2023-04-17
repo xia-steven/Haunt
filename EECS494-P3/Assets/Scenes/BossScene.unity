@@ -808,7 +808,7 @@ GameObject:
   - component: {fileID: 1816884596}
   - component: {fileID: 1816884595}
   - component: {fileID: 1816884594}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BossSpawnTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
