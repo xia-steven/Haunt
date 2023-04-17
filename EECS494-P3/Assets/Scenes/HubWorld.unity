@@ -1609,6 +1609,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4144785315314873154, guid: d53564a7d1d02de42bc2df1aa2d5086b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.40999985
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144785315314873154, guid: d53564a7d1d02de42bc2df1aa2d5086b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 4671627079308938242, guid: d53564a7d1d02de42bc2df1aa2d5086b, type: 3}
       propertyPath: m_RootOrder
       value: 18
@@ -1656,6 +1664,14 @@ PrefabInstance:
     - target: {fileID: 4671627079308938247, guid: d53564a7d1d02de42bc2df1aa2d5086b, type: 3}
       propertyPath: m_Name
       value: Humerus
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671627079478602160, guid: d53564a7d1d02de42bc2df1aa2d5086b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671627079478602160, guid: d53564a7d1d02de42bc2df1aa2d5086b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4671627079478602165, guid: d53564a7d1d02de42bc2df1aa2d5086b, type: 3}
       propertyPath: m_Layer
