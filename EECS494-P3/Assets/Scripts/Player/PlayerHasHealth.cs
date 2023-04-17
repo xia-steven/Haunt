@@ -137,7 +137,7 @@ public class PlayerHasHealth : HasHealth {
         float duration = 0;
         SpriteRenderer sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         Color normalColor = sr.color;
-        while (duration < invincibilityTimer && isEnabled) {
+        while (duration < invincibilityTimer && (isEnabled || health > 0)) {
             duration += 0.1f;
             normalColor.a = 1 - normalColor.a;
             sr.color = normalColor;
