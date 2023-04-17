@@ -6,10 +6,10 @@ public class HasDashDamageUpgrade : MonoBehaviour {
     public float cooldown;
     public float dmgMod;
 
-    float dodgeTime;
+    private float lastDodge;
 
-    bool coolingDown = false;
-    bool increased = false;
+    private bool coolingDown = false;
+    private bool increased = false;
     private Animator anim;
 
     Subscription<PlayerDodgeEvent> dodgeSub;
@@ -18,7 +18,8 @@ public class HasDashDamageUpgrade : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
-
+        // Always allow for dodge instantly
+        lastDodge = 0;
         anim = GetComponentInChildren<Animator>();
         
         EventBus.Subscribe<PlayerDodgeEvent>(_OnDash);
@@ -26,42 +27,47 @@ public class HasDashDamageUpgrade : MonoBehaviour {
     }
 
     void _OnDash(PlayerDodgeEvent e) {
-        if (!coolingDown) {
-            StartCoroutine(Cooldown());
-            if (!increased) {
-                PlayerModifiers.damage *= dmgMod;
-                increased = true;
+        // Check if dash cooldown has passed since last activation && not currently buffed
+        if ((Time.time - lastDodge) >= cooldown && !increased) {
+            lastDodge = Time.time;
+
+            // Increase damage
+            PlayerModifiers.damage *= dmgMod;
+            increased = true;
                 
-                // TODO: add visual of increase here
-                anim.SetFloat("damage", PlayerModifiers.damage);
-            }
-        }
-    }
-
-    void _OnFire(FireEvent e) {
-        StartCoroutine(DecreaseAfterTick());
-    }
-
-    IEnumerator DecreaseAfterTick() {
-        yield return null;
-        if (increased) {
-            PlayerModifiers.damage /= dmgMod;
-            increased = false;
-            // TODO: remove visual of increase here
+            // Change visual to show increase
             anim.SetFloat("damage", PlayerModifiers.damage);
         }
     }
 
+    void _OnFire(FireEvent e) {
+        if (increased)
+        {
+            StartCoroutine(DecreaseAfterTick());
+        }
+    }
 
-    IEnumerator Cooldown() {
-        coolingDown = true;
-        yield return new WaitForSeconds(cooldown);
-        coolingDown = false;
+    IEnumerator DecreaseAfterTick() {
+        yield return null;
 
-        if (increased) {
+        // Reset damage
+        PlayerModifiers.damage /= dmgMod;
+        increased = false;
+
+        // Change visual back to normal
+        anim.SetFloat("damage", PlayerModifiers.damage);
+    }
+
+    private void OnDestroy()
+    {
+        // Reset everything on destroy if increased (don't want active between scenes)
+        if (increased)
+        {
+            // Reset damage
             PlayerModifiers.damage /= dmgMod;
             increased = false;
-            // TODO: remove visual of increase here
+
+            // Change visual back to normal
             anim.SetFloat("damage", PlayerModifiers.damage);
         }
     }

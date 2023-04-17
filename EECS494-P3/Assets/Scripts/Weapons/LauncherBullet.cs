@@ -77,6 +77,12 @@ public class LauncherBullet : Bullet
             return;
         }
 
+        if (collided.layer == LayerMask.NameToLayer("PlayerUtility"))
+        {
+            if (collided.GetComponent<Bullet>().GetShooter() == Shooter.Player)
+                return;
+        }
+
         // Alter pedestal health if collided is pedestal and shot by player
         HasPedestalHealth pedHealth = collided.GetComponent<HasPedestalHealth>();
         if (pedHealth != null)

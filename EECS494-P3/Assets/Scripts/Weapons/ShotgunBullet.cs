@@ -10,6 +10,6 @@ public class ShotgunBullet : Bullet
     {
         base.Awake();
         damage = -1;
-        bulletLife = 1.5f;
+        bulletLife = 0.8f;
     }
 }

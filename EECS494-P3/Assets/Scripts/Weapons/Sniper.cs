@@ -165,8 +165,8 @@ public class Sniper : Weapon
         // Play firing sound
         AudioSource.PlayClipAtPoint(firingSound, transform.position);
 
-        Debug.Log("Beginning of loop");
-        Debug.Log("Length: " + hits.Length);
+        Debug.Log("Damage output: " + damage * PlayerModifiers.damage);
+
         for (int i = 0; i < pierce; i++)
         {
             if (i >= hits.Length)
@@ -200,7 +200,6 @@ public class Sniper : Weapon
                 break;
             }
         }
-        Debug.Log("Got to end of loop");
 
         // Spawn bullet trail
         GameObject trail = Instantiate(sniperTrail, transform);
@@ -208,7 +207,6 @@ public class Sniper : Weapon
 
         yield return new WaitForSeconds(0.1f);
 
-        Debug.Log("Beginning reload and line fix");
         lineRenderer.endWidth = 0.04f;
         isFiring = false;
         GunReload();
