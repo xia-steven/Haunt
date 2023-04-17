@@ -67,7 +67,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -120,8 +120,8 @@ TextureImporter:
       name: altar_0
       rect:
         serializedVersion: 2
-        x: 48
-        y: 15
+        x: 47
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -141,8 +141,8 @@ TextureImporter:
       name: altar_1
       rect:
         serializedVersion: 2
-        x: 176
-        y: 15
+        x: 175
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -162,8 +162,8 @@ TextureImporter:
       name: altar_2
       rect:
         serializedVersion: 2
-        x: 304
-        y: 15
+        x: 303
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -183,8 +183,8 @@ TextureImporter:
       name: altar_3
       rect:
         serializedVersion: 2
-        x: 432
-        y: 15
+        x: 431
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -204,8 +204,8 @@ TextureImporter:
       name: altar_4
       rect:
         serializedVersion: 2
-        x: 560
-        y: 15
+        x: 559
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -225,8 +225,8 @@ TextureImporter:
       name: altar_5
       rect:
         serializedVersion: 2
-        x: 688
-        y: 15
+        x: 687
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -246,8 +246,8 @@ TextureImporter:
       name: altar_6
       rect:
         serializedVersion: 2
-        x: 816
-        y: 15
+        x: 815
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -267,8 +267,8 @@ TextureImporter:
       name: altar_7
       rect:
         serializedVersion: 2
-        x: 944
-        y: 15
+        x: 943
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -288,8 +288,8 @@ TextureImporter:
       name: altar_8
       rect:
         serializedVersion: 2
-        x: 1072
-        y: 15
+        x: 1071
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -309,8 +309,8 @@ TextureImporter:
       name: altar_9
       rect:
         serializedVersion: 2
-        x: 1200
-        y: 15
+        x: 1199
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -330,8 +330,8 @@ TextureImporter:
       name: altar_10
       rect:
         serializedVersion: 2
-        x: 1328
-        y: 15
+        x: 1327
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -351,8 +351,8 @@ TextureImporter:
       name: altar_11
       rect:
         serializedVersion: 2
-        x: 1456
-        y: 15
+        x: 1455
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -372,8 +372,8 @@ TextureImporter:
       name: altar_12
       rect:
         serializedVersion: 2
-        x: 1584
-        y: 15
+        x: 1583
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -393,8 +393,8 @@ TextureImporter:
       name: altar_13
       rect:
         serializedVersion: 2
-        x: 1712
-        y: 15
+        x: 1711
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -414,8 +414,8 @@ TextureImporter:
       name: altar_14
       rect:
         serializedVersion: 2
-        x: 1840
-        y: 15
+        x: 1839
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -435,8 +435,8 @@ TextureImporter:
       name: altar_15
       rect:
         serializedVersion: 2
-        x: 1968
-        y: 15
+        x: 1967
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -456,8 +456,8 @@ TextureImporter:
       name: altar_16
       rect:
         serializedVersion: 2
-        x: 2096
-        y: 15
+        x: 2095
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -477,8 +477,8 @@ TextureImporter:
       name: altar_17
       rect:
         serializedVersion: 2
-        x: 2224
-        y: 15
+        x: 2223
+        y: 16
         width: 32
         height: 61
       alignment: 7
@@ -498,8 +498,8 @@ TextureImporter:
       name: altar_18
       rect:
         serializedVersion: 2
-        x: 2352
-        y: 15
+        x: 2351
+        y: 16
         width: 32
         height: 61
       alignment: 7
