@@ -845,6 +845,10 @@ PrefabInstance:
       propertyPath: m_Center.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 492145512768473495, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 45777226e7fb59c47b65fcf13cb9a64b, type: 2}
     - target: {fileID: 797050021694597236, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: m_Name
       value: Level1
@@ -913,6 +917,18 @@ PrefabInstance:
       propertyPath: m_Center.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3081077793933149325, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081077793933149325, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081077793933149325, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 3893399174923849482, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: m_Size.x
       value: 5
@@ -920,6 +936,18 @@ PrefabInstance:
     - target: {fileID: 3893399174923849482, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: m_Center.x
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955725451214434857, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955725451214434857, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955725451214434857, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 4214975784450574262, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: m_Size.x
@@ -953,6 +981,10 @@ PrefabInstance:
       propertyPath: otherScene
       value: HubWorld
       objectReference: {fileID: 0}
+    - target: {fileID: 8638054748176387227, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2f5763ab61113274282e81f630b317ef, type: 2}
     - target: {fileID: 8947897291978937394, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
       propertyPath: m_Size.z
       value: 13
