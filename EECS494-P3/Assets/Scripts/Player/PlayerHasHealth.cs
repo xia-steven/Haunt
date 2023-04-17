@@ -7,7 +7,6 @@ public class PlayerHasHealth : HasHealth {
     private Subscription<PedestalRepairedEvent> pedRepSub;
     private Subscription<ToggleInvincibilityEvent> invincibleSub;
     private Subscription<PlayerDodgeEvent> dodgeSub;
-    private Subscription<NightEndEvent> nightEndSub;
     private Subscription<EnablePlayerEvent> playerEnabled;
     private Subscription<DisablePlayerEvent> playerDisabled;
 
@@ -29,7 +28,6 @@ public class PlayerHasHealth : HasHealth {
         pedRepSub = EventBus.Subscribe<PedestalRepairedEvent>(_OnPedestalRepaired);
         dodgeSub = EventBus.Subscribe<PlayerDodgeEvent>(_OnDodge);
         invincibleSub = EventBus.Subscribe<ToggleInvincibilityEvent>(_OnInvincibilityToggle);
-        nightEndSub = EventBus.Subscribe<NightEndEvent>(NightEnd);
         playerEnabled = EventBus.Subscribe<EnablePlayerEvent>(_OnPlayerEnable);
         playerDisabled = EventBus.Subscribe<DisablePlayerEvent>(_OnPlayerDisable);
 
@@ -192,21 +190,5 @@ public class PlayerHasHealth : HasHealth {
         lockedHealth = 0;
         health = maxHealth;
         shieldHealth = 0;
-    }
-
-    private void NightEnd(NightEndEvent e) {
-        if (e.valid) {
-            StartCoroutine(DamagePlayerOnNightEnd());
-        }
-    }
-
-    private IEnumerator DamagePlayerOnNightEnd() {
-        yield return new WaitForSeconds(5);
-        while (SceneManager.GetActiveScene().name is "GameScene" or "TutorialGameScene") {
-            AlterHealth(-1);
-            yield return new WaitForSeconds(8);
-        }
-
-        yield return null;
     }
 }
