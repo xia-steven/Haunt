@@ -63,6 +63,8 @@ public class NPCMessages : MonoBehaviour
         EventBus.Unsubscribe(interactSubscription);
         EventBus.Unsubscribe(finishedSub);
         EventBus.Unsubscribe(startedSub);
+
+        ePrompt.cancelPrompt = true;
     }
 
     private void OnTriggerStay(Collider other)
