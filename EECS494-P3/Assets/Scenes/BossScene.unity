@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &24886071 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6468321568866164416, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+  m_PrefabInstance: {fileID: 296974422}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &149927755
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,6 +598,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a6819ce79f67e445b09fb88961e52ab, type: 3}
+--- !u!4 &1263220148 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6468321568283886591, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+  m_PrefabInstance: {fileID: 296974422}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1444882970 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5754469987906111690, guid: 0f01d9ead48681348affd0e5b6113d94, type: 3}
@@ -788,9 +798,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1722619434 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6468321568322196193, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+  m_PrefabInstance: {fileID: 296974422}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1741431024 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8435124677107252628, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
+  m_PrefabInstance: {fileID: 296974422}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1806670618 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 797050022290257567, guid: c6f958143ce548d479c1757ce6e2c69f, type: 3}
   m_PrefabInstance: {fileID: 296974422}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1816884593
@@ -1188,17 +1208,37 @@ PrefabInstance:
     - target: {fileID: 5276552873523448444, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
       propertyPath: spawners.Array.data[0]
       value: 
-      objectReference: {fileID: 1136073739}
+      objectReference: {fileID: 1806670618}
     - target: {fileID: 5276552873523448444, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
       propertyPath: spawners.Array.data[1]
       value: 
-      objectReference: {fileID: 149927756}
+      objectReference: {fileID: 1722619434}
     - target: {fileID: 5276552873523448444, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
       propertyPath: spawners.Array.data[2]
       value: 
-      objectReference: {fileID: 1853058784}
+      objectReference: {fileID: 24886071}
     - target: {fileID: 5276552873523448444, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
       propertyPath: spawners.Array.data[3]
+      value: 
+      objectReference: {fileID: 1263220148}
+    - target: {fileID: 5276552873523448444, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: clericSpawners.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276552873523448444, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: clericSpawners.Array.data[0]
+      value: 
+      objectReference: {fileID: 1136073739}
+    - target: {fileID: 5276552873523448444, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: clericSpawners.Array.data[1]
+      value: 
+      objectReference: {fileID: 149927756}
+    - target: {fileID: 5276552873523448444, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: clericSpawners.Array.data[2]
+      value: 
+      objectReference: {fileID: 1853058784}
+    - target: {fileID: 5276552873523448444, guid: 15226177460a866438f5c1f64bfddf32, type: 3}
+      propertyPath: clericSpawners.Array.data[3]
       value: 
       objectReference: {fileID: 1698824217}
     m_RemovedComponents: []
