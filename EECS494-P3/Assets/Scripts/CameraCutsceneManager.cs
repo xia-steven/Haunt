@@ -151,7 +151,8 @@ public class CameraCutsceneManager : MonoBehaviour
             progress = (Time.realtimeSinceStartup - initial_time) / expandHoleTime;
 
             GameObject playerShadow = IsPlayer.instance.transform.GetChild(1).gameObject;
-            playerShadow.transform.parent = null;
+            playerShadow.transform.parent = this.transform;
+            
 
             while (progress < 1.0f)
             {
