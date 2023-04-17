@@ -132,11 +132,12 @@ public class ShopController : MonoBehaviour {
             iter2 = Random.Range(0, range);
         }
 
-        var upgrade1 = Instantiate(Resources.Load<GameObject>("Prefabs/Hub/" + upgradePool[iter1]),
-            topUpgradeTable.transform, false);
-        var upgrade2 = Instantiate(Resources.Load<GameObject>("Prefabs/Hub/" + upgradePool[iter2]),
-            sideUpgradeTable.transform, false);
-        upgradePool.Remove(upgradePool[iter1]);
-        upgradePool.Remove(upgradePool[iter2]);
+        var str1 = upgradePool[iter1];
+        var str2 = upgradePool[iter2];
+
+        Instantiate(Resources.Load<GameObject>("Prefabs/Hub/" + str1), topUpgradeTable.transform, false);
+        Instantiate(Resources.Load<GameObject>("Prefabs/Hub/" + str2), sideUpgradeTable.transform, false);
+        upgradePool.Remove(str1);
+        upgradePool.Remove(str1);
     }
 }
