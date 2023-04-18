@@ -25,6 +25,9 @@ public class EnemyBase : MonoBehaviour {
     // Player variables
     private PlayerHasHealth playerHealth;
 
+    // Animator
+    private Animator enemyAnim;
+
     protected virtual void Start() {
         // Initialize components and transform
         rb = GetComponent<Rigidbody>();
@@ -39,12 +42,16 @@ public class EnemyBase : MonoBehaviour {
 
         // Get player attributes
         playerHealth = GameObject.Find("Player").GetComponent<PlayerHasHealth>();
+
+        // Get enemy animator
+        enemyAnim = GetComponent<Animator>();
     }
 
     protected void FixedUpdate() {
         if (state != EnemyState.AStarMovement && needAStar()) {
             if (!runningCoroutine) {
                 state = EnemyState.AStarMovement;
+                enemyAnim.SetBool("walking", true);
                 runningCoroutine = true;
                 PathfindingController.FindClosestWalkable(GetTarget(), out var x, out var y);
                 StartCoroutine(MoveWithAStar(x, y));
@@ -61,6 +68,8 @@ public class EnemyBase : MonoBehaviour {
         if (state != EnemyState.Attacking && canAttack(GetTarget())) {
             if (!runningCoroutine) {
                 state = EnemyState.Attacking;
+                // Set animator
+                enemyAnim.SetBool("walking", false);
                 runningCoroutine = true;
                 StartCoroutine(EnemyAttack());
             }
@@ -77,6 +86,7 @@ public class EnemyBase : MonoBehaviour {
             Vector3.Distance(GetTarget(), transform.position) > attributes.targetDistance) {
             if (!runningCoroutine) {
                 state = EnemyState.SimpleMovement;
+                enemyAnim.SetBool("walking", true);
                 runningCoroutine = true;
                 StartCoroutine(MoveStraightToTarget());
             }
