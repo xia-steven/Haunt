@@ -29,7 +29,7 @@ public class GameWinMenuReveal : MonoBehaviour
         
         GameObject rosePrefab = Resources.Load<GameObject>("Prefabs/UI/MenuWhiteRose");
         float start = Time.realtimeSinceStartup;
-        while (Time.realtimeSinceStartup - start < 60f)
+        while (Time.realtimeSinceStartup - start < 180f)
         {
             GameObject rose  = Instantiate(rosePrefab, menuRect);
             // Generate random x and y positions within the bounds of the menu object
@@ -41,7 +41,7 @@ public class GameWinMenuReveal : MonoBehaviour
             roseRect.anchoredPosition = new Vector2(randomX, randomY);
             roseRect.localPosition = new Vector3(roseRect.localPosition.x, roseRect.localPosition.y,
                 menuRect.localPosition.z - 1);
-            yield return new WaitForSecondsRealtime(0.01f);
+            yield return new WaitForSecondsRealtime(0.1f);
 
         }
     }
