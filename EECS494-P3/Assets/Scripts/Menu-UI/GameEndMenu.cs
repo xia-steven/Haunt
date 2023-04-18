@@ -21,16 +21,12 @@ public class GameEndMenu : MonoBehaviour {
     }
 
     void _Win(GameWinEvent e) {
-        foreach (Transform child in gameWinUI.transform) {
-            if (child.name == "Restart") {
-                EventSystem.current.SetSelectedGameObject(child.gameObject);
-            }
-        }
+        
 
         Time.timeScale = 0;
         gameWinUI.SetActive(true);
     }
-
+    
     IEnumerator ShowLossMenu(GameLossEvent e)
     {
         while(!e.finishedDeathAnimation)
