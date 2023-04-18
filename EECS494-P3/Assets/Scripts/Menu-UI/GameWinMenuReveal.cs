@@ -17,6 +17,7 @@ public class GameWinMenuReveal : MonoBehaviour
     {
         buttons.SetActive(false);
         playerUI.SetActive(false);
+        roseCanvas.SetActive(true);
         StartCoroutine(DropRosesCutscene());
         StartCoroutine(TypeThankYou());
 
