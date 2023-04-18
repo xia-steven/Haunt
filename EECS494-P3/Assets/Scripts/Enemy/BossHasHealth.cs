@@ -12,7 +12,6 @@ public class BossHasHealth : HasHealth
     [SerializeField] GameObject winTrigger;
     [SerializeField] List<GameObject> Pedestals;
     Image healthBarImage;
-    TMP_Text healthText;
     IsBoss boss;
 
     float lastClericSpawn = 0;
@@ -29,8 +28,6 @@ public class BossHasHealth : HasHealth
             }
         }
         healthBarImage = healthBar.GetComponent<Image>();
-        healthText = healthBar.GetComponentInChildren<TMP_Text>();
-        healthText.text = health.ToString();
 
         boss = GetComponent<IsBoss>();
 
@@ -55,7 +52,6 @@ public class BossHasHealth : HasHealth
         else
         {
             healthBarImage.fillAmount = health / maxHealth;
-            healthText.text = health.ToString();
         }
 
         // If we haven't spawned clerics in 20 health
@@ -132,7 +128,6 @@ public class BossHasHealth : HasHealth
         maxHealth = health_in;
         health = maxHealth;
         lastClericSpawn = health;
-        //healthText.text = health.ToString();
     }
 
 }
