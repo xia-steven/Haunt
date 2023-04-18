@@ -4,6 +4,7 @@ using UnityEngine;
 public class HasEnemyHealth : HasHealth {
     private GameObject coinPrefab;
     private GameObject healthPrefab;
+    private GameObject deathFlowersPrefab;
     private SpriteRenderer sr;
     private Color normalColor;
     private bool isCleric;
@@ -11,6 +12,7 @@ public class HasEnemyHealth : HasHealth {
     private void Start() {
         coinPrefab = Resources.Load<GameObject>("Prefabs/Coin");
         healthPrefab = Resources.Load<GameObject>("Prefabs/Health");
+        deathFlowersPrefab = Resources.Load<GameObject>("Prefabs/DeathFlowers");
         foreach (Transform child in transform) {
             if (child.gameObject.name == "Sprite") {
                 sr = child.gameObject.GetComponent<SpriteRenderer>();
@@ -31,7 +33,7 @@ public class HasEnemyHealth : HasHealth {
             else if (Random.Range(0, 100) is >= 40 and < 80 && GameControl.Day != 0 && !isCleric) {
                 Instantiate(coinPrefab, transform.position, Quaternion.identity);
             }
-
+            Instantiate(deathFlowersPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }
