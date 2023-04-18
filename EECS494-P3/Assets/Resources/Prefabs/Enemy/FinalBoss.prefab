@@ -170,6 +170,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  clericSpawners: []
   sprite: {fileID: 3226477733417184676}
   warmupColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 0.39215687}
 --- !u!114 &1702138906439512309
@@ -455,7 +456,7 @@ LineRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 1
-  m_Loop: 1
+  m_Loop: 0
 --- !u!135 &807433133
 SphereCollider:
   m_ObjectHideFlags: 0
