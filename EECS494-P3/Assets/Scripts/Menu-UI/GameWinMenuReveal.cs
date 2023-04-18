@@ -10,6 +10,9 @@ public class GameWinMenuReveal : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private GameObject roseCanvas;
     [SerializeField] private GameObject buttons;
+    [SerializeField] GameObject ammoUI;
+    [SerializeField] GameObject tab;
+    [SerializeField] GameObject sword;
 
     [SerializeField] private GameObject playerUI;
     // Start is called before the first frame update
@@ -17,6 +20,9 @@ public class GameWinMenuReveal : MonoBehaviour
     {
         buttons.SetActive(false);
         playerUI.SetActive(false);
+        ammoUI.SetActive(false);
+        tab.SetActive(false);
+        sword.SetActive(false);
         roseCanvas.SetActive(true);
         StartCoroutine(DropRosesCutscene());
         StartCoroutine(TypeThankYou());
