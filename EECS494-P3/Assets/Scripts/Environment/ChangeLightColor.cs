@@ -49,21 +49,12 @@ public class ChangeLightColor : MonoBehaviour {
 
     void _OnNightEnd(NightEndEvent nee) {
         roundStopped = true;
-        //StartCoroutine(ResetColor());
     }
 
 
     IEnumerator ChangeColor() {
-        //TODO: Make less horrible
         yield return null;
-        if(GameControl.Day == 0)
-        {
-            duration = 15f;
-        }
-        else
-        {
-            duration = GameControl.NightTimeRemaining;
-        }
+        duration = GameControl.NightTimeRemaining;
 
 
         float initial_time = Time.time;
@@ -79,17 +70,4 @@ public class ChangeLightColor : MonoBehaviour {
         }
     }
 
-    IEnumerator ResetColor() {
-        float initial_time = Time.time;
-        float progress = (Time.time - initial_time) / resetDuration;
-
-        while (progress < 1.0f) {
-            progress = (Time.time - initial_time) / resetDuration;
-
-            sunlight.color = colors.Evaluate(1.0f - progress);
-
-
-            yield return null;
-        }
-    }
 }
